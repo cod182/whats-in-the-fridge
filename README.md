@@ -1,3 +1,7 @@
+# What's in the fridge?
+
+### Fridge managment. Can't remember what's in your fridge? Add it all to the app and view anywhere. Just rememeber to keep it updated!
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -34,3 +38,25 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## User Story
+
+- Login / Sign Up
+- Choose fridge
+  - Fridge Freezer / Freezer / Chest Freezer / Fridge
+  - Name fridge
+  - Preset images of freezer
+  - Set background
+  - Set Number of shelves / Drawers
+  - Name shelves / Drawers
+- Share fridge access
+- Have more than one fridge
+- Add items to individual shelves
+- Remove items from individual shelves
+- View list of items on individual shelf
+- View list of all items
+- Search for items in fridge
+  - Show number of that item
+  - Show location of that item
+  - Search by type (Fish/Meat/Poultry/Veg)
+  - Search by expiry date
