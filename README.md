@@ -60,3 +60,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
   - Show location of that item
   - Search by type (Fish/Meat/Poultry/Veg)
   - Search by expiry date
+
+# Attribution
+
+- Fridge Model: <a href="https://www.vecteezy.com/free-vector/food">Food Vectors by Vecteezy</a>
