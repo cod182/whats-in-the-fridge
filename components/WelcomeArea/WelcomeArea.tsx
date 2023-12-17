@@ -19,15 +19,14 @@ const WelcomeArea = () => {
         delayNumber={500}
         direction="left"
         distance={500}
-        classes="top-[25%] left-[8%] absolute w-[30%]"
+        classes="sm:top-[25%] sm:left-[8%] xs:bottom-[0] w-full xs:absolute sm:w-[30%] mx-auto p-4 xs:p-0 bg-primary xs:bg-transparent text-white xs:text-black"
       >
-        <div className="text-xl w-full font-semibold flex flex-col items-start justify-between gap-2 text-start">
+        <div className="text-xs xs:text-sm sm:text-md lg:text-xl w-full font-semibold xs:pl-4 xs:pb-4  flex flex-col items-start justify-between gap-2 text-start overflow-hidden max-h-[50%]">
           <p className="">
             Have you ever wondered what was in your fridge while you were
-            shopping?
+            shopping?&nbsp;<span>Now you can!</span>
           </p>
 
-          <p>Now you can!</p>
           <p>Just fill up your fridge and check it whilst you're out.</p>
         </div>
       </FadeInHOC>
