@@ -30,7 +30,7 @@ const FadeInHOC = ({
 
   // styles variable
 
-  // gets the XY from direction
+  // gets the XY direction
   const movementTravel = () => {
     let xy;
     let spec = '';
@@ -54,7 +54,7 @@ const FadeInHOC = ({
 
     return { xy, spec };
   };
-
+  // calls the movementTravel function
   let calcMovement = movementTravel();
 
   // Settings the styles for the div
@@ -68,10 +68,9 @@ const FadeInHOC = ({
         transitionDuration: movementDelay,
       };
 
-  console.log(styles);
   return (
     <div
-      className={`transform ease-in-out transition-all ${classes} w-[20%] h-auto ${
+      className={`ease-in-out transition-all ${classes} h-auto ${
         isVisible ? `opacity-100 ` : `opacity-0 `
       }`}
       style={styles}
