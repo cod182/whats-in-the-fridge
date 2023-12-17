@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 import { Nav } from '@/components';
+import { NavigationProvider } from '@/context/NavigationProvider';
 
 export const metadata: Metadata = {
   title: "What's in the fridge?",
@@ -17,8 +18,10 @@ export default function RootLayout({
     <html lang="en">
       <head></head>
       <body>
-        <Nav />
-        {children}
+        <NavigationProvider>
+          <Nav />
+          {children}
+        </NavigationProvider>
       </body>
     </html>
   );
