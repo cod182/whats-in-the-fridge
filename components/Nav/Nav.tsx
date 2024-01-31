@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import logo from '@/public/assets/images/witf-logo.webp';
 import { BiSolidFridge } from 'react-icons/bi';
 import { GoHomeFill } from 'react-icons/go';
-import { IoLogIn } from 'react-icons/io5';
+import { IoAdd, IoLogIn, IoLogOut } from 'react-icons/io5';
 import MobileNav from '../MobileNav/MobileNav';
 import { Squash as Hamburger } from 'hamburger-react';
 
@@ -27,27 +27,19 @@ const Nav = () => {
             <li className="mx-2">
               <a
                 href="/"
-                className="hover:text-gray-600 font-semibold text-primary duration-200 transition-all ease-in text-[30px] flex flex-col justify-center items-center"
+                className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
               >
-                <GoHomeFill />
+                <GoHomeFill className='group-hover:translate-y-[-5px] transition-all duration-200 ease'/>
                 <span className="text-[15px] hidden sm:inline">Home</span>
               </a>
             </li>
+
             <li className="mx-2">
               <a
                 href="/"
-                className="hover:text-gray-600 font-semibold text-primary duration-200 transition-all ease-in text-[30px] flex flex-col justify-center items-center"
+                className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
               >
-                <IoLogIn />
-                <span className="text-[15px] hidden sm:inline">Login</span>
-              </a>
-            </li>
-            <li className="mx-2">
-              <a
-                href="/"
-                className="hover:text-gray-600 font-semibold text-primary duration-200 transition-all ease-in text-[30px] flex flex-col justify-center items-center"
-              >
-                <BiSolidFridge />
+                <BiSolidFridge className='group-hover:translate-y-[-5px] transition-all duration-200 ease'/>
                 <span className="text-[15px] hidden sm:inline">Fridge</span>
               </a>
             </li>
@@ -58,14 +50,32 @@ const Nav = () => {
         </div>
         <div className="w-full hidden sm:flex flex-row justify-around items-center">
           <ul className="flex flex-row justify-start items-center">
-            <li>
-              <a href="">Home</a>
+          <li className="mx-2">
+              <a
+                href="/"
+                className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
+              >
+                <IoLogIn className='group-hover:translate-y-[-5px] transition-all duration-200 ease'/>
+                <span className="text-[15px] hidden sm:inline">Login</span>
+              </a>
             </li>
-            <li>
-              <a href="">Login</a>
+            <li className="mx-2">
+              <a
+                href="/"
+                className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
+              >
+                <IoLogOut className='group-hover:translate-y-[-5px] transition-all duration-200 ease'/>
+                <span className="text-[15px] hidden sm:inline">Logout</span>
+              </a>
             </li>
-            <li>
-              <a href="">My Fridge</a>
+            <li className="mx-2">
+              <a
+                href="/"
+                className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
+              >
+                <IoAdd className='group-hover:translate-y-[-5px] transition-all duration-200 ease'/>
+                <span className="text-[15px] hidden sm:inline">Register</span>
+              </a>
             </li>
           </ul>
         </div>
