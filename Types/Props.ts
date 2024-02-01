@@ -2,13 +2,17 @@ type ApplianceProp = {
   name: string;
   description: string[];
   fridgeCompartments?: number;
+  fridgeCompartment?: CompartmentProps[]
   freezerCompartments?: number;
+  freezerCompartment?: CompartmentProps[]
   doorCompartments?: number;
-  fridgeCompartmentsShelves?: number;
-  fridgeCompartmentsDrawers?: number;
-  freezerCompartmentsDrawers?: number;
-  doorCompartmentsShelves?: number;
+  doorCompartment?: CompartmentProps[]
 };
+
+type CompartmentProps = {
+  shelves?:number[];
+  drawers?:number[];
+}
 
 type itemProps = {
   id:number;
