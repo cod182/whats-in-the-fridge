@@ -8,19 +8,21 @@ import { FadeInHOC } from '..';
 const WelcomeArea = () => {
 
   return (
-<div>
+    <div className='relative'>
       {/* Background Image */}
       <Image
         src={background}
-        alt="image of fridge"
+        alt="background house scene"
         className="w-full h-auto select-none"
       />
+
+
       {/* Text Area */}
       <FadeInHOC
         delayNumber={500}
         direction="left"
         distance={500}
-        classes="sm:top-[25%] sm:left-[8%]  w-full xs:absolute sm:w-[30%] mx-auto p-4 xs:p-0 bg-primary xs:bg-transparent text-white xs:text-black xs:bottom-[0]"
+        classes="sm:top-[25%] sm:left-[8%]  w-full xs:absolute sm:w-[30%] mx-auto p-4 xs:p-0 bg-primary xs:bg-transparent text-white xs:text-black xs:bottom-[0] sm:max-w-[387px]"
       >
         <div className="text-xs xs:text-sm sm:text-md lg:text-xl w-full font-semibold xs:pl-4 xs:pb-4  flex flex-col items-start justify-between gap-2 text-start overflow-hidden max-h-[50%]">
           <p className="">
@@ -37,7 +39,7 @@ const WelcomeArea = () => {
         delayNumber={500}
         direction="up"
         distance={500}
-        classes="top-[20%] left-[41%] absolute w-[20%]"
+        classes="top-[20%] left-[41%] absolute w-[20%] max-w-[257px]"
       >
         <a href="#" className="" >
           <Image
@@ -53,7 +55,7 @@ const WelcomeArea = () => {
         delayNumber={500}
         direction="right"
         distance={500}
-        classes="top-[18%] left-[70%] absolute w-[20%] select-none"
+        classes="top-[18%] left-[70%] absolute w-[20%] max-w-[258px] select-none"
       >
         <Image src={window} alt="image of window" className="select-none" />
       </FadeInHOC>
