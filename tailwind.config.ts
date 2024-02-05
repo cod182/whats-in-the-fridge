@@ -14,8 +14,9 @@ const config: Config = {
       },
       screens: {
         xs: '450px',
-        minMd: '866',
-        midlg: '1152px',
+        midLow: '767px',
+        midMd: '985px',
+        midLg: '1152px',
       },
     },
   },

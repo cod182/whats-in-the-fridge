@@ -19,7 +19,6 @@ type Props = {
 const Appliance = ({ onSelect, type = 'fridge_freezer' }: Props) => {
 
   const [appliance, setAppliance] = useState<ApplianceProp>();
-  const [doorStatus, setDoorStatus] = useState(false);
 
   useEffect(() => {
     const getApplianceType = () => {
@@ -54,20 +53,14 @@ const Appliance = ({ onSelect, type = 'fridge_freezer' }: Props) => {
 
         </div>
       }
-      <div className='max-w-[400px] h-[800px] rounded-md p-1 border-2 border-black bg-gray-100 relative midlg:mx-auto'>
+      <div className='max-w-[400px] h-[800px] rounded-md p-1 border-2 border-black bg-gray-100 relative mx-3 sm:mx-auto md:mx-0 midLg:mx-auto lg:mx-auto '>
 
         {/* Door Start*/}
-        <div className={`${doorStatus ? 'left-[380px]' : 'left-[13px]'} z-[0] bg-pink-300 absolute top-[10px] h-[360px] w-[400px] cursor-pointer border-2 border-black rounded-md flex flex-row items-end justify-space overflow-hidden transition-all duration-300 ease-in`}
-          onClick={() => { setDoorStatus((prev) => prev ? false : true) }}>
-          <div className='w-[95%] px-4 py-2'>
-            {/* Door Compartment */}
-            <ApplianceDoor appliance={appliance!} positions={positions} handleSelect={onSelect} />
 
-          </div>
-          <div className='h-full w-[5%] flex flex-col justify-center items-center hover:bg-gray-400 border-l-[1px] border-gray-600'>
-            <p className='transform rotate-90 origin-center'>Door</p>
-          </div>
-        </div>
+        {/* Door Compartment */}
+        <ApplianceDoor appliance={appliance!} positions={positions} handleSelect={onSelect} />
+
+
         {/* Door End */}
 
         <div className='z-[5] flex flex-col w-full h-full rounded-md p-[2px] border-[1px] border-gray-400 bg-white relative'>
