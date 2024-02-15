@@ -34,6 +34,8 @@ type PositionProps = {
   type: string;
   loc: number;
   position?: number;
+  handleModalState: (state: string) => void;
+  modalState: boolean;
 }
 
 type userProps = {
