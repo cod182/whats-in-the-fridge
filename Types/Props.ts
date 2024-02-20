@@ -52,10 +52,6 @@ type appliance = {
   type: string;
 }
 
-type applianceItems = {
-  item: applianceItem[];
-}
-
 type applianceItem = {
   id: number;
   applianceid: number;

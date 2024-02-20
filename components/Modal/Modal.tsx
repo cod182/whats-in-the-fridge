@@ -31,7 +31,7 @@ const Modal = ({ children, setModalState, modalState, dataTest }: Props) => {
   return (
     <div
       data-test={dataTest ? dataTest : null}
-      className={`fixed top-0 left-0 w-screen z-[950]  flex justify-center items-center transition-all duration-500 ease-in-out ${modalState ? 'h-screen overflow-hidden' : 'h-0 overflow-hidden'
+      className={`fixed top-0 left-0 w-screen z-[998]  flex justify-center items-center transition-all duration-500 ease-in-out ${modalState ? 'h-screen overflow-hidden' : 'h-0 overflow-hidden'
         }`}
     >
       <div

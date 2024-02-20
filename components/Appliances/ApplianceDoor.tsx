@@ -19,7 +19,7 @@ const Door = ({ appliance, positions, handleSelect, modalState, handleModalState
   const [doorStatus, setDoorStatus] = useState(false);
 
   return (
-    <div className={`${doorStatus ? ' left-[13px] midLow:left-[380px] z-[999] midLow:z-[0] bg-blue-300/100' : 'left-[13px] midLow:left-[100px] z-[0] bg-blue-300/0'} absolute top-[10px] h-[360px] w-full sm:w-[400px] midLow:w-[310px] cursor-pointer border-2 border-black rounded-md flex flex-row items-end justify-space overflow-hidden transition-all duration-300 ease-in`}
+    <div className={`${doorStatus ? ' left-[13px] midLow:left-[380px] z-[959] midLow:z-[0] bg-blue-300/100' : 'left-[13px] midLow:left-[100px] z-[0] bg-blue-300/0'} absolute top-[10px] h-[360px] w-full sm:w-[400px] midLow:w-[310px] cursor-pointer border-2 border-black rounded-md flex flex-row items-end justify-space overflow-hidden transition-all duration-300 ease-in`}
     >
       <div className={`w-[95%] px-4 py-2 `}>
         {
