@@ -43,3 +43,27 @@ type userProps = {
   email: string;
   password: string;
 }
+
+type appliance = {
+  id: number;
+  ownerid: number;
+  name: string;
+  type: string;
+}
+
+type applianceItems = {
+  item: applianceItem[];
+}
+
+type applianceItem = {
+  id: number;
+  applianceid: number;
+  ownerid: number;
+  name: string;
+  quantity: number;
+  addedDate: string;
+  expiryDate: string;
+  type: string;
+  area: string;
+  position: number;
+}

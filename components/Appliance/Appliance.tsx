@@ -4,7 +4,6 @@ import { ApplianceDoor, FridgeFreezer, Modal, PositionButton } from '..';
 // components/Fridge.tsx
 import React, { useState } from 'react';
 
-import DrawerButton from '../Appliances/DrawerButton';
 import { appliances } from '@/static/appliances';
 import { toggleBodyScrolling } from '@/utilities/functions';
 import { useEffect } from 'react';
@@ -12,20 +11,31 @@ import { useEffect } from 'react';
 type Props = {
   onSelect: (area: string, type: string, loc: number, position?: number) => void;
   type: string;
+  items: applianceItems;
 }
 
-
-const Appliance = ({ onSelect, type = 'fridge_freezer' }: Props) => {
-
+const Appliance = ({ onSelect, type = '', items }: Props) => {
+  // The modal State for open or closed
   const [modalState, setModalState] = useState(false)
 
+  // The appliance state. Contains the current appliance
   const [appliance, setAppliance] = useState<ApplianceProp>();
+
+  // Static Values for Items in the Appliance
+  const itemsInAppliance = {
+
+  }
+
+
 
   useEffect(() => {
     const getApplianceType = () => {
+
       appliances.map((applianceChoice: ApplianceProp) => {
         if (applianceChoice.name.toLowerCase().replace(/\s/g, '_') === type) {
-          setAppliance(applianceChoice)
+          setAppliance(applianceChoice);
+        } else {
+          console.log('Appliance Not Found')
         }
       })
     };
@@ -33,9 +43,6 @@ const Appliance = ({ onSelect, type = 'fridge_freezer' }: Props) => {
     getApplianceType();
 
   }, [type, appliance])
-
-
-  const positions = [1, 2, 3];
 
 
 
@@ -53,6 +60,7 @@ const Appliance = ({ onSelect, type = 'fridge_freezer' }: Props) => {
       setModalState(false);
     }
   };
+
   // Checks appliance exists
   if (appliance != null) {
     // Switch for choosing correct appliance component
@@ -68,6 +76,9 @@ const Appliance = ({ onSelect, type = 'fridge_freezer' }: Props) => {
         )
 
       default:
+        return (
+          <p>Not Found</p>
+        )
         break;
     }
   }
