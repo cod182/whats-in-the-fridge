@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 type Props = {
   onSelect: (area: string, type: string, loc: number, position?: number) => void;
   type: string;
-  items: applianceItems;
+  items: applianceItem[];
 }
 
 const Appliance = ({ onSelect, type = '', items }: Props) => {
@@ -25,8 +25,6 @@ const Appliance = ({ onSelect, type = '', items }: Props) => {
   const itemsInAppliance = {
 
   }
-
-
 
   useEffect(() => {
     const getApplianceType = () => {
@@ -71,7 +69,7 @@ const Appliance = ({ onSelect, type = '', items }: Props) => {
             <Modal modalState={modalState} setModalState={handleModalState}>
               <p>hi</p>
             </Modal>
-            <FridgeFreezer modalState={modalState} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} />
+            <FridgeFreezer modalState={modalState} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} />
           </>
         )
 

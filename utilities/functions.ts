@@ -17,3 +17,33 @@ export const queryDatabase = async (query: string) => {
     return false;
   }
 }
+
+export const findItemLocation = (items: applianceItem[]) => {
+  let doorItems: applianceItem[] = [];
+  let fridgeItems: applianceItem[] = [];
+  let freezerItems: applianceItem[] = [];
+
+  // Mapping over items and pushing them to their area array using a switch
+  items.map((item) => {
+    switch (item.area) {
+      case 'door':
+        doorItems.push(item)
+        break;
+      case 'fridge':
+        fridgeItems.push(item)
+        break;
+      case 'freezer':
+        freezerItems.push(item)
+        break;
+      default:
+        break;
+    }
+  })
+  // building an object of items by their areas
+  const object: any = {};
+  object.door = doorItems;
+  object.fridge = fridgeItems;
+  object.freezer = freezerItems;
+
+  return object;
+}

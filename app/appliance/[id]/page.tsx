@@ -9,7 +9,7 @@ const AppliancePage = () => {
   const [selectedArea, setSelectedArea] = useState<string>();
   const [loading, setLoading] = useState(true);
   const [appliance, setAppliance] = useState<appliance>({ id: 0, ownerid: 0, name: 'null', type: '' });
-  const [applianceItems, setApplianceItems] = useState<applianceItems>();
+  const [applianceItems, setApplianceItems] = useState<applianceItem[]>();
   const [error, setError] = useState<string>();
 
   const userId = 1;

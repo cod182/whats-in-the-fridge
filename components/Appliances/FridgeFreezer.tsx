@@ -2,15 +2,26 @@ import { ApplianceDoor, PositionButton } from '..'
 
 import DrawerButton from './DrawerButton'
 import React from 'react'
+import { findItemLocation } from '@/utilities/functions';
 
 type Props = {
   appliance: ApplianceProp;
   handleSelect: (area: string, type: string, loc: number, position?: number) => void;
   modalState: boolean;
-  handleModalState: (state: string) => void
+  handleModalState: (state: string) => void;
+  items: applianceItem[];
 }
 
-const FridgeFreezer = ({ appliance, handleSelect, modalState, handleModalState }: Props) => {
+const FridgeFreezer = ({ appliance, handleSelect, modalState, handleModalState, items }: Props) => {
+
+  // let doorItems = items.map((item) => { let x = []; if (item.area === 'door') { x.push(item) }; return items; })
+
+
+
+
+  const itemsInLocation = findItemLocation(items);
+  console.log(itemsInLocation)
+
 
   const shelfPositions = [1, 2, 3]; // How many areas there are on a shelf
   return (
