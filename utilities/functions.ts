@@ -47,3 +47,15 @@ export const findItemLocation = (items: applianceItem[]) => {
 
   return object;
 }
+
+export const getItemsInThisLocation = (position: number, shelf: number, items: applianceItem[]) => {
+  // Find all items with matching area and shelf
+  let array: applianceItem[] = []
+  items.map((item) => {
+    if (item.position === position && item.shelf === shelf) {
+      array.push(item);
+    }
+  })
+  console.log(array);
+  return array;
+}

@@ -23,13 +23,13 @@ const FridgeFreezer = ({ appliance, handleSelect, modalState, handleModalState, 
   console.log(itemsInLocation)
 
 
-  const shelfPositions = [1, 2, 3]; // How many areas there are on a shelf
+  const shelfPositions = [0, 1, 2]; // How many areas there are on a shelf
+
   return (
     <>
       <div className='mb-2'>
         <h2 className='text-normal text-gray-800'>{appliance.name}</h2>
         <p className='text-sm italic text-gray-700'>{appliance.description}</p>
-        <p className='sm:hidden block z-[999]'>Hi</p>
 
       </div>
 
@@ -38,7 +38,7 @@ const FridgeFreezer = ({ appliance, handleSelect, modalState, handleModalState, 
         {/* Door Start*/}
 
         {/* Door Compartment */}
-        <ApplianceDoor appliance={appliance!} positions={shelfPositions} handleSelect={handleSelect} modalState={modalState} handleModalState={handleModalState} />
+        <ApplianceDoor appliance={appliance!} positions={shelfPositions} handleSelect={handleSelect} modalState={modalState} handleModalState={handleModalState} items={itemsInLocation.door} />
         {/* Door End */}
 
         <div className='z-[5] flex flex-col w-full h-full rounded-md p-[2px] border-[1px] border-gray-400 bg-white relative'>
@@ -54,7 +54,7 @@ const FridgeFreezer = ({ appliance, handleSelect, modalState, handleModalState, 
                     <div className='grid grid-cols-3 grid-rows-1 gap-x-1 mx-auto mt-2'>
                       {/* Positions */}
                       {shelfPositions.map((position) => (
-                        <PositionButton key={position} handleSelection={handleSelect} area='fridge' type='shelf' loc={shelf} position={position} handleModalState={handleModalState} modalState={modalState} />
+                        <PositionButton key={position} handleSelection={handleSelect} area='fridge' type='shelf' loc={shelf} position={position} handleModalState={handleModalState} modalState={modalState} items={itemsInLocation.fridge} />
                       ))}
                     </div>
                     <hr className='w-full h-[4px] bg-gray-300 shadow-xl' />
@@ -66,7 +66,7 @@ const FridgeFreezer = ({ appliance, handleSelect, modalState, handleModalState, 
                 {drawers != undefined &&
                   <div className={`grid grid-cols-2 grid-rows-1 gap-x-1 mx-auto mt-2`}>
                     {drawers.map((drawer, index) => (
-                      <DrawerButton key={index} handleSelection={handleSelect} area='fridge' type='drawer' loc={drawer} handleModalState={handleModalState} modalState={modalState} />
+                      <DrawerButton key={index} handleSelection={handleSelect} area='fridge' type='drawer' loc={drawer} handleModalState={handleModalState} modalState={modalState} items={itemsInLocation.fridge} />
                     ))}
                   </div>
                 }
@@ -88,7 +88,7 @@ const FridgeFreezer = ({ appliance, handleSelect, modalState, handleModalState, 
                 {drawers != undefined &&
                   <div className={`grid grid-cols-1 grid-rows-${drawers.length} gap-2 mx-auto mt-2`}>
                     {drawers.map((drawer, index) => (
-                      <DrawerButton key={index} handleSelection={handleSelect} area='freezer' type='drawer' loc={drawer} modalState={modalState} handleModalState={handleModalState} />
+                      <DrawerButton key={index} handleSelection={handleSelect} area='freezer' type='drawer' loc={drawer} modalState={modalState} handleModalState={handleModalState} items={itemsInLocation.freezer} />
                     ))}
                   </div>
                 }

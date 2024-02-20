@@ -44,7 +44,7 @@ const AppliancePage = () => {
   } else if (!loading && appliance && applianceItems) {
     return (
       <div className="container mx-auto p-0 sm:p-8">
-        <h1 className="text-3xl font-bold mb-4">Your Fridge</h1>
+        <h1 className="text-3xl font-bold mb-4">{appliance.name}</h1>
         <Appliance onSelect={handleSelect} type={appliance.type} items={applianceItems} />
         <div className="mt-4">
           <h2 className="text-xl font-bold mb-2">Selected Items:</h2>

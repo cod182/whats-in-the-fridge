@@ -36,6 +36,7 @@ type PositionProps = {
   position?: number;
   handleModalState: (state: string) => void;
   modalState: boolean;
+  items: applianceItem[]
 }
 
 type userProps = {
@@ -65,5 +66,6 @@ type applianceItem = {
   expiryDate: string;
   type: string;
   area: string;
+  shelf: number;
   position: number;
 }

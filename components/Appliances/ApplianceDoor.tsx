@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 
 import { PositionButton } from '..'
+import { getItemsInThisLocation } from '@/utilities/functions';
 
 type Props = {
   appliance: ApplianceProp;
@@ -10,10 +11,11 @@ type Props = {
   handleSelect: (area: string, type: string, loc: number, position?: number,) => void;
   modalState: boolean;
   handleModalState: (state: string) => void
+  items: applianceItem[]
 }
 
 
-const Door = (doorItems: Props) => {
+const Door = ({ appliance, positions, handleSelect, modalState, handleModalState, items }: Props) => {
   const [doorStatus, setDoorStatus] = useState(false);
 
   return (
@@ -21,15 +23,16 @@ const Door = (doorItems: Props) => {
     >
       <div className={`w-[95%] px-4 py-2 `}>
         {
-          doorItems.appliance?.doorCompartment && doorItems.appliance.doorCompartment.map(({ shelves }: CompartmentProps, index: number) => (
+          appliance?.doorCompartment && appliance.doorCompartment.map(({ shelves }: CompartmentProps, index: number) => (
             <div key={index}>
               {/* Shelves */}
               {shelves != undefined && shelves.map((shelf, index) => (
                 <div key={index}>
+                  <p>{shelf}</p>
                   <div className='grid grid-cols-3 grid-rows-1 gap-x-1 mx-auto my-2'>
                     {/* Positions */}
-                    {doorItems.positions.map((position) => (
-                      <PositionButton key={position} handleSelection={doorItems.handleSelect} area='door' type='shelf' loc={shelf} position={position} modalState={doorItems.modalState} handleModalState={doorItems.handleModalState} />
+                    {positions.map((position) => (
+                      <PositionButton key={position} handleSelection={handleSelect} area='door' type='shelf' loc={shelf} position={position} modalState={modalState} handleModalState={handleModalState} items={getItemsInThisLocation(position, shelf, items)} />
                     ))}
                   </div>
                   <hr className='w-full h-[4px] bg-gray-300 shadow-xl' />
