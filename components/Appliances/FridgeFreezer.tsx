@@ -1,12 +1,14 @@
 import { ApplianceDoor, PositionButton } from '..'
 
 import DrawerButton from './DrawerButton'
+import FreezerCompartment from './FreezerCompartment';
+import FridgeCompartment from './FridgeCompartment';
 import React from 'react'
 import { findItemLocation } from '@/utilities/functions';
 
 type Props = {
   appliance: ApplianceProp;
-  handleSelect: (area: string, type: string, loc: number, position?: number) => void;
+  handleSelect: (items: applianceItem[]) => void;
   modalState: boolean;
   handleModalState: (state: string) => void;
   items: applianceItem[];
@@ -14,7 +16,7 @@ type Props = {
 
 const FridgeFreezer = ({ appliance, handleSelect, modalState, handleModalState, items }: Props) => {
 
-  // let doorItems = items.map((item) => { let x = []; if (item.area === 'door') { x.push(item) }; return items; })
+  // let doorItems = items.map((item) => { let x = []; if (item.compartment === 'door') { x.push(item) }; return items; })
 
 
 
@@ -42,61 +44,23 @@ const FridgeFreezer = ({ appliance, handleSelect, modalState, handleModalState, 
         {/* Door End */}
 
         <div className='z-[5] flex flex-col w-full h-full rounded-md p-[2px] border-[1px] border-gray-400 bg-white relative'>
-          {/* Fridge Area Start*/}
+          {/* Fridge compartment Start*/}
           <div className='w-full z-[6] h-[49%] rounded-md border-2 border-black p-2'>
             {/* Fridge Compartment */}
-            {appliance?.fridgeCompartment && appliance.fridgeCompartment.map(({ shelves, drawers }: CompartmentProps, index: number) => (
-              <div key={index}>
-
-                {/* Shelves */}
-                {shelves != undefined && shelves.map((shelf, index) => (
-                  <div key={index}>
-                    <div className='grid grid-cols-3 grid-rows-1 gap-x-1 mx-auto mt-2'>
-                      {/* Positions */}
-                      {shelfPositions.map((position) => (
-                        <PositionButton key={position} handleSelection={handleSelect} area='fridge' type='shelf' loc={shelf} position={position} handleModalState={handleModalState} modalState={modalState} items={itemsInLocation.fridge} />
-                      ))}
-                    </div>
-                    <hr className='w-full h-[4px] bg-gray-300 shadow-xl' />
-
-                  </div>
-                ))}
-
-                {/* Drawers */}
-                {drawers != undefined &&
-                  <div className={`grid grid-cols-2 grid-rows-1 gap-x-1 mx-auto mt-2`}>
-                    {drawers.map((drawer, index) => (
-                      <DrawerButton key={index} handleSelection={handleSelect} area='fridge' type='drawer' loc={drawer} handleModalState={handleModalState} modalState={modalState} items={itemsInLocation.fridge} />
-                    ))}
-                  </div>
-                }
-              </div>
-            ))}
+            <FridgeCompartment appliance={appliance!} positions={shelfPositions} handleSelect={handleSelect} modalState={modalState} handleModalState={handleModalState} items={itemsInLocation.fridge} />
           </div>
-          {/* Fridge Area End */}
+          {/* Fridge compartment End */}
 
           {/* Middle Bar Start*/}
           <hr className='border-2 border-gray-500 bg-gray-200 w-full h-[2%] flex flex-row justify-center items-center' />
           {/* Middle Bar End*/}
 
-          {/* Freezer Area Start*/}
+          {/* Freezer compartment Start*/}
           <div className='w-full h-[49%] rounded-md border-2 border-black my-auto p-2'>
             {/* Freezer Compartment */}
-            {appliance?.freezerCompartment && appliance.freezerCompartment.map(({ shelves, drawers }: CompartmentProps, index: number) => (
-              <div key={index}>
-                {/* Drawers */}
-                {drawers != undefined &&
-                  <div className={`grid grid-cols-1 grid-rows-${drawers.length} gap-2 mx-auto mt-2`}>
-                    {drawers.map((drawer, index) => (
-                      <DrawerButton key={index} handleSelection={handleSelect} area='freezer' type='drawer' loc={drawer} modalState={modalState} handleModalState={handleModalState} items={itemsInLocation.freezer} />
-                    ))}
-                  </div>
-                }
-              </div>
-
-            ))}
+            <FreezerCompartment appliance={appliance!} handleSelect={handleSelect} modalState={modalState} handleModalState={handleModalState} items={itemsInLocation.freezer} />
           </div>
-          {/* Freezer Area End*/}
+          {/* Freezer compartment End*/}
 
         </div>
       </div >

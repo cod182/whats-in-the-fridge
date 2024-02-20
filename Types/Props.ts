@@ -29,8 +29,8 @@ type itemProps = {
 }
 
 type PositionProps = {
-  handleSelection: (are: string, type: string, loc: number, position?: number) => void;
-  area: string;
+  handleSelection: (items: applianceItem[]) => void;
+  compartment: string;
   type: string;
   loc: number;
   position?: number;
@@ -65,7 +65,8 @@ type applianceItem = {
   addedDate: string;
   expiryDate: string;
   type: string;
-  area: string;
-  shelf: number;
+  compartment: string;
+  locationType: string;
+  level: number;
   position: number;
 }

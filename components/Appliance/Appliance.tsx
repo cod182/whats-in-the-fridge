@@ -9,22 +9,22 @@ import { toggleBodyScrolling } from '@/utilities/functions';
 import { useEffect } from 'react';
 
 type Props = {
-  onSelect: (area: string, type: string, loc: number, position?: number) => void;
+
   type: string;
   items: applianceItem[];
 }
 
-const Appliance = ({ onSelect, type = '', items }: Props) => {
+const Appliance = ({ type = '', items }: Props) => {
   // The modal State for open or closed
   const [modalState, setModalState] = useState(false)
 
   // The appliance state. Contains the current appliance
   const [appliance, setAppliance] = useState<ApplianceProp>();
 
-  // Static Values for Items in the Appliance
-  const itemsInAppliance = {
-
-  }
+  const [selectedArea, setSelectedArea] = useState<applianceItem[]>();
+  const handleSelect = (items: applianceItem[]) => {
+    setSelectedArea(items);
+  };
 
   useEffect(() => {
     const getApplianceType = () => {
@@ -41,12 +41,6 @@ const Appliance = ({ onSelect, type = '', items }: Props) => {
     getApplianceType();
 
   }, [type, appliance])
-
-
-
-  const handleSelect = (area: string, type: string, loc: number, position?: any) => {
-    onSelect(area, type, loc, position);
-  };
 
   // Handles the Modal and scrolling on body
   const handleModalState = (state: string) => {
@@ -67,7 +61,12 @@ const Appliance = ({ onSelect, type = '', items }: Props) => {
         return (
           <>
             <Modal modalState={modalState} setModalState={handleModalState}>
-              <p>hi</p>
+              <div className="mt-4">
+                <h2 className="text-xl font-bold mb-2">Items:</h2>
+                <ul>
+                  {selectedArea != undefined && selectedArea?.map((item: applianceItem, index) => { return (<p key={index}>{item.name}</p>) })}
+                </ul>
+              </div>
             </Modal>
             <FridgeFreezer modalState={modalState} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} />
           </>
