@@ -19,21 +19,22 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, mod
         () => {
           handleModalState('open');
 
-        }} aria-label={`Add an item to ${compartment} compartment, on ${type} ${level}, position ${position}`} className='w-[50%] h-full text-center hover:border-r-2 hidden group-hover:flex flex-row justify-center items-center hover:bg-gray-600/80 hover:text-gray-200 rounded-l-md transition-all duration-300 ease-in'>
+        }} aria-label={`Add an item to ${compartment} compartment, on ${type} ${level}, position ${position}`}
+        className={`${items.length > 0 ? 'w-[50%] hover:border-r-2 rounded-l-md' : 'w-full rounded-md'}  h-full text-center   hidden group-hover:flex flex-row justify-center items-center hover:bg-gray-600/80 hover:text-gray-200  transition-all duration-300 ease-in`}>
         <span className='text-[2.9vw]'>
           <IoIosAddCircleOutline className='text-2xl max-h-[40px] aspect-square' />
         </span>
       </button>
-      <button type='button' onClick={
-        () => {
-          handleModalState('open');
-          handleSelection(items, items[0].level, compartment, position)
-        }} aria-label={`View items in ${compartment} compartment, on ${type} ${level}, position ${position}`} className='w-[50%] h-full text-center hover:border-l-2 hidden group-hover:flex flex-row justify-center items-center hover:bg-gray-600/80 hover:text-gray-200 rounded-r-md transition-all duration-300 ease-in text-xl'>
-        <span className='text-[2.9vw]'>
+      {items.length > 0 &&
+        <button
+          type='button' onClick={
+            () => {
+              handleModalState('open');
+              handleSelection(items, items[0].level, compartment, position)
+            }} aria-label={`View items in ${compartment} compartment, on ${type} ${level}, position ${position}`} className='w-[50%] h-full text-center hover:border-l-2 hidden group-hover:flex flex-row justify-center items-center hover:bg-gray-600/80 hover:text-gray-200 rounded-r-md transition-all duration-300 ease-in text-xl'>
           <GiOpenedFoodCan className='text-2xl max-h-[40px] aspect-square' />
-
-        </span>
-      </button>
+        </button>
+      }
 
 
     </div>
