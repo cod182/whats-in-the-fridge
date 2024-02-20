@@ -8,7 +8,7 @@ import { findItemLocation } from '@/utilities/functions';
 
 type Props = {
   appliance: ApplianceProp;
-  handleSelect: (items: applianceItem[]) => void;
+  handleSelect: (items: applianceItem[], level: number, compartment: string, position?: number) => void;
   modalState: boolean;
   handleModalState: (state: string) => void;
   items: applianceItem[];
@@ -16,15 +16,7 @@ type Props = {
 
 const FridgeFreezer = ({ appliance, handleSelect, modalState, handleModalState, items }: Props) => {
 
-  // let doorItems = items.map((item) => { let x = []; if (item.compartment === 'door') { x.push(item) }; return items; })
-
-
-
-
   const itemsInLocation = findItemLocation(items);
-  console.log(itemsInLocation)
-
-
   const shelfPositions = [0, 1, 2]; // How many areas there are on a shelf
 
   return (

@@ -8,7 +8,7 @@ import { getItemsInThisLocation } from '@/utilities/functions';
 type Props = {
   appliance: ApplianceProp;
   positions: number[];
-  handleSelect: (items: applianceItem[]) => void;
+  handleSelect: (items: applianceItem[], level: number, compartment: string, position?: number) => void;
   modalState: boolean;
   handleModalState: (state: string) => void
   items: applianceItem[]
@@ -26,12 +26,12 @@ const Door = ({ appliance, positions, handleSelect, modalState, handleModalState
           appliance?.doorCompartment && appliance.doorCompartment.map(({ shelves }: CompartmentProps, index: number) => (
             <div key={index}>
               {/* Shelves */}
-              {shelves != undefined && shelves.map((shelf, index) => (
+              {shelves != undefined && shelves.map((shelfNum, index) => (
                 <div key={index}>
                   <div className='grid grid-cols-3 grid-rows-1 gap-x-1 mx-auto my-2'>
                     {/* Positions */}
                     {positions.map((position) => (
-                      <PositionButton key={position} handleSelection={handleSelect} compartment='door' type='shelf' loc={shelf} position={position} modalState={modalState} handleModalState={handleModalState} items={getItemsInThisLocation(shelf, items, 'shelf', position)} />
+                      <PositionButton key={position} handleSelection={handleSelect} compartment='door' type='shelf' level={shelfNum} position={position} modalState={modalState} handleModalState={handleModalState} items={getItemsInThisLocation(shelfNum, items, 'shelf', position)} />
                     ))}
                   </div>
                   <hr className='w-full h-[4px] bg-gray-300 shadow-xl' />

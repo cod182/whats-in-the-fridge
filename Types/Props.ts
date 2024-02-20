@@ -29,10 +29,10 @@ type itemProps = {
 }
 
 type PositionProps = {
-  handleSelection: (items: applianceItem[]) => void;
+  handleSelection: (items: applianceItem[], level: number, compartment: string, position?: number) => void;
   compartment: string;
   type: string;
-  loc: number;
+  level: number;
   position?: number;
   handleModalState: (state: string) => void;
   modalState: boolean;
@@ -69,4 +69,11 @@ type applianceItem = {
   locationType: string;
   level: number;
   position: number;
+}
+
+type selectionProps = {
+  items: applianceItem[];
+  level: number;
+  position?: number;
+  compartment: string;
 }

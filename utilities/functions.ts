@@ -53,14 +53,18 @@ export const findItemLocation = (items: applianceItem[]) => {
 
 // Find all items with matching compartment, level and position (optional)
 // Add to a new array and return
-export const getItemsInThisLocation = (level: number, items: applianceItem[], locationType: string, position?: number) => {
+// level X axis
+// items = all the items to be filtered
+// location type = fridge, freezer, door
+// position Y axis
+export const getItemsInThisLocation = (level: number, items: applianceItem[], locationType: string, position: number = 0) => {
   let array: applianceItem[] = [] // initialize array
   // Map over all items giving item
   items.map((item) => {
     // Check if optional position is available
-    if (position) {
+    if (locationType === 'shelf') {
       // Match position, level and location
-      if (item.position === position && item.level === level && item.locationType === locationType) {
+      if (item.level === level && (item.position === position) && (item.locationType === locationType)) {
         // Add item to array
         array.push(item);
       }

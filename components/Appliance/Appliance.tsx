@@ -15,15 +15,25 @@ type Props = {
 }
 
 const Appliance = ({ type = '', items }: Props) => {
+
   // The modal State for open or closed
   const [modalState, setModalState] = useState(false)
 
   // The appliance state. Contains the current appliance
   const [appliance, setAppliance] = useState<ApplianceProp>();
 
-  const [selectedArea, setSelectedArea] = useState<applianceItem[]>();
-  const handleSelect = (items: applianceItem[]) => {
-    setSelectedArea(items);
+
+  const [selectedArea, setSelectedArea] = useState();
+
+  const handleSelect = (items: applianceItem[], level: number, compartment: string, position?: number) => {
+    const obj: selectionProps = {};
+    obj.items = items;
+    obj.level = level;
+    obj.compartment = compartment;
+    position && (obj.position = position);
+
+    setSelectedArea(obj);
+    console.log(obj)
   };
 
   useEffect(() => {
@@ -50,6 +60,7 @@ const Appliance = ({ type = '', items }: Props) => {
     } else if (state === 'closed') {
       toggleBodyScrolling(true);
       setModalState(false);
+      setSelectedArea(undefined);
     }
   };
 
@@ -64,7 +75,7 @@ const Appliance = ({ type = '', items }: Props) => {
               <div className="mt-4">
                 <h2 className="text-xl font-bold mb-2">Items:</h2>
                 <ul>
-                  {selectedArea != undefined && selectedArea?.map((item: applianceItem, index) => { return (<p key={index}>{item.name}</p>) })}
+                  {selectedArea && selectedArea?.items?.map((item: applianceItem, index) => { return (<p key={index}>{item.name}</p>) })}
                 </ul>
               </div>
             </Modal>
@@ -76,7 +87,6 @@ const Appliance = ({ type = '', items }: Props) => {
         return (
           <p>Not Found</p>
         )
-        break;
     }
   }
 }
