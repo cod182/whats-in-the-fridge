@@ -17,7 +17,7 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, mod
       </div>
       <button type='button' onClick={
         () => {
-          handleModalState('open');
+          // Add Itemw
 
         }} aria-label={`Add an item to ${compartment} compartment, on ${type} ${level}, position ${position}`}
         className={`${items.length > 0 ? 'w-[50%] hover:border-r-2 rounded-l-md' : 'w-full rounded-md'}  h-full text-center   hidden group-hover:flex flex-row justify-center items-center hover:bg-gray-600/80 hover:text-gray-200  transition-all duration-300 ease-in`}>

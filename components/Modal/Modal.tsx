@@ -43,7 +43,7 @@ const Modal = ({ children, setModalState, modalState, dataTest }: Props) => {
         }}
       />
       <div
-        className="relative z-[999] flex flex-col w-full h-screen sm:w-[90%] max-w-[850px] sm:h-fit max-h-full p-2 sm:p-8 bg-blue-300 rounded-lg  drop-shadow-2xl"
+        className="relative z-[999] flex flex-col w-full h-screen sm:w-[90%] max-w-[850px] sm:h-fit max-h-full p-2 sm:p-4 bg-blue-300 rounded-lg  drop-shadow-2xl"
         onClick={() => { }}
       >
         <div className="w-full h-[60px] flex flex-row justify-end items-center mb-4 sm:mb-0 z-[990]">

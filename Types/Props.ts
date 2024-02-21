@@ -60,11 +60,13 @@ type applianceItem = {
   quantity: number;
   addedDate: string;
   expiryDate: string;
-  type: string;
+  itemType: string;
+  itemSubType: string;
   compartment: string;
   locationType: string;
   level: number;
   position: number;
+  comment: string;
 }
 
 type selectionProps = {

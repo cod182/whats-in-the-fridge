@@ -8,6 +8,7 @@ import { FaEdit } from "react-icons/fa";
 import Image from 'next/image';
 import { IoCloseSharp } from "react-icons/io5";
 import ItemCard from '../Appliances/ItemCard';
+import ViewItems from '../Appliances/ViewItems';
 import { appliances } from '@/static/appliances';
 import { toggleBodyScrolling } from '@/utilities/functions';
 import { useEffect } from 'react';
@@ -27,7 +28,11 @@ const Appliance = ({ type = '', items }: Props) => {
   const [appliance, setAppliance] = useState<ApplianceProp>();
 
 
-  const [selectedArea, setSelectedArea] = useState<selectionProps>();
+  const [selectedArea, setSelectedArea] = useState<selectionProps>({
+    items: [],
+    level: 0,
+    compartment: ''
+  });
 
   const handleSelect = (items: applianceItem[], level: number, compartment: string, position?: number) => {
     const obj: selectionProps = {
@@ -43,6 +48,8 @@ const Appliance = ({ type = '', items }: Props) => {
     setSelectedArea(obj);
     console.log(obj)
   };
+
+
 
   useEffect(() => {
     const getApplianceType = () => {
@@ -85,14 +92,10 @@ const Appliance = ({ type = '', items }: Props) => {
           <>
             <Modal modalState={modalState} setModalState={handleModalState}>
               <div className="mt-4">
-                <h2 className="text-xl font-bold mb-2">Items:</h2>
-                <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                  {selectedArea && selectedArea?.items?.map((item: applianceItem, index) =>
-                    <div key={index} className='w-full h-full'>
-                      <ItemCard item={item} />
-                    </div>
-                  )}
-                </div>
+                <ViewItems
+                  selectedArea={selectedArea}
+                />
+
               </div>
             </Modal>
             <FridgeFreezer modalState={modalState} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} />

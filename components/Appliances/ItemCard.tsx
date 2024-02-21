@@ -18,13 +18,16 @@ const ItemCard = ({ item }: Props) => {
       itemContainer?.classList.remove('max-h-[500px]');
       itemContainer?.classList.add('max-h-[110px]');
       containerStatus = false;
-      button!.textContent = 'More Info';
+      if (button) {
+        button.textContent = 'More Info';
+      }
     } else {
       itemContainer?.classList.remove('max-h-[110px]');
       itemContainer?.classList.add('max-h-[500px]');
       containerStatus = true;
-      button!.textContent = 'Less Info';
-
+      if (button) {
+        button.textContent = 'Less Info';
+      }
     }
   }
 
@@ -42,7 +45,7 @@ const ItemCard = ({ item }: Props) => {
 
   return (
     <div
-      id={`${item.name.toLowerCase().replace(/\s/g, '-')}-${item.id}-container`}
+      id={`${item.name.toLowerCase().replace(/\s/g, '-')} -${item.id} -container`}
       className='flex flex-col justify-start items-start p-2 w-full max-h-[110px] rounded-md relative border-[1px] border-gray-400 bg-gray-200 overflow-hidden transition-all duration-200 ease-in-out'
     >
 
@@ -50,7 +53,7 @@ const ItemCard = ({ item }: Props) => {
         {/* Item info */}
         <div className='flex flex-row justify-start items-center w-full' >
           <div className='mr-2 flex flex-col justify-center items-center w-[75px] h-[75px] aspect-square relative'>
-            <Image alt={`${item.name}`} src={`/assets/images/items/${item.name.toLowerCase().replace(/\s/g, '-')}.png`} fill className='object-fill' />
+            <Image alt={`${item.name} `} src={`/assets/images/items/${item.name.toLowerCase().replace(/\s/g, '-')}` + '.webp'} fill className='object-fill' />
           </div>
           <div>
             <p className='capitalize text-md'>{item.name}</p>
@@ -77,14 +80,18 @@ const ItemCard = ({ item }: Props) => {
         <p
           id={`${item.name.toLowerCase().replace(/\s/g, '-')}-${item.id}-button`}
           className='w-full h-[15px] select-none cursor-pointer text-center rounded-t-md absolute text-xs bottom-0 bg-gray-300 hover:bg-gray-400 hover:text-gray-300 border-t-[1px] border-gray-600 transition-all duration-200 ease-in-out'
-          onClick={() => toggleContainer(`${item.name.toLowerCase().replace(/\s/g, '-')}-${item.id}-container`)}
+          onClick={() => toggleContainer(`${item.name.toLowerCase().replace(/\s/g, '-')} -${item.id} -container`)}
         >
           More Info
         </p>
       </div>
-      <div className='w-full h-fit mb-2'>
-        <p className='text-sm'>Expiry: {item.expiryDate}</p>
-        <p className='text-sm'>Date Added: {item.addedDate}</p>
+      <div className='w-full h-fit mb-2 '>
+        <p className='text-sm text-normal text-normal'>Item Type: <span className='italic'>{item.itemType}</span></p>
+
+        <p className='text-sm text-normal'>Item sub Type: <span className='italic'>{item.itemSubType}</span></p>
+
+        <p className='text-sm text-normal'>Expiry: <span className='italic'>{item.expiryDate}</span></p>
+        <p className='text-sm text-normal'>Date Added: <span className='italic'>{item.addedDate}</span></p>
 
 
       </div>
