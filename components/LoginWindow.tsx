@@ -1,14 +1,15 @@
 'use client'
 
-import { getProviders, signIn, useSession } from "next-auth/react";
+import { ClientSafeProvider, LiteralUnion, getProviders, signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
+
+import { BuiltInProviderType } from "next-auth/providers/index";
+import { IoLogoGoogle } from "react-icons/io5";
 
 const LoginWindow = () => {
 
-  const { data: session } = useSession();
 
-  const [providers, setProviders] = useState(null);
-  const [toggleDropdown, setToggleDropdown] = useState(false);
+  const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>(null);
 
   useEffect(() => {
     const setUpProviders = async () => {
@@ -16,15 +17,14 @@ const LoginWindow = () => {
 
       setProviders(response);
     };
-
     setUpProviders();
   }, []);
 
   return (
     <div className='mt-4 p-4 w-full h-full flex flex-col justify-center items-center'>
-      <h1 className=''>Login</h1>
-      <div className='bg-gray-500/80'>
-        {providers &&
+      <h1 className='text-bold text-5xl underline'>Login</h1>
+      <div className='mt-4 flex flex-col justify-center items-center '>
+        {providers ?
           Object.values(providers).map((provider) => (
             <button
               type="button"
@@ -32,11 +32,20 @@ const LoginWindow = () => {
               onClick={() => {
                 signIn(provider.id);
               }}
-              className="black_btn"
+              className="py-2 px-4 bg-gray-100 rounded-md border-gray-500 border-[1px] border-b-[5px] hover:border-b-[1px] hover:translate-y-1 transition-all duration-200 ease flex flex-row justify-around items-center"
             >
-              Sign in
+              {provider.id === 'google' && (
+                <IoLogoGoogle />
+              )}
+              <span className="ml-2 text-semibold">
+                Sign in with {provider.name}
+              </span>
             </button>
-          ))}
+          )) : (
+            <>
+              <p>Loading...</p>
+            </>
+          )}
       </div>
     </div>
   )

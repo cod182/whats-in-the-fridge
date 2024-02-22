@@ -9,9 +9,13 @@ import { Squash as Hamburger } from 'hamburger-react';
 import Image from 'next/image';
 import MobileNav from '../MobileNav/MobileNav';
 import logo from '@/public/assets/images/witf-logo.webp';
+import { useSession } from 'next-auth/react';
 
 const Nav = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+
+  const { data: session } = useSession();
+
 
   const toggleNav = () => {
     setIsNavOpen((prev) => !prev);
@@ -52,24 +56,28 @@ const Nav = () => {
         </div>
         <div className="w-full hidden sm:flex flex-row justify-around items-center">
           <ul className="flex flex-row justify-start items-center">
-            <li className="mx-2">
-              <a
-                href="/login"
-                className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
-              >
-                <IoLogIn className='group-hover:translate-y-[-5px] transition-all duration-200 ease' />
-                <span className="text-[15px] hidden sm:inline">Login / Register</span>
-              </a>
-            </li>
-            <li className="mx-2">
-              <a
-                href="/"
-                className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
-              >
-                <IoLogOut className='group-hover:translate-y-[-5px] transition-all duration-200 ease' />
-                <span className="text-[15px] hidden sm:inline">Logout</span>
-              </a>
-            </li>
+
+            {!session?.user ? (
+
+              <li className="mx-2">
+                <a
+                  href="/login"
+                  className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
+                >
+                  <IoLogIn className='group-hover:translate-y-[-5px] transition-all duration-200 ease' />
+                  <span className="text-[15px] hidden sm:inline">Login / Register</span>
+                </a>
+              </li>) : (
+              <li className="mx-2">
+                <a
+                  href="/"
+                  className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
+                >
+                  <IoLogOut className='group-hover:translate-y-[-5px] transition-all duration-200 ease' />
+                  <span className="text-[15px] hidden sm:inline">Logout</span>
+                </a>
+              </li>
+            )}
 
           </ul>
         </div>
