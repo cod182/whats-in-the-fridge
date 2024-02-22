@@ -9,7 +9,7 @@ const db = mysql({
   }
 });
 
-export const executeQuery = async (query: any, values = []) => {
+export const executeQuery = async (query: string, values: any = []) => {
   try {
     const results = await db.query(query, values);
     await db.end();

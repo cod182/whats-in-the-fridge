@@ -4,9 +4,11 @@ import { IoCloseSharp } from 'react-icons/io5'
 
 type Props = {
   item: applianceItem;
+  updateItems: (items: applianceItem[]) => void;
+  items: applianceItem[]
 }
 
-const ItemCard = ({ item }: Props) => {
+const ItemCard = ({ item, updateItems, items }: Props) => {
 
   let containerStatus = false;
 
@@ -30,13 +32,28 @@ const ItemCard = ({ item }: Props) => {
       }
     }
   }
+  let userId = 1
 
 
-  const handleClickDelete = (e: any) => {
+  const handleDelete = async (e: any) => {
     let result = confirm('Are you sure you want to delete?')
 
     if (result) {
-      console.log('DELETE')
+      try {
+        // await removeItemFromDb(`DELETE FROM applianceItems WHERE id=${item.id} AND ownerid=${userId}`)
+        await fetch(`/api/appliance-items/${item.id}`, {
+          method: 'DELETE',
+          headers: {
+            'ownerid': userId.toString()
+          }
+        });
+        const filteredItems = items.filter(
+          (i) => i.id != item.id
+        )
+        updateItems(filteredItems);
+      } catch (error) {
+        console.log(error)
+      }
     } else {
       e.preventDefault();
     }
@@ -71,7 +88,7 @@ const ItemCard = ({ item }: Props) => {
 
           {/* Remove Buttons */}
           <button className='relative'
-            onClick={(e) => handleClickDelete(e)}
+            onClick={(e) => handleDelete(e)}
           >
             <IoCloseSharp className='h-[25px] w-[25px] text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out' />
           </button>

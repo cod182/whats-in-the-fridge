@@ -2,10 +2,42 @@ export const toggleBodyScrolling = (state: boolean) => {
   state ? document.body.classList.remove('overflow-hidden') : document.body.classList.add('overflow-hidden')
 };
 
-export const queryDatabase = async (query: string) => {
+export const getAppliance = async (query: string) => {
   try {
-    const response = await fetch('/api/getdata', {
+    const response = await fetch('/api/appliance', {
       method: 'GET',
+      headers: {
+        'query-header': query,
+      },
+    });
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return false;
+  }
+}
+
+export const getApplianceItems = async (query: string) => {
+  try {
+    const response = await fetch('/api/appliance-items', {
+      method: 'GET',
+      headers: {
+        'query-header': query,
+      },
+    });
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return false;
+  }
+}
+
+export const removeItemFromDb = async (query: string, values: [] = []) => {
+  try {
+    const response = await fetch('/api/appliance-items', {
+      method: 'DELETE',
       headers: {
         'query-header': query,
       }
@@ -57,12 +89,12 @@ export const findItemLocation = (items: applianceItem[]) => {
 // items = all the items to be filtered
 // location type = fridge, freezer, door
 // position Y axis
-export const getItemsInThisLocation = (level: number, items: applianceItem[], locationType: string, position: number = 0) => {
+export const getItemsInThisLocation = (level: number, items: applianceItem[], locationType: string, position: number = 999) => {
   let array: applianceItem[] = [] // initialize array
   // Map over all items giving item
   items.map((item) => {
     // Check if optional position is available
-    if (locationType === 'shelf') {
+    if (position != 999) {
       // Match position, level and location
       if (item.level === level && (item.position === position) && (item.locationType === locationType)) {
         // Add item to array
