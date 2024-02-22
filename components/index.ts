@@ -7,3 +7,5 @@ export { default as ApplianceDoor } from './Appliances/ApplianceDoor';
 export { default as PositionButton } from './Appliances/PositionButton';
 export { default as FridgeFreezer } from './Appliances/FridgeFreezer';
 export { default as Modal } from './Modal/Modal';
+export { default as Provider } from './Provider';
+export { default as LoginWindow } from './LoginWindow';

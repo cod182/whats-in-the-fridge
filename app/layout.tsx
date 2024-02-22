@@ -1,7 +1,8 @@
-import type { Metadata } from 'next';
 import './globals.css';
 
-import { Nav } from '@/components';
+import { Nav, Provider } from '@/components';
+
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "What's in the fridge?",
@@ -16,9 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head></head>
+
       <body className="max-w-6xl mx-auto bg-[#88caff]">
-        <Nav />
-        {children}
+        <Provider>
+          <Nav />
+          {children}
+        </Provider>
       </body>
     </html>
   );

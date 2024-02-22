@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import { BiSolidFridge } from 'react-icons/bi';
 import { GoHomeFill } from 'react-icons/go';
 import { IoLogIn } from 'react-icons/io5';
+import { useState } from 'react';
 
 type Props = {
   isNavOpen: boolean;
@@ -15,9 +15,8 @@ const MobileNav = ({ isNavOpen, toggleNav }: Props) => {
 
   return (
     <div
-      className={`absolute top sm:hidden bg-primary z-[999] w-full transition-all ease-in duration-300 ${
-        isNavOpen ? 'h-[100svh] overflow-scroll' : 'h-0 overflow-hidden'
-      }`}
+      className={`absolute top sm:hidden bg-primary z-[999] w-full transition-all ease-in duration-300 ${isNavOpen ? 'h-[100svh] overflow-scroll' : 'h-0 overflow-hidden'
+        }`}
     >
       <ul className="flex flex-col py-4 px-2">
         <li className="w-full">
@@ -35,7 +34,7 @@ const MobileNav = ({ isNavOpen, toggleNav }: Props) => {
             className="hover:text-gray-600 font-semibold text-black duration-200 transition-all ease-in text-6xl my-4 flex flex-row justify-start items-center border-black rounded hover:border-2 hover:shadow-2xl"
           >
             <IoLogIn />
-            <span className="text-[30px] inline">Login</span>
+            <span className="text-[30px] inline">Login / Register</span>
           </a>
         </li>
         <li className="w-full">

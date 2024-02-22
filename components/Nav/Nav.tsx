@@ -1,12 +1,14 @@
 'use client';
-import Image from 'next/image';
+
+import { IoAdd, IoLogIn, IoLogOut } from 'react-icons/io5';
 import React, { useState } from 'react';
-import logo from '@/public/assets/images/witf-logo.webp';
+
 import { BiSolidFridge } from 'react-icons/bi';
 import { GoHomeFill } from 'react-icons/go';
-import { IoAdd, IoLogIn, IoLogOut } from 'react-icons/io5';
-import MobileNav from '../MobileNav/MobileNav';
 import { Squash as Hamburger } from 'hamburger-react';
+import Image from 'next/image';
+import MobileNav from '../MobileNav/MobileNav';
+import logo from '@/public/assets/images/witf-logo.webp';
 
 const Nav = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -29,7 +31,7 @@ const Nav = () => {
                 href="/"
                 className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
               >
-                <GoHomeFill className='group-hover:translate-y-[-5px] transition-all duration-200 ease'/>
+                <GoHomeFill className='group-hover:translate-y-[-5px] transition-all duration-200 ease' />
                 <span className="text-[15px] hidden sm:inline">Home</span>
               </a>
             </li>
@@ -39,7 +41,7 @@ const Nav = () => {
                 href="/"
                 className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
               >
-                <BiSolidFridge className='group-hover:translate-y-[-5px] transition-all duration-200 ease'/>
+                <BiSolidFridge className='group-hover:translate-y-[-5px] transition-all duration-200 ease' />
                 <span className="text-[15px] hidden sm:inline">Fridge</span>
               </a>
             </li>
@@ -50,13 +52,13 @@ const Nav = () => {
         </div>
         <div className="w-full hidden sm:flex flex-row justify-around items-center">
           <ul className="flex flex-row justify-start items-center">
-          <li className="mx-2">
+            <li className="mx-2">
               <a
-                href="/"
+                href="/login"
                 className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
               >
-                <IoLogIn className='group-hover:translate-y-[-5px] transition-all duration-200 ease'/>
-                <span className="text-[15px] hidden sm:inline">Login</span>
+                <IoLogIn className='group-hover:translate-y-[-5px] transition-all duration-200 ease' />
+                <span className="text-[15px] hidden sm:inline">Login / Register</span>
               </a>
             </li>
             <li className="mx-2">
@@ -64,19 +66,11 @@ const Nav = () => {
                 href="/"
                 className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
               >
-                <IoLogOut className='group-hover:translate-y-[-5px] transition-all duration-200 ease'/>
+                <IoLogOut className='group-hover:translate-y-[-5px] transition-all duration-200 ease' />
                 <span className="text-[15px] hidden sm:inline">Logout</span>
               </a>
             </li>
-            <li className="mx-2">
-              <a
-                href="/"
-                className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
-              >
-                <IoAdd className='group-hover:translate-y-[-5px] transition-all duration-200 ease'/>
-                <span className="text-[15px] hidden sm:inline">Register</span>
-              </a>
-            </li>
+
           </ul>
         </div>
       </nav>
