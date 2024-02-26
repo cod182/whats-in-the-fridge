@@ -1,9 +1,9 @@
 'use client'
 
+import { Appliance, FridgeLoader } from '@/components';
 import { getAppliance, getApplianceItems } from '@/utilities/functions';
 import { useEffect, useState } from 'react';
 
-import { Appliance } from '@/components';
 import { useSession } from 'next-auth/react';
 
 const AppliancePage = () => {
@@ -54,8 +54,8 @@ const AppliancePage = () => {
 
   if (loading) {
     return (
-      <div className='flex flex-col justify-center items-center w-full h-full'>
-        <h1 className='text-bold text-2xl'>Loading...</h1>
+      <div className='flex flex-col justify-center items-center w-full h-fit my-10 overflow-hidden'>
+        <FridgeLoader />
       </div>
     );
   } else if (!loading && appliance && applianceItems) {
