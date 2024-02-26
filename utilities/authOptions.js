@@ -1,8 +1,8 @@
 import GoogleProvider from 'next-auth/providers/google';
-import NextAuth from 'next-auth';
-import { executeQuery } from '../../../../lib/db';
+import { NextAuthOptions } from "next-auth";
+import { executeQuery } from "@/lib/db";
 
-const handler = NextAuth({
+export const authOptions = {
 
   providers: [
     GoogleProvider({
@@ -39,5 +39,4 @@ const handler = NextAuth({
       }
     },
   }
-})
-export { handler as GET, handler as POST }
+};

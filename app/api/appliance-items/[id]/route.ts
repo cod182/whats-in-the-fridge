@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { NextApiRequest } from "next";
 import { executeQuery } from "@/lib/db";
+import { getSession } from "next-auth/react";
 import { headers } from "next/headers";
 
-export const DELETE = async (req: NextRequest, { params }: any, res: any) => {
+export const DELETE = async (req: any, { params }: any, res: any) => {
   const headersList = headers();
   const ownerId = headersList.get("ownerId");
+
 
   if (!ownerId) {
     return NextResponse.json({ message: 'No ownerId Provided' });

@@ -3,17 +3,20 @@ import './globals.css';
 import { Nav, Provider } from '@/components';
 
 import type { Metadata } from 'next';
+import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
   title: "What's in the fridge?",
   description: "Fridge management. Know what's in your fridge",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
+
   return (
     <html lang="en">
       <head></head>
@@ -24,6 +27,6 @@ export default function RootLayout({
           {children}
         </Provider>
       </body>
-    </html>
+    </html >
   );
 }

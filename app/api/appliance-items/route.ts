@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { NextApiRequest } from 'next';
 import { executeQuery } from '@/lib/db';
+import { getSession } from 'next-auth/react';
 import { headers } from "next/headers";
 
-export const GET = async (req: any, params: any, res: any) => {
+export const GET = async (req: NextApiRequest, params: any, res: any) => {
+
 
   const headersList = headers();
   const query = headersList.get("query-header");
