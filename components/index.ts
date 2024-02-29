@@ -10,3 +10,4 @@ export { default as Modal } from './Modal/Modal';
 export { default as Provider } from './Provider';
 export { default as LoginWindow } from './LoginWindow';
 export { default as FridgeLoader } from './FridgeLoader/FridgeLoader';
+export { default as ProfileNav } from './Profile/ProfileNav';

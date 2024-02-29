@@ -25,16 +25,17 @@ const Nav = async () => {
                 <span className="text-[15px] hidden sm:inline">Home</span>
               </a>
             </li>
+            {session?.user ? (
 
-            <li className="mx-2">
-              <a
-                href="/"
-                className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
-              >
-                <BiSolidFridge className='group-hover:translate-y-[-5px] transition-all duration-200 ease' />
-                <span className="text-[15px] hidden sm:inline">Fridge</span>
-              </a>
-            </li>
+              <li className="mx-2">
+                <a
+                  href="/profile"
+                  className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
+                >
+                  <BiSolidFridge className='group-hover:translate-y-[-5px] transition-all duration-200 ease' />
+                  <span className="text-[15px] hidden sm:inline">Account</span>
+                </a>
+              </li>) : null}
           </ul>
         </div>
         <div className="w-full flex justify-center items-center">

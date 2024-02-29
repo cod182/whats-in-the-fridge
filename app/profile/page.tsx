@@ -1,18 +1,19 @@
-import React from 'react'
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
+'use client'
 
-const page = async () => {
+import { getSession } from 'next-auth/react';
 
-  const session = await getServerSession()
+const page = () => {
 
-  if (!session?.user) {
-    redirect('/login');
-  }
+  const { data: session } = getSession()
+
+  console.log(session)
 
 
   return (
-    <div>Profile Page</div>
+    <div className='px-2'>
+      <p>Welcome {session?.user?.firstName}</p>
+      <p>This is your profile, where you can manage your appliances.</p>
+    </div>
   )
 }
 
