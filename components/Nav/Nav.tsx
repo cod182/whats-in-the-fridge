@@ -1,10 +1,9 @@
 "use server"
 
-import { IoAdd, IoLogIn, IoLogOut } from 'react-icons/io5';
-
 import { BiSolidFridge } from 'react-icons/bi';
 import { GoHomeFill } from 'react-icons/go';
 import Image from 'next/image';
+import { IoLogIn, } from 'react-icons/io5';
 import MobileNav from '../MobileNav/MobileNav';
 import SignOutButton from './SignOutButton';
 import { getServerSession } from 'next-auth';
