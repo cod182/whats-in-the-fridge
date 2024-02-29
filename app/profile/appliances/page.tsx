@@ -1,3 +1,4 @@
+import { AppliancesList } from '@/components';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
@@ -7,8 +8,12 @@ const page = async () => {
   if (!session?.user) {
     redirect('/login');
   }
+
+
   return (
-    <div className='px-2'>All Appliances</div>
+    <div className='px-2 py-4'>
+      <AppliancesList />
+    </div>
   )
 }
 

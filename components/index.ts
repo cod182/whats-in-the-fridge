@@ -11,3 +11,5 @@ export { default as Provider } from './Provider';
 export { default as LoginWindow } from './LoginWindow';
 export { default as FridgeLoader } from './FridgeLoader/FridgeLoader';
 export { default as ProfileNav } from './Profile/ProfileNav';
+export { default as ProfileHome } from './Profile/ProfileHome';
+export { default as AppliancesList } from './AppliancesList/AppliancesList';
