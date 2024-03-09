@@ -14,3 +14,4 @@ export { default as ProfileNav } from './Profile/ProfileNav';
 export { default as ProfileHome } from './Profile/ProfileHome';
 export { default as AppliancesList } from './AppliancesList/AppliancesList';
 export { default as ApplianceCard } from './ApplianceCard/ApplianceCard';
+export { default as ChestFreezer } from './Appliances/ChestFreezer/ChestFreezer_main';

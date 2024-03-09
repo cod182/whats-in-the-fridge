@@ -1,6 +1,6 @@
 'use client'
 
-import { FridgeFreezer, Modal } from '..';
+import { ChestFreezer, FridgeFreezer, Modal } from '..';
 // components/Fridge.tsx
 import React, { useState } from 'react';
 import { getItemsInThisLocation, toggleBodyScrolling } from '@/utilities/functions';
@@ -113,7 +113,7 @@ const Appliance = ({ type = '', items, updateItems }: Props) => {
 
       default:
         return (
-          <p>Not Found</p>
+          <ChestFreezer modalState={modalState} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} />
         )
     }
   }
