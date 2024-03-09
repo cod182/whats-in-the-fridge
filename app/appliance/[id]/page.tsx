@@ -4,9 +4,16 @@ import { Appliance, FridgeLoader } from '@/components';
 import { getAppliance, getApplianceItems } from '@/utilities/functions';
 import { useEffect, useState } from 'react';
 
+import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 const AppliancePage = () => {
+
+  const { id } = useParams();
+  const applianceId = id;
+
+
+
   const { data: session, status } = useSession();
   let user: any;
 
@@ -22,7 +29,6 @@ const AppliancePage = () => {
   const [applianceItems, setApplianceItems] = useState<applianceItem[]>();
   const [error, setError] = useState<string>();
 
-  const applianceId = 1;
 
 
   useEffect(() => {
@@ -31,26 +37,38 @@ const AppliancePage = () => {
 
         const selectedAppliance = await getAppliance(`SELECT * FROM appliances WHERE ownerid=${user.id} AND id=${applianceId}`);
         if (!selectedAppliance) {
-          setError('There has been an error!')
+          setError('There has been an error getting the appliance.')
         } else {
           setAppliance(selectedAppliance[0]);
           const selectedApplianceItems = await getApplianceItems(`SELECT * FROM applianceItems WHERE ownerid=${user.id} AND applianceid=${applianceId}`)
 
-          if (selectedApplianceItems != false) {
-            console.log(selectedApplianceItems)
-            setApplianceItems(selectedApplianceItems); setLoading(false);
+          if (selectedApplianceItems) {
+            console.log(selectedApplianceItems);
+            setApplianceItems(selectedApplianceItems);
+            setLoading(false);
+          } else {
+            setError('There has been an error retrieving the appliance items');
+            return;
           }
-          setError('There has been an error!');
-          return;
+
 
         }
       }
     };
     fetchData();
-  }, [user?.id, status]);
+  }, [user?.id, status, applianceId]);
 
 
-
+  // Error Handling
+  if (error) {
+    return (
+      <div className='w-full h-full flex flex-col justify-center items-center'>
+        <p className='font-bold'>
+          {error}
+        </p>
+      </div>
+    )
+  }
 
   if (loading) {
     return (

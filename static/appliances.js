@@ -15,6 +15,15 @@ export const appliances = [{
     { shelves: [0, 1] },
   ],
 },
+{
+  name: 'Chest Freezer',
+  description: ['Freezer: 4 Section'],
+  fridgeCompartments: 1,
+  freezerCompartments: 1,
+  freezerCompartment: [
+    { drawers: [0, 1, 2, 3] },
+  ],
+},
   // {
   //   name: 'American Fridge Freezer',
   //   description: ['Fridge: 5 Shelves, 2 Drawers', 'Fridge Door: 5 Shelves', 'Freezer: 5 Drawer', 'Freezer Door: 5 Shelves'],

@@ -127,3 +127,25 @@ export const getItemsInThisLocation = (level: number, items: applianceItem[], lo
   // Return the filtered array
   return array;
 }
+
+// Gets the image for th provided appliace name
+import { appliances } from '../static/appliances';
+
+export const getImageForAppliance = (applianceName: string) => {
+  let imageString = '/assets/images/appliances/not_found.webp'; // Settings the default string as a nor found image 
+
+  const normalizedApplianceName = applianceName.replace(/\s/g, "_").toLowerCase(); // normalizes the appliacen name as lower case and any spaces replaced with _
+
+  // using find to location and appliance in appliances that matches 
+  const foundAppliance = appliances.find(appliance => {
+    const normalizedAppliance = appliance.name.replace(/\s/g, "_").toLowerCase(); // variable for normalizes appliance name
+    return normalizedAppliance === normalizedApplianceName; // check for match
+  });
+
+  if (foundAppliance) {
+    const imageName = foundAppliance.name.replace(/\s/g, "_").toLowerCase();
+    imageString = `/assets/images/appliances/${imageName}.webp`;
+  }
+
+  return imageString;
+}

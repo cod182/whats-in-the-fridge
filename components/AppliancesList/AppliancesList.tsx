@@ -1,18 +1,13 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { getApplianceItems, getAppliances } from '@/utilities/functions';
 
+import ApplianceCard from '../ApplianceCard/ApplianceCard';
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
 import FridgeLoader from '../FridgeLoader/FridgeLoader';
-import { getAppliances } from '@/utilities/functions';
 import { useSession } from 'next-auth/react';
 
-type user = {
-  name: string;
-  email: string;
-  image: string;
-  id: number
-}
 const AppliancesList = () => {
 
   const { data: session } = useSession();
@@ -20,11 +15,14 @@ const AppliancesList = () => {
   const user: any = session?.user;
 
   const [appliances, setAppliances] = useState<appliance[]>()
+  const [items, setItems] = useState<applianceItem[][]>()
+
+
 
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
-        const appliances = await getAppliances(`SELECT * FROM appliances WHERE ownerid=${user?.id}`);
+        const appliances: appliance[] = await getAppliances(`SELECT * FROM appliances WHERE ownerid=${user?.id}`);
         setAppliances(appliances)
       }
     };
@@ -33,11 +31,15 @@ const AppliancesList = () => {
 
   }, [user]);
 
+  const handleGettingItems = async (applianceId: number) => {
+    const items = await getApplianceItems(`SELECT * FROM applianceItems WHERE ownerid=${user?.id} AND applianceId=${applianceId}`)
+    return items.length;
+  }
+
 
   if (!session?.user || (appliances === undefined)) {
     return (
       <div className='w-full h-full flex flex-col justify-center'>
-
         <FridgeLoader />
       </div>
     )
@@ -45,10 +47,10 @@ const AppliancesList = () => {
 
   return (
 
-    <div>
-      {appliances?.map((item: appliance, index) => (
+    <div className='grid grid-flow-col grid-cols-1 sm:grid-cols-2 mx-auto gap-2'>
+      {appliances?.map((app, index) => (
         <FadeInHOC key={index} delayNumber={index} direction='up'>
-          <div >{item.name}</div>
+          <ApplianceCard app={app} />
         </FadeInHOC>
       ))}
     </div>
