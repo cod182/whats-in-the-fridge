@@ -13,7 +13,7 @@ const Nav = async () => {
   const session = await getServerSession()
   return (
     <>
-      <nav className="w-full h-auto flex-row justify-center items-center sm:items-end bg-white hidden sm:flex">
+      <nav className="w-full h-auto flex-row justify-center items-center sm:items-end  hidden sm:flex">
         <div className="w-full flex flex-row justify-between sm:justify-around items-center">
           <ul className="hidden sm:flex flex-row justify-start items-center ">
             <li className="mx-2">
