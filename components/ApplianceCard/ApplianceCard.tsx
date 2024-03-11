@@ -4,7 +4,6 @@ import { getImageForAppliance } from '@/utilities/functions'
 
 const ApplianceCard = (app: any) => {
   const image = getImageForAppliance(app.app.type)
-  console.log(image)
   return (
     <a href={`/appliance/${app.app.id}`} className='flex flex-row flex-wrap items-center justify-around w-full h-full p-4 transition-all duration-300 rounded-md aspect-auto bg-gray-200/30 hover:bg-gray-400/50 hover:shadow-xl ease'>
       <div className='mx-2'>

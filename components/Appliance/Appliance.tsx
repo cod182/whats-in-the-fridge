@@ -37,8 +37,6 @@ const Appliance = ({ type = '', items, updateItems }: Props) => {
       appliances.map((applianceChoice: ApplianceProp) => {
         if (applianceChoice.name.toLowerCase().replace(/\s/g, '_') === type) {
           setAppliance(applianceChoice);
-        } else {
-          console.log('Appliance Not Found')
         }
       })
     };

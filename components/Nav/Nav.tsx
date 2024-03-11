@@ -13,9 +13,9 @@ const Nav = async () => {
   const session = await getServerSession()
   return (
     <>
-      <nav className="w-full h-auto flex-row justify-center items-center sm:items-end  hidden sm:flex">
-        <div className="w-full flex flex-row justify-between sm:justify-around items-center">
-          <ul className="hidden sm:flex flex-row justify-start items-center ">
+      <nav className="flex-row items-center justify-center hidden w-full h-auto sm:items-end sm:flex">
+        <div className="flex flex-row items-center justify-between w-full sm:justify-around">
+          <ul className="flex-row items-center justify-start hidden sm:flex ">
             <li className="mx-2">
               <a
                 href="/"
@@ -38,11 +38,11 @@ const Nav = async () => {
               </li>) : null}
           </ul>
         </div>
-        <div className="w-full flex justify-center items-center">
+        <div className="flex items-center justify-center w-full">
           <Image src={logo} alt="Logo" className="w-[400px] h-auto" />
         </div>
-        <div className="w-full hidden sm:flex flex-row justify-around items-center">
-          <ul className="flex flex-row justify-start items-center">
+        <div className="flex-row items-center justify-around hidden w-full sm:flex">
+          <ul className="flex flex-row items-center justify-start">
 
             {!session?.user ? (
 
