@@ -64,3 +64,12 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 # Attribution
 
 - Fridge Model: <a href="https://www.vecteezy.com/free-vector/food">Food Vectors by Vecteezy</a>
+## Icons
+  - <a href="https://www.flaticon.com/free-icons/freezer" title="freezer icons">Freezer icons created by Freepik - Flaticon</a>
+  - <a href="https://www.flaticon.com/free-icons/freezer" title="freezer icons">Freezer icons created by Freepik - Flaticon</a>
+  - <a href="https://www.flaticon.com/free-icons/deep-freezer" title="deep freezer icons">Deep freezer icons created by ranksol graphics - Flaticon</a>
+  - <a href="https://www.flaticon.com/free-icons/freezer" title="freezer icons">Freezer icons created by Freepik - Flaticon</a>
+  - <a href="https://www.flaticon.com/free-icons/fridge" title="fridge icons">Fridge icons created by kmg design - Flaticon</a>
+  - <a href="https://www.flaticon.com/free-icons/freezer" title="freezer icons">Freezer icons created by POD Gladiator - Flaticon</a>
+  - <a href="https://www.flaticon.com/free-icons/freezer" title="freezer icons">Freezer icons created by Freepik - Flaticon</a>
+  - <a href="https://www.flaticon.com/free-icons/freezer" title="freezer icons">Freezer icons created by Freepik - Flaticon</a>

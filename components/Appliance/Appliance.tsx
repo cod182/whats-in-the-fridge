@@ -111,10 +111,24 @@ const Appliance = ({ type = '', items, updateItems }: Props) => {
           </>
         )
 
-      default:
+      case 'chest_freezer':
         return (
-          <ChestFreezer modalState={modalState} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} />
+          <>
+            <Modal modalState={modalState} setModalState={handleModalState}>
+              <div className="mt-4">
+                <ViewItems
+                  selectedArea={selectedArea}
+                  updateItems={handleUpdateItems}
+                  items={items}
+                />
+              </div>
+            </Modal>
+            <ChestFreezer modalState={modalState} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} />
+          </>
         )
+
+      default:
+        return (<div>Unknown</div>)
     }
   }
 }
