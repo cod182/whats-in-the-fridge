@@ -32,9 +32,24 @@ const AppliancesList = () => {
 
   }, [user]);
 
-  const handleGettingItems = async (applianceId: number) => {
-    const items = await getApplianceItems(`SELECT * FROM applianceItems WHERE ownerid=${user?.id} AND applianceId=${applianceId}`)
-    return items.length;
+
+  // Called for deleting an appliance from the databaase then updaing the current state of items instead ot calling the db again
+  const handleDeleteAppliance = async (applianceId: number) => {
+    try {
+      // await removeItemFromDb(`DELETE FROM appliances WHERE id=${applianceId} AND ownerid=${user.id}`)
+      await fetch(`/api/appliance/${applianceId}`, {
+        method: 'DELETE',
+        headers: {
+          'ownerid': user.id.toString()
+        }
+      });
+      const filteredItems = appliances!.filter(
+        (i) => i.id != applianceId
+      )
+      setAppliances(filteredItems);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 
@@ -51,7 +66,7 @@ const AppliancesList = () => {
     <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4'>
       {appliances?.map((app, index) => (
         <FadeInHOC key={index} delayNumber={index === 0 ? 200 : (index + 1) * 200} direction='up'>
-          <ApplianceCard app={app} />
+          <ApplianceCard app={app} handleDelete={handleDeleteAppliance} />
         </FadeInHOC>
       ))
       }
