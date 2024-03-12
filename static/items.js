@@ -1,3 +1,5 @@
+export const itemTypes = ['vegetables', 'meats', 'drinks', 'snacks']
+
 export const vegetables = [{
   "name": "Carrot",
   "type": "Root Vegetable",

@@ -5,6 +5,7 @@ import { ChestFreezer, FridgeFreezer, Modal } from '..';
 import React, { useState } from 'react';
 import { getItemsInThisLocation, toggleBodyScrolling } from '@/utilities/functions';
 
+import AddItem from '../Appliances/AddItem';
 import ViewItems from '../Appliances/ViewItems';
 import { appliances } from '@/static/appliances';
 import { useEffect } from 'react';
@@ -30,6 +31,9 @@ const Appliance = ({ type = '', items, updateItems }: Props) => {
     level: 0,
     compartment: ''
   });
+  // State for the type of modal
+  const [modalType, setModalType] = useState<'add' | 'view'>();
+
 
   // Use Effects
   useEffect(() => {
@@ -62,11 +66,13 @@ const Appliance = ({ type = '', items, updateItems }: Props) => {
     setSelectedArea(obj);
     console.log(obj)
   };
+
   // Handles the Modal and scrolling on body
-  const handleModalState = (state: string) => {
+  const handleModalState = (state: string, toDisplay?: 'add' | 'view') => {
     if (state === 'open') {
       toggleBodyScrolling(false);
       setModalState(true);
+      setModalType(toDisplay);
     } else if (state === 'closed') {
       toggleBodyScrolling(true);
       setModalState(false);
@@ -89,45 +95,47 @@ const Appliance = ({ type = '', items, updateItems }: Props) => {
     setSelectedArea({ ...selectedArea, items: filteredItems })
   }
 
+
+  const getAppliance = () => {
+    if (appliance != null) {
+
+      switch (type) {
+        case 'fridge_freezer':
+          return <FridgeFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} />;
+
+        case 'chest_freezer':
+          return <ChestFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} />;
+
+        default:
+          return (<div>Unknown</div>)
+      }
+    }
+  }
+
   // Checks appliance exists
   if (appliance != null) {
-    // Switch for choosing correct appliance component
-    switch (type) {
-      case 'fridge_freezer':
-        return (
-          <>
-            <Modal modalState={modalState} setModalState={handleModalState}>
-              <div className="mt-4">
-                <ViewItems
-                  selectedArea={selectedArea}
-                  updateItems={handleUpdateItems}
-                  items={items}
-                />
-              </div>
-            </Modal>
-            <FridgeFreezer modalState={modalState} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} />
-          </>
-        )
+    return (
+      <>
+        <Modal modalState={modalState} setModalState={handleModalState}>
+          <div className="mt-4">
+            {modalType === 'view' &&
+              <ViewItems
+                selectedArea={selectedArea}
+                updateItems={handleUpdateItems}
+                items={items}
+              />
+            }
 
-      case 'chest_freezer':
-        return (
-          <>
-            <Modal modalState={modalState} setModalState={handleModalState}>
-              <div className="mt-4">
-                <ViewItems
-                  selectedArea={selectedArea}
-                  updateItems={handleUpdateItems}
-                  items={items}
-                />
-              </div>
-            </Modal>
-            <ChestFreezer modalState={modalState} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} />
-          </>
-        )
+            {modalType === 'add' &&
+              <AddItem selectedArea={selectedArea} />
+            }
+          </div>
+        </Modal>
+        {getAppliance()}
 
-      default:
-        return (<div>Unknown</div>)
-    }
+      </>
+    )
+
   }
 }
 export default Appliance

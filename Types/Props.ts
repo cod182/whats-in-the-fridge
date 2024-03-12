@@ -1,3 +1,4 @@
+
 type ApplianceProp = {
   name: string;
   description: string[];
@@ -34,8 +35,7 @@ type PositionProps = {
   type: string;
   level: number;
   position?: number;
-  handleModalState: (state: string) => void;
-  modalState: boolean;
+  handleModalState: (state: string, toDisplay?: 'add' | 'view') => void
   items: applianceItem[]
 }
 

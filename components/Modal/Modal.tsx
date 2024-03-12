@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 declare type Props = {
   children: any;
-  setModalState: (state: string) => void;
+  setModalState: (state: string, toDisplay?: 'add' | 'view') => void;
   modalState: boolean;
   dataTest?: string;
 };
