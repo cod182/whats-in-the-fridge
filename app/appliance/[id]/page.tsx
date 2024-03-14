@@ -70,7 +70,7 @@ const AppliancePage = () => {
     return (
       <div className="container p-0 mx-auto sm:p-8">
         <h1 className="mb-4 text-3xl font-bold">{appliance.name}</h1>
-        <Appliance type={appliance.type} items={applianceItems} updateItems={setApplianceItems} />
+        <Appliance type={appliance.type} items={applianceItems} updateItems={setApplianceItems} userId={user.id} />
       </div>
     )
   }

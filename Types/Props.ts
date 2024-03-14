@@ -76,10 +76,14 @@ type selectionProps = {
   compartment: string;
 }
 
-type availableItem = {
+interface availableItem {
   name: string;
   itemMainType: string;
   itemType: string;
   itemSubType: string;
   image: string;
+}
+
+interface userCreatedItem extends availableItem {
+  creatorId: number;
 }

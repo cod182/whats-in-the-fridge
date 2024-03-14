@@ -6,14 +6,16 @@ import CustomAddItem from "./CustomAddItem";
 import FadeInHOC from "../FadeInHOC/FadeInHOC";
 import Image from "next/image";
 import OptionAddItem from "./OptionAddItem";
+import UserCreatedItems from "./UserCreatedItems";
 
 type Props = {
   selectedArea: selectionProps;
   availableItems: availableItem[]
+  userCreatedItems: userCreatedItem[]
 }
 
 // Add Item Component
-const AddItem = ({ selectedArea, availableItems }: Props) => {
+const AddItem = ({ selectedArea, availableItems, userCreatedItems }: Props) => {
   const { compartment, position, level } = selectedArea;
 
   useEffect(() => {
@@ -22,6 +24,8 @@ const AddItem = ({ selectedArea, availableItems }: Props) => {
 
 
   const [addType, setAddType] = useState('')
+
+  console.log(userCreatedItems)
 
   return (
     <div className="px-4">
@@ -48,13 +52,25 @@ const AddItem = ({ selectedArea, availableItems }: Props) => {
               Pre-made Item
             </span>
           </button>
+          {userCreatedItems.length > 0 && (
+            <button onClick={() => setAddType('userCreated')}
+              className={`${addType === 'userCreated' ? ' border-green-300 border-2 translate-y-[-10px]' : 'hover:translate-y-1'} flex flex-col items-center justify-center px-2 font-normal bg-gradient-to-bl to-blue-400 from-blue-600 hover:translate-y-[-10px] active:bg-blue-400 aspect-square h-[100px] rounded-full transition-all duration-200 ease`}>
+              <Image src='/assets/images/user-created.svg' alt='pre-made icon' width={25} height={25} className="object-fill" />
+              <span className="">
+                Your Items
+              </span>
+            </button>
+          )}
         </div>
       </div>
       <hr />
 
       {/* Type of item Creation */}
       <div>
-        {addType === 'options' ? <OptionAddItem selectedArea={selectedArea} availableItems={availableItems} /> : <CustomAddItem selectedArea={selectedArea} availableItems={availableItems} />}
+        {addType === 'options' && <OptionAddItem selectedArea={selectedArea} availableItems={availableItems} />}
+        {addType === 'custom' && <CustomAddItem selectedArea={selectedArea} availableItems={availableItems} />}
+        {addType === 'userCreated' && <UserCreatedItems selectedArea={selectedArea} availableItems={userCreatedItems} />}
+
       </div>
 
     </div>

@@ -14,9 +14,10 @@ type Props = {
   type: string;
   items: applianceItem[];
   updateItems: (items: applianceItem[]) => void;
+  userId: string;
 }
 
-const Appliance = ({ type = '', items, updateItems }: Props) => {
+const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
   // States
 
   // The modal State for open or closed
@@ -37,6 +38,7 @@ const Appliance = ({ type = '', items, updateItems }: Props) => {
   // State for the type of modal
   const [modalType, setModalType] = useState<'add' | 'view'>();
   const [availableItems, setAvailableItems] = useState<availableItem[]>([])
+  const [userCreatedItems, setUserCreatedItems] = useState<userCreatedItem[]>([])
 
   // Use Effects
   useEffect(() => {
@@ -49,16 +51,19 @@ const Appliance = ({ type = '', items, updateItems }: Props) => {
     };
 
     // Fetches all the available items to add
-    const fetchData = async () => {
+    const getAvailableItemsToAdd = async () => {
       const itemsArray: availableItem[] = await getAllAddableItems();
       setAvailableItems(itemsArray)
+      const userItemsArray: userCreatedItem[] = await getAllAddableItems(`SELECT * FROM customAvailableItems WHERE creatorId=${userId}`);
+      setUserCreatedItems(userItemsArray)
+
     }
-    // Calls fetchData
-    fetchData();
     // Matches the type to type of appliance
     getApplianceType();
+    // Gets all the items in teh database that can be added to the appliance
+    getAvailableItemsToAdd();
 
-  }, [type, appliance])
+  }, [type, appliance, userId])
 
 
   // Functions
@@ -136,7 +141,7 @@ const Appliance = ({ type = '', items, updateItems }: Props) => {
             }
 
             {modalType === 'add' &&
-              <AddItem selectedArea={selectedArea} availableItems={availableItems} />
+              <AddItem selectedArea={selectedArea} availableItems={availableItems} userCreatedItems={userCreatedItems} />
             }
           </div>
         </Modal>

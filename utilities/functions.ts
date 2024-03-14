@@ -66,7 +66,35 @@ export const removeItemFromDb = async (query: string, values: [] = []) => {
   }
 }
 
-export const getAllAddableItems = async () => {
+export const getAllAddableItems = async (query?: string) => {
+  if (query) {
+    try {
+      const response = await fetch('/api/items', {
+        method: 'GET',
+        headers: {
+          'query-header': query,
+        }
+      });
+      const responseData = await response.json();
+      return responseData;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return false;
+    }
+  } else {
+
+    try {
+      const response = await fetch('/api/items');
+      const responseData = await response.json();
+      return responseData;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return false;
+    }
+  }
+}
+
+export const getAllUserItems = async () => {
   try {
     const response = await fetch('/api/items');
     const responseData = await response.json();
