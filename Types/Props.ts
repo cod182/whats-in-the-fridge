@@ -75,3 +75,11 @@ type selectionProps = {
   position?: number;
   compartment: string;
 }
+
+type availableItem = {
+  name: string;
+  itemMainType: string;
+  itemType: string;
+  itemSubType: string;
+  image: string;
+}

@@ -17,6 +17,7 @@ type Props = {
   formType: string;
 }
 
+
 const ApplianceForm = ({ formType }: Props) => {
 
   const { data: session } = useSession();
@@ -31,7 +32,7 @@ const ApplianceForm = ({ formType }: Props) => {
   const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
-    setFormData({ ...formData, userId: parseInt(session?.user!.id) });
+    setFormData({ ...formData, userId: parseInt(session?.user?.id) });
   }, [session])
 
 

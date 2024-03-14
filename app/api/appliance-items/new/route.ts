@@ -17,7 +17,7 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
   if (userId && applianceId && itemName && itemQuantity && addedDate && expiryDate && itemType && itemSubType && locationType && compartment && level && position && comment) {
     console.log('Creating Item')
     try {
-      const queryResponse = await executeQuery(`INSERT INTO applianceItems (ownerid, applianceid, name, quantity, addedDate, expiryDate, itemType, itemSubType, locationType, compartment, level, position, comment) VALUES('${userId}', '${applianceId}', '${itemName}', '${itemQuantity}', '${addedDate}', '${expiryDate}', '${itemType}', '${itemSubType}', '${locationType}', '${compartment}', '${level}', '${position}', '${comment})`)
+      const queryResponse = await executeQuery(`INSERT INTO applianceItems (ownerid, applianceid, name, quantity, addedDate, expiryDate, itemType, itemSubType, locationType, compartment, level, position, comment) VALUES('${userId}', '${applianceId}', '${itemName}', '${itemQuantity}', '${addedDate}', '${expiryDate}', '${itemType}', '${itemSubType}', '${locationType}', '${compartment}', '${level}', '${position}', '${comment}')`)
       // return Response.redirect(`${process.env.NEXT_URL}/profile/appliances`);
       return new Response('', { status: 200, statusText: 'Success' })
 

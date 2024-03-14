@@ -66,6 +66,17 @@ export const removeItemFromDb = async (query: string, values: [] = []) => {
   }
 }
 
+export const getAllAddableItems = async () => {
+  try {
+    const response = await fetch('/api/items');
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return false;
+  }
+}
+
 // Takes items and filters them to an array of objects
 export const findItemLocation = (items: applianceItem[]) => {
   let doorItems: applianceItem[] = []; // Initialized array

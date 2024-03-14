@@ -3,9 +3,9 @@
 import { ChestFreezer, FridgeFreezer, Modal } from '..';
 // components/Fridge.tsx
 import React, { useState } from 'react';
-import { getItemsInThisLocation, toggleBodyScrolling } from '@/utilities/functions';
+import { getAllAddableItems, getItemsInThisLocation, toggleBodyScrolling } from '@/utilities/functions';
 
-import AddItem from '../Appliances/AddItem';
+import AddItem from '../AddingItems/AddItem';
 import ViewItems from '../Appliances/ViewItems';
 import { appliances } from '@/static/appliances';
 import { useEffect } from 'react';
@@ -21,8 +21,10 @@ const Appliance = ({ type = '', items, updateItems }: Props) => {
 
   // The modal State for open or closed
   const [modalState, setModalState] = useState(false)
+
   // The appliance state. Contains the current appliance
   const [appliance, setAppliance] = useState<ApplianceProp>();
+
   // The state for the currently selected area (e.g shelf 0 position 0)
   // Contains the level (shelf / drawer number), compartment (e.g fridge, freezer, door), and optional position (0,1,2)
   // Contains all items in the level, compartment and position(optional)
@@ -31,9 +33,10 @@ const Appliance = ({ type = '', items, updateItems }: Props) => {
     level: 0,
     compartment: ''
   });
+
   // State for the type of modal
   const [modalType, setModalType] = useState<'add' | 'view'>();
-
+  const [availableItems, setAvailableItems] = useState<availableItem[]>([])
 
   // Use Effects
   useEffect(() => {
@@ -44,13 +47,21 @@ const Appliance = ({ type = '', items, updateItems }: Props) => {
         }
       })
     };
+
+    // Fetches all the available items to add
+    const fetchData = async () => {
+      const itemsArray: availableItem[] = await getAllAddableItems();
+      setAvailableItems(itemsArray)
+    }
+    // Calls fetchData
+    fetchData();
     // Matches the type to type of appliance
     getApplianceType();
 
   }, [type, appliance])
 
-  // Functions
 
+  // Functions
   // Called when a element is selected (e.g clicked on shelf 0 position 0. Gets all the items in the area
   const handleSelect = (items: applianceItem[], level: number, compartment: string, position?: number) => {
     const obj: selectionProps = {
@@ -62,9 +73,7 @@ const Appliance = ({ type = '', items, updateItems }: Props) => {
     obj.level = level;
     obj.compartment = compartment;
     position && (obj.position = position);
-
     setSelectedArea(obj);
-    console.log(obj)
   };
 
   // Handles the Modal and scrolling on body
@@ -127,7 +136,7 @@ const Appliance = ({ type = '', items, updateItems }: Props) => {
             }
 
             {modalType === 'add' &&
-              <AddItem selectedArea={selectedArea} />
+              <AddItem selectedArea={selectedArea} availableItems={availableItems} />
             }
           </div>
         </Modal>
