@@ -3,8 +3,10 @@ import React from 'react'
 type Props = {
   selectedArea: selectionProps;
   availableItems: availableItem[]
+  userId: string;
+
 }
-const UserCreatedItems = ({ selectedArea, availableItems }: Props) => {
+const UserCreatedItems = ({ selectedArea, availableItems, userId }: Props) => {
   return (
     <div>
       <p className='my-2'>Select an item:</p>

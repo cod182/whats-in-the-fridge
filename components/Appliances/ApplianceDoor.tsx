@@ -8,7 +8,7 @@ import { getItemsInThisLocation } from '@/utilities/functions';
 type Props = {
   appliance: ApplianceProp;
   positions: number[];
-  handleSelect: (items: applianceItem[], level: number, compartment: string, position?: number) => void;
+  handleSelect: (items: applianceItem[], level: number, compartment: string, type: string, position?: number) => void;
   handleModalState: (state: string, toDisplay?: 'add' | 'view') => void
   items: applianceItem[]
 }

@@ -103,11 +103,18 @@ const ItemCard = ({ item, updateItems, items }: Props) => {
         </p>
       </div>
       <div className='w-full h-fit mb-2 '>
-        <p className='text-sm text-normal text-normal'>Item Type: <span className='italic'>{item.itemType}</span></p>
-
-        <p className='text-sm text-normal'>Item sub Type: <span className='italic'>{item.itemSubType}</span></p>
-
-        <p className='text-sm text-normal'>Expiry: <span className='italic'>{item.expiryDate}</span></p>
+        {item.itemType &&
+          <p className='text-sm text-normal text-normal'>Item Type: <span className='italic'>{item.itemType}</span></p>
+        }
+        {item.itemMainType &&
+          <p className='text-sm text-normal text-normal'>Item Type 2: <span className='italic'>{item.itemMainType}</span></p>
+        }
+        {item.itemSubType &&
+          <p className='text-sm text-normal'>Item sub Type: <span className='italic'>{item.itemSubType}</span></p>
+        }
+        {item.expiryDate &&
+          <p className='text-sm text-normal'>Expiry: <span className='italic'>{item.expiryDate}</span></p>
+        }
         <p className='text-sm text-normal'>Date Added: <span className='italic'>{item.addedDate}</span></p>
 
 

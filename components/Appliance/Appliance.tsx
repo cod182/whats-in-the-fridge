@@ -32,7 +32,8 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
   const [selectedArea, setSelectedArea] = useState<selectionProps>({
     items: [],
     level: 0,
-    compartment: ''
+    compartment: '',
+    type: '',
   });
 
   // State for the type of modal
@@ -68,15 +69,17 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
 
   // Functions
   // Called when a element is selected (e.g clicked on shelf 0 position 0. Gets all the items in the area
-  const handleSelect = (items: applianceItem[], level: number, compartment: string, position?: number) => {
+  const handleSelect = (items: applianceItem[], level: number, compartment: string, type: string, position?: number) => {
     const obj: selectionProps = {
       items: [],
       level: 0,
-      compartment: ''
+      compartment: '',
+      type: '',
     };
     obj.items = items;
     obj.level = level;
     obj.compartment = compartment;
+    obj.type = type;
     position && (obj.position = position);
     setSelectedArea(obj);
   };
@@ -93,7 +96,8 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
       setSelectedArea({
         items: [],
         level: 0,
-        compartment: ''
+        compartment: '',
+        type: '',
       });
     }
   };
@@ -141,7 +145,7 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
             }
 
             {modalType === 'add' &&
-              <AddItem selectedArea={selectedArea} availableItems={availableItems} userCreatedItems={userCreatedItems} />
+              <AddItem userId={userId} selectedArea={selectedArea} availableItems={availableItems} userCreatedItems={userCreatedItems} />
             }
           </div>
         </Modal>

@@ -12,12 +12,13 @@ type Props = {
   selectedArea: selectionProps;
   availableItems: availableItem[]
   userCreatedItems: userCreatedItem[]
+  userId: string;
 }
 
 // Add Item Component
-const AddItem = ({ selectedArea, availableItems, userCreatedItems }: Props) => {
+const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId }: Props) => {
 
-  const { compartment, position, level } = selectedArea; // spreading the selected area
+  const { compartment, position, level, type } = selectedArea; // spreading the selected area
 
   // Use States
   const [addType, setAddType] = useState('') // This is the button type selected
@@ -75,9 +76,9 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems }: Props) => {
 
       {/* Type of item Creation */}
       <div>
-        {addType === 'options' && <OptionAddItem selectedArea={selectedArea} availableItems={availableItems} />}
-        {addType === 'custom' && <CustomAddItem selectedArea={selectedArea} availableItems={availableItems} />}
-        {addType === 'userCreated' && <UserCreatedItems selectedArea={selectedArea} availableItems={userCreatedItems} />}
+        {addType === 'options' && <OptionAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} />}
+        {addType === 'custom' && <CustomAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} />}
+        {addType === 'userCreated' && <UserCreatedItems selectedArea={selectedArea} availableItems={userCreatedItems} userId={userId} />}
 
       </div>
 
