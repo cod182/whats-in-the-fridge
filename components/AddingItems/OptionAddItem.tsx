@@ -268,10 +268,17 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
                       <input id='expiryDate' type="date" name='expiryDate' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
 
                       {/* Quantity Selector */}
-                      <div>
+                      <div className='w-full'>
                         <label htmlFor='quantity' className='mt-2'>Set the quantity <span className='italic text-gray-100 font-normal text-sm'>(Optional)</span></label>
-                        <div className="flex flex-row justify-center items-center">
-                          <button type='button' disabled={quantity === 1} onClick={() => void quantityChange('decrement')} className={`${quantity === 1 ? 'bg-gray-300' : 'bg-red-300 hover:bg-red-400 active:bg-red-300'} px-4 py-2 mr-2  rounded-md`}>-</button>
+                        <div className="flex flex-row justify-start items-center">
+                          <button
+                            type='button'
+                            disabled={quantity === 1}
+                            onClick={() => void quantityChange('decrement')}
+                            className={`${quantity === 1 ? 'bg-gray-300' : 'bg-red-300 hover:bg-red-400 active:bg-red-300'} hidden xxs:inline rounded-md transition-all duration-200 ease w-[40px] h-[40px] aspect-square`}
+                          >
+                            -
+                          </button>
                           <input
                             id='quantity'
                             min={1}
@@ -280,11 +287,37 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
                             value={quantity}
                             onChange={(e) => setQuantity(parseInt(e.target.value))}
                             placeholder='1'
-                            className='w-fit px-4 py-2 font-semibold capitalize rounded-md shadow-inner h-fit'
+                            className='w-full max-w-[200px] px-4 py-2 font-semibold capitalize rounded-md shadow-inner h-fit'
                           />
-                          <button type='button' onClick={() => void quantityChange('increment')} className="px-4 py-2 ml-2 rounded-md bg-blue-500 hover:bg-blue-600 active:bg-blue-500">+</button>
+                          <button
+                            type='button'
+                            onClick={() => void quantityChange('increment')}
+                            className="hidden xxs:inline rounded-md bg-blue-500 hover:bg-blue-600 active:bg-blue-500 transition-all duration-200 ease w-[40px] h-[40px] aspect-square"
+                          >
+                            +
+                          </button>
+                        </div>
+                        {/* < 300 button */}
+                        <div className='block xxs:hidden'>
+                          <button
+                            type='button'
+                            disabled={quantity === 1}
+                            onClick={() => void quantityChange('decrement')}
+                            className={`${quantity === 1 ? 'bg-gray-300' : ' bg-red-300 hover:bg-red-400 active:bg-red-300'} rounded-md transition-all duration-200 ease w-[50%] h-[40px] aspect-square`}
+                          >
+                            -
+                          </button>
+                          <button
+                            type='button'
+                            onClick={() => void quantityChange('increment')}
+                            className=" rounded-md bg-blue-500 hover:bg-blue-600 active:bg-blue-500 transition-all duration-200 ease w-[50%] h-[40px] aspect-square"
+                          >
+                            +
+                          </button>
+
                         </div>
                       </div>
+
                       {/* Comment Section */}
                       <label htmlFor="comment">Enter a comment. <span className='italic text-gray-100 font-normal text-sm'>(Optional)</span></label>
                       <textarea name="comment" id="comment" className='w-full rounded-md p-4'></textarea>
