@@ -19,12 +19,13 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
   const { compartment, position, level, type: locationType } = selectedArea;
   // States
   const [id, setId] = useState<string>();
-  const [itemType, setItemType] = useState<string>('')
-  const [selectItemType, setSelectItemType] = useState<string>()
-  const [selectedItem, setSelectedItem] = useState<availableItem | userCreatedItem | null>()
+  const [itemType, setItemType] = useState<string>('');
+  const [selectItemType, setSelectItemType] = useState<string>();
+  const [selectedItem, setSelectedItem] = useState<availableItem | userCreatedItem | null>();
   const [quantity, setQuantity] = useState<number>(1);
-  const [error, setError] = useState<string>()
-  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string>();
+  const [submitting, setSubmitting] = useState(false);
+  const [message, setMessage] = useState<string>();
 
   // Use Effects
   useEffect(() => {
@@ -120,7 +121,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
     }
 
     if (isValid && selectedItem && id) {
-      console.log('Form is valid. Submitting data:', formValues);
+
       // Proceed to send this data to the api
       const newItemId = generateUniqueId();
       let newItemObject = {
@@ -151,16 +152,18 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
           body: JSON.stringify(newItemObject),
         });
         if (response.ok) {
-          console.log('ok', response);
+
           setSubmitting(false)
           setItemType('');
           setSelectItemType('');
           setSelectedItem(null);
-
           handleAddingToCurrentItems(newItemObject);
+          setMessage('Item Added')
+
         } else {
           setError(response.statusText);
           setSubmitting(false)
+          setMessage('')
         }
       } catch (error) {
         console.error('Error while sending data', error);
@@ -179,12 +182,18 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
           <p className='italic font-normal'>Error: {error}</p>
         </div>
       }
+
+      {message &&
+        <div className='flex flex-col justify-center items-center w-[90%] mx-auto h-fit bg-green-500/80 py-2 px-4 rounded-b-md'>
+          <p className='italic font-normal'>{message}</p>
+        </div>
+      }
       <FadeInHOC delayNumber={800} direction='down'>
         <div className={`flex flex-col py-2 xs:p-4 transition-all duration-200 ease relative`}>
           <div className='flex flex-col items-center justify-center relative'>
             {submitting &&
               <div className={`absolute top left w-full h-full bg-gray-400/50 z-[999] flex flex-col justify-center items-center`}>
-                <p>Adding to your Fridge...</p>
+                <p className='font-bold text-xl animate-ping'>Adding...</p>
               </div>
             }
             <div className='w-full h-full border-[1px] border-black xxxs:p-4 rounded-md transition-all duration-200 ease overflow-hidden relative'>
