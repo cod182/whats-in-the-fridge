@@ -107,7 +107,7 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
           More Info
         </p>
       </div>
-      <div className='w-full h-fit mb-2 '>
+      <div className='w-full h-fit my-4 '>
         {item.itemType &&
           <p className='text-sm text-normal text-normal'>Item Type: <span className='italic'>{item.itemType}</span></p>
         }

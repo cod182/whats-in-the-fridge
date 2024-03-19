@@ -196,20 +196,20 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
         </div>
       }
       <FadeInHOC delayNumber={200} direction='down'>
-        <div className={`flex flex-col p-4 transition-all duration-200 ease relative`}>
+        <div className={`flex flex-col py-2 xs:p-4 transition-all duration-200 ease relative`}>
           <div className='flex flex-col items-center justify-center relative'>
             {submitting &&
               <div className={`absolute top left w-full h-full bg-gray-400/50 z-[999] flex flex-col justify-center items-center`}>
                 <p>Adding to your Fridge...</p>
               </div>
             }
-            <div className='w-full h-full border-[1px] border-black p-4 rounded-md transition-all duration-200 ease overflow-hidden relative'>
+            <div className='w-full h-full border-[1px] border-black xxxs:p-4 rounded-md transition-all duration-200 ease overflow-hidden relative'>
               <FadeInHOC delayNumber={1000} direction='up'>
                 <div className="w-full h-fit">
                   <p>Choose your type of item:</p>
-                  <div className='flex flex-wrap justify-center items-center gap-2'>
+                  <div className='grid grid-cols-1 xxxs:grid-cols-2 xxs:grid-cols-3 xs:grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2'>
                     {getItemMainTypes(availableItems).map((item, index) => (
-                      <label key={index} className='flex items-center mr-4 active:scale-110 transition-all duration-200 ease'>
+                      <label key={index} className='flex items-center w-full mx-auto active:scale-110 transition-all duration-200 ease'>
                         <input
                           type="radio"
                           name="itemName"
@@ -218,7 +218,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
                           onChange={(e) => handleSelectChange(e)}
                           className='mr-2 hidden group'
                         />
-                        <div className="flex flex-col justify-normal items-start">
+                        <div className="flex flex-col justify-center items-center mx-auto">
                           <Image
                             src={`/assets/images/itemTypes/${(item as string).toLowerCase().replace(' ', '_')}.svg`}
                             alt={(item as string)}

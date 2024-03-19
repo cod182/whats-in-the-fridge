@@ -40,7 +40,7 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
 
 
   return (
-    <div className="px-4">
+    <div className="xxs:px-2 sm:px-4">
       <FadeInHOC delayNumber={1000} direction='up'>
         <h2 className='mb-2 text-xl font-semibold'>Add an item to your <span className='capitalize'>{compartment}</span></h2>
       </FadeInHOC>
