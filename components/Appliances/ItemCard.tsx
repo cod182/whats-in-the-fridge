@@ -6,9 +6,10 @@ type Props = {
   item: applianceItem;
   updateItems: (items: applianceItem[]) => void;
   items: applianceItem[]
+  userId: string;
 }
 
-const ItemCard = ({ item, updateItems, items }: Props) => {
+const ItemCard = ({ item, updateItems, items, userId }: Props) => {
 
   let containerStatus = false;
 
@@ -32,25 +33,29 @@ const ItemCard = ({ item, updateItems, items }: Props) => {
       }
     }
   }
-  let userId = 1
+
 
 
   const handleDelete = async (e: any) => {
     let result = confirm('Are you sure you want to delete?')
 
     if (result) {
+      console.log('deleting item');
       try {
-        // await removeItemFromDb(`DELETE FROM applianceItems WHERE id=${item.id} AND ownerid=${userId}`)
-        await fetch(`/api/appliance-items/${item.id}`, {
+        let response = await fetch(`/api/appliance-items/${item.id}`, {
           method: 'DELETE',
           headers: {
             'ownerid': userId.toString()
           }
         });
-        const filteredItems = items.filter(
-          (i) => i.id != item.id
-        )
-        updateItems(filteredItems);
+        if (response.ok) {
+
+          const filteredItems = items.filter(
+            (i) => i.id != item.id
+          )
+          updateItems(filteredItems);
+        }
+        console.log(response)
       } catch (error) {
         console.log(error)
       }
@@ -70,7 +75,7 @@ const ItemCard = ({ item, updateItems, items }: Props) => {
         {/* Item info */}
         <div className='flex flex-row justify-start items-center w-full' >
           <div className='mr-2 flex flex-col justify-center items-center w-[75px] h-[75px] aspect-square relative'>
-            <Image alt={`${item.name} `} src={`/assets/images/items/${item.name.toLowerCase().replace(/\s/g, '-')}` + '.webp'} fill className='object-fill' />
+            {/* <Image alt={`${item.name} `} src={`/assets/images/items/${item.name.toLowerCase().replace(/\s/g, '-')}` + '.webp'} fill className='object-fill' /> */}
           </div>
           <div>
             <p className='capitalize text-md'>{item.name}</p>
@@ -116,7 +121,9 @@ const ItemCard = ({ item, updateItems, items }: Props) => {
           <p className='text-sm text-normal'>Expiry: <span className='italic'>{item.expiryDate}</span></p>
         }
         <p className='text-sm text-normal'>Date Added: <span className='italic'>{item.addedDate}</span></p>
-
+        {item.comment &&
+          <p className='mb-2 text-sm text-normal'>Comment: <span className='block text-sm text-normal border-gray-300 border-[1px] rounded-md bg-gray-100 p-2 italic text-gray-600'>{item.comment}</span></p>
+        }
 
       </div>
     </div >

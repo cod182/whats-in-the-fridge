@@ -8,7 +8,7 @@ import { getItemsInThisLocation } from '@/utilities/functions';
 type Props = {
   appliance: ApplianceProp;
   positions: number[];
-  handleSelect: (items: applianceItem[], level: number, compartment: string, type: string, position?: number) => void;
+  handleSelect: (items: applianceItem[], level: number, compartment: string, type: string, position: number) => void;
   handleModalState: (state: string, toDisplay?: 'add' | 'view') => void
   items: applianceItem[]
 }
@@ -30,7 +30,7 @@ const Door = ({ appliance, positions, handleSelect, handleModalState, items }: P
                   <div className='grid grid-cols-3 grid-rows-1 mx-auto my-2 gap-x-1'>
                     {/* Positions */}
                     {positions.map((position) => (
-                      <PositionButton key={position} handleSelection={handleSelect} compartment='door' type='shelf' level={shelfNum} position={position} handleModalState={handleModalState} items={getItemsInThisLocation(shelfNum, items, 'shelf', position)} />
+                      <PositionButton key={position} handleSelection={handleSelect} compartment='door' type='shelf' level={shelfNum} position={position} handleModalState={handleModalState} items={getItemsInThisLocation(shelfNum, items, 'shelf', 'door', position)} />
                     ))}
                   </div>
                   <hr className='w-full h-[4px] bg-gray-300 shadow-xl' />

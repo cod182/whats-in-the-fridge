@@ -6,6 +6,7 @@ import { executeQuery } from '@/lib/db';
 export const POST = async (request: NextRequest, params: any, response: NextResponse) => {
   try {
     const {
+      id,
       userId,
       applianceId,
       itemName,
@@ -22,8 +23,12 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
       comment
     } = await request.json();
 
-
+    console.log('new item id', id);
     // Input validation
+    if (!id) {
+      console.log('id required for item');
+      return new Response('item id is required', { status: 400, statusText: 'Bad Request' });
+    }
     if (!userId) {
       console.log('userId required');
       return new Response('User ID is required', { status: 400, statusText: 'Bad Request' });
@@ -69,14 +74,13 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
       return new Response('Level is required', { status: 400, statusText: 'Bad Request' });
     }
 
-    console.log(addedDate)
-
     // SQL query with parameterized values
     const query = `
-      INSERT INTO applianceItems (ownerid, applianceid, name, quantity, addedDate, expiryDate, itemMainType, itemType, itemSubType, compartment, level, locationType,  position, comment) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)
+      INSERT INTO applianceItems (id, ownerid, applianceid, name, quantity, addedDate, expiryDate, itemMainType, itemType, itemSubType, compartment, level, locationType,  position, comment) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)
     `;
     const queryResponse = await executeQuery(query, [
+      id,
       userId,
       applianceId,
       itemName,

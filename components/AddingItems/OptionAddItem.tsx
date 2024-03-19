@@ -1,22 +1,22 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { generateUniqueId, getCurrentDate } from '@/utilities/functions';
 
 import AddItemForm from './AddItemForm';
 import FadeInHOC from '../FadeInHOC/FadeInHOC'
 import Image from 'next/image';
-import { getCurrentDate } from '@/utilities/functions';
 
 type Props = {
   selectedArea: selectionProps;
   availableItems: availableItem[]
   userId: string;
+  handleAddingToCurrentItems: (item: applianceItem) => void;
 }
 
-const OptionAddItem = ({ availableItems, selectedArea, userId }: Props) => {
+const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCurrentItems }: Props) => {
 
   const { compartment, position, level, type: locationType } = selectedArea;
-
   // States
   const [id, setId] = useState<string>();
   const [itemType, setItemType] = useState<string>('')
@@ -51,6 +51,25 @@ const OptionAddItem = ({ availableItems, selectedArea, userId }: Props) => {
     })
     return Array.from(itemTypes);
   }
+
+  const getExpiryDate = (inputDate?: string) => {
+    // Takes in a date in '2024-03-30' format and returns '30/03/2024'
+    if (inputDate) {
+      // Split the input string into year, month, and day components
+      const [year, month, day] = inputDate.split('-').map(Number);
+
+      // Create a new Date object using the components
+      const date: Date = new Date(year, month - 1, day);
+
+      // Extract the day, month, and year from the Date object and format them
+      const formattedDate: string = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+      return formattedDate
+    } else {
+      return '';
+    }
+
+  };
 
   const getItemsOfType = (type: string, itemData: availableItem[]) => {
     const itemsOfType = itemData.filter(item => item.itemMainType === type);
@@ -105,6 +124,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId }: Props) => {
     if (isValid && selectedItem && id) {
       console.log('Form is valid. Submitting data:', formValues);
       // Proceed to send this data to the api
+      const newItemId = generateUniqueId();
       try {
         setSubmitting(true)
         const response = await fetch('/api/appliance-items/new', {
@@ -113,6 +133,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId }: Props) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
+            id: newItemId,
             userId: parseInt(userId),
             applianceId: parseInt(id),
             itemName: selectedItem.name,
@@ -120,13 +141,13 @@ const OptionAddItem = ({ availableItems, selectedArea, userId }: Props) => {
             itemMainType: selectedItem.itemMainType ? selectedItem.itemMainType : '',
             itemSubType: selectedItem.itemSubType ? selectedItem.itemSubType : '',
             addedDate: getCurrentDate(),
-            expiryDate: formValues.expiryDate ? formValues.expiryDate : '',
+            expiryDate: getExpiryDate(formValues.expiryDate),
             itemQuantity: parseInt(formValues.quantity),
             comment: formValues.comment ? formValues.comment : '',
             compartment: compartment,
             level: level.toString(),
             locationType: locationType,
-            position: position ? position : '',
+            position: position ? position : 0,
           }),
         });
         if (response.ok) {
@@ -135,6 +156,24 @@ const OptionAddItem = ({ availableItems, selectedArea, userId }: Props) => {
           setItemType('');
           setSelectItemType('');
           setSelectedItem(null);
+
+          handleAddingToCurrentItems({
+            id: newItemId,
+            ownerid: parseInt(userId),
+            applianceid: parseInt(id),
+            name: selectedItem.name,
+            itemType: selectedItem.itemType,
+            itemMainType: selectedItem.itemMainType ? selectedItem.itemMainType : '',
+            itemSubType: selectedItem.itemSubType ? selectedItem.itemSubType : '',
+            addedDate: getCurrentDate(),
+            expiryDate: getExpiryDate(formValues.expiryDate),
+            quantity: parseInt(formValues.quantity),
+            comment: formValues.comment ? formValues.comment : '',
+            compartment: compartment,
+            level: level,
+            locationType: locationType,
+            position: position ? position : 0,
+          })
         } else {
           setError(response.statusText);
           setSubmitting(false)
@@ -229,11 +268,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId }: Props) => {
                     // Form needs to send the level to the api
 
                     <form onSubmit={(e) => handleFormSubmit(e)} className='flex flex-col justify-center items-start gap-2'>
-                      {/* <input id='name' type="hidden" name='name' value={selectedItem.name} className='w-full px-4 py-2 my-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
-                    <input id='itemMainType' type="hidden" name='itemMainType' value={selectedItem.itemMainType} className='w-full px-4 py-2 my-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
-                    <input id='itemType' type="hidden" name='itemType' value={selectedItem.itemType} className='w-full px-4 py-2 my-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
-                    <input id='itemSubType' type="hidden" name='itemSubType' value={selectedItem.itemSubType} className='w-full px-4 py-2 my-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
-                    <input id='addedDate' type="hidden" name='addedDate' value={getCurrentDate()} className='w-full px-4 py-2 my-2 font-semibold capitalize rounded-md shadow-inner h-fit' /> */}
+          
 
                       <label htmlFor='expiryDate' className='mt-2'>Set the Expiry Date <span className='italic text-gray-100 font-normal text-sm'>(Optional)</span></label>
                       <input id='expiryDate' type="date" name='expiryDate' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' />

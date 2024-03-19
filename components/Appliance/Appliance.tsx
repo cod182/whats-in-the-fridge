@@ -31,9 +31,10 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
   // Contains all items in the level, compartment and position(optional)
   const [selectedArea, setSelectedArea] = useState<selectionProps>({
     items: [],
-    level: 0,
+    level: 999,
     compartment: '',
     type: '',
+    position: 128,
   });
 
   // State for the type of modal
@@ -69,12 +70,13 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
 
   // Functions
   // Called when a element is selected (e.g clicked on shelf 0 position 0. Gets all the items in the area
-  const handleSelect = (items: applianceItem[], level: number, compartment: string, type: string, position?: number) => {
+  const handleSelect = (items: applianceItem[], level: number, compartment: string, type: string, position: number) => {
     const obj: selectionProps = {
       items: [],
       level: 0,
       compartment: '',
       type: '',
+      position: 128,
     };
     obj.items = items;
     obj.level = level;
@@ -98,6 +100,7 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
         level: 0,
         compartment: '',
         type: '',
+        position: 128,
       });
     }
   };
@@ -109,7 +112,7 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
   // updates the selectedArea state just providing the new items list
   const handleUpdateItems = (updatedItems: applianceItem[]) => {
     updateItems(updatedItems);
-    const filteredItems = getItemsInThisLocation(selectedArea.level, updatedItems, selectedArea.items[0].locationType, selectedArea?.position);
+    const filteredItems = getItemsInThisLocation(selectedArea.level, updatedItems, selectedArea.type, selectedArea.compartment, selectedArea?.position);
     setSelectedArea({ ...selectedArea, items: filteredItems })
   }
 
@@ -141,11 +144,13 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
                 selectedArea={selectedArea}
                 updateItems={handleUpdateItems}
                 items={items}
+                userId={userId}
               />
             }
 
             {modalType === 'add' &&
-              <AddItem userId={userId} selectedArea={selectedArea} availableItems={availableItems} userCreatedItems={userCreatedItems} />
+              <AddItem userId={userId} selectedArea={selectedArea} availableItems={availableItems} userCreatedItems={userCreatedItems} updateItems={handleUpdateItems} items={items}
+              />
             }
           </div>
         </Modal>

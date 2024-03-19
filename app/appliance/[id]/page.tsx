@@ -33,21 +33,31 @@ const AppliancePage = () => {
           setError('There has been an error getting the appliance.')
         } else {
           setAppliance(selectedAppliance[0]);
-          const selectedApplianceItems = await getApplianceItems(`SELECT * FROM applianceItems WHERE ownerid=${user.id} AND applianceid=${applianceId}`)
-
-          if (selectedApplianceItems) {
-            console.log(selectedApplianceItems);
-            setApplianceItems(selectedApplianceItems);
-            setLoading(false);
-          } else {
-            setError('There has been an error retrieving the appliance items');
-            return;
-          }
         }
       }
     };
     fetchData();
   }, [user?.id, status, applianceId]);
+
+  useEffect(() => {
+    const getAllApplianceItems = async () => {
+      if (appliance) {
+        const selectedApplianceItems = await getApplianceItems(`SELECT * FROM applianceItems WHERE ownerid=${user.id} AND applianceid=${applianceId}`)
+        if (selectedApplianceItems) {
+          setApplianceItems(selectedApplianceItems);
+          setLoading(false);
+        } else {
+          setError('There has been an error retrieving the appliance items');
+          return;
+        }
+      }
+    }
+
+    if (status === 'authenticated') {
+      getAllApplianceItems();
+    }
+  }, [appliance, applianceId, user?.id, status])
+
 
   // Error Handling
   if (error) {

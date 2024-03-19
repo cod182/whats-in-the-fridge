@@ -144,20 +144,20 @@ export const findItemLocation = (items: applianceItem[]) => {
 // items = all the items to be filtered
 // location type = fridge, freezer, door
 // position Y axis
-export const getItemsInThisLocation = (level: number, items: applianceItem[], locationType: string, position: number = 999) => {
+export const getItemsInThisLocation = (level: number, items: applianceItem[], locationType: string, compartment: string, position: number) => {
   let array: applianceItem[] = [] // initialize array
   // Map over all items giving item
   items.map((item) => {
     // Check if optional position is available
-    if (position != 999) {
+    if (position) {
       // Match position, level and location
-      if (item.level === level && (item.position === position) && (item.locationType === locationType)) {
+      if (item.level === level && (item.position === position) && (item.locationType === locationType) && (item.compartment === compartment)) {
         // Add item to array
         array.push(item);
       }
     } else {
       // Match level and location
-      if (item.level === level && item.locationType === locationType) {
+      if ((item.level === level) && (item.locationType === locationType) && (item.compartment === compartment)) {
         // Add item to array
         array.push(item);
       }
@@ -167,7 +167,7 @@ export const getItemsInThisLocation = (level: number, items: applianceItem[], lo
   return array;
 }
 
-// Gets the image for th provided appliace name
+// Gets the image for th provided appliance name
 import { appliances } from '../static/appliances';
 
 export const getImageForAppliance = (applianceName: string) => {
@@ -194,4 +194,11 @@ export const getCurrentDate = () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
   return formattedDate;
+}
+
+export const generateUniqueId = () => {
+  const timestamp = Date.now().toString(36); // Convert current timestamp to base 36 string
+  const randomString = Math.random().toString(36).substr(2, 5); // Generate a random string
+  const uniqueId = timestamp + randomString; // Concatenate timestamp and random string
+  return uniqueId;
 }

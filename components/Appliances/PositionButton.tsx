@@ -11,7 +11,7 @@ const PositionButton = ({ handleSelection, compartment, type, level, position, h
         () => {
           // Add Item
           handleModalState('open', 'add');
-          handleSelection(items, level, compartment, type, position);
+          handleSelection(items, level, compartment, type, position ? position : 128);
         }}
         aria-label={`Add an item to ${compartment} compartment, on ${type} ${level}, position ${position}`}
         className={`${items.length > 0 ? 'w-[50%] hover:border-r-2 rounded-l-md' : 'w-full rounded-md'}  h-0 overflow-hidden text-center group-hover:h-full flex group-hover:relative absolute opacity-0 group-hover:opacity-100 flex-row justify-center items-center hover:bg-gray-600/80 hover:text-gray-200  transition-all duration-300 ease-in`}>
@@ -23,7 +23,7 @@ const PositionButton = ({ handleSelection, compartment, type, level, position, h
           type='button' onClick={
             () => {
               handleModalState('open', 'view');
-              handleSelection(items, items[0].level, compartment, type, position)
+              handleSelection(items, items[0].level, compartment, type, position ? position : 128)
             }} aria-label={`View items in ${compartment} compartment, on ${type} ${level}, position ${position}`} className='w-[50%] h-0 overflow-hidden text-center hover:border-l-2  group-hover:h-full flex group-hover:relative absolute opacity-0 group-hover:opacity-100 flex-row justify-center items-center hover:bg-gray-600/80 hover:text-gray-200 rounded-r-md transition-all duration-300 ease-in text-xl'>
           <GiOpenedFoodCan className='text-2xl max-h-[40px] aspect-square' />
         </button>

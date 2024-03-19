@@ -13,13 +13,14 @@ type Props = {
   availableItems: availableItem[]
   userCreatedItems: userCreatedItem[]
   userId: string;
+  updateItems: (items: applianceItem[]) => void;
+  items: applianceItem[];
 }
 
 // Add Item Component
-const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId }: Props) => {
+const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updateItems, items }: Props) => {
 
   const { compartment, position, level, type } = selectedArea; // spreading the selected area
-
   // Use States
   const [addType, setAddType] = useState('') // This is the button type selected
 
@@ -28,6 +29,14 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId }: Pro
     setAddType('') // Clearing the type on every load (for changing what is selected)
   }, [compartment, position, level])
 
+
+  // Functions
+
+  const handleAddingItem = (item: applianceItem) => {
+    let newItemsList = items;
+    newItemsList.push(item)
+    updateItems(newItemsList);
+  }
 
 
   return (
@@ -76,9 +85,9 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId }: Pro
 
       {/* Type of item Creation */}
       <div>
-        {addType === 'options' && <OptionAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} />}
-        {addType === 'custom' && <CustomAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} />}
-        {addType === 'userCreated' && <UserCreatedItems selectedArea={selectedArea} availableItems={userCreatedItems} userId={userId} />}
+        {addType === 'options' && <OptionAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />}
+        {/* {addType === 'custom' && <CustomAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />} */}
+        {/* {addType === 'userCreated' && <UserCreatedItems selectedArea={selectedArea} availableItems={userCreatedItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />} */}
 
       </div>
 

@@ -18,7 +18,7 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
       <button type='button' onClick={
         () => {
           handleModalState('open', 'add');
-          handleSelection(items, level, compartment, type, position);
+          handleSelection(items, level, compartment, type, position ? position : 128);
 
         }} aria-label={`Add an item to ${compartment} compartment, on ${type} ${level}, position ${position}`}
         className={`${items.length > 0 ? 'w-[50%] hover:border-r-2 rounded-l-md' : 'w-full rounded-md'}  h-full text-center   hidden group-hover:flex flex-row justify-center items-center hover:bg-gray-600/80 hover:text-gray-200  transition-all duration-300 ease-in`}>
@@ -31,7 +31,7 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
           type='button' onClick={
             () => {
               handleModalState('open', 'view');
-              handleSelection(items, items[0].level, compartment, type, position)
+              handleSelection(items, items[0].level, compartment, type, position ? position : 128)
             }} aria-label={`View items in ${compartment} compartment, on ${type} ${level}, position ${position}`} className='w-[50%] h-full text-center hover:border-l-2 hidden group-hover:flex flex-row justify-center items-center hover:bg-gray-600/80 hover:text-gray-200 rounded-r-md transition-all duration-300 ease-in text-xl'>
           <GiOpenedFoodCan className='text-2xl max-h-[40px] aspect-square' />
         </button>
