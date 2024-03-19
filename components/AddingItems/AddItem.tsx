@@ -87,7 +87,7 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
       {/* Type of item Creation */}
       <div>
         {addType === 'options' && <OptionAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />}
-        {/* {addType === 'custom' && <CustomAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />} */}
+        {addType === 'custom' && <CustomAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />}
         {/* {addType === 'userCreated' && <UserCreatedItems selectedArea={selectedArea} availableItems={userCreatedItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />} */}
 
       </div>

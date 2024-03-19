@@ -195,7 +195,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
           <p className='italic font-normal'>Error: {error}</p>
         </div>
       }
-      <FadeInHOC delayNumber={200} direction='down'>
+      <FadeInHOC delayNumber={800} direction='down'>
         <div className={`flex flex-col py-2 xs:p-4 transition-all duration-200 ease relative`}>
           <div className='flex flex-col items-center justify-center relative'>
             {submitting &&
@@ -206,7 +206,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
             <div className='w-full h-full border-[1px] border-black xxxs:p-4 rounded-md transition-all duration-200 ease overflow-hidden relative'>
               <FadeInHOC delayNumber={1000} direction='up'>
                 <div className="w-full h-fit">
-                  <p>Choose your type of item:</p>
+                  <p className='mb-2'>Choose your type of item:</p>
                   <div className='grid grid-cols-1 xxxs:grid-cols-2 xxs:grid-cols-3 xs:grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2'>
                     {getItemMainTypes(availableItems).map((item, index) => (
                       <label key={index} className='flex items-center w-full mx-auto active:scale-110 transition-all duration-200 ease'>
@@ -267,7 +267,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
                       <label htmlFor='expiryDate' className='mt-2'>Set the Expiry Date <span className='italic text-gray-100 font-normal text-sm'>(Optional)</span></label>
                       <input id='expiryDate' type="date" name='expiryDate' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
 
-                      {/* Quantity Selector */}
+                      {/* Item Quantity */}
                       <div className='w-full'>
                         <label htmlFor='quantity' className='mt-2'>Set the quantity <span className='italic text-gray-100 font-normal text-sm'>(Optional)</span></label>
                         <div className="flex flex-row justify-start items-center">
@@ -287,7 +287,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
                             value={quantity}
                             onChange={(e) => setQuantity(parseInt(e.target.value))}
                             placeholder='1'
-                            className='w-full max-w-[200px] px-4 py-2 font-semibold capitalize rounded-md shadow-inner h-fit'
+                            className='w-full xs:max-w-[200px] px-4 py-2 font-semibold capitalize rounded-md shadow-inner h-fit'
                           />
                           <button
                             type='button'
@@ -314,9 +314,9 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
                           >
                             +
                           </button>
-
                         </div>
                       </div>
+                      {/* End Item Quantity */}
 
                       {/* Comment Section */}
                       <label htmlFor="comment">Enter a comment. <span className='italic text-gray-100 font-normal text-sm'>(Optional)</span></label>
