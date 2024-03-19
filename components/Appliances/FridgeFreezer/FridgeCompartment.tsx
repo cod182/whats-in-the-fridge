@@ -1,5 +1,5 @@
-import DrawerButton from './DrawerButton'
-import PositionButton from './PositionButton';
+import DrawerButton from '../DrawerButton'
+import PositionButton from '../PositionButton';
 import React from 'react'
 import { getItemsInThisLocation } from '@/utilities/functions';
 

@@ -1,6 +1,6 @@
-import { ApplianceDoor, PositionButton } from '..'
+import { ApplianceDoor, PositionButton } from '../..'
 
-import DrawerButton from './DrawerButton'
+import DrawerButton from '../DrawerButton'
 import FreezerCompartment from './FreezerCompartment';
 import FridgeCompartment from './FridgeCompartment';
 import React from 'react'

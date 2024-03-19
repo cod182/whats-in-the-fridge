@@ -1,4 +1,4 @@
-import DrawerButton from "./DrawerButton";
+import DrawerButton from "../DrawerButton";
 import { getItemsInThisLocation } from "@/utilities/functions";
 
 type Props = {

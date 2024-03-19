@@ -41,25 +41,27 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## User Story
 
-- Login / Sign Up
-- Choose fridge
-  - Fridge Freezer / Freezer / Chest Freezer / Fridge
-  - Name fridge
-  - Preset images of freezer
+- Login / Sign Up &#10003;
+- Choose fridge &#10003;
+  - Fridge Freezer / Freezer / Chest Freezer / Fridge 
+  - Name fridge &#10003;
+  - Preset images of freezer &#10003;
   - Set background
   - Set Number of shelves / Drawers
   - Name shelves / Drawers
 - Share fridge access
-- Have more than one fridge
-- Add items to individual shelves
-- Remove items from individual shelves
-- View list of items on individual shelf
+- Have more than one fridge &#10003;
+- Add items to individual shelves &#10003;
+- Remove items from individual shelves &#10003;
+- View list of items on individual shelf &#10003;
+- Edit items
 - View list of all items
 - Search for items in fridge
   - Show number of that item
   - Show location of that item
   - Search by type (Fish/Meat/Poultry/Veg)
   - Search by expiry date
+- Notification of expiring items
 
 # Attribution
 

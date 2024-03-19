@@ -47,13 +47,14 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
 
       <div className="px-2 mb-2 ">
         <p className='my-2'>Choose from a pre-made item{userCreatedItems.length > 0 ? ', create your own item or choose an item you have previously created.' : ' or create your own item.'}</p>
-        <div className="flex flex-row justify-center items-center gap-4 my-2">
+        <div className="flex flex-row flex-wrap justify-center items-center gap-4 my-2">
 
 
 
           {/* Button for items that have been pre-made by owner */}
           <button onClick={() => setAddType('options')}
-            className={`${addType === 'options' ? ' border-green-300 border-2 translate-y-[-10px]' : 'hover:translate-y-1'} flex flex-col items-center justify-center px-2 font-normal bg-gradient-to-bl to-blue-400 from-blue-600 hover:translate-y-[-10px] active:bg-blue-400 aspect-square h-[100px] rounded-full transition-all duration-200 ease`}>
+            className={`${addType === 'options' ? ' border-green-300 border-2' : 'hover:translate-y-1'} relative flex flex-col items-center justify-center px-2 font-normal bg-gradient-to-bl to-blue-400 from-blue-600 hover:translate-y-[-10px] active:bg-blue-400 aspect-square h-[100px] rounded-full transition-all duration-200 ease`}
+          >
             <Image src='/assets/images/options.svg' alt='pre-made icon' width={25} height={25} />
             <span className="">
               Pre-made Item
@@ -62,7 +63,7 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
 
           {/* Button for user to create their own item */}
           <button onClick={() => setAddType('custom')}
-            className={`${addType === 'custom' ? ' border-green-300 border-2 translate-y-[-10px]' : 'hover:translate-y-1'} flex flex-col items-center justify-center px-2 font-normal bg-from-blue-400 bg-gradient-to-br to-blue-400 from-blue-600 hover:translate-y-[-10px] active:bg-blue-400 aspect-square h-[100px] rounded-full transition-all duration-200 ease`}>
+            className={`${addType === 'custom' ? ' border-green-300 border-2' : 'hover:translate-y-1'} flex flex-col items-center justify-center px-2 font-normal bg-from-blue-400 bg-gradient-to-br to-blue-400 from-blue-600 hover:translate-y-[-10px] active:bg-blue-400 aspect-square h-[100px] rounded-full transition-all duration-200 ease`}>
             <Image src='/assets/images/custom.svg' alt='pre-made icon' width={30} height={30} />
             <span className="">
               Custom Item
@@ -72,7 +73,7 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
           {/* Button only available if the user has custom items stored in db - Associated by their userId */}
           {userCreatedItems.length > 0 && (
             <button onClick={() => setAddType('userCreated')}
-              className={`${addType === 'userCreated' ? ' border-green-300 border-2 translate-y-[-10px]' : 'hover:translate-y-1'} flex flex-col items-center justify-center px-2 font-normal bg-gradient-to-bl to-blue-400 from-blue-600 hover:translate-y-[-10px] active:bg-blue-400 aspect-square h-[100px] rounded-full transition-all duration-200 ease`}>
+              className={`${addType === 'userCreated' ? ' border-green-300 border-2' : 'hover:translate-y-1'} flex flex-col items-center justify-center px-2 font-normal bg-gradient-to-bl to-blue-400 from-blue-600 hover:translate-y-[-10px] active:bg-blue-400 aspect-square h-[100px] rounded-full transition-all duration-200 ease`}>
               <Image src='/assets/images/user-created.svg' alt='pre-made icon' width={25} height={25} className="object-fill" />
               <span className="">
                 Your Items

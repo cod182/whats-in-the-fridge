@@ -238,16 +238,17 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
 
 
               {/* Select Item */}
-              <div className={`${itemType != '' ? 'flex' : 'hidden'} w-full h-fit`}>
-                {itemType != '' &&
+              <div className={`${itemType !== '' ? 'flex' : 'hidden'} w-full h-fit`}>
+                {itemType !== '' && (
                   <FadeInHOC delayNumber={200} direction='up' classes='w-full'>
                     <select
                       name="itemName"
                       id="itemName"
                       className='w-full px-4 py-2 my-2 font-semibold capitalize rounded-md shadow-inner h-fit'
                       onChange={(e) => handleChangeSelectedItem(JSON.parse(e.target.value))}
+                      defaultValue="" // set default value to an empty string
                     >
-                      <option value="" disabled>Item Types</option>
+                      <option value="" disabled hidden>Item Types</option> {/* make the default option hidden */}
                       {getItemsOfType(itemType, availableItems).map((item: availableItem, index) => (
                         <option key={index} value={JSON.stringify(item)} >
                           {item.name}
@@ -255,28 +256,22 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
                       ))}
                     </select>
                   </FadeInHOC>
-                }
+                )}
               </div>
               <FadeInHOC delayNumber={200} direction='up'>
                 <div className={`h-fit w-full transition-all duration-200 ease`}>
                   {selectedItem != null &&
-                    // TODO
-                    // Form needs to send the applianceId to api
-                    // Form needs to send the userId to the api
-                    // Form needs to send the compartment to the api
-                    // Form needs to send the position to the api
-                    // Form needs to send the level to the api
 
                     <form onSubmit={(e) => handleFormSubmit(e)} className='flex flex-col justify-center items-start gap-2'>
-          
-
+                      {/* Expiry Date Section */}
                       <label htmlFor='expiryDate' className='mt-2'>Set the Expiry Date <span className='italic text-gray-100 font-normal text-sm'>(Optional)</span></label>
                       <input id='expiryDate' type="date" name='expiryDate' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
+
                       {/* Quantity Selector */}
                       <div>
                         <label htmlFor='quantity' className='mt-2'>Set the quantity <span className='italic text-gray-100 font-normal text-sm'>(Optional)</span></label>
                         <div className="flex flex-row justify-center items-center">
-                          <button type='button' disabled={quantity === 0} onClick={() => void quantityChange('decrement')} className={`${quantity === 0 ? 'bg-gray-300' : 'bg-red-300 hover:bg-red-400 active:bg-red-300'} px-4 py-2 mr-2  rounded-md`}>-</button>
+                          <button type='button' disabled={quantity === 1} onClick={() => void quantityChange('decrement')} className={`${quantity === 1 ? 'bg-gray-300' : 'bg-red-300 hover:bg-red-400 active:bg-red-300'} px-4 py-2 mr-2  rounded-md`}>-</button>
                           <input
                             id='quantity'
                             min={1}
@@ -290,6 +285,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
                           <button type='button' onClick={() => void quantityChange('increment')} className="px-4 py-2 ml-2 rounded-md bg-blue-500 hover:bg-blue-600 active:bg-blue-500">+</button>
                         </div>
                       </div>
+                      {/* Comment Section */}
                       <label htmlFor="comment">Enter a comment. <span className='italic text-gray-100 font-normal text-sm'>(Optional)</span></label>
                       <textarea name="comment" id="comment" className='w-full rounded-md p-4'></textarea>
 
