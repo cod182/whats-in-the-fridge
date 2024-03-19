@@ -89,3 +89,8 @@ interface availableItem {
 interface userCreatedItem extends availableItem {
   creatorId: number;
 }
+
+type customIcons = {
+  name: string;
+  icon: string;
+}

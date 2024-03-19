@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+'use client'
 
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
+import Image from 'next/image';
+import { customImages } from '../../static/custom-item-images';
+import { useState } from 'react';
 
 type Props = {
   selectedArea: selectionProps;
@@ -14,6 +17,9 @@ const CustomAddItem = ({ selectedArea, availableItems, userId }: Props) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [error, setError] = useState<string>()
   const [id, setId] = useState<string>();
+  const [selectedIcon, setSelectedIcon] = useState<string>()
+  console.log(selectedIcon);
+
 
   // Functions
   const quantityChange = (type: 'increment' | 'decrement') => {
@@ -44,22 +50,72 @@ const CustomAddItem = ({ selectedArea, availableItems, userId }: Props) => {
         <form action='' method='POST'>
 
           {/* Name Entry */}
-          <div>
-            <label htmlFor="name" className='my-2'>Name your item:</label>
+          <div className='my-2'>
+            <label htmlFor="name" className='mb-1'>Name your item:</label>
             <input type="text" id='name' name='name' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
           </div>
           {/* End Name Entry */}
 
-          {/* Item Type */}
-          {/* End Item Type */}
+
 
           {/* Item Main Type */}
+          <div className='my-2'>
+            <label htmlFor="itemMainType" className='my-2'>Set the main type of the item: <span className='font-normal text-sm italic block text-gray-700 mb-1'>e.g Herb, Red Meat, Savory Snack, Seafood  </span></label>
+            <input type="text" id='itemMainType' name='itemMainType' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
+          </div>
           {/* End Item Main Type */}
 
+          {/* Item Type */}
+          <div className='my-2'>
+            <label htmlFor="itemType" className='my-2'>Set the type of the item: <span className='font-normal text-sm italic block text-gray-700 mb-1'>e.g Vegetable, Meat, Snack, Fish </span></label>
+            <input type="text" id='itemType' name='itemType' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
+          </div>
+          {/* End Item Type */}
+
           {/* Item Sub Type */}
+          <div className='my-2'>
+            <label htmlFor="itemSubType" className='my-2'>Set the sub type of the item: <span className='font-normal text-sm italic block text-gray-700 mb-1'>Optional </span></label>
+            <input type="text" id='itemSubType' name='itemSubType' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
+          </div>
           {/* End Item Sub Type */}
 
+          {/* Icon Selection */}
+          <div className='my-2'>
+            <div className='grid grid-cols-1 xxxs:grid-cols-2 xxs:grid-cols-3 xs:grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2'>
+              {customImages.map((item, index) => (
+                <label key={index} className='flex items-center w-full mx-auto active:scale-110 transition-all duration-200 ease'>
+                  <input
+                    type="radio"
+                    name="itemIcon"
+                    value={item.name}
+                    onChange={(e) => setSelectedIcon(e.target.value)}
+                    className='mr-2 hidden group'
+                    checked={selectedIcon === item.name}
+                  />
+                  <div className="flex flex-col justify-center items-center mx-auto">
+                    <Image
+                      src={`/assets/images/itemTypes/${item.icon}`}
+                      alt={item.name}
+                      className={`mx-auto hover:scale-110 transition-all duration-200 ease ${selectedIcon === item.name ? 'rounded-full scale-110 border-[1px] shadow-xl border-green-200' : ''} `}
+                      width={50}
+                      height={50}
+                    />
+                    <p className={`capitalize `}>
+                      {item.name}
+                    </p>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </div>
+          {/* End Icon Selection */}
+
           {/* Item expiry Date */}
+          <div className='my-2'>
+            <label htmlFor='expiryDate' className='mt-2'>Set the Expiry Date <span className='italic text-gray-100 font-normal text-sm mb-1'>(Optional)</span></label>
+            <input id='expiryDate' type="date" name='expiryDate' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
+          </div>
+
           {/* End Item expiry Date */}
 
 
