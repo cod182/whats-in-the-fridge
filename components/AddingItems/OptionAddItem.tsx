@@ -27,7 +27,6 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
   const [submitting, setSubmitting] = useState(false)
 
   // Use Effects
-
   useEffect(() => {
     const pathname = window.location.pathname;
     const segments = pathname.split('/');
@@ -43,7 +42,6 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
 
 
   // Functions
-
   const getItemMainTypes = (data: availableItem[]) => {
     const itemTypes = new Set();
     data.map((item: availableItem) => {
@@ -125,6 +123,24 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
       console.log('Form is valid. Submitting data:', formValues);
       // Proceed to send this data to the api
       const newItemId = generateUniqueId();
+      let newItemObject = {
+        id: newItemId,
+        ownerid: parseInt(userId),
+        applianceid: parseInt(id),
+        name: selectedItem.name,
+        itemType: selectedItem.itemType,
+        itemMainType: selectedItem.itemMainType ? selectedItem.itemMainType : '',
+        itemSubType: selectedItem.itemSubType ? selectedItem.itemSubType : '',
+        addedDate: getCurrentDate(),
+        expiryDate: getExpiryDate(formValues.expiryDate),
+        quantity: parseInt(formValues.quantity),
+        comment: formValues.comment ? formValues.comment : '',
+        compartment: compartment,
+        level: level,
+        locationType: locationType,
+        position: position ? position : 0,
+      };
+
       try {
         setSubmitting(true)
         const response = await fetch('/api/appliance-items/new', {
@@ -132,23 +148,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            id: newItemId,
-            userId: parseInt(userId),
-            applianceId: parseInt(id),
-            itemName: selectedItem.name,
-            itemType: selectedItem.itemType,
-            itemMainType: selectedItem.itemMainType ? selectedItem.itemMainType : '',
-            itemSubType: selectedItem.itemSubType ? selectedItem.itemSubType : '',
-            addedDate: getCurrentDate(),
-            expiryDate: getExpiryDate(formValues.expiryDate),
-            itemQuantity: parseInt(formValues.quantity),
-            comment: formValues.comment ? formValues.comment : '',
-            compartment: compartment,
-            level: level.toString(),
-            locationType: locationType,
-            position: position ? position : 0,
-          }),
+          body: JSON.stringify(newItemObject),
         });
         if (response.ok) {
           console.log('ok', response);
@@ -157,23 +157,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
           setSelectItemType('');
           setSelectedItem(null);
 
-          handleAddingToCurrentItems({
-            id: newItemId,
-            ownerid: parseInt(userId),
-            applianceid: parseInt(id),
-            name: selectedItem.name,
-            itemType: selectedItem.itemType,
-            itemMainType: selectedItem.itemMainType ? selectedItem.itemMainType : '',
-            itemSubType: selectedItem.itemSubType ? selectedItem.itemSubType : '',
-            addedDate: getCurrentDate(),
-            expiryDate: getExpiryDate(formValues.expiryDate),
-            quantity: parseInt(formValues.quantity),
-            comment: formValues.comment ? formValues.comment : '',
-            compartment: compartment,
-            level: level,
-            locationType: locationType,
-            position: position ? position : 0,
-          })
+          handleAddingToCurrentItems(newItemObject);
         } else {
           setError(response.statusText);
           setSubmitting(false)

@@ -1,9 +1,11 @@
 'use client'
 
+import { useEffect, useState } from 'react';
+
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
 import Image from 'next/image';
 import { customImages } from '../../static/custom-item-images';
-import { useState } from 'react';
+import { generateUniqueId } from '@/utilities/functions';
 
 type Props = {
   selectedArea: selectionProps;
@@ -16,10 +18,20 @@ const CustomAddItem = ({ selectedArea, availableItems, userId }: Props) => {
   // States
   const [quantity, setQuantity] = useState<number>(1);
   const [error, setError] = useState<string>()
+  // Id of the current appliance
   const [id, setId] = useState<string>();
   const [selectedIcon, setSelectedIcon] = useState<string>()
-  console.log(selectedIcon);
+  const [submitting, setSubmitting] = useState(false)
 
+
+  // Use Effects
+
+  useEffect(() => {
+    const pathname = window.location.pathname;
+    const segments = pathname.split('/');
+    const idFromUrl = segments[segments.length - 1];
+    setId(idFromUrl);
+  }, []);
 
   // Functions
   const quantityChange = (type: 'increment' | 'decrement') => {
@@ -32,6 +44,47 @@ const CustomAddItem = ({ selectedArea, availableItems, userId }: Props) => {
       setQuantity((prev => prev - 1));
     }
   };
+
+
+  const handleFormSubmit = (e: any) => {
+    e.preventDefault();
+    setError('');
+
+    const formData = new FormData(e.target as HTMLFormElement);
+    const formValues: Record<string, string> = {};
+
+    formData.forEach((value, key) => {
+      formValues[key] = value.toString();
+    });
+
+    // Validate quantity
+    const quantity = parseInt(formValues['quantity']);
+    let quantityIsValid = true;
+
+    if (isNaN(quantity) || quantity < 1) {
+      console.error('Quantity must be a number greater than or equal to 1.');
+      quantityIsValid = false;
+    }
+
+    if (quantityIsValid && id) {
+      const newItemId = generateUniqueId();
+
+      try {
+        setSubmitting(true)
+
+
+      } catch (error) {
+
+      }
+    } else {
+      setError('Error checking form validation')
+    }
+
+
+
+  };
+
+
   return (
     <FadeInHOC delayNumber={800} direction='up'>
       <div className='w-full h-full border-[1px] border-black xxxs:p-4 rounded-md transition-all duration-200 ease overflow-hidden relative my-4'>
@@ -96,7 +149,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId }: Props) => {
                     <Image
                       src={`/assets/images/itemTypes/${item.icon}`}
                       alt={item.name}
-                      className={`mx-auto hover:scale-110 transition-all duration-200 ease ${selectedIcon === item.name ? 'rounded-full scale-110 border-[1px] shadow-xl border-green-200' : ''} `}
+                      className={`mx-auto hover:scale-110 cursor-pointer transition-all duration-200 ease ${selectedIcon === item.name ? 'rounded-full scale-110 border-[2px] shadow-xl border-green-400' : ''} `}
                       width={50}
                       height={50}
                     />

@@ -7,10 +7,10 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
   try {
     const {
       id,
-      userId,
-      applianceId,
-      itemName,
-      itemQuantity,
+      ownerid,
+      applianceid,
+      name,
+      quantity,
       addedDate,
       expiryDate,
       itemType,
@@ -29,22 +29,22 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
       console.log('id required for item');
       return new Response('item id is required', { status: 400, statusText: 'Bad Request' });
     }
-    if (!userId) {
-      console.log('userId required');
+    if (!ownerid) {
+      console.log('ownerid required');
       return new Response('User ID is required', { status: 400, statusText: 'Bad Request' });
     }
 
-    if (!applianceId) {
-      console.log('applianceId required');
+    if (!applianceid) {
+      console.log('applianceid required');
       return new Response('Appliance ID is required', { status: 400, statusText: 'Bad Request' });
     }
 
-    if (!itemName) {
+    if (!name) {
       console.log('item name required');
       return new Response('Item Name is required', { status: 400, statusText: 'Bad Request' });
     }
 
-    if (!itemQuantity) {
+    if (!quantity) {
       console.log('quantity required');
       return new Response('Item Quantity is required', { status: 400, statusText: 'Bad Request' });
     }
@@ -81,10 +81,10 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
     `;
     const queryResponse = await executeQuery(query, [
       id,
-      userId,
-      applianceId,
-      itemName,
-      itemQuantity,
+      ownerid,
+      applianceid,
+      name,
+      quantity,
       addedDate,
       expiryDate,
       itemMainType,
