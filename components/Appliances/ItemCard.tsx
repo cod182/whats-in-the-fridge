@@ -75,7 +75,7 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
         {/* Item info */}
         <div className='flex flex-row justify-start items-center w-full' >
           <div className='mr-2 flex flex-col justify-center items-center w-[75px] h-[75px] aspect-square relative'>
-            {/* <Image alt={`${item.name} `} src={`/assets/images/items/${item.name.toLowerCase().replace(/\s/g, '-')}` + '.webp'} fill className='object-fill' /> */}
+            <Image alt={`${item.name} `} src={`/assets/images/items/${item.name.toLowerCase().replace(/\s/g, '-')}` + '.webp'} fill className='object-fill' />
           </div>
           <div>
             <p className='capitalize text-md'>{item.name}</p>

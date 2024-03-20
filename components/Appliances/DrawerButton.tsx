@@ -9,13 +9,14 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
       <div
         className="hidden md:flex group h-[80px] w-full text-center cursor-pointer border rounded-md flex-row items-center justify-around transition-all duration-200 ease-in hover:bg-gray-500/50 relative"
       >
-        <div className='flex flex-col justify-center items-center'>
+        <div className='flex flex-col justify-center items-center h-full group-hover:absolute group-hover:h-0 overflow-hidden transition-all duration-200 ease'>
 
-          <p className='flex group-hover:hidden'>Drawer {level}</p>
-          <div className='flex flex-col items-center justify-center w-full h-full overflow-hidden transition-all duration-200 ease-in-out group-hover:absolute group-hover:h-0'>
-            <p>{items.length} Item{items.length != 1 && 's'}</p>
-          </div>
+          <p className='flex'>Drawer {level}</p>
+          <p>{items.length} Item{items.length != 1 && 's'}</p>
+
+
         </div>
+
         <button type='button' onClick={
           () => {
             handleModalState('open', 'add');
@@ -27,6 +28,7 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
             <IoIosAddCircleOutline className='text-2xl max-h-[40px] aspect-square' />
           </span>
         </button>
+
         {items.length > 0 &&
           <button
             type='button' onClick={
@@ -45,13 +47,9 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
       <div
         className="h-[80px] w-full text-center cursor-pointer border rounded-md flex md:hidden flex-col items-center justify-around transition-all duration-200 ease-in  relative"
       >
-
-
         <div className='flex flex-col justify-center items-center h-[25%] border-b-[1px] w-full text-sm'>
           <p className='flex'>Drawer {level}</p>
         </div>
-
-
         <div className='h-[50%] w-full flex flex-row '>
           <button type='button' onClick={
             () => {

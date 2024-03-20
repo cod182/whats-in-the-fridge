@@ -75,3 +75,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
   - <a href="https://www.flaticon.com/free-icons/freezer" title="freezer icons">Freezer icons created by POD Gladiator - Flaticon</a>
   - <a href="https://www.flaticon.com/free-icons/freezer" title="freezer icons">Freezer icons created by Freepik - Flaticon</a>
   - <a href="https://www.flaticon.com/free-icons/freezer" title="freezer icons">Freezer icons created by Freepik - Flaticon</a>
+  - <a href="https://www.freepik.com/free-vector/big-set-flat-whole-sliced-fresh-fruits-vegetables-with-carrot-tomato-lemon-avocado-apple-banana-peach-isolated-vector-illustration_32074509.htm#query=vegetables&position=9&from_view=keyword&track=sph&uuid=6ce88b9d-f2f8-4569-bb2e-053c43bae17c">Image by macrovector</a> on Freepik
