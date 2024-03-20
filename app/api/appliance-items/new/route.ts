@@ -20,7 +20,8 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
       level,
       locationType,
       position,
-      comment
+      comment,
+      image
     } = await request.json();
 
     console.log('new item id', id);
@@ -47,6 +48,10 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
     if (!quantity) {
       console.log('quantity required');
       return new Response('Item Quantity is required', { status: 400, statusText: 'Bad Request' });
+    }
+    if (!image) {
+      console.log('quantity required');
+      return new Response('Image is required', { status: 400, statusText: 'Bad Request' });
     }
 
     if (!addedDate) {
@@ -76,8 +81,8 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
 
     // SQL query with parameterized values
     const query = `
-      INSERT INTO applianceItems (id, ownerid, applianceid, name, quantity, addedDate, expiryDate, itemMainType, itemType, itemSubType, compartment, level, locationType,  position, comment) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)
+      INSERT INTO applianceItems (id, ownerid, applianceid, name, quantity, addedDate, expiryDate, itemMainType, itemType, itemSubType, compartment, level, locationType,  position, comment, image) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)
     `;
     const queryResponse = await executeQuery(query, [
       id,
@@ -94,7 +99,8 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
       parseInt(level),
       locationType,
       position,
-      comment
+      comment,
+      image
     ]);
 
     console.log(queryResponse);

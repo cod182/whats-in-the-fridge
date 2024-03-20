@@ -47,7 +47,7 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
 
       <div className="px-2 mb-2 ">
         <p className='my-2'>Choose from a pre-made item{userCreatedItems.length > 0 ? ', create your own item or choose an item you have previously created.' : ' or create your own item.'}</p>
-        <div className="flex flex-row flex-wrap justify-center items-center gap-4 my-2">
+        <div className="flex flex-row flex-wrap items-center justify-center gap-4 my-2">
 
 
 

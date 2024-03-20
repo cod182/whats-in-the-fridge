@@ -68,6 +68,7 @@ type applianceItem = {
   level: number;
   position: number;
   comment: string;
+  image: string;
 }
 
 type selectionProps = {

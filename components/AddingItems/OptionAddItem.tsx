@@ -62,13 +62,12 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
       const date: Date = new Date(year, month - 1, day);
 
       // Extract the day, month, and year from the Date object and format them
-      const formattedDate: string = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+      const formattedDate: string = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
 
-      return formattedDate
+      return formattedDate;
     } else {
       return '';
     }
-
   };
 
   const getItemsOfType = (type: string, itemData: availableItem[]) => {
@@ -141,6 +140,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
         level: level,
         locationType: locationType,
         position: position ? position : 0,
+        image: selectedItem.image,
       };
 
       try {
@@ -196,11 +196,11 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
 
       <FadeInHOC delayNumber={800} direction='down'>
         <div className={`flex flex-col py-2 xs:p-4 transition-all duration-200 ease relative`}>
-          <div className='flex flex-col items-center justify-center relative'>
+          <div className='relative flex flex-col items-center justify-center'>
             {/* Submitting Overlay */}
             {submitting &&
               <div className={`absolute top left w-full h-full bg-gray-400/50 z-[999] flex flex-col justify-center items-center`}>
-                <p className='font-bold text-xl animate-ping'>Adding...</p>
+                <p className='text-xl font-bold animate-ping'>Adding...</p>
               </div>
             }
             {/* Submitting Overlay End */}
@@ -210,18 +210,18 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
                 <FadeInHOC delayNumber={1000} direction='up'>
                   <div className="w-full h-fit">
                     <p className='mb-2'>Choose your type of item:</p>
-                    <div className='grid grid-cols-1 xxxs:grid-cols-2 xxs:grid-cols-3 xs:grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2'>
+                    <div className='grid grid-cols-1 gap-2 xxxs:grid-cols-2 xxs:grid-cols-3 xs:grid-cols-4 sm:grid-cols-5 md:grid-cols-6'>
                       {getItemMainTypes(availableItems).map((item, index) => (
-                        <label key={index} className='flex items-center w-full mx-auto active:scale-110 transition-all duration-200 ease'>
+                        <label key={index} className='flex items-center w-full mx-auto transition-all duration-200 active:scale-110 ease'>
                           <input
                             type="radio"
                             name="itemName"
                             value={(item as string).toLowerCase().replace(' ', '_')}
                             checked={selectItemType === (item as string).toLowerCase().replace(' ', '_')}
                             onChange={(e) => handleSelectChange(e)}
-                            className='mr-2 hidden group'
+                            className='hidden mr-2 group'
                           />
-                          <div className="flex flex-col justify-center items-center mx-auto cursor-pointer">
+                          <div className="flex flex-col items-center justify-center mx-auto cursor-pointer">
                             <Image
                               src={`/assets/images/itemTypes/${(item as string).toLowerCase().replace(' ', '_')}.svg`}
                               alt={(item as string)}

@@ -193,11 +193,11 @@ const UserCreatedItems = ({ selectedArea, availableItems, userId, handleAddingTo
 
       <FadeInHOC delayNumber={800} direction='down'>
         <div className={`flex flex-col py-2 xs:p-4 transition-all duration-200 ease relative`}>
-          <div className='flex flex-col items-center justify-center relative'>
+          <div className='relative flex flex-col items-center justify-center'>
             {/* Loading Overlay */}
             {submitting &&
               <div className={`absolute top left w-full h-full bg-gray-400/50 z-[999] flex flex-col justify-center items-center`}>
-                <p className='font-bold text-xl animate-ping'>Adding...</p>
+                <p className='text-xl font-bold animate-ping'>Adding...</p>
               </div>
             }
             {/* Loading Overlay End */}

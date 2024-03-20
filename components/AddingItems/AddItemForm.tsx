@@ -8,15 +8,15 @@ type Props = {
 const AddItemForm = ({ handleFormSubmit, quantity, setQuantity, quantityChange }: Props) => {
 
   return (
-    <form onSubmit={(e) => handleFormSubmit(e)} className='flex flex-col justify-center items-start gap-2'>
+    <form onSubmit={(e) => handleFormSubmit(e)} className='flex flex-col items-start justify-center gap-2'>
       {/* Expiry Date Section */}
-      <label htmlFor='expiryDate' className='mt-2'>Set the Expiry Date <span className='italic text-gray-100 font-normal text-sm'>(Optional)</span></label>
+      <label htmlFor='expiryDate' className='mt-2'>Set the Expiry Date <span className='text-sm italic font-normal text-gray-100'>(Optional)</span></label>
       <input id='expiryDate' type="date" name='expiryDate' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
 
       {/* Item Quantity */}
       <div className='w-full'>
-        <label htmlFor='quantity' className='mt-2'>Set the quantity <span className='italic text-gray-100 font-normal text-sm'>(Optional)</span></label>
-        <div className="flex flex-row justify-start items-center">
+        <label htmlFor='quantity' className='mt-2'>Set the quantity <span className='text-sm italic font-normal text-gray-100'>(Optional)</span></label>
+        <div className="flex flex-row items-center justify-start">
           <button
             type='button'
             disabled={quantity === 1}
@@ -65,10 +65,10 @@ const AddItemForm = ({ handleFormSubmit, quantity, setQuantity, quantityChange }
       {/* End Item Quantity */}
 
       {/* Comment Section */}
-      <label htmlFor="comment">Enter a comment. <span className='italic text-gray-100 font-normal text-sm'>(Optional)</span></label>
-      <textarea name="comment" id="comment" className='w-full rounded-md p-4'></textarea>
+      <label htmlFor="comment">Enter a comment. <span className='text-sm italic font-normal text-gray-100'>(Optional)</span></label>
+      <textarea name="comment" id="comment" className='w-full p-4 rounded-md'></textarea>
 
-      <button type="submit" className='px-4 py-2 bg-blue-500 rounded-md w-full hover:bg-blue-400 transition duration-200 ease mx-auto font-semibold active:bg-blue-500 active:shadow-md'>Add Item</button>
+      <button type="submit" className='w-full px-4 py-2 mx-auto font-semibold transition duration-200 bg-blue-500 rounded-md hover:bg-blue-400 ease active:bg-blue-500 active:shadow-md'>Add Item</button>
     </form>
   )
 }
