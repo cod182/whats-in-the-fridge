@@ -1,8 +1,5 @@
-'use client'
-
 import DeleteButton from './DeleteButton'
 import Image from 'next/image'
-import React from 'react'
 import { getImageForAppliance } from '@/utilities/functions'
 
 type Props = {
@@ -11,7 +8,6 @@ type Props = {
 }
 
 const ApplianceCard = ({ app, handleDelete }: Props) => {
-
   // Get the image for the appliance type
   const image = getImageForAppliance(app.type)
 
@@ -29,14 +25,7 @@ const ApplianceCard = ({ app, handleDelete }: Props) => {
         </div>
       </a>
       <div className='w-full h-[25px] absolute bottom-0 rounded-b-md overflow-hidden'>
-        <div className='grid grid-cols-2'>
-          <div>
-            <DeleteButton id={app.id} onDelete={handleDelete} />
-          </div>
-          <button className='w-full h-full px-4 bg-blue-400/50 hover:bg-blue-400/80 z-2'>
-            Edit
-          </button>
-        </div>
+        <DeleteButton id={app.id} onDelete={handleDelete} />
       </div>
     </div>
   )
