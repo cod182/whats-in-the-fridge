@@ -17,3 +17,4 @@ export { default as ApplianceCard } from './ApplianceCard/ApplianceCard';
 export { default as ChestFreezer } from './Appliances/ChestFreezer/ChestFreezer_main';
 export { default as ApplianceForm } from './ApplianceForm/ApplianceForm';
 export { default as PageTitle } from './PageTitle/PageTitle';
+export { default as ItemSearch } from './ItemSearch/ItemSearch';
