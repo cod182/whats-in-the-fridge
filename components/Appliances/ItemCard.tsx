@@ -96,8 +96,18 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
       if (response.ok) {
         setUpdating(false)
         setSuccess(true);
+        // Set states to false after 1 second
+        setTimeout(() => {
+          setSuccess(false);
+          setEditActivated(false);
+          setContainerStatus(false);
+        }, 1000);
       } else {
         setError(response.statusText);
+        // Set success to false after 1 second
+        setTimeout(() => {
+          setError('');
+        }, 1000);
         setUpdating(false)
         setSuccess(false)
       }

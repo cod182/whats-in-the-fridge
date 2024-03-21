@@ -43,8 +43,8 @@ export const PUT = async (request: NextRequest, params: any, response: NextRespo
       return new Response('An Id is missing', { status: 400, statusText: 'An ID is missing' })
     }
 
-    if (!quantity || !expiryDate || !comment) {
-      return new Response('A piece of form data is missing', { status: 400, statusText: 'A piece of form data is missing' })
+    if (!quantity) {
+      return new Response('Quantity is missing', { status: 400, statusText: 'Quantity is missing' })
 
     }
 
