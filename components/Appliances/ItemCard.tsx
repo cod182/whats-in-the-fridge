@@ -7,6 +7,7 @@ import { IoCloseSharp } from 'react-icons/io5'
 import { IoSaveSharp } from "react-icons/io5";
 import { MdCancel } from "react-icons/md";
 import { TiTick } from "react-icons/ti";
+import { createBrotliDecompress } from "zlib";
 import { useState } from 'react';
 
 type Props = {
@@ -94,6 +95,7 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
         body: JSON.stringify(updatedItem),
       });
       if (response.ok) {
+        handlingUpdateLocalItem(updatedItem);
         setUpdating(false)
         setSuccess(true);
         // Set states to false after 1 second
@@ -118,6 +120,42 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
     }
   }
 
+  const handlingUpdateLocalItem = (updatedItemPart: any) => {
+    const index = items.findIndex(item => item.id === updatedItemPart.id);
+
+    const updatedItem = {
+      id: updatedItemPart.id,
+      ownerid: updatedItemPart.ownerid,
+      applianceid: updatedItemPart.id,
+      name: item.name,
+      itemType: item.itemType,
+      itemMainType: item.itemMainType,
+      itemSubType: item.itemSubType,
+      addedDate: item.addedDate,
+      expiryDate: updatedItemPart.expiryDate,
+      quantity: parseInt(updatedItemPart.quantity),
+      comment: updatedItemPart.comment,
+      compartment: item.compartment,
+      level: item.level,
+      locationType: item.locationType,
+      position: item.position,
+      image: item.image,
+    }
+
+    if (index === -1) {
+      // If the item is not found, return the original array
+      console.log('item not found')
+      return items;
+    }
+
+    const updatedItems = [...items];
+    // console.log('Original List', items)
+    // console.log('New List', updatedItems)
+    updatedItems.splice(index, 1, updatedItem); // Replace the item at the found index with the updated item
+    updateItems(updatedItems);
+  };
+
+
 
 
   return (
@@ -125,9 +163,10 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
       id={`${item.name.toLowerCase().replace(/\s/g, '-')}-${item.id}-container`}
       className={`flex flex-col justify-start items-start p-2 w-full max-h-[110px] rounded-md relative border-[1px] border-gray-400 bg-gray-200 overflow-hidden transition-all duration-200 ease-in-out ${containerStatus ? 'max-h-[500px]' : 'max-h-[110px]'}`}
     >
-      <p className={`${editActivated ? 'h-fit border-2 border-blue-300 py-2' : 'h-0'} w-fit overflow-hidden text-blue-400/60 font-bold text-2xl absolute bottom-5 right-0 mr-5 transition-all duration-200 ease px-2`}>Editing</p>
+      {/* form selection depending on the editActivated State */}
 
       {editActivated ? (
+        // Form for editing
         <form action='' method='PUT' onSubmit={(e) => handleUpdatingItem(e)} className='w-full'>
           <div className='flex flex-row items-start justify-around w-full mb-2'>
             {/* Item info */}
@@ -144,23 +183,52 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
 
             {/* Buttons */}
             <div
-              className='flex flex-col flex-wrap justify-between items-center h-[75px] w-fit right-0'>
-              {/* Save Button */}
-              {updating && <BiDotsHorizontalRounded className='h-[20px] w-[20px] text-blue-500  hover:scale-110 transition-all duration-200 ease-in-out animate-spin' />}
-              {success && <TiTick className='h-[20px] w-[20px] text-green-700  hover:scale-110 transition-all duration-200 ease-in-out' />}
+              className='flex flex-col flex-wrap justify-between items-end h-[75px] w-fit right-0'>
+              {updating &&
+                (
+                  <div className="flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
+                    <p className="text-sm font-normal">Updating!</p>
+                    <BiDotsHorizontalRounded className='h-[20px] w-[20px] text-blue-500  hover:scale-110 transition-all duration-200 ease-in-out animate-spin' />
+                  </div>
 
+                )
+              }
+              {success &&
+                (
+                  <div className="flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
+                    <p className="text-sm font-normal">Updated!</p>
+                    <TiTick className='h-[25px] w-[25px] text-green-500  hover:scale-110 transition-all duration-200 ease-in-out' />
+                  </div>
+                )
+              }
+
+              {/* If updating and success is false, show the save and cancel buttons */}
               {!updating && !success &&
                 <>
-                  <button
-                    type='submit'>
-                    <IoSaveSharp className='h-[20px] w-[20px] text-green-500 hover:text-green-600 hover:scale-110 transition-all duration-200 ease-in-out' />
-                  </button>
+                  {/* Save Button */}
+
+                  <div className="relative group">
+                    <div className="overflow-hidden absolute select-none right-[25px] group-hover:flex w-0 group-hover:w-fit flex-row items-center justify-center p-0 group-hover:px-2 py-[2px] bg-transparent group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+                      <p className="text-sm font-normal">Save</p>
+                    </div>
+                    <button
+                      type='submit'>
+                      <IoSaveSharp className='h-[23px] w-[23px] text-green-500 hover:text-green-600 hover:scale-110 transition-all duration-200 ease-in-out' />
+                    </button>
+                  </div>
+
                   {/* Cancel Button */}
-                  <button className='relative'
-                    onClick={() => { setEditActivated(false); setContainerStatus(false) }}
-                  >
-                    <MdCancel className='h-[25px] w-[25px] text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out' />
-                  </button>
+                  <div className="relative group">
+
+                    <div className="overflow-hidden absolute select-none right-[25px] group-hover:flex w-0 group-hover:w-fit flex-row items-center justify-center p-0 group-hover:px-2 py-[2px] bg-transparent group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+                      <p className="text-sm font-normal">Cancel</p>
+                    </div>
+                    <button className='relative'
+                      onClick={() => { setEditActivated(false); setContainerStatus(false) }}
+                    >
+                      <MdCancel className='h-[25px] w-[25px] text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out' />
+                    </button>
+                  </div>
                 </>
               }
             </div>
