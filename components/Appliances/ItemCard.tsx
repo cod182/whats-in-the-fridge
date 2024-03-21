@@ -1,10 +1,12 @@
 'use client'
 
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { FaEdit } from 'react-icons/fa'
 import Image from 'next/image';
 import { IoCloseSharp } from 'react-icons/io5'
 import { IoSaveSharp } from "react-icons/io5";
 import { MdCancel } from "react-icons/md";
+import { TiTick } from "react-icons/ti";
 import { useState } from 'react';
 
 type Props = {
@@ -17,12 +19,16 @@ type Props = {
 const ItemCard = ({ item, updateItems, items, userId }: Props) => {
 
 
-  const [containerStatus, setContainerStatus] = useState(false)
-  const [editActivated, setEditActivated] = useState(false)
+  const [containerStatus, setContainerStatus] = useState(false);
+  const [editActivated, setEditActivated] = useState(false);
+  const [itemQuantity, setItemQuantity] = useState(item.quantity);
+  const [itemComment, setItemComment] = useState(item.comment || '');
+  const [expiryDate, setExpiryDate] = useState(item.expiryDate || '');
+  const [updating, setUpdating] = useState(false);
+  const [success, setSuccess] = useState<boolean>();
+  const [error, setError] = useState<string>();
 
   // Functions
-
-
   const handleDelete = async (e: any) => {
     let result = confirm('Are you sure you want to delete?')
 
@@ -52,32 +58,57 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
   }
 
   const reverseDate = (inputDate: string): string => {
-
     // Split the input string into day, month, and year components
-    const [day, month, year] = inputDate.split('/').map(Number);
-
+    const [year, month, day] = inputDate.split('-').map(Number);
     // Form the reversed date string in 'YYYY-MM-DD' format
-    const reversedDate: string = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-
+    const reversedDate: string = `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`;
     return reversedDate;
   };
 
-  const handleUpdatingItem = (e: any) => {
+  const handleUpdatingItem = async (e: any) => {
     e.preventDefault();
 
     const formData = new FormData(e.target as HTMLFormElement);
     const formValues: Record<string, string> = {};
-
+    setError('');
     formData.forEach((value, key) => {
       formValues[key] = value.toString();
     });
-    console.log('Update item', formValues)
 
+    const updatedItem = {
+      id: item.id,
+      applianceid: item.applianceid,
+      ownerid: item.ownerid,
+      quantity: formValues.quantity,
+      expiryDate: formValues.expiryDate,
+      comment: formValues.comment,
+    }
+
+    try {
+      setUpdating(true)
+      const response = await fetch(`/api/appliance-items/${item.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedItem),
+      });
+      if (response.ok) {
+        setUpdating(false)
+        setSuccess(true);
+      } else {
+        setError(response.statusText);
+        setUpdating(false)
+        setSuccess(false)
+      }
+    } catch (error) {
+      console.error('Error while sending data', error);
+      setError('Error while sending data, please try again');
+      setUpdating(false)
+    }
   }
 
-  const [itemQuantity, setItemQuantity] = useState(item.quantity)
-  const [itemComment, setItemComment] = useState(item.comment || '')
-  const [expiryDate, setExpiryDate] = useState(item.expiryDate && reverseDate(item.expiryDate))
+
 
   return (
     <div
@@ -87,7 +118,7 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
       <p className={`${editActivated ? 'h-fit border-2 border-blue-300 py-2' : 'h-0'} w-fit overflow-hidden text-blue-400/60 font-bold text-2xl absolute bottom-5 right-0 mr-5 transition-all duration-200 ease px-2`}>Editing</p>
 
       {editActivated ? (
-        <form action='' method='' onSubmit={(e) => handleUpdatingItem(e)} className='w-full'>
+        <form action='' method='PUT' onSubmit={(e) => handleUpdatingItem(e)} className='w-full'>
           <div className='flex flex-row items-start justify-around w-full mb-2'>
             {/* Item info */}
             <div className='flex flex-row items-center justify-start w-full' >
@@ -105,17 +136,23 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
             <div
               className='flex flex-col flex-wrap justify-between items-center h-[75px] w-fit right-0'>
               {/* Save Button */}
-              <button
-                type='submit'>
-                <IoSaveSharp className='h-[20px] w-[20px] text-green-500 hover:text-green-600 hover:scale-110 transition-all duration-200 ease-in-out' />
-              </button>
+              {updating && <BiDotsHorizontalRounded className='h-[20px] w-[20px] text-blue-500  hover:scale-110 transition-all duration-200 ease-in-out animate-spin' />}
+              {success && <TiTick className='h-[20px] w-[20px] text-green-700  hover:scale-110 transition-all duration-200 ease-in-out' />}
 
-              {/* Cancel Button */}
-              <button className='relative'
-                onClick={() => { setEditActivated(false); setContainerStatus(false) }}
-              >
-                <MdCancel className='h-[25px] w-[25px] text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out' />
-              </button>
+              {!updating && !success &&
+                <>
+                  <button
+                    type='submit'>
+                    <IoSaveSharp className='h-[20px] w-[20px] text-green-500 hover:text-green-600 hover:scale-110 transition-all duration-200 ease-in-out' />
+                  </button>
+                  {/* Cancel Button */}
+                  <button className='relative'
+                    onClick={() => { setEditActivated(false); setContainerStatus(false) }}
+                  >
+                    <MdCancel className='h-[25px] w-[25px] text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out' />
+                  </button>
+                </>
+              }
             </div>
 
             {/* More Info Button */}
@@ -147,6 +184,7 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
             <textarea name="comment" id="comment" placeholder='Comment (Optional)' value={itemComment} onChange={(e) => setItemComment(e.target.value)} className='px-2 py-[] rounded-md block mb-[5px]'></textarea>
 
           </div>
+          {error && <div className='w-full mb-4 italic text-black bg-red-500 h-fit'>Error:{error}</div>}
         </form>
       ) : (
 
@@ -203,7 +241,7 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
               <p className='text-sm text-normal'>Item sub Type: <span className='italic'>{item.itemSubType}</span></p>
             }
             {item.expiryDate &&
-              <p className='text-sm text-normal'>Expiry: <span className='italic'>{item.expiryDate}</span></p>
+              <p className='text-sm text-normal'>Expiry: <span className='italic'>{reverseDate(item.expiryDate)}</span></p>
             }
             <p className='text-sm text-normal'>Date Added: <span className='italic'>{item.addedDate}</span></p>
             {item.comment &&

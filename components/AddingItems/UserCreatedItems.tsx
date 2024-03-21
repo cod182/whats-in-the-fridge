@@ -130,13 +130,14 @@ const UserCreatedItems = ({ selectedArea, availableItems, userId, handleAddingTo
         itemMainType: selectedItem.itemMainType ? selectedItem.itemMainType : '',
         itemSubType: selectedItem.itemSubType ? selectedItem.itemSubType : '',
         addedDate: getCurrentDate(),
-        expiryDate: getExpiryDate(formValues.expiryDate),
+        expiryDate: formValues.expiryDate,
         quantity: parseInt(formValues.quantity),
         comment: formValues.comment ? formValues.comment : '',
         compartment: compartment,
         level: level,
         locationType: locationType,
         position: position ? position : 0,
+        image: selectedItem.image,
       };
 
       try {

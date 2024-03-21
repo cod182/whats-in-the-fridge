@@ -101,7 +101,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
         itemMainType: formValues.itemMainType,
         itemSubType: formValues.itemSubType,
         addedDate: getCurrentDate(),
-        expiryDate: getExpiryDate(formValues.expiryDate),
+        expiryDate: formValues.expiryDate,
         quantity: parseInt(formValues.quantity),
         comment: formValues.comment ? formValues.comment : '',
         compartment: compartment,
@@ -174,22 +174,22 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
         <div className='w-full h-full border-[1px] border-black xxxs:p-4 rounded-md transition-all duration-200 ease overflow-hidden relative my-4'>
           {submitting &&
             <div className={`absolute top-0 left-0 w-full h-full bg-gray-400/80 z-[999] flex flex-col justify-center items-center`}>
-              <p className='font-bold text-xl animate-ping'>Adding...</p>
+              <p className='text-xl font-bold animate-ping'>Adding...</p>
             </div>
           }
           <FadeInHOC delayNumber={1000} direction='up' >
             <div className='mb-2'>
-              <p className='underline text-md font-semibold'>Create your item</p>
+              <p className='font-semibold underline text-md'>Create your item</p>
               <FadeInHOC delayNumber={1000} direction='up'>
                 <>
-                  <p className='text-sm italic text-gray-600 font-normal'>The items you create will be accessible in the &apos;Your Items&apos; option once they have been submitted.</p>
-                  <p className='text-sm italic text-gray-600 font-normal'>Items you create are only visible to you.</p>
+                  <p className='text-sm italic font-normal text-gray-600'>The items you create will be accessible in the &apos;Your Items&apos; option once they have been submitted.</p>
+                  <p className='text-sm italic font-normal text-gray-600'>Items you create are only visible to you.</p>
                 </>
               </FadeInHOC>
             </div>
           </FadeInHOC >
 
-          <form ref={formRef} onSubmit={(e) => handleFormSubmit(e)} className='flex flex-col justify-center items-start gap-2 w-full'>
+          <form ref={formRef} onSubmit={(e) => handleFormSubmit(e)} className='flex flex-col items-start justify-center w-full gap-2'>
 
             {/* Name Entry */}
             <div className='w-full'>
@@ -202,21 +202,21 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
 
             {/* Item Main Type */}
             <div className='w-full'>
-              <label htmlFor="itemMainType" className='my-2'>Set the main type of the item: <span className='font-normal text-sm italic block text-gray-700 mb-1'>e.g Herb, Red Meat, Savory Snack, Seafood  </span></label>
+              <label htmlFor="itemMainType" className='my-2'>Set the main type of the item: <span className='block mb-1 text-sm italic font-normal text-gray-700'>e.g Herb, Red Meat, Savory Snack, Seafood  </span></label>
               <input type="text" id='itemMainType' name='itemMainType' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
             </div>
             {/* End Item Main Type */}
 
             {/* Item Type */}
             <div className='w-full'>
-              <label htmlFor="itemType" className='my-2'>Set the type of the item: <span className='font-normal text-sm italic block text-gray-700 mb-1'>e.g Vegetable, Meat, Snack, Fish </span></label>
+              <label htmlFor="itemType" className='my-2'>Set the type of the item: <span className='block mb-1 text-sm italic font-normal text-gray-700'>e.g Vegetable, Meat, Snack, Fish </span></label>
               <input type="text" id='itemType' name='itemType' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
             </div>
             {/* End Item Type */}
 
             {/* Item Sub Type */}
             <div className='w-full'>
-              <label htmlFor="itemSubType" className='my-2'>Set the sub type of the item: <span className='font-normal text-sm italic block text-gray-700 mb-1'>Optional </span></label>
+              <label htmlFor="itemSubType" className='my-2'>Set the sub type of the item: <span className='block mb-1 text-sm italic font-normal text-gray-700'>Optional </span></label>
               <input type="text" id='itemSubType' name='itemSubType' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
             </div>
             {/* End Item Sub Type */}
@@ -224,18 +224,18 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
             {/* Icon Selection */}
             <div className='w-full'>
               <p className='my-2'>Choose an Icon:</p>
-              <div className='grid grid-cols-1 xxxs:grid-cols-2 xxs:grid-cols-3 xs:grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2'>
+              <div className='grid grid-cols-1 gap-2 xxxs:grid-cols-2 xxs:grid-cols-3 xs:grid-cols-4 sm:grid-cols-5 md:grid-cols-6'>
                 {customImages.map((item, index) => (
-                  <label key={index} className='flex items-center w-full mx-auto active:scale-110 transition-all duration-200 ease'>
+                  <label key={index} className='flex items-center w-full mx-auto transition-all duration-200 active:scale-110 ease'>
                     <input
                       type="radio"
                       name="itemIcon"
                       value={item.icon}
                       onChange={(e) => setSelectedIcon(e.target.value)}
-                      className='mr-2 hidden group'
+                      className='hidden mr-2 group'
                       checked={selectedIcon === item.icon}
                     />
-                    <div className="flex flex-col justify-center items-center mx-auto">
+                    <div className="flex flex-col items-center justify-center mx-auto">
                       <Image
                         src={`/assets/images/itemTypes/${item.icon}`}
                         alt={item.name}
@@ -252,7 +252,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
 
             {/* Item expiry Date */}
             <div className='w-full'>
-              <label htmlFor='expiryDate' className='mt-2'>Set the Expiry Date <span className='italic text-gray-100 font-normal text-sm mb-1'>(Optional)</span></label>
+              <label htmlFor='expiryDate' className='mt-2'>Set the Expiry Date <span className='mb-1 text-sm italic font-normal text-gray-100'>(Optional)</span></label>
               <input id='expiryDate' type="date" name='expiryDate' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' />
             </div>
 
@@ -261,8 +261,8 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
 
             {/* Item Quantity */}
             <div className='w-full my-2'>
-              <label htmlFor='quantity' className='mt-2'>Set the quantity <span className='italic text-gray-100 font-normal text-sm'>(Optional)</span></label>
-              <div className="flex flex-row justify-start items-center">
+              <label htmlFor='quantity' className='mt-2'>Set the quantity <span className='text-sm italic font-normal text-gray-100'>(Optional)</span></label>
+              <div className="flex flex-row items-center justify-start">
                 <button
                   type='button'
                   disabled={quantity === 1}
@@ -312,12 +312,12 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
 
 
             {/* Comment Section */}
-            <label htmlFor="comment">Enter a comment. <span className='italic text-gray-100 font-normal text-sm'>(Optional)</span></label>
-            <textarea name="comment" id="comment" className='w-full rounded-md p-4'></textarea>
+            <label htmlFor="comment">Enter a comment. <span className='text-sm italic font-normal text-gray-100'>(Optional)</span></label>
+            <textarea name="comment" id="comment" className='w-full p-4 rounded-md'></textarea>
             {/* End Comment Section */}
 
             {/* Submit Button */}
-            <button type="submit" className='px-4 py-2 bg-blue-500 rounded-md w-full hover:bg-blue-400 transition duration-200 ease mx-auto font-semibold active:bg-blue-500 active:shadow-md'>Add Item</button>
+            <button type="submit" className='w-full px-4 py-2 mx-auto font-semibold transition duration-200 bg-blue-500 rounded-md hover:bg-blue-400 ease active:bg-blue-500 active:shadow-md'>Add Item</button>
             {/* End Submit Button */}
 
           </form>

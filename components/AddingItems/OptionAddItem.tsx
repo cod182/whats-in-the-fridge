@@ -133,7 +133,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
         itemMainType: selectedItem.itemMainType ? selectedItem.itemMainType : '',
         itemSubType: selectedItem.itemSubType ? selectedItem.itemSubType : '',
         addedDate: getCurrentDate(),
-        expiryDate: getExpiryDate(formValues.expiryDate),
+        expiryDate: formValues.expiryDate,
         quantity: parseInt(formValues.quantity),
         comment: formValues.comment ? formValues.comment : '',
         compartment: compartment,
