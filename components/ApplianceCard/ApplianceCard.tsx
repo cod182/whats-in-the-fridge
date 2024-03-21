@@ -29,7 +29,14 @@ const ApplianceCard = ({ app, handleDelete }: Props) => {
         </div>
       </a>
       <div className='w-full h-[25px] absolute bottom-0 rounded-b-md overflow-hidden'>
-        <DeleteButton id={app.id} onDelete={handleDelete} />
+        <div className='grid grid-cols-2'>
+          <div>
+            <DeleteButton id={app.id} onDelete={handleDelete} />
+          </div>
+          <button className='w-full h-full px-4 bg-blue-400/50 hover:bg-blue-400/80 z-2'>
+            Edit
+          </button>
+        </div>
       </div>
     </div>
   )
