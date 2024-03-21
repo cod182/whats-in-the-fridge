@@ -120,8 +120,9 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
     }
   }
 
+  // Takes the updated item, adds the uneffected original item parts. Find the item, removes it and adds it to a new array then updates the local array
   const handlingUpdateLocalItem = (updatedItemPart: any) => {
-    const index = items.findIndex(item => item.id === updatedItemPart.id);
+    const index = items.findIndex(item => item.id === updatedItemPart.id); // finds the item that matches
 
     const updatedItem = {
       id: updatedItemPart.id,
@@ -148,7 +149,7 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
       return items;
     }
 
-    const updatedItems = [...items];
+    const updatedItems = [...items]; // creates new array of item
     // console.log('Original List', items)
     // console.log('New List', updatedItems)
     updatedItems.splice(index, 1, updatedItem); // Replace the item at the found index with the updated item
@@ -187,7 +188,7 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
               {updating &&
                 (
                   <div className="flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
-                    <p className="text-sm font-normal">Updating!</p>
+                    <p className="text-xs font-normal md:text-sm">Updating!</p>
                     <BiDotsHorizontalRounded className='h-[20px] w-[20px] text-blue-500  hover:scale-110 transition-all duration-200 ease-in-out animate-spin' />
                   </div>
 
@@ -196,7 +197,7 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
               {success &&
                 (
                   <div className="flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
-                    <p className="text-sm font-normal">Updated!</p>
+                    <p className="text-xs font-normal md:text-sm">Updated!</p>
                     <TiTick className='h-[25px] w-[25px] text-green-500  hover:scale-110 transition-all duration-200 ease-in-out' />
                   </div>
                 )
@@ -208,8 +209,8 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
                   {/* Save Button */}
 
                   <div className="relative group">
-                    <div className="overflow-hidden absolute select-none right-[25px] group-hover:flex w-0 group-hover:w-fit flex-row items-center justify-center p-0 group-hover:px-2 py-[2px] bg-transparent group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
-                      <p className="text-sm font-normal">Save</p>
+                    <div className="overflow-hidden absolute select-none top-[2px] right-[25px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+                      <p className="text-xs font-normal md:text-sm">Save</p>
                     </div>
                     <button
                       type='submit'>
@@ -220,8 +221,8 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
                   {/* Cancel Button */}
                   <div className="relative group">
 
-                    <div className="overflow-hidden absolute select-none right-[25px] group-hover:flex w-0 group-hover:w-fit flex-row items-center justify-center p-0 group-hover:px-2 py-[2px] bg-transparent group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
-                      <p className="text-sm font-normal">Cancel</p>
+                    <div className="overflow-hidden absolute select-none top-[2px] right-[25px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+                      <p className="text-xs font-normal md:text-sm">Cancel</p>
                     </div>
                     <button className='relative'
                       onClick={() => { setEditActivated(false); setContainerStatus(false) }}
@@ -283,20 +284,47 @@ const ItemCard = ({ item, updateItems, items, userId }: Props) => {
             <div
               className='flex flex-col flex-wrap justify-between items-center h-[75px]'>
               {/* Edit Button */}
-              <button
+
+              <div className="relative group">
+                <div className="overflow-hidden absolute select-none top-[2px] right-[25px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+                  <p className="text-xs font-normal md:text-sm">Edit</p>
+                </div>
+                <button
+                  onClick={() => {
+                    setEditActivated(true);
+                    setContainerStatus(true);
+                  }}>
+                  <FaEdit className='h-[20px] w-[20px] text-blue-500 hover:text-blue-600 hover:scale-110 transition-all duration-200 ease-in-out' />
+                </button>
+              </div>
+
+              {/* <button
                 onClick={() => {
                   setEditActivated(true);
                   setContainerStatus(true);
                 }}>
                 <FaEdit className='h-[20px] w-[20px] text-blue-500 hover:text-blue-600 hover:scale-110 transition-all duration-200 ease-in-out' />
-              </button>
+              </button> */}
 
               {/* Remove Buttons */}
-              <button className='relative'
+
+              <div className="relative group">
+                <div className="overflow-hidden absolute select-none top-[2px] right-[25px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+                  <p className="text-xs font-normal md:text-sm">Delete</p>
+                </div>
+                <button className='relative'
+                  onClick={(e) => handleDelete(e)}
+                >
+                  <IoCloseSharp className='h-[25px] w-[25px] text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out' />
+                </button>
+              </div>
+
+
+              {/* <button className='relative'
                 onClick={(e) => handleDelete(e)}
               >
                 <IoCloseSharp className='h-[25px] w-[25px] text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out' />
-              </button>
+              </button> */}
             </div>
             {/* More Info Button */}
             <p
