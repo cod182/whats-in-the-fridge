@@ -2,6 +2,7 @@ import './globals.css';
 
 import { Nav, Provider } from '@/components';
 
+import Footer from '@/components/Footer/Footer';
 import type { Metadata } from 'next';
 import { getServerSession } from "next-auth";
 
@@ -26,6 +27,7 @@ export default async function RootLayout({
           <Nav />
           {children}
         </Provider>
+        <Footer />
       </body>
     </html >
   );
