@@ -13,7 +13,12 @@ const config: Config = {
         secondary: '#d8dd14',
       },
       screens: {
+        xxxs: '200px',
+        xxs: '300px',
         xs: '450px',
+        midLow: '767px',
+        midMd: '985px',
+        midLg: '1152px',
       },
     },
   },
