@@ -3,32 +3,39 @@
 import { FaChevronCircleDown, FaChevronCircleUp, FaSearch } from 'react-icons/fa'
 import React, { useState } from 'react'
 
+import ItemCard from '../Appliances/ItemCard';
+
 type Props = {
   items: applianceItem[];
+  handleUpdateItems: (items: applianceItem[]) => void;
 }
-const ItemSearch = ({ items }: Props) => {
+const ItemSearch = ({ items, handleUpdateItems }: Props) => {
   // States
   const [searchState, setSearchState] = useState(false);
   const [searchResults, setSearchResults] = useState<applianceItem[]>()
   const [showResults, setShowResults] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
+  // Functions
   const handleSearch = (searchTerm: string) => {
+    setSearchQuery(searchTerm)
     setSearchResults([]); // Reset search results when the search term changes
-    setShowResults(true);
-
+    setShowResults(true); // Sets the results state to show
+    // If the search term is empty
     if (searchTerm.trim() === "") {
-      setTimeout(() => {
-        if (searchTerm.trim() === "") {
-          setShowResults(false); // Hide the search results after 2 seconds
-        }
-      }, 1000);
       return; // Exit early if the search term is empty
     }
-
+    // Search the array of items
     const results = items.filter(item =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    // set the results to the state
     setSearchResults(results);
+  }
+
+  const handleUpdateItemsIntercept = (items: applianceItem[]) => {
+    handleUpdateItems(items)
+
   }
 
   return (
@@ -45,23 +52,25 @@ const ItemSearch = ({ items }: Props) => {
       </div>
       {/* Results */}
       <div className={`overflow-hidden ${showResults ? 'max-h-[1000px] w-full' : 'max-h-[0px] w-[0]'} transition-all duration-200 ease`}>
-
         <div className={`${searchState ? 'max-h-[400px] w-full mt-2' : 'max-h-[0px] w-[0] mt-0'}  flex flex-col justify-start items-start overflow-hidden transition-all duration-200 ease`}>
-          <p className='mb-2 font-semibold underline'>Results <span>{searchResults?.length}</span></p>
-          <div className='grid grid-cols-4 gap-2 w-full max-h-[300px] overflow-scroll p-4'>
-            {searchResults?.length && searchResults.length > 0 ?
-              searchResults?.map(({ id, name }) => (
-                <div key={id}>{name}</div>
+          <div className='flex flex-row items-center justify-start gap-x-2'>
+            <p className='font-semibold underline'>Results:</p><span className=''>{searchResults?.length}</span>
+          </div>
+          <div className='grid grid-cols-1 sm:grid-cols-2 ms:grid-cols-3 gap-2 w-full max-h-[300px] overflow-scroll p-4'>
+            {searchResults && searchResults.length > 0 ?
+              searchResults?.map((item) => (
+                <div key={item.id}>
+                  <ItemCard item={item} items={items} userId={item.ownerid.toString()} updateItems={handleUpdateItemsIntercept} inSearch />
+                </div>
               ))
-
-              : (
+              :
+              (
                 <div className='w-full'>
                   <p>No Items Found</p>
                 </div>
               )}
           </div>
         </div>
-
       </div>
 
     </div >
