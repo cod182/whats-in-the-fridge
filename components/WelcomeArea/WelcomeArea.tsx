@@ -1,6 +1,6 @@
 import { FadeInHOC } from '..';
 import Image from 'next/image';
-import window from '../../public/assets/images/window.webp'
+import window from '@/assets/images/window.webp'
 
 const WelcomeArea = () => {
 
@@ -58,7 +58,7 @@ const WelcomeArea = () => {
         distance={500}
         classes="top-[18%] left-[70%] absolute w-[20%] max-w-[258px] select-none overflow-hidden"
       >
-        <Image src={window} alt="image of window" className="select-none" width={258} height={258} />
+        <Image src='/assets/images/fridge.webp' alt="image of window" className="select-none" width={258} height={258} />
       </ FadeInHOC>
     </div >
   );
