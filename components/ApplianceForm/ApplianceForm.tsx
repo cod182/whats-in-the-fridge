@@ -23,6 +23,11 @@ const ApplianceForm = ({ formType }: Props) => {
   const { data: session } = useSession();
   const router = useRouter();
 
+  let user: any;
+
+  if (session) {
+    user = session.user
+  }
   const [formData, setFormData] = useState<FormData>({
     applianceName: '',
     applianceType: '',
@@ -32,8 +37,8 @@ const ApplianceForm = ({ formType }: Props) => {
   const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
-    setFormData({ ...formData, userId: parseInt(session?.user?.id) });
-  }, [session])
+    setFormData({ ...formData, userId: parseInt(user?.id) });
+  }, [user])
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
