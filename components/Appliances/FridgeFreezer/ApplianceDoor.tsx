@@ -2,20 +2,19 @@
 
 import React, { useState } from 'react'
 
-import { PositionButton } from '..'
+import { PositionButton } from '../..'
 import { getItemsInThisLocation } from '@/utilities/functions';
 
 type Props = {
   appliance: ApplianceProp;
   positions: number[];
-  handleSelect: (items: applianceItem[], level: number, compartment: string, position?: number) => void;
-  modalState: boolean;
-  handleModalState: (state: string) => void
+  handleSelect: (items: applianceItem[], level: number, compartment: string, type: string, position: number) => void;
+  handleModalState: (state: string, toDisplay?: 'add' | 'view') => void
   items: applianceItem[]
 }
 
 
-const Door = ({ appliance, positions, handleSelect, modalState, handleModalState, items }: Props) => {
+const Door = ({ appliance, positions, handleSelect, handleModalState, items }: Props) => {
   const [doorStatus, setDoorStatus] = useState(false);
 
   return (
@@ -28,10 +27,10 @@ const Door = ({ appliance, positions, handleSelect, modalState, handleModalState
               {/* Shelves */}
               {shelves != undefined && shelves.map((shelfNum, index) => (
                 <div key={index}>
-                  <div className='grid grid-cols-3 grid-rows-1 gap-x-1 mx-auto my-2'>
+                  <div className='grid grid-cols-3 grid-rows-1 mx-auto my-2 gap-x-1'>
                     {/* Positions */}
                     {positions.map((position) => (
-                      <PositionButton key={position} handleSelection={handleSelect} compartment='door' type='shelf' level={shelfNum} position={position} modalState={modalState} handleModalState={handleModalState} items={getItemsInThisLocation(shelfNum, items, 'shelf', position)} />
+                      <PositionButton key={position} handleSelection={handleSelect} compartment='door' type='shelf' level={shelfNum} position={position} handleModalState={handleModalState} items={getItemsInThisLocation(shelfNum, items, 'shelf', 'door', position)} />
                     ))}
                   </div>
                   <hr className='w-full h-[4px] bg-gray-300 shadow-xl' />
@@ -43,7 +42,7 @@ const Door = ({ appliance, positions, handleSelect, modalState, handleModalState
         }
       </div >
       <div className='h-full w-[5%] flex flex-col justify-center items-center hover:bg-gray-400 border-l-[1px] border-gray-600 bg-pink-300' onClick={() => { setDoorStatus((prev) => prev ? false : true) }}>
-        <p className='transform rotate-90 origin-center'>Door</p>
+        <p className='origin-center transform rotate-90'>Door</p>
       </div>
     </div >
   )

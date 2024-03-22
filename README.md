@@ -41,25 +41,27 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## User Story
 
-- Login / Sign Up
-- Choose fridge
-  - Fridge Freezer / Freezer / Chest Freezer / Fridge
-  - Name fridge
-  - Preset images of freezer
+- Login / Sign Up &#10003;
+- Choose fridge &#10003;
+  - Fridge Freezer / Freezer / Chest Freezer / Fridge 
+  - Name fridge &#10003;
+  - Preset images of freezer &#10003;
   - Set background
   - Set Number of shelves / Drawers
   - Name shelves / Drawers
 - Share fridge access
-- Have more than one fridge
-- Add items to individual shelves
-- Remove items from individual shelves
-- View list of items on individual shelf
+- Have more than one fridge &#10003;
+- Add items to individual shelves &#10003;
+- Remove items from individual shelves &#10003;
+- View list of items on individual shelf &#10003;
+- Edit items
 - View list of all items
 - Search for items in fridge
   - Show number of that item
   - Show location of that item
   - Search by type (Fish/Meat/Poultry/Veg)
   - Search by expiry date
+- Notification of expiring items
 
 # Attribution
 
@@ -73,3 +75,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
   - <a href="https://www.flaticon.com/free-icons/freezer" title="freezer icons">Freezer icons created by POD Gladiator - Flaticon</a>
   - <a href="https://www.flaticon.com/free-icons/freezer" title="freezer icons">Freezer icons created by Freepik - Flaticon</a>
   - <a href="https://www.flaticon.com/free-icons/freezer" title="freezer icons">Freezer icons created by Freepik - Flaticon</a>
+  - <a href="https://www.freepik.com/free-vector/big-set-flat-whole-sliced-fresh-fruits-vegetables-with-carrot-tomato-lemon-avocado-apple-banana-peach-isolated-vector-illustration_32074509.htm#query=vegetables&position=9&from_view=keyword&track=sph&uuid=6ce88b9d-f2f8-4569-bb2e-053c43bae17c">Image by macrovector</a> on Freepik

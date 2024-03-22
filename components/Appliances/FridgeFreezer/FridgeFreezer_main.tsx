@@ -1,6 +1,6 @@
-import { ApplianceDoor, PositionButton } from '..'
+import { ApplianceDoor, ItemSearch, PositionButton } from '../..'
 
-import DrawerButton from './DrawerButton'
+import DrawerButton from '../DrawerButton'
 import FreezerCompartment from './FreezerCompartment';
 import FridgeCompartment from './FridgeCompartment';
 import React from 'react'
@@ -8,38 +8,40 @@ import { findItemLocation } from '@/utilities/functions';
 
 type Props = {
   appliance: ApplianceProp;
-  handleSelect: (items: applianceItem[], level: number, compartment: string, position?: number) => void;
-  modalState: boolean;
-  handleModalState: (state: string) => void;
+  handleSelect: (items: applianceItem[], level: number, compartment: string, type: string, position: number) => void;
+  handleModalState: (state: string, toDisplay?: 'add' | 'view') => void;
   items: applianceItem[];
+  handleUpdateItems: (items: applianceItem[]) => void;
 }
 
-const FridgeFreezer = ({ appliance, handleSelect, modalState, handleModalState, items }: Props) => {
+const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems }: Props) => {
 
   const itemsInLocation = findItemLocation(items);
-  const shelfPositions = [0, 1, 2]; // How many areas there are on a shelf
+  const shelfPositions = [1, 2, 3]; // How many areas there are on a shelf
 
   return (
     <>
       <div className='mb-2'>
-        <h2 className='text-normal text-gray-800'>{appliance.name}</h2>
+        <h2 className='text-gray-800 text-normal'>{appliance.name}</h2>
         <p className='text-sm italic text-gray-700'>{appliance.description}</p>
-
       </div>
+
+
+      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
+
 
       <div className='max-w-[400px] h-[800px] rounded-md p-1 border-2 border-black bg-gray-100 relative mx-3 sm:mx-auto md:mx-0 midLg:mx-auto lg:mx-auto '>
 
         {/* Door Start*/}
-
         {/* Door Compartment */}
-        <ApplianceDoor appliance={appliance!} positions={shelfPositions} handleSelect={handleSelect} modalState={modalState} handleModalState={handleModalState} items={itemsInLocation.door} />
+        <ApplianceDoor appliance={appliance!} positions={shelfPositions} handleSelect={handleSelect} handleModalState={handleModalState} items={itemsInLocation.door} />
         {/* Door End */}
 
         <div className='z-[5] flex flex-col w-full h-full rounded-md p-[2px] border-[1px] border-gray-400 bg-white relative'>
           {/* Fridge compartment Start*/}
           <div className='w-full z-[6] h-[49%] rounded-md border-2 border-black p-2'>
             {/* Fridge Compartment */}
-            <FridgeCompartment appliance={appliance!} positions={shelfPositions} handleSelect={handleSelect} modalState={modalState} handleModalState={handleModalState} items={itemsInLocation.fridge} />
+            <FridgeCompartment appliance={appliance!} positions={shelfPositions} handleSelect={handleSelect} handleModalState={handleModalState} items={itemsInLocation.fridge} />
           </div>
           {/* Fridge compartment End */}
 
@@ -50,7 +52,7 @@ const FridgeFreezer = ({ appliance, handleSelect, modalState, handleModalState, 
           {/* Freezer compartment Start*/}
           <div className='w-full h-[49%] rounded-md border-2 border-black my-auto p-2'>
             {/* Freezer Compartment */}
-            <FreezerCompartment appliance={appliance!} handleSelect={handleSelect} modalState={modalState} handleModalState={handleModalState} items={itemsInLocation.freezer} />
+            <FreezerCompartment appliance={appliance!} handleSelect={handleSelect} handleModalState={handleModalState} items={itemsInLocation.freezer} />
           </div>
           {/* Freezer compartment End*/}
 

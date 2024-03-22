@@ -1,9 +1,5 @@
-import Image from 'next/image';
-
-import background from '@/public/assets/images/background.webp';
-import fridge from '@/public/assets/images/fridge.webp';
-import window from '@/public/assets/images/window.webp';
 import { FadeInHOC } from '..';
+import Image from 'next/image';
 
 const WelcomeArea = () => {
 
@@ -11,9 +7,11 @@ const WelcomeArea = () => {
     <div className='relative'>
       {/* Background Image */}
       <Image
-        src={background}
+        src='/assets/images/background.webp'
         alt="background house scene"
         className="w-full h-auto select-none"
+        height={1000}
+        width={1000}
       />
 
 
@@ -41,25 +39,27 @@ const WelcomeArea = () => {
         distance={500}
         classes="top-[20%] left-[41%] absolute w-[20%] max-w-[257px]"
       >
-        <a href="#" className="" >
+        <a href="/profile" className="" >
           <Image
-            src={fridge}
+            src='/assets/images/fridge.webp'
             alt="image of fridge"
-            className="w-full hover:drop-shadow-2xl shadow-primary shadow-none transition-all ease-in duration-200"
+            className="w-full hover:drop-shadow-2xl shadow-primary shadow-none transition-all ease-in duration-200 overflow-hidden"
+            width={230}
+            height={399}
           />
         </a>
-      </FadeInHOC>
+      </FadeInHOC >
 
       {/* Window Image */}
-      <FadeInHOC
+      < FadeInHOC
         delayNumber={500}
         direction="right"
         distance={500}
-        classes="top-[18%] left-[70%] absolute w-[20%] max-w-[258px] select-none"
+        classes="top-[18%] left-[70%] absolute w-[20%] max-w-[258px] select-none overflow-hidden"
       >
-        <Image src={window} alt="image of window" className="select-none" />
-      </FadeInHOC>
-    </div>
+        <Image src='/assets/images/window.webp' alt="image of window" className="select-none" width={258} height={258} />
+      </ FadeInHOC>
+    </div >
   );
 };
 

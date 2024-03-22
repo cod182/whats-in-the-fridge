@@ -1,8 +1,5 @@
-'use client'
-
 import DeleteButton from './DeleteButton'
 import Image from 'next/image'
-import React from 'react'
 import { getImageForAppliance } from '@/utilities/functions'
 
 type Props = {
@@ -11,7 +8,6 @@ type Props = {
 }
 
 const ApplianceCard = ({ app, handleDelete }: Props) => {
-
   // Get the image for the appliance type
   const image = getImageForAppliance(app.type)
 

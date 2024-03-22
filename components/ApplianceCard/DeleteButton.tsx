@@ -9,25 +9,34 @@ type Props = {
 
 const DeleteButton = ({ onDelete, id }: Props) => {
 
-  const [textString, setTextString] = useState('Delete')
   const [checkDelete, setCheckDelete] = useState(true)
+  const [confirmButton, setConfirmButton] = useState(false)
 
-  const handleDelete = (e: any) => {
+  const handleDelete = () => {
     if (checkDelete) {
-      e.preventDefault();
-      setTextString('Are You Sure?');
+      setConfirmButton(true);
       setCheckDelete(false);
     } else {
       onDelete(id);
-      setTextString('Delete');
+      setConfirmButton(false);
       setCheckDelete(true);
     }
   }
 
   return (
-    <button type='submit' className='w-full h-full px-4 bg-red-400/50 hover:bg-red-400/80 z-2' onClick={(e) => handleDelete(e)}>
-      {textString}
-    </button>
+    <div className='w-full h-full bg-red-400/50 hover:bg-red-400/80 z-2' >
+      {!confirmButton ?
+        (
+          <button onClick={() => handleDelete()} className="w-full h-full"> Delete</ button>
+        ) :
+        (
+          <div className="flex flex-row items-center justify-center w-full h-full">
+            <button className="border-r-[1px] border-black bg-red-500/50 hover:bg-red-500/80 hover:font-semibold px-2 w-full" onClick={() => handleDelete()}>Delete</button>
+            <button className="border-l-[1px] border-black bg-blue-500/50 hover:bg-blue-500/80 hover:font-semibold px-2 w-full" onClick={() => { setCheckDelete(true); setConfirmButton(false); }}>Cancel</button>
+          </div>
+        )
+      }
+    </div >
   )
 }
 
