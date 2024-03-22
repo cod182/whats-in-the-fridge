@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import CustomAddItem from "./CustomAddItem";
 import FadeInHOC from "../FadeInHOC/FadeInHOC";
 import Image from "next/image";
+import { IoIosSearch } from "react-icons/io";
 import OptionAddItem from "./OptionAddItem";
-import UserCreatedItems from "./UserCreatedItems";
+import SearchAddItems from "./SearchAddItems";
 
 type Props = {
   selectedArea: selectionProps;
@@ -49,6 +50,17 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
         <p className='my-2'>Choose from a pre-made item{userCreatedItems.length > 0 ? ', create your own item or choose an item you have previously created.' : ' or create your own item.'}</p>
         <div className="flex flex-row flex-wrap items-center justify-center gap-4 my-2">
 
+          {/* Button for searching pre-made items */}
+          <button onClick={() => setAddType('search')}
+            className={`${addType === 'search' ? ' border-green-300 border-2' : 'hover:translate-y-1'} relative flex flex-col items-center justify-center px-2 font-normal bg-gradient-to-bl to-blue-400 from-blue-600 hover:translate-y-[-10px] active:bg-blue-400 aspect-square h-[100px] rounded-full transition-all duration-200 ease`}
+          >
+            <IoIosSearch
+              className='w-[25px] h-[25px]'
+            />
+            <span>
+              Search Items
+            </span>
+          </button>
 
 
           {/* Button for items that have been pre-made by owner */}
@@ -86,6 +98,7 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
 
       {/* Type of item Creation */}
       <div>
+        {addType === 'search' && <SearchAddItems selectedArea={selectedArea} preMadeItems={availableItems} userCreatedItems={userCreatedItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />}
         {addType === 'options' && <OptionAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} showItemTypes={true} />}
         {addType === 'custom' && <CustomAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />}
         {addType === 'userCreated' && <OptionAddItem selectedArea={selectedArea} availableItems={userCreatedItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} showItemTypes={false} />}

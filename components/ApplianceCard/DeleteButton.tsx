@@ -24,7 +24,7 @@ const DeleteButton = ({ onDelete, id }: Props) => {
   }
 
   return (
-    <button type='submit' className='w-full h-full bg-red-400/50 hover:bg-red-400/80 z-2' >
+    <div className='w-full h-full bg-red-400/50 hover:bg-red-400/80 z-2' >
       {!confirmButton ?
         (
           <button onClick={() => handleDelete()} className="w-full h-full"> Delete</ button>
@@ -36,7 +36,7 @@ const DeleteButton = ({ onDelete, id }: Props) => {
           </div>
         )
       }
-    </button >
+    </div >
   )
 }
 
