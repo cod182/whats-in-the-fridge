@@ -188,6 +188,7 @@ const SearchAddItems = ({ preMadeItems, userCreatedItems, selectedArea, userId, 
                         setSelectedItemsGroup('pre');
                         setSearchResults([]);
                         setSearchQuery('');
+                        setSelectedItem(null);
                       }}
                     >
                       <Image src='/assets/images/options.svg' alt='pre-made icon' width={20} height={20} className="object-fill" />
@@ -199,6 +200,7 @@ const SearchAddItems = ({ preMadeItems, userCreatedItems, selectedArea, userId, 
                         setSelectedItemsGroup('user');
                         setSearchResults([]);
                         setSearchQuery('');
+                        setSelectedItem(null);
                       }}
                     >
                       <Image src='/assets/images/user-created.svg' alt='pre-made icon' width={20} height={20} className="object-fill" />
