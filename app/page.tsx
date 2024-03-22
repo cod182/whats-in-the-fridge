@@ -1,5 +1,13 @@
+import { WelcomeArea } from '@/components';
+
 const page = () => {
-  return <div>Home Page</div>;
+  return (
+    <div>
+      <div>
+        <WelcomeArea />
+      </div>
+    </div>
+  );
 };
 
 export default page;
