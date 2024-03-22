@@ -26,7 +26,7 @@ const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items }: Pro
       </div>
 
 
-      <ItemSearch />
+      <ItemSearch items={items} />
 
       <div className='max-w-[400px] h-[800px] rounded-md p-1 border-2 border-black bg-gray-100 relative mx-3 sm:mx-auto md:mx-0 midLg:mx-auto lg:mx-auto '>
 
