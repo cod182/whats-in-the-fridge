@@ -41,14 +41,14 @@ const ItemSearch = ({ items, handleUpdateItems }: Props) => {
   }
 
   return (
-    <div className={`flex flex-wrap flex-col items-start my-2 p-2 bg-blue-200 rounded-md w-full sm:w-fit overflow-hidden h-fit transition-all ease duration-300`}>
+    <div className={`z-[10] flex flex-wrap flex-col items-start my-2 p-2 bg-blue-200 rounded-md w-full sm:w-fit overflow-hidden h-fit transition-all ease duration-300`}>
       <div className='flex flex-row flex-wrap items-center justify-start w-full sm:w-fit'>
         <p
           onClick={() => { setSearchState((prev) => !prev); setShowResults(false); }}
           className='inline bg-blue-300 hover:bg-blue-400 active:bg-blue-500 px-[5px] py-[2px] rounded-md cursor-pointer sm:text-start text-center w-full sm:w-fit'
         >Search <FaChevronCircleUp className={`${!searchState ? 'sm:rotate-90 rotate-180' : ' sm:rotate-[-90deg]'} transition-all duration-300 ease inline`} />
         </p>
-        <div className={`transition-all duration-200 ease overflow-hidden rounded-md ${searchState ? 'mt-2 sm:mt-0 w-full sm:w-fit sm:max-w-full sm:px-4' : 'max-w-0 p-0'}`}>
+        <div className={`transition-all duration-200 ease overflow-hidden rounded-md ${searchState ? 'mt-2 sm:mt-0 w-full sm:w-fit sm:max-w-[2000px] sm:px-4' : 'max-w-0 p-0'}`}>
           <input type="text" className='rounded-md border-[1px] border-black px-4 text-gray-500 h-[50px] sm:h-[30px]' placeholder='Search for an item' onChange={(e) => handleSearch(e.target.value)} />
         </div>
       </div>
@@ -58,7 +58,7 @@ const ItemSearch = ({ items, handleUpdateItems }: Props) => {
           <div className='flex flex-row items-center justify-start gap-x-2'>
             <p className='font-semibold underline'>Results:</p><span className=''>{searchResults?.length}</span>
           </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 ms:grid-cols-3 gap-2 w-full max-h-[300px] overflow-scroll p-4'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 w-full max-h-[300px] overflow-scroll p-4'>
             {searchResults && searchResults.length > 0 ?
               searchResults?.map((item) => (
                 <div key={item.id}>
