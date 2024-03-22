@@ -57,7 +57,7 @@ const WelcomeArea = () => {
         distance={500}
         classes="top-[18%] left-[70%] absolute w-[20%] max-w-[258px] select-none overflow-hidden"
       >
-        <Image src='/assets/images/window.webp' alt="image of window" className="select-none" width={258} height={258} />
+        <Image src={`/assets/images/window.webp`} alt="image of window" className="select-none" width={258} height={258} />
       </ FadeInHOC>
     </div >
   );
