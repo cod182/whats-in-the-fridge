@@ -98,7 +98,7 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
 
       {/* Type of item Creation */}
       <div>
-        {addType === 'search' && <SearchAddItems selectedArea={selectedArea} availableItems={availableItems} userId={userId} showItemTypes={true} />}
+        {addType === 'search' && <SearchAddItems selectedArea={selectedArea} preMadeItems={availableItems} userCreatedItems={userCreatedItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />}
         {addType === 'options' && <OptionAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} showItemTypes={true} />}
         {addType === 'custom' && <CustomAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />}
         {addType === 'userCreated' && <OptionAddItem selectedArea={selectedArea} availableItems={userCreatedItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} showItemTypes={false} />}
