@@ -1,9 +1,10 @@
 'use client'
 
-import { FaChevronCircleDown, FaChevronCircleUp, FaSearch } from 'react-icons/fa'
 import React, { useState } from 'react'
 
+import { FaChevronCircleUp } from 'react-icons/fa'
 import ItemCard from '../Appliances/ItemCard';
+import { setTimeout } from 'timers';
 
 type Props = {
   items: applianceItem[];
@@ -23,6 +24,7 @@ const ItemSearch = ({ items, handleUpdateItems }: Props) => {
     setShowResults(true); // Sets the results state to show
     // If the search term is empty
     if (searchTerm.trim() === "") {
+      setShowResults(false); // Sets the results state to show
       return; // Exit early if the search term is empty
     }
     // Search the array of items

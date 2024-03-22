@@ -161,7 +161,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
 
   return (
     <>
-      {inSearch && (<div className="text-normal text-sm bg-gray-300 rounded-lg px-2 py-[5px] ">Located in: <span className="capitalize">{item.compartment}</span> {item.locationType === 'shelf' ? 'on' : 'in'} {item.locationType} {item.level} {item.position != 128 && (` at position ${item.position}`)}</div>)}
+      {inSearch && (<div className="mx-auto w-[97%] text-normal text-sm bg-gray-300 rounded-t-lg border-t-[1px] border-l-[1px] border-r-[1px] border-gray-600 px-2 py-[5px] "><span className="capitalize">{item.compartment}</span> {item.locationType === 'shelf' ? 'on' : 'in'} {item.locationType} {item.level} {item.position != 128 && (` at position ${item.position}`)}</div>)}
 
       <div
         id={`${item.name.toLowerCase().replace(/\s/g, '-')}-${item.id}-container`}
