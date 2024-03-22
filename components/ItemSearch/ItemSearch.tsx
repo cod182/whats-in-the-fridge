@@ -74,7 +74,6 @@ const ItemSearch = ({ items, handleUpdateItems }: Props) => {
           </div>
         </div>
       </div>
-
     </div >
   )
 }

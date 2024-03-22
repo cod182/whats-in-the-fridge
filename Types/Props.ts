@@ -80,6 +80,7 @@ type selectionProps = {
 }
 
 interface availableItem {
+  id: number;
   name: string;
   itemMainType: string;
   itemType: string;
