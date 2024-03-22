@@ -9,17 +9,17 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
   const headersList = headers();
   const ownerId = headersList.get("ownerId");
 
-
-  if (!ownerId) {
-    return NextResponse.json({ message: 'No ownerId Provided' });
+  console.log(params)
+  if (!ownerId || ownerId === 'undefined') {
+    return new Response('No Owner Id Provided', { status: 400, statusText: 'No Owner Id Provided' })
   }
 
-  if (!params.id) {
-    return NextResponse.json({ message: 'No item Id provided' });
+  if (!params.id || params.id === 'undefined') {
+    return new Response('No Item Id Provided', { status: 400, statusText: 'No Item Id Provided' })
   }
 
   try {
-    const response = await executeQuery(`DELETE FROM applianceItems WHERE id=${params.id} AND ownerid=${ownerId}`);
+    const response = await executeQuery('DELETE FROM applianceItems WHERE id = ? AND ownerid = ?', [params.id, ownerId]);
     console.log('deleted')
     return NextResponse.json(response);
   } catch (error: any) {
@@ -27,3 +27,44 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
 
   }
 }
+
+export const PUT = async (request: NextRequest, params: any, response: NextResponse) => {
+  try {
+    const {
+      id,
+      applianceid,
+      ownerid,
+      quantity,
+      expiryDate,
+      comment,
+    } = await request.json();
+
+    if (!id || !applianceid || !ownerid) {
+      return new Response('An Id is missing', { status: 400, statusText: 'An ID is missing' })
+    }
+
+    if (!quantity) {
+      return new Response('Quantity is missing', { status: 400, statusText: 'Quantity is missing' })
+
+    }
+
+    // SQL query with parameterized values
+    const query = `UPDATE applianceItems SET quantity = ?, expiryDate = ?, comment = ? WHERE id = ? AND ownerid = ? AND applianceid = ?`;
+    const queryResponse = await executeQuery(query, [
+      quantity,
+      expiryDate,
+      comment,
+      id,
+      ownerid,
+      applianceid,
+    ]);
+
+    console.log(queryResponse);
+
+    // Return success response
+    return new Response('', { status: 200, statusText: 'Success' });
+  } catch (error: any) {
+    console.error(error);
+    return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error', message: error.message }), { status: 500 });
+  }
+};

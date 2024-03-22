@@ -20,6 +20,7 @@ const handler = NextAuth({
         // store the user id from MySQl to Session
         const sessionUser = await executeQuery(`SELECT * FROM user WHERE email = '${session.user.email}'`);
         session.user.id = sessionUser[0].id.toString();
+
         return session;
       }
     },
