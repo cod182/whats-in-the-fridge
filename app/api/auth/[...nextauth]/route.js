@@ -12,8 +12,8 @@ const handler = NextAuth({
   ],
   callbacks: {
     async session({ session }) {
-      // console.log('In Session Callback')
-      if (!session ? .user) {
+      // console.log('In Session Calback')
+      if (!session.user) {
         // console.log('No Session User')
         return session
       } else {
