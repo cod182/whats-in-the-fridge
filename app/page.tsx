@@ -3,9 +3,7 @@ import { WelcomeArea } from '@/components';
 const page = () => {
   return (
     <div>
-      <div>
-        <WelcomeArea />
-      </div>
+      <WelcomeArea />
     </div>
   );
 };

@@ -1,11 +1,10 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { RedirectType, redirect, useRouter } from 'next/navigation';
 
 import Image from 'next/image';
 import { appliances } from '../../static/appliances'
-import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 interface FormData {
   applianceName: string;
@@ -15,31 +14,28 @@ interface FormData {
 
 type Props = {
   formType: string;
+  userId: string
 }
 
 
-const ApplianceForm = ({ formType }: Props) => {
-
-  const { data: session } = useSession();
+const ApplianceForm = ({ formType, userId }: Props) => {
   const router = useRouter();
-
-  let user: any;
-
-  if (session) {
-    user = session.user
-  }
 
   const [formData, setFormData] = useState<FormData>({
     applianceName: '',
     applianceType: '',
     userId: 0,
   });
+
+  // States
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
+
+
   useEffect(() => {
-    setFormData({ ...formData, userId: parseInt(user.id) });
-  }, [user])
+    setFormData({ ...formData, userId: parseInt(userId) });
+  }, [userId])
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
