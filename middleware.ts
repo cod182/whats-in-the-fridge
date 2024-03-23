@@ -9,6 +9,16 @@ export default async function middleware(req: NextRequest) {
   //   console.log('Relaying auth cookie...');
   //   req.cookies.set({ ...req.cookies.get('__Secure-next-auth.session-token'), name: 'next-auth.session-token' });
   // }
+
+  const url = new URL(req.url);
+  const origin = url.origin;
+  const pathname = url.pathname;
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set('x-url', req.url);
+  requestHeaders.set('x-origin', origin);
+  requestHeaders.set('x-pathname', pathname);
+
+
   const token = await getToken({ req });
   const isAuthenticated = !!token;
 
@@ -21,14 +31,19 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (req.nextUrl.pathname.startsWith('/')) {
-    return NextResponse.next()
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      }
+    });
   }
 
   return await withAuth(req as NextRequestWithAuth, {
     // Specify the login page
     pages: {
       signIn: '/login',
-    }
+    },
+
   });
 }
 

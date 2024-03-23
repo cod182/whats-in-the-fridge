@@ -39,7 +39,7 @@ const Nav = async () => {
           </ul>
         </div>
         <div className="flex items-center justify-center w-full">
-          <Image src={logo} alt="Logo" className="w-[400px] h-auto" />
+          <Image priority src={logo} alt="Logo" className="w-[400px] h-auto" />
         </div>
         <div className="flex-row items-center justify-around hidden w-full sm:flex">
           <ul className="flex flex-row items-center justify-start">

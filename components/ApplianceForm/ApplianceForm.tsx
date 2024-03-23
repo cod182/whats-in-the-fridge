@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
+import { getSession, useSession } from 'next-auth/react';
 
 import Image from 'next/image';
 import { appliances } from '../../static/appliances'
@@ -9,34 +10,35 @@ import { useRouter } from 'next/navigation';
 interface FormData {
   applianceName: string;
   applianceType: string;
-  userId: number;
+  userId: string;
 }
 
 type Props = {
   formType: string;
-  userId: string
+  userId: string;
 }
 
 
 const ApplianceForm = ({ formType, userId }: Props) => {
   const router = useRouter();
 
+  // States
   const [formData, setFormData] = useState<FormData>({
     applianceName: '',
     applianceType: '',
-    userId: 0,
+    userId: '0',
   });
 
-  // States
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
-
-
+  // Use Effects
   useEffect(() => {
-    setFormData({ ...formData, userId: parseInt(userId) });
+    setFormData({ ...formData, userId: userId });
   }, [userId])
 
+
+  // Functions
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -82,7 +84,6 @@ const ApplianceForm = ({ formType, userId }: Props) => {
 
   return (
     <>
-
       <div className={`w-full bg-gray-300/40  border-red-600/40 flex flex-col justify-center items-center transition-opacity duration-200 ease ${error != '' ? 'h-[40px] border-[1px]' : 'h-0 border-0'}`}>
         {error}
       </div>
