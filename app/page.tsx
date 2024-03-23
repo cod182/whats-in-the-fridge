@@ -2,7 +2,7 @@ import { WelcomeArea } from '@/components';
 
 const page = () => {
   return (
-    <div>
+    <div className='grow'>
       <WelcomeArea />
     </div>
   );

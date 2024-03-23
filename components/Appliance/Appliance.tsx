@@ -154,7 +154,9 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
             }
           </div>
         </Modal>
-        {getAppliance()}
+        <div className='grow'>
+          {getAppliance()}
+        </div>
 
       </>
     )

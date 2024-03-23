@@ -21,9 +21,9 @@ const LoginWindow = () => {
   }, []);
 
   return (
-    <div className='mt-4 p-4 w-full h-full flex flex-col justify-center items-center'>
-      <h1 className='text-bold text-5xl underline'>Login</h1>
-      <div className='mt-4 flex flex-col justify-center items-center '>
+    <div className='mt-4 w-fit mx-auto h-full min-w-[50vw] min-h-[50vh] max-w-[500px] max-h-[500px] bg-gray-100/40 rounded-lg p-10 border-[1px] border-gray-700 flex flex-col items-center'>
+      <h1 className='text-bold text-5xl underline'>Login / Register</h1>
+      <div className='mt-8 flex flex-col items-center justify-center grow'>
         {providers ?
           Object.values(providers).map((provider) => (
             <button
@@ -32,7 +32,7 @@ const LoginWindow = () => {
               onClick={() => {
                 signIn(provider.id, { callbackUrl: '/profile' });
               }}
-              className="py-2 px-4 bg-gray-100 rounded-md border-gray-500 border-[1px] border-b-[5px] hover:border-b-[1px] hover:translate-y-1 transition-all duration-200 ease flex flex-row justify-around items-center"
+              className="py-2 px-4 bg-gray-100 rounded-md border-gray-500 border-[1px] border-b-[5px] hover:border-b-[1px] hover:translate-y-1 hover:mb-1 transition-all duration-200 ease flex flex-row justify-around items-center"
             >
               {provider.id === 'google' && (
                 <IoLogoGoogle />
@@ -43,7 +43,7 @@ const LoginWindow = () => {
             </button>
           )) : (
             <>
-              <p>Loading...</p>
+              <p className="animate-pulse py-2 px-4 bg-gray-100 rounded-md border-gray-500 border-[1px] border-b-[5px]  transition-all duration-200 ease flex flex-row justify-around items-center">Loading Providers...</p>
             </>
           )}
       </div>

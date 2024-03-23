@@ -13,7 +13,7 @@ export const authOptions = {
   callbacks: {
     async session({ session }) {
 
-      if (!session.user) {
+      if (!session ? .user) {
         console.log('No Session User')
         return session
       } else {

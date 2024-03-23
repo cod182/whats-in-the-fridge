@@ -73,13 +73,13 @@ const AppliancePage = () => {
 
   if (loading) {
     return (
-      <div className='flex flex-col items-center justify-center w-full my-10 overflow-hidden h-fit'>
+      <div className='flex flex-col items-center justify-center w-full my-10 overflow-hidden h-fit grow'>
         <FridgeLoader />
       </div>
     );
   } else if (!loading && appliance && applianceItems) {
     return (
-      <div className="container p-0 mx-auto sm:p-8">
+      <div className="container p-0 mx-auto sm:p-8 grow">
         <h1 className="mb-4 text-3xl font-bold">{appliance.name}</h1>
         <Appliance type={appliance.type} items={applianceItems} updateItems={setApplianceItems} userId={user.id} />
       </div>

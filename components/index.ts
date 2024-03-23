@@ -18,3 +18,5 @@ export { default as ChestFreezer } from './Appliances/ChestFreezer/ChestFreezer_
 export { default as ApplianceForm } from './ApplianceForm/ApplianceForm';
 export { default as PageTitle } from './PageTitle/PageTitle';
 export { default as ItemSearch } from './ItemSearch/ItemSearch';
+export { default as AccountOptions } from './Profile/AccountOptions';
+export { default as DeleteButton } from './DeleteButton/DeleteButton';

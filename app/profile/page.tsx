@@ -1,9 +1,10 @@
 import { ProfileHome } from "@/components"
-
 const page = () => {
 
   return (
-    <ProfileHome />
+    <div className="grow">
+      <ProfileHome />
+    </div>
   )
 }
 

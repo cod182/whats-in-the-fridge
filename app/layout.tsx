@@ -4,7 +4,6 @@ import { Nav, Provider } from '@/components';
 
 import Footer from '@/components/Footer/Footer';
 import type { Metadata } from 'next';
-import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
   title: "What's in the fridge?",
@@ -22,7 +21,7 @@ export default async function RootLayout({
     <html lang="en">
       <head></head>
 
-      <body className="max-w-6xl mx-auto bg-[#88caff]">
+      <body className="max-w-6xl mx-auto bg-[#88caff] min-h-[100vh] flex flex-col">
         <Provider>
           <Nav />
           {children}

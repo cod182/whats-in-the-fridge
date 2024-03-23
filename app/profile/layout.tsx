@@ -11,17 +11,17 @@ const layout = async ({
 }) => {
 
   const session = await getServerSession(nextAuthOptions);
-  if (!session.user) {
+  if (!session?.user) {
     redirect('/login');
   }
   const headersList = headers();
   const pathname = headersList.get("x-pathname") || "";
 
   return (
-    <>
+    <div className='grow'>
       <ProfileNav path={pathname} />
       {children}
-    </>
+    </div>
   )
 }
 
