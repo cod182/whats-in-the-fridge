@@ -4,6 +4,11 @@ import { NextRequestWithAuth, withAuth } from 'next-auth/middleware';
 import { getToken } from 'next-auth/jwt';
 
 export default async function middleware(req: NextRequest) {
+  // Setting the Secure cookie
+  // if (!req.cookies.has('next-auth.session-token') && req.cookies.has('__Secure-next-auth.session-token')) {
+  //   console.log('Relaying auth cookie...');
+  //   req.cookies.set({ ...req.cookies.get('__Secure-next-auth.session-token'), name: 'next-auth.session-token' });
+  // }
   const token = await getToken({ req });
   const isAuthenticated = !!token;
 

@@ -7,7 +7,7 @@ const Footer = () => {
       <Link className='text-sm font-normal hover:text-white active:text-blue-100 transition-all duration-200 ease' href={`/privacy-policy`}>Privacy Policy</Link>
       <Link className='text-sm font-normal hover:text-white active:text-blue-100 transition-all duration-200 ease' href={`/cookies`}>Cookies</Link>
       <Link className='text-sm font-normal hover:text-white active:text-blue-100 transition-all duration-200 ease' href={`/terms`}>Terms & Conditions</Link>
-
+      <p className='font-bold text-sm'>*Educational Use Only*</p>
     </div>
   )
 }
