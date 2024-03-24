@@ -1,9 +1,13 @@
 import { AccountOptions, PageTitle } from '@/components';
 
+import { Metadata } from 'next'
 import { getServerSession } from 'next-auth';
 import { nextAuthOptions } from '@/lib/nextAuthOptions';
 import { redirect } from 'next/navigation';
 
+export const metadata: Metadata = {
+  title: 'Settings',
+}
 const page = async () => {
   const session = await getServerSession(nextAuthOptions);
   if (!session?.user) {

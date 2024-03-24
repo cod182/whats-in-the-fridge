@@ -1,4 +1,9 @@
 import { LoginWindow } from "@/components";
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Login / Register',
+}
 
 const page = () => {
 

@@ -1,8 +1,16 @@
+import { Metadata } from 'next'
 import { ProfileNav } from '@/components'
 import { getServerSession } from 'next-auth';
 import { headers } from 'next/headers';
 import { nextAuthOptions } from '@/lib/nextAuthOptions';
 import { redirect } from 'next/navigation';
+
+export const metadata: Metadata = {
+  title: {
+    template: 'WITF?! | %s',
+    default: 'Profile', // a default is required when creating a template
+  },
+}
 
 const layout = async ({
   children,
