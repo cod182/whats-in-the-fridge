@@ -80,7 +80,7 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
     // Gets all the items in teh database that can be added to the appliance
     getAvailableItemsToAdd();
 
-  }, [type, appliance, userId])
+  }, [type, appliance, userId, applianceData.name])
 
 
   // Functions
@@ -141,6 +141,7 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
         }, 1000);
       } if (!response.ok) {
         setErrorMessage(response.statusText)
+        setLoading(false);
         setTimeout(() => {
           setErrorMessage(null)
           setApplianceName(applianceData.name)
