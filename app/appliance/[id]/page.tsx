@@ -1,6 +1,6 @@
 'use client'
 
-import { Appliance, FridgeLoader } from '@/components';
+import { Appliance, ExpiryNotification, FridgeLoader } from '@/components';
 import { getAppliance, getApplianceItems } from '@/utilities/functions';
 import { useEffect, useState } from 'react';
 
@@ -81,6 +81,9 @@ const AppliancePage = () => {
     return (
       <div className="container p-0 mx-auto sm:p-8 grow">
         {/* <h1 className="mb-4 text-3xl font-bold">{appliance.name}</h1> */}
+        <div className='w-[40%] h-fit'>
+          <ExpiryNotification items={applianceItems} />
+        </div>
         <Appliance type={appliance.type} applianceData={appliance} items={applianceItems} updateItems={setApplianceItems} userId={user.id} />
       </div>
     )

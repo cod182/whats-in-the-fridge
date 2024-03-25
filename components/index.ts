@@ -20,3 +20,4 @@ export { default as PageTitle } from './PageTitle/PageTitle';
 export { default as ItemSearch } from './ItemSearch/ItemSearch';
 export { default as AccountOptions } from './Profile/AccountOptions';
 export { default as DeleteButton } from './DeleteButton/DeleteButton';
+export { default as ExpiryNotification } from './ExpiryNotification/ExpiryNotification';
