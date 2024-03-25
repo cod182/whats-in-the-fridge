@@ -27,7 +27,7 @@ const MobileNav = () => {
           </div>
 
           <div className="flex items-center justify-center w-full">
-            <Image src={logo} alt="Logo" className="w-[400px] h-auto" />
+            <Image priority src={logo} alt="Logo" className="w-[400px] h-auto" />
           </div>
         </div>
       </nav>
