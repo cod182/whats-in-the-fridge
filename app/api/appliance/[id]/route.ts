@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
 import { executeQuery } from "@/lib/db";
@@ -25,3 +26,39 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
 
   }
 }
+
+
+export const PUT = async (request: NextRequest, params: any, response: NextResponse) => {
+  try {
+    const { newName, userId } = await request.json();
+    console.log('owner', userId, 'New Name', newName, 'app id', params.params.id);
+
+    if (!params.params.id) {
+      return new Response('An appliance id is missing', { status: 400, statusText: 'An appliance id is missing' });
+    }
+
+    if (!newName) {
+      return new Response('A new appliance name is missing', { status: 400, statusText: 'A new appliance name is missing' });
+    }
+
+    if (!userId) {
+      return new Response('Owner id is missing', { status: 400, statusText: 'Owner id is missing' });
+    }
+
+    // SQL query with parameterized values
+    const query = `UPDATE appliances SET name = ? WHERE id = ? AND ownerid = ?`;
+    const queryResponse = await executeQuery(query, [
+      newName,
+      params.params.id,
+      userId
+    ]);
+
+    console.log('RESPONSE', queryResponse);
+
+    // Return success response
+    return new Response('', { status: 200, statusText: 'Success: Appliance Renamed' });
+  } catch (error: any) {
+    console.error(error);
+    return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error, Please try again', message: error.message }), { status: 500 });
+  }
+};

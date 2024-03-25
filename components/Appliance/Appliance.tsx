@@ -6,6 +6,11 @@ import React, { useState } from 'react';
 import { getAllAddableItems, getItemsInThisLocation, toggleBodyScrolling } from '@/utilities/functions';
 
 import AddItem from '../AddingItems/AddItem';
+import { BiDotsHorizontalRounded } from 'react-icons/bi';
+import { FaEdit } from 'react-icons/fa';
+import { IoSaveSharp } from 'react-icons/io5';
+import { MdCancel } from 'react-icons/md';
+import { TiTick } from 'react-icons/ti';
 import ViewItems from '../Appliances/ViewItems';
 import { appliances } from '@/static/appliances';
 import { useEffect } from 'react';
@@ -15,9 +20,10 @@ type Props = {
   items: applianceItem[];
   updateItems: (items: applianceItem[]) => void;
   userId: string;
+  applianceData: appliance;
 }
 
-const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
+const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Props) => {
   // States
 
   // The modal State for open or closed
@@ -25,6 +31,17 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
 
   // The appliance state. Contains the current appliance
   const [appliance, setAppliance] = useState<ApplianceProp>();
+  // State for the type of modal
+  const [modalType, setModalType] = useState<'add' | 'view'>();
+  const [availableItems, setAvailableItems] = useState<availableItem[]>([])
+  const [userCreatedItems, setUserCreatedItems] = useState<userCreatedItem[]>([])
+  // Related to updaing the name of the appliance
+  const [currentApplianceName, setCurrentApplianceName] = useState(applianceData.name)
+  const [editName, setEditName] = useState<boolean>(false)
+  const [applianceName, setApplianceName] = useState<string>('')
+  const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>()
+  const [success, setSuccess] = useState(false)
 
   // The state for the currently selected area (e.g shelf 0 position 0)
   // Contains the level (shelf / drawer number), compartment (e.g fridge, freezer, door), and optional position (0,1,2)
@@ -37,10 +54,6 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
     position: 128,
   });
 
-  // State for the type of modal
-  const [modalType, setModalType] = useState<'add' | 'view'>();
-  const [availableItems, setAvailableItems] = useState<availableItem[]>([])
-  const [userCreatedItems, setUserCreatedItems] = useState<userCreatedItem[]>([])
 
   // Use Effects
   useEffect(() => {
@@ -50,6 +63,8 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
           setAppliance(applianceChoice);
         }
       })
+      setCurrentApplianceName(applianceData.name)
+      setApplianceName(applianceData.name)
     };
 
     // Fetches all the available items to add
@@ -105,6 +120,38 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
     }
   };
 
+  const handleChangeApplianceName = async (e: any) => {
+    e.preventDefault()
+    setLoading(true);
+    try {
+      let response = await fetch(`/api/appliance/${applianceData.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ newName: applianceName, userId: userId.toString(), })
+      });
+      if (response.ok) {
+        setCurrentApplianceName(applianceName)
+        setLoading(false);
+        setSuccess(true)
+        setTimeout(() => {
+          setSuccess(false)
+          setEditName(false)
+        }, 1000);
+      } if (!response.ok) {
+        setErrorMessage(response.statusText)
+        setTimeout(() => {
+          setErrorMessage(null)
+          setApplianceName(applianceData.name)
+        }, 1500);
+
+      }
+    } catch (error: any) {
+      console.log(error)
+    }
+  }
+
   // Called to handle what happens when and items is edited or deleted
   // Gets the updated items from as a props
   // Updated the items by callback to items state by updateItems()
@@ -155,8 +202,24 @@ const Appliance = ({ type = '', items, updateItems, userId }: Props) => {
           </div>
         </Modal>
         <div className='grow'>
+          {/* Fridge Name */}
+          <div className='flex flex-row items-center justify-start gap-2 mb-2'>
+            <h1 className={`${editName ? 'max-w-[0px]' : 'max-w-[300px]'}  h-[36px] overflow-hidden text-3xl font-bold transition-all duration-200 ease`}>{currentApplianceName} </h1>
+            {/* Edit Form */}
+            <form action="" method='PUT' onSubmit={(e) => handleChangeApplianceName(e)} className={`${!editName ? 'max-w-[0px]' : 'max-w-[1000px]'} left-0 text-3xl font-bold overflow-hidden transition-all duration-200 ease flex flex-row items-center gap-2`}>
+              <input className={`py-[5px] px-2 rounded-md ${!applianceName ? 'border-red-400' : 'border-black'}`} type="text" value={applianceName} onChange={(e) => setApplianceName(e.target.value)} />
+              <button className='' type="submit"><IoSaveSharp className={`w-[25px] h-[25px] hover:text-green-600 transition-all duration-200 ease ${loading || success ? 'hidden' : ''}`} /></button>
+            </form>
+            <MdCancel className={`w-[25px] h-[25px] hover:text-red-500 transition-all duration-200 ease cursor-pointer ${editName ? (loading || success ? 'hidden' : '') : 'hidden'}`} onClick={() => { setEditName(false); setApplianceName(currentApplianceName) }} />
+            {/* Edit BUtton */}
+            <FaEdit className={`${editName ? 'hidden' : ''} text-2xl text-blue-600 hover:scale-110 hover:text-gray-200 transition-all duration-200 ease cursor-pointer`} onClick={() => { setEditName(true); }} />
+            <div className={`bg-gray-800/60 text-red-500 font-semibold overflow-hidden transition-all duration-200 ease  ${errorMessage ? 'max-w-[1000px] overflow-scroll py-[5px] px-2 rounded-lg' : 'max-w-[0px] p-0'}`}>{errorMessage}</div>
+            <TiTick className={`${success && editName ? 'h-[40px] w-[40px] text-green-500' : 'hidden'} transition-all duration-200 ease`} />
+            <BiDotsHorizontalRounded className={`${loading && editName ? 'h-[40px] w-[40px] text-blue-500' : 'hidden'} animate-spin transition-all duration-200 ease`} />
+          </div>
+
           {getAppliance()}
-        </div>
+        </div >
 
       </>
     )
