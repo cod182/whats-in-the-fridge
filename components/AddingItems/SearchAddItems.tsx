@@ -179,7 +179,7 @@ const SearchAddItems = ({ preMadeItems, userCreatedItems, selectedArea, userId, 
               <div className={`flex flex-row gap-x-2 items-center transition-all duration-200 ease overflow-hidden rounded-md mt-2 sm:mt-0 w-full sm:px-4`}>
                 <input type="text" className='rounded-md border-[1px] border-black px-4 text-gray-500 h-[40px] w-full' value={searchQuery} placeholder='Search for an item' onChange={(e) => { handleSearch(e.target.value); setSearchQuery(e.target.value); }} />
                 {/* Buttons for selecting between items if usercreated items are avvailable*/}
-                {UserCreatedItems.length >= 1 && (
+                {userCreatedItems.length > 0 && (
                   <div className='flex flex-row items-center gap-x-[5px]'>
                     <button
                       className={`w-[30px] h-[30px] rounded-md flex items-center justify-center ${selectedItemsGroup === 'pre' ? 'bg-green-400 hover:bg-green-300 active:bg-green-400' : 'bg-blue-400 hover:bg-blue-300 active:bg-blue-400'} transition-all duration-200 ease`}

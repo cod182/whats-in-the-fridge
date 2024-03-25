@@ -1,6 +1,7 @@
 'use client'
 
 import { ChestFreezer, FridgeFreezer, Modal } from '..';
+import { IoCloseCircle, IoSaveSharp } from 'react-icons/io5';
 // components/Fridge.tsx
 import React, { useState } from 'react';
 import { getAllAddableItems, getItemsInThisLocation, toggleBodyScrolling } from '@/utilities/functions';
@@ -8,7 +9,6 @@ import { getAllAddableItems, getItemsInThisLocation, toggleBodyScrolling } from 
 import AddItem from '../AddingItems/AddItem';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import { FaEdit } from 'react-icons/fa';
-import { IoSaveSharp } from 'react-icons/io5';
 import { MdCancel } from 'react-icons/md';
 import { TiTick } from 'react-icons/ti';
 import ViewItems from '../Appliances/ViewItems';
