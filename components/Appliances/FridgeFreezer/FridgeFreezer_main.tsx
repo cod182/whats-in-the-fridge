@@ -26,11 +26,12 @@ const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handl
         <p className='text-sm italic text-gray-700'>{appliance.description}</p>
       </div>
 
-      <div className='w-fit h-fit'>
-        <ExpiryNotification layout='horizontal' items={items} />
-      </div>
 
       <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
+
+      <div className='w-fit mx-auto h-fit'>
+        <ExpiryNotification layout='horizontal' items={items} />
+      </div>
 
 
       <div className='max-w-[400px] h-[800px] rounded-md md:p-1 border-2 border-black bg-gray-100 relative mr-2 xs:mx-auto sm:mx-0 lg:mx-auto'>

@@ -129,7 +129,7 @@ const ExpiryNotification = ({ items, layout = 'vertical' }: Props) => {
   }
   if (expiringItems) {
     return (
-      <div className={`flex ${layout === 'vertical' ? 'flex-col items-center justify-normal' : 'md:flex-row flex-wrap flex-col items-start justify-start gap-x-2'} w-full h-fit  rounded-md p-2`}>
+      <div className={`flex ${layout === 'vertical' ? 'flex-col items-center justify-normal' : 'md:flex-row flex-wrap flex-col items-start justify-start gap-x-2'} w-full h-fit rounded-md p-2`}>
         {expiringItems.map((expiryObj) =>
           expiryObj.items.length > 0 && (
             <button
