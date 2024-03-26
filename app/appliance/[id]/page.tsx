@@ -81,7 +81,7 @@ const AppliancePage = () => {
     return (
       <div className="container p-0 mx-auto sm:p-8 grow">
         {/* <h1 className="mb-4 text-3xl font-bold">{appliance.name}</h1> */}
-        <div className='w-[40%] h-fit'>
+        <div className='w-fit h-fit'>
           <ExpiryNotification items={applianceItems} />
         </div>
         <Appliance type={appliance.type} applianceData={appliance} items={applianceItems} updateItems={setApplianceItems} userId={user.id} />
