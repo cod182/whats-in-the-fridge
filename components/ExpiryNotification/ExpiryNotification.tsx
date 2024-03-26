@@ -42,7 +42,6 @@ const ExpiryNotification = ({ items, layout = 'vertical' }: Props) => {
 
       items.forEach(item => {
         if (!item.expiryDate) {
-          console.log(`${item.name} has no expiry set`)
           return;
         }
 
@@ -66,11 +65,9 @@ const ExpiryNotification = ({ items, layout = 'vertical' }: Props) => {
               four.push(item)
               break;
             default:
-              console.log(`${item.name} has a while yet`)
               break;
           }
         } else {
-          console.log('pushing expired', item.name)
           expired.push(item)
         }
       });
