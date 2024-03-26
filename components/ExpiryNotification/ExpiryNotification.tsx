@@ -129,15 +129,15 @@ const ExpiryNotification = ({ items, layout = 'vertical' }: Props) => {
   }
   if (expiringItems) {
     return (
-      <div className={`flex ${layout === 'vertical' ? 'flex-col items-center justify-normal' : 'flex-row flex-wrap md:flex-nowrap items-start justify-start gap-x-2'} w-full h-fit bg-blue-400/30 border-[1px] border-black rounded-md p-2`}>
+      <div className={`flex ${layout === 'vertical' ? 'flex-col items-center justify-normal' : 'md:flex-row flex-wrap flex-col items-start justify-start gap-x-2'} w-full h-fit  rounded-md p-2`}>
         {expiringItems.map((expiryObj) =>
           expiryObj.items.length > 0 && (
             <button
               key={expiryObj.name.replace(' ', '_')}
               onClick={() => setSelectedExpiry((prev) => prev === expiryObj.name.replace(' ', '_') ? null : expiryObj.name.replace(' ', '_'))}
-              className={`group h-fit my-1 py-[2px] flex flex-col items-start justify-center overflow-hidden ${expiryObj.name === 'expired' ? 'bg-red-500/70 font-bold hover:bg-red-500/80 active:bg-red-500/90' : 'bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500/90'} active:shadow-inner w-full rounded-lg transition-all duration-200 ease cursor-pointer select-none`}
+              className={`group h-fit my-1 py-[2px] flex flex-col items-start justify-center overflow-hidden ${expiryObj.name === 'expired' ? 'bg-red-500/70 font-bold hover:bg-red-500/80 active:bg-red-500/90' : 'bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500/90'} active:shadow-inner w-fit rounded-lg transition-all duration-200 ease cursor-pointer select-none`}
             >
-              {/* Notification Bar */}
+              {/* TOP Notification Bar */}
               <div className='flex flex-row items-center justify-between w-full px-2' onClick={() => { }}>
                 <p className={`text-md text-start ${expiryObj.name === 'expired' ? 'font-bold' : 'font-normal'}`}>{getExpiryText(expiryObj.name)} {expiryObj.name === 'expired' && (<IoIosWarning className="inline text-yellow-300" />)}</p>
                 <div className='ml-2 rounded-full bg-red-600 h-[22px] w-[22px] text-gray-100 text-sm select-none flex flex-col justify-center items-center'>
@@ -146,6 +146,7 @@ const ExpiryNotification = ({ items, layout = 'vertical' }: Props) => {
                   </p>
                 </div>
               </div>
+
               {/* Items that have / are expiring */}
               <div className={`${selectedExpiry === expiryObj.name.replace(' ', '_') ? 'max-h-[400px] overflow-scroll py-[5px]' : 'max-h-[0px] overflow-hidden'} transition-all duration-200 ease flex flex-col items-start justify-start gap-y-2 w-full`}>
                 <hr className="w-full border-black" />
