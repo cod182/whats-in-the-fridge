@@ -79,10 +79,10 @@ const AppliancePage = () => {
     );
   } else if (!loading && appliance && applianceItems) {
     return (
-      <div className="container p-0 mx-auto sm:p-8 grow">
+      <div className="sm:container p-0 sm:mx-auto sm:p-8 grow">
         {/* <h1 className="mb-4 text-3xl font-bold">{appliance.name}</h1> */}
         <div className='w-fit h-fit'>
-          <ExpiryNotification items={applianceItems} />
+          <ExpiryNotification layout='horizontal' items={applianceItems} />
         </div>
         <Appliance type={appliance.type} applianceData={appliance} items={applianceItems} updateItems={setApplianceItems} userId={user.id} />
       </div>

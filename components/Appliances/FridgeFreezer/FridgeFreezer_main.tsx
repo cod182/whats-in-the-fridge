@@ -30,7 +30,7 @@ const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handl
       <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
 
 
-      <div className='max-w-[400px] h-[800px] rounded-md p-1 border-2 border-black bg-gray-100 relative mx-3 sm:mx-auto md:mx-0 midLg:mx-auto lg:mx-auto '>
+      <div className='max-w-[400px] h-[800px] rounded-md md:p-1 border-2 border-black bg-gray-100 relative mr-4 mx-0 sm:mx-auto md:mx-0 midLg:mx-auto lg:mx-auto '>
 
         {/* Door Start*/}
         {/* Door Compartment */}
