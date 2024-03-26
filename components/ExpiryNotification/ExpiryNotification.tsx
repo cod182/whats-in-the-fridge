@@ -1,8 +1,9 @@
 'use client'
 
+import { calculateFutureDate, reverseDate } from "@/utilities/functions";
 import { useEffect, useState } from "react";
 
-import { calculateFutureDate } from "@/utilities/functions";
+import { reverse } from "dns";
 import { time } from "console";
 
 type Props = {
@@ -18,7 +19,7 @@ const ExpiryNotification = ({ items }: Props) => {
   }
   // States
   const [expiringItems, setExpiringItems] = useState<expiringItem[]>()
-
+  const [selectedExpiry, setSelectedExpiry] = useState<string | null>()
 
   // Use Effects
 
@@ -126,23 +127,38 @@ const ExpiryNotification = ({ items }: Props) => {
         break;
     }
   }
-  console.log(expiringItems)
   if (expiringItems) {
     return (
-      <div className={`flex flex-col items-center justify-normal w-full h-fit bg-gray-400/30 border-[1px] border-black rounded-md p-2`}>
+      <div className={`flex flex-col items-center justify-normal w-full h-fit bg-blue-400/30 border-[1px] border-black rounded-md p-2`}>
         {expiringItems.map((expiryObj) =>
           expiryObj.items.length > 0 && (
-            <div key={expiryObj.name} className={`my-1 py-[2px] flex flex-col items-start justify-center bg-gray-500/60 hover:bg-gray-500/70 active:bg-gray-500/90 ${expiryObj.name === 'expired' && 'bg-red-400 font-bold'} active:shadow-inner w-full px-4 rounded-lg transition-all duration-200 ease cursor-pointer select-none`} >
+            <button
+              key={expiryObj.name.replace(' ', '_')}
+              onClick={() => setSelectedExpiry((prev) => prev === expiryObj.name.replace(' ', '_') ? null : expiryObj.name.replace(' ', '_'))}
+              className={`group h-fit my-1 py-[2px] flex flex-col items-start justify-center overflow-hidden ${expiryObj.name === 'expired' ? 'bg-red-400 font-bold hover:bg-red-500/70 active:bg-red-500/90' : 'bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500/90'} active:shadow-inner w-full rounded-lg transition-all duration-200 ease cursor-pointer select-none`}
+            >
               {/* Notification Bar */}
-              <div className='flex flex-row items-center justify-between w-full' onClick={() => { }}>
+              <div className='flex flex-row items-center justify-between w-full px-2' onClick={() => { }}>
                 <p className={`text-md text-start ${expiryObj.name === 'expired' && 'font-bold'}`}>{getExpiryText(expiryObj.name)} </p>
-                <div className='rounded-full bg-red-600 h-[22px] w-[22px] text-gray-100 text-sm select-none flex flex-col justify-center items-center'>
+                <div className='ml-2 rounded-full bg-red-600 h-[22px] w-[22px] text-gray-100 text-sm select-none flex flex-col justify-center items-center'>
                   <p>
                     {expiryObj.items.length || 0}
                   </p>
                 </div>
               </div>
-            </div >
+              {/* Items that have / are expiring */}
+              <div className={`${selectedExpiry === expiryObj.name.replace(' ', '_') ? 'max-h-[400px] overflow-scroll py-[5px]' : 'max-h-[0px] overflow-hidden'} transition-all duration-200 ease flex flex-col items-start justify-start gap-y-2 w-full`}>
+                <hr className="w-full border-black" />
+                <div className={`px-2 transition-all duration-200 ease flex flex-col items-start justify-start gap-y-2 w-full`}>
+                  {expiryObj.items.map((item) => (
+                    <div key={item.name.replace(' ', '_')} className="text-gray-300 w-full h-fit flex flex-col items-start justify-start bg-gray-800/60 rounded-lg px-2 py-[5px]">
+                      <p className='text-md font-normal' >{item.name}</p>
+                      <p className=" font-normal text-sm capitalize">Location: {item.compartment} {item.locationType} {item.level}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </button >
           )
         )}
       </div >

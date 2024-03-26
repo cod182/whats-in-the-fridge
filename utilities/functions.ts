@@ -203,7 +203,7 @@ export const generateUniqueId = () => {
   return uniqueId;
 }
 
-export function calculateFutureDate(daysToAdd: number): string {
+export const calculateFutureDate = (daysToAdd: number): string => {
   const now: Date = new Date();
   const futureDate: Date = new Date(now.getTime() + daysToAdd * 24 * 60 * 60 * 1000); // Adding days in milliseconds
 
@@ -215,7 +215,7 @@ export function calculateFutureDate(daysToAdd: number): string {
   // return `${futureDay}${getOrdinalSuffix(futureDay)} of ${getMonthName(futureMonth)}, ${futureYear}`;
 }
 
-function getOrdinalSuffix(day: number): string {
+const getOrdinalSuffix = (day: number): string => {
   if (day >= 11 && day <= 13) {
     return "th";
   }
@@ -231,10 +231,18 @@ function getOrdinalSuffix(day: number): string {
   }
 }
 
-function getMonthName(month: number): string {
+const getMonthName = (month: number): string => {
   const monthNames: string[] = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
   return monthNames[month - 1]; // Month is zero-indexed
 }
+
+export const reverseDate = (inputDate: string): string => {
+  // Split the input string into day, month, and year components
+  const [year, month, day] = inputDate.split('-').map(Number);
+  // Form the reversed date string in 'YYYY-MM-DD' format
+  const reversedDate: string = `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`;
+  return reversedDate;
+};
