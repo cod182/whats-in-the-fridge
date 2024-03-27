@@ -1,4 +1,4 @@
-import { ApplianceDoor, ItemSearch, PositionButton } from '../..'
+import { ApplianceDoor, ExpiryNotification, ItemSearch, PositionButton } from '../..'
 
 import DrawerButton from '../DrawerButton'
 import FreezerCompartment from './FreezerCompartment';
@@ -29,15 +29,19 @@ const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handl
 
       <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
 
+      <div className='w-fit mx-auto h-fit'>
+        <ExpiryNotification layout='horizontal' items={items} />
+      </div>
 
-      <div className='max-w-[400px] h-[800px] rounded-md p-1 border-2 border-black bg-gray-100 relative mx-3 sm:mx-auto md:mx-0 midLg:mx-auto lg:mx-auto '>
+
+      <div className='max-w-[400px] h-[800px] rounded-md md:p-1 border-2 border-black bg-gray-100 relative mr-2 xs:mx-auto sm:mx-0 lg:mx-auto'>
 
         {/* Door Start*/}
         {/* Door Compartment */}
         <ApplianceDoor appliance={appliance!} positions={shelfPositions} handleSelect={handleSelect} handleModalState={handleModalState} items={itemsInLocation.door} />
         {/* Door End */}
 
-        <div className='z-[5] flex flex-col w-full h-full rounded-md p-[2px] border-[1px] border-gray-400 bg-white relative'>
+        <div className='mx-auto z-[5] flex flex-col w-full h-full rounded-md p-[2px] border-[1px] border-gray-400 bg-white relative'>
           {/* Fridge compartment Start*/}
           <div className='w-full z-[6] h-[49%] rounded-md border-2 border-black p-2'>
             {/* Fridge Compartment */}

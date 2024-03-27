@@ -20,7 +20,7 @@ const MobileNav = () => {
 
   return (
     <>
-      <nav className="flex-row items-center justify-center w-full h-auto bg-white sm:items-end sm:hidden">
+      <nav className="flex-row items-center justify-center w-full h-auto sm:items-end sm:hidden">
         <div className="flex flex-row items-center justify-between w-full sm:justify-around">
           <div className="sm:hidden flex flex-row justify-center items-center text-primary hover:text-secondary hover:drop-shadow-2xl w-fit font-[calc(10px + 10vw)]">
             <Hamburger toggled={isNavOpen} toggle={toggleNav} />

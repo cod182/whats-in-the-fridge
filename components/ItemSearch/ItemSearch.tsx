@@ -41,7 +41,7 @@ const ItemSearch = ({ items, handleUpdateItems }: Props) => {
   }
 
   return (
-    <div className={`z-[10] flex flex-wrap flex-col items-start my-2 p-2 bg-blue-200 rounded-md w-full sm:w-fit overflow-hidden h-fit transition-all ease duration-300`}>
+    <div className={`z-[10] flex flex-wrap flex-col items-start my-2 p-2 bg-blue-200 rounded-md max-w-[400px] mx-auto sm:mx-0 sm:w-fit overflow-hidden h-fit transition-all ease duration-300`}>
       <div className='flex flex-row flex-wrap items-center justify-start w-full sm:w-fit'>
         <p
           onClick={() => { setSearchState((prev) => !prev); setShowResults(false); }}
@@ -49,7 +49,7 @@ const ItemSearch = ({ items, handleUpdateItems }: Props) => {
         >Search <FaChevronCircleUp className={`${!searchState ? 'sm:rotate-90 rotate-180' : ' sm:rotate-[-90deg]'} transition-all duration-300 ease inline`} />
         </p>
         <div className={`transition-all duration-200 ease overflow-hidden rounded-md ${searchState ? 'mt-2 sm:mt-0 w-full sm:w-fit sm:max-w-[2000px] sm:px-4' : 'max-w-0 p-0'}`}>
-          <input type="text" className='rounded-md border-[1px] border-black px-4 text-gray-500 h-[50px] sm:h-[30px]' placeholder='Search for an item' onChange={(e) => handleSearch(e.target.value)} />
+          <input type="text" className='rounded-md border-[1px] border-black px-4 text-gray-500 h-[40px] sm:h-[30px] w-full' placeholder='Search for an item' onChange={(e) => handleSearch(e.target.value)} />
         </div>
       </div>
       {/* Results */}

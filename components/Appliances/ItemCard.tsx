@@ -7,6 +7,7 @@ import { IoCloseSharp } from 'react-icons/io5'
 import { IoSaveSharp } from "react-icons/io5";
 import { MdCancel } from "react-icons/md";
 import { TiTick } from "react-icons/ti";
+import { reverseDate } from "@/utilities/functions";
 import { useState } from 'react';
 
 type Props = {
@@ -58,13 +59,6 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
     }
   }
 
-  const reverseDate = (inputDate: string): string => {
-    // Split the input string into day, month, and year components
-    const [year, month, day] = inputDate.split('-').map(Number);
-    // Form the reversed date string in 'YYYY-MM-DD' format
-    const reversedDate: string = `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`;
-    return reversedDate;
-  };
 
   const handleUpdatingItem = async (e: any) => {
     e.preventDefault();

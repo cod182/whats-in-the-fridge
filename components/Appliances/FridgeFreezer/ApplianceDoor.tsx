@@ -25,9 +25,10 @@ const Door = ({ appliance, positions, handleSelect, handleModalState, items }: P
           appliance?.doorCompartment && appliance.doorCompartment.map(({ shelves }: CompartmentProps, index: number) => (
             <div key={index}>
               {/* Shelves */}
-              {shelves != undefined && shelves.map((shelfNum, index) => (
-                <div key={index}>
+              {shelves != undefined && shelves.map((shelfNum) => (
+                <div key={shelfNum}>
                   <div className='grid grid-cols-3 grid-rows-1 mx-auto my-2 gap-x-1'>
+                    <span className='absolute text-xs font-normal select-none'>Shelf:{shelfNum}</span>
                     {/* Positions */}
                     {positions.map((position) => (
                       <PositionButton key={position} handleSelection={handleSelect} compartment='door' type='shelf' level={shelfNum} position={position} handleModalState={handleModalState} items={getItemsInThisLocation(shelfNum, items, 'shelf', 'door', position)} />

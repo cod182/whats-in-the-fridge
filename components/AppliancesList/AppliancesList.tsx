@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { getApplianceItems, getAppliances } from '@/utilities/functions';
 
 import ApplianceCard from '../ApplianceCard/ApplianceCard';
+import ExpiryNotification from '../ExpiryNotification/ExpiryNotification';
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
 import FridgeLoader from '../FridgeLoader/FridgeLoader';
 import { IoAddOutline } from "react-icons/io5";
@@ -15,12 +16,13 @@ const AppliancesList = () => {
 
   const user: any = session?.user;
 
+  // States
   const [appliances, setAppliances] = useState<appliance[]>()
   const [numberOfResults, setNumberOfResults] = useState(11)
   const [filteredAppliances, setFilteredAppliances] = useState<appliance[]>()
 
 
-
+  // useEffects
   useEffect(() => {
     // Fetches the list of appliances
     const fetchAppliances = async () => {
@@ -47,9 +49,7 @@ const AppliancesList = () => {
     paginateAppliances();
   }, [appliances, numberOfResults])
 
-
-
-
+  // Functions
 
   // Called for deleting an appliance from the databaase then updaing the current state of items instead ot calling the db again
   const handleDeleteAppliance = async (applianceId: number) => {
@@ -82,11 +82,17 @@ const AppliancesList = () => {
   return (
     <>
       <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4'>
-        {filteredAppliances?.map((app, index) => (
-          <FadeInHOC key={index} delayNumber={index === 0 ? 200 : (index + 1) * 200} direction='up'>
-            <ApplianceCard app={app} handleDelete={handleDeleteAppliance} />
-          </FadeInHOC>
-        ))
+        {filteredAppliances?.map((app, index) => {
+          return (
+            <FadeInHOC key={app.id} delayNumber={index === 0 ? 200 : (index + 1) * 200} direction='up'>
+              <>
+                <ApplianceCard app={app} handleDelete={handleDeleteAppliance} />
+
+                {/* <ExpiryNotification items={items} layout='vertical' /> */}
+              </>
+            </FadeInHOC>
+          )
+        })
         }
         <a href={`/profile/add-appliance`} className='flex flex-row flex-wrap items-center justify-around w-full h-full p-4 transition-all duration-300 rounded-md aspect-auto bg-gray-200/30 hover:bg-gray-400/50 hover:shadow-xl ease'>
           <div className='mx-2'>
