@@ -21,11 +21,18 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
       locationType,
       position,
       comment,
-      image
+      image,
+      cookedFromFrozen
     } = await request.json();
 
     console.log('new item id', id);
     // Input validation
+
+    if (!cookedFromFrozen) {
+      console.log('id required for item');
+      return new Response('item cookedFromFrozen is required', { status: 400, statusText: 'Item cookedFromFrozen is missing' });
+    }
+
     if (!id) {
       console.log('id required for item');
       return new Response('item id is required', { status: 400, statusText: 'Item ID is missing' });
@@ -81,8 +88,8 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
 
     // SQL query with parameterized values
     const query = `
-      INSERT INTO applianceItems (id, ownerid, applianceid, name, quantity, addedDate, expiryDate, itemMainType, itemType, itemSubType, compartment, level, locationType,  position, comment, image) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)
+      INSERT INTO applianceItems (id, ownerid, applianceid, name, quantity, cookedFromFrozen, addedDate, expiryDate, itemMainType, itemType, itemSubType, compartment, level, locationType,  position, comment, image) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)
     `;
     const queryResponse = await executeQuery(query, [
       id,
@@ -90,6 +97,7 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
       applianceid,
       name,
       quantity,
+      cookedFromFrozen,
       addedDate,
       expiryDate,
       itemMainType,

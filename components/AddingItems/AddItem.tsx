@@ -34,6 +34,7 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
   // Functions
 
   const handleAddingItem = (item: applianceItem) => {
+    console.log(item);
     let newItemsList = items;
     newItemsList.push(item)
     updateItems(newItemsList);

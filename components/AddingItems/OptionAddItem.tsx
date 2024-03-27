@@ -135,6 +135,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
         addedDate: getCurrentDate(),
         expiryDate: formValues.expiryDate,
         quantity: parseInt(formValues.quantity),
+        cookedFromFrozen: formValues.cookedFromFrozen ? formValues.cookedFromFrozen : 'NA',
         comment: formValues.comment ? formValues.comment : '',
         compartment: compartment,
         level: level,
@@ -275,7 +276,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
               <FadeInHOC delayNumber={200} direction='up'>
                 <div className={`h-fit w-full transition-all duration-200 ease`}>
                   {selectedItem != null &&
-                    <AddItemForm handleFormSubmit={handleFormSubmit} quantity={quantity} setQuantity={setQuantity} quantityChange={quantityChange} />
+                    <AddItemForm compartment={compartment} handleFormSubmit={handleFormSubmit} quantity={quantity} setQuantity={setQuantity} quantityChange={quantityChange} />
 
                   }
                 </div>

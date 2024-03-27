@@ -4,6 +4,7 @@ import React from 'react'
 const Footer = () => {
   return (
     <footer className='w-full h-fit md:h-[30px] border-t-[2px] border-gray-600 flex flex-wrap flex-row items-center gap-2 px-2 overflow-hidden'>
+      <Link className='text-sm font-normal hover:text-white active:text-blue-100 transition-all duration-200 ease' href={`/attribution`}>Attribution</Link>
       <Link className='text-sm font-normal hover:text-white active:text-blue-100 transition-all duration-200 ease' href={`/privacy-policy`}>Privacy Policy</Link>
       <Link className='text-sm font-normal hover:text-white active:text-blue-100 transition-all duration-200 ease' href={`/cookies`}>Cookies</Link>
       <Link className='text-sm font-normal hover:text-white active:text-blue-100 transition-all duration-200 ease' href={`/terms`}>Terms & Conditions</Link>

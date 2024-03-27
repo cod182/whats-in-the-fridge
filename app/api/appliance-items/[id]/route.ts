@@ -37,7 +37,24 @@ export const PUT = async (request: NextRequest, params: any, response: NextRespo
       quantity,
       expiryDate,
       comment,
+      cookedFromFrozen
     } = await request.json();
+
+    console.log(
+      'ID',
+      id,
+      'appliance id',
+      applianceid,
+      'owner id',
+      ownerid,
+      'quantity',
+      quantity,
+      'exp date',
+      expiryDate,
+      'comment',
+      comment,
+      'cookedfromfrozen',
+      cookedFromFrozen)
 
     if (!id || !applianceid || !ownerid) {
       return new Response('An Id is missing', { status: 400, statusText: 'An ID is missing' })
@@ -49,9 +66,10 @@ export const PUT = async (request: NextRequest, params: any, response: NextRespo
     }
 
     // SQL query with parameterized values
-    const query = `UPDATE applianceItems SET quantity = ?, expiryDate = ?, comment = ? WHERE id = ? AND ownerid = ? AND applianceid = ?`;
+    const query = `UPDATE applianceItems SET quantity = ?, cookedFromFrozen=?, expiryDate = ?, comment = ? WHERE id = ? AND ownerid = ? AND applianceid = ?`;
     const queryResponse = await executeQuery(query, [
       quantity,
+      cookedFromFrozen,
       expiryDate,
       comment,
       id,
@@ -59,7 +77,7 @@ export const PUT = async (request: NextRequest, params: any, response: NextRespo
       applianceid,
     ]);
 
-    console.log(queryResponse);
+    console.log('RESPONSE', queryResponse);
 
     // Return success response
     return new Response('', { status: 200, statusText: 'Success' });

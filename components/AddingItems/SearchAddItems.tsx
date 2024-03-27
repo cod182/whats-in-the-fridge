@@ -20,9 +20,9 @@ const SearchAddItems = ({ preMadeItems, userCreatedItems, selectedArea, userId, 
   const { compartment, position, level, type: locationType } = selectedArea;
   // States
 
-  const [searchQuery, setSearchQuery] = useState<string>()
-  const [searchResults, setSearchResults] = useState<availableItem[]>()
-  const [message, setMessage] = useState<string>()
+  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [searchResults, setSearchResults] = useState<availableItem[]>();
+  const [message, setMessage] = useState<string>();
   const [selectedItem, setSelectedItem] = useState<availableItem | null>()
   const [quantity, setQuantity] = useState<number>(1)
   const [submitting, setSubmitting] = useState<boolean>(false)
@@ -96,6 +96,7 @@ const SearchAddItems = ({ preMadeItems, userCreatedItems, selectedArea, userId, 
         itemType: selectedItem.itemType,
         itemMainType: selectedItem.itemMainType ? selectedItem.itemMainType : '',
         itemSubType: selectedItem.itemSubType ? selectedItem.itemSubType : '',
+        cookedFromFrozen: formValues.cookedFromFrozen ? formValues.cookedFromFrozen : 'NA',
         addedDate: getCurrentDate(),
         expiryDate: formValues.expiryDate,
         quantity: parseInt(formValues.quantity),
@@ -166,7 +167,7 @@ const SearchAddItems = ({ preMadeItems, userCreatedItems, selectedArea, userId, 
         </div>
       }
       {/* Error Message End */}
-      < FadeInHOC delayNumber={800} direction='down'>
+      <FadeInHOC delayNumber={800} direction='down'>
         <>
           {/* Submitting Overlay */}
           {submitting &&
@@ -174,6 +175,7 @@ const SearchAddItems = ({ preMadeItems, userCreatedItems, selectedArea, userId, 
               <p className='text-xl font-bold animate-ping'>Adding...</p>
             </div>
           }
+
           <div className={`relative flex flex-wrap flex-col items-start my-2 p-2 bg-blue-200 rounded-md w-full overflow-hidden h-fit transition-all ease duration-300`}>
             <div className='flex flex-row flex-wrap items-center justify-start w-full'>
               <div className={`flex flex-row gap-x-2 items-center transition-all duration-200 ease overflow-hidden rounded-md mt-2 sm:mt-0 w-full sm:px-4`}>
@@ -249,7 +251,7 @@ const SearchAddItems = ({ preMadeItems, userCreatedItems, selectedArea, userId, 
               <FadeInHOC delayNumber={800} direction='down'>
                 <>
                   <p className='font-bold'>Adding: {selectedItem?.name}</p>
-                  <AddItemForm handleFormSubmit={handleFormSubmit} quantity={quantity} setQuantity={setQuantity} quantityChange={quantityChange} />
+                  <AddItemForm compartment={compartment} handleFormSubmit={handleFormSubmit} quantity={quantity} setQuantity={setQuantity} quantityChange={quantityChange} />
                 </>
               </FadeInHOC>
             </div>

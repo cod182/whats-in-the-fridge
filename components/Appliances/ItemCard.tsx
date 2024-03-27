@@ -26,10 +26,12 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
   const [itemQuantity, setItemQuantity] = useState(item.quantity);
   const [itemComment, setItemComment] = useState(item.comment || '');
   const [expiryDate, setExpiryDate] = useState(item.expiryDate || '');
+  const [cookedFromFrozen, setCookedFromFrozen] = useState<string | undefined>(item.cookedFromFrozen);
   const [updating, setUpdating] = useState(false);
   const [success, setSuccess] = useState<boolean>();
   const [error, setError] = useState<string>();
 
+  console.log(item.name, cookedFromFrozen);
   // Functions
   const handleDelete = async (e: any) => {
     let result = confirm('Are you sure you want to delete?')
@@ -75,10 +77,11 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
       applianceid: item.applianceid,
       ownerid: item.ownerid,
       quantity: formValues.quantity,
+      cookedFromFrozen: cookedFromFrozen,
       expiryDate: formValues.expiryDate,
       comment: formValues.comment,
     }
-
+    console.log(updatedItem);
     try {
       setUpdating(true)
       const response = await fetch(`/api/appliance-items/${item.id}`, {
@@ -121,13 +124,14 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
     const updatedItem = {
       id: updatedItemPart.id,
       ownerid: updatedItemPart.ownerid,
-      applianceid: updatedItemPart.id,
+      applianceid: updatedItemPart.applianceid,
       name: item.name,
       itemType: item.itemType,
       itemMainType: item.itemMainType,
       itemSubType: item.itemSubType,
       addedDate: item.addedDate,
       expiryDate: updatedItemPart.expiryDate,
+      cookedFromFrozen: cookedFromFrozen,
       quantity: parseInt(updatedItemPart.quantity),
       comment: updatedItemPart.comment,
       compartment: item.compartment,
@@ -190,6 +194,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
 
                   )
                 }
+
                 {success &&
                   (
                     <div className="flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
@@ -228,7 +233,10 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
                     </div>
                   </>
                 }
+
               </div>
+
+
 
               {/* More Info Button */}
               <p
@@ -241,6 +249,32 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
             </div>
 
             <div className='w-full my-4 h-fit '>
+              {/* Cook from frozen button if in freezer */}
+              {item.compartment === 'freezer' && (
+                <div>
+                  <p className='mt-2'>Can be cooked from frozen?</p>
+
+                  <div className="flex flex-row items-center justify-start gap-2 ">
+
+                    <div className="flex flex-col items-center justify-center relative" onClick={() => setCookedFromFrozen('yes')}>
+                      <input required defaultChecked={cookedFromFrozen === 'yes'} type="radio" name="cookedFrozen" id={`cookedFrozenYes_${item.id}`} className="peer absolute bottom-0 left-3 z-[1]" />
+                      <label htmlFor={`cookedFrozenYes_${item.id}`} className='border-[1px] border-black h-[40px] w-[40px] peer-checked:bg-green-400 font-semibold bg-gray-200 z-[2] rounded-md peer-checked:border-black py-2 text-center hover:bg-gray-300 active:bg-gray-400'>Yes</label>
+                    </div>
+
+                    <div className="flex flex-col items-center justify-center relative" onClick={() => setCookedFromFrozen('no')}>
+                      <input required defaultChecked={cookedFromFrozen === 'no'} type="radio" name="cookedFrozen" id={`cookedFrozenNo_${item.id}`} className="peer absolute bottom-0 left-3 z-[1]" />
+                      <label htmlFor={`cookedFrozenNo_${item.id}`} className='border-[1px] border-black h-[40px] w-[40px] peer-checked:bg-red-300 font-semibold bg-gray-200 z-[2] rounded-md peer-checked:border-black py-2 text-center hover:bg-gray-300 active:bg-gray-400'>No</label>
+                    </div>
+
+                    <div className="flex flex-col items-center justify-center relative" onClick={() => setCookedFromFrozen('NA')}>
+                      <input required defaultChecked={cookedFromFrozen === 'NA'} type="radio" name="cookedFrozen" id={`cookedFrozenNA_${item.id}`} className="peer absolute bottom-0 left-3 z-[1]" />
+                      <label htmlFor={`cookedFrozenNA_${item.id}`} className='border-[1px] h-[40px] w-[40px] peer-checked:bg-gray-500 peer-checked:text-gray-300 font-semibold bg-gray-200 z-[2] rounded-md  border-black py-2 text-center hover:bg-gray-300 active:bg-gray-400'>N/A</label>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {/* End cook from frozen */}
+
               {item.itemType &&
                 <p className='text-sm text-normal'>Item Type: <span className='italic'>{item.itemType}</span></p>
               }
@@ -250,6 +284,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               {item.itemSubType &&
                 <p className='text-sm text-normal'>Item sub Type: <span className='italic'>{item.itemSubType}</span></p>
               }
+
               <label htmlFor="expiryDate" className='text-sm text-normal'>Expiry:</label>
               <input id='expiryDate' type="date" name='expiryDate' value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} placeholder='Expiry Date (Optional)' className='ml-[5px] px-2 my-[5px] font-semibold capitalize rounded-md shadow-inner h-fit' />
 
@@ -294,16 +329,8 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
                   </button>
                 </div>
 
-                {/* <button
-                onClick={() => {
-                  setEditActivated(true);
-                  setContainerStatus(true);
-                }}>
-                <FaEdit className='h-[20px] w-[20px] text-blue-500 hover:text-blue-600 hover:scale-110 transition-all duration-200 ease-in-out' />
-              </button> */}
 
-                {/* Remove Buttons */}
-
+                {/* Close Buttons */}
                 <div className="relative group">
                   <div className="overflow-hidden absolute select-none top-[2px] right-[25px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
                     <p className="text-xs font-normal md:text-sm">Delete</p>
@@ -315,12 +342,6 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
                   </button>
                 </div>
 
-
-                {/* <button className='relative'
-                onClick={(e) => handleDelete(e)}
-                >
-                <IoCloseSharp className='h-[25px] w-[25px] text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out' />
-              </button> */}
               </div>
               {/* More Info Button */}
               <p
@@ -333,6 +354,24 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               </p>
             </div>
             <div className='w-full my-4 h-fit '>
+              {item.compartment === 'freezer' && item.cookedFromFrozen && (
+                <>
+                  {item.cookedFromFrozen === 'yes' && (
+                    <div className="flex flex-row justify-start items-center gap-1">
+                      <Image className='inline' src='/assets/images/frozen.svg' width={15} height={15} alt='' />
+                      <p className={`text-sm text-normal`}>Can be cooked from frozen</p>
+                    </div>
+                  )}
+                  {item.cookedFromFrozen === 'no' && (
+                    <div className="flex flex-row justify-start items-center gap-1">
+                      <Image className='inline' src='/assets/images/defrost.svg' width={15} height={15} alt='' />
+                      <p className={`text-sm text-normal`}>Must be defrosted</p>
+                    </div>
+                  )}
+                  {item.cookedFromFrozen === 'NA' && null}
+                </>
+              )}
+
               {item.itemType &&
                 <p className='text-sm text-normal'>Item Type: <span className='italic'>{item.itemType}</span></p>
               }
@@ -342,6 +381,8 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               {item.itemSubType &&
                 <p className='text-sm text-normal'>Item sub Type: <span className='italic'>{item.itemSubType}</span></p>
               }
+
+
               {item.expiryDate &&
                 <p className='text-sm text-normal'>Expiry: <span className='italic'>{reverseDate(item.expiryDate)}</span></p>
               }
@@ -349,7 +390,6 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               {item.comment &&
                 <p className='mb-2 text-sm text-normal'>Comment: <span className='block text-sm text-normal border-gray-300 border-[1px] rounded-md bg-gray-100 p-2 italic text-gray-600'>{item.comment}</span></p>
               }
-
             </div></>)
         }
       </div >

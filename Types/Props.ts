@@ -58,6 +58,7 @@ type applianceItem = {
   ownerid: number;
   name: string;
   quantity: number;
+  cookedFromFrozen: string | undefined;
   addedDate: string;
   expiryDate: string;
   itemType: string;

@@ -129,6 +129,7 @@ const UserCreatedItems = ({ selectedArea, availableItems, userId, handleAddingTo
         itemType: selectedItem.itemType,
         itemMainType: selectedItem.itemMainType ? selectedItem.itemMainType : '',
         itemSubType: selectedItem.itemSubType ? selectedItem.itemSubType : '',
+        cookedFromFrozen: formValues.cookedFromFrozen ? formValues.cookedFromFrozen : null,
         addedDate: getCurrentDate(),
         expiryDate: formValues.expiryDate,
         quantity: parseInt(formValues.quantity),
@@ -227,7 +228,7 @@ const UserCreatedItems = ({ selectedArea, availableItems, userId, handleAddingTo
               <FadeInHOC delayNumber={200} direction='up'>
                 <div className={`h-fit w-full transition-all duration-200 ease`}>
                   {selectedItem != null &&
-                    <AddItemForm handleFormSubmit={handleFormSubmit} quantity={quantity} setQuantity={setQuantity} quantityChange={quantityChange} />
+                    <AddItemForm compartment={compartment} handleFormSubmit={handleFormSubmit} quantity={quantity} setQuantity={setQuantity} quantityChange={quantityChange} />
 
                   }
                 </div>
