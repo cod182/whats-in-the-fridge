@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useState } from 'react';
+
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { FaEdit } from 'react-icons/fa'
 import Image from 'next/image';
@@ -8,7 +10,6 @@ import { IoSaveSharp } from "react-icons/io5";
 import { MdCancel } from "react-icons/md";
 import { TiTick } from "react-icons/ti";
 import { reverseDate } from "@/utilities/functions";
-import { useState } from 'react';
 
 type Props = {
   item: applianceItem;
@@ -18,7 +19,38 @@ type Props = {
   inSearch?: boolean;
 }
 
+const isValidImage = (url: string): Promise<boolean> => {
+  return new Promise((resolve) => {
+    const img = document.createElement('img');
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url;
+  });
+};
+
+const getImageUrl = async (url: string): Promise<string> => {
+  try {
+    const isValid = await isValidImage(url);
+    return isValid ? url : '/assets/images/items/default.png'; // Replace '/path/to/default.png' with your default image path
+  } catch (error) {
+    console.error('Error checking image validity:', error);
+    return '/assets/images/items/default.png'; // Return default image path in case of error
+  }
+}
+
 const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
+
+
+  const [displayImageUrl, setDisplayImageUrl] = useState('/assets/images/items/default.png');
+
+  useEffect(() => {
+    const fetchImageUrl = async () => {
+      const validUrl = await getImageUrl(`/assets/images/items/${item.image}`);
+      setDisplayImageUrl(validUrl);
+    };
+
+    fetchImageUrl();
+  }, [item.image]);
 
 
   const [containerStatus, setContainerStatus] = useState(false);
@@ -31,7 +63,6 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
   const [success, setSuccess] = useState<boolean>();
   const [error, setError] = useState<string>();
 
-  console.log(item.name, cookedFromFrozen);
   // Functions
   const handleDelete = async (e: any) => {
     let result = confirm('Are you sure you want to delete?')
@@ -156,7 +187,6 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
 
 
 
-
   return (
     <>
       {inSearch && (<div className="mx-auto w-[97%] text-normal text-sm bg-gray-300 rounded-t-lg border-t-[1px] border-l-[1px] border-r-[1px] border-gray-600 px-2 py-[5px] "><span className="capitalize">{item.compartment}</span> {item.locationType === 'shelf' ? 'on' : 'in'} {item.locationType} {item.level} {item.position != 128 && (` at position ${item.position}`)}</div>)}
@@ -173,7 +203,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               {/* Item info */}
               <div className='flex flex-row items-center justify-start w-full' >
                 <div className='mr-2 flex flex-col justify-center items-center w-[75px] h-[75px] aspect-square relative'>
-                  <Image alt={`${item.name} `} src={`/assets/images/items/${item.image}`} fill className='object-fill' />
+                  <Image alt={`${item.name} `} src={displayImageUrl ? displayImageUrl : '/assets/images/items/default.pnh'} width={75} height={75} className='object-fill' />
                 </div>
                 <div>
                   <p className='capitalize text-md'>{item.name}</p>
@@ -303,7 +333,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               {/* Item info */}
               <div className='flex flex-row items-center justify-start w-full' >
                 <div className='mr-2 flex flex-col justify-center items-center w-[75px] h-[75px] aspect-square relative'>
-                  <Image alt={`${item.name} `} src={`/assets/images/items/${item.image}`} fill className='object-fill' />
+                  <Image alt={`${item.name} `} src={displayImageUrl ? displayImageUrl : '/assets/images/items/default.pnh'} width={75} height={75} className='object-fill' />
                 </div>
                 <div>
                   <p className='capitalize text-md'>{item.name}</p>
@@ -358,13 +388,13 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
                 <>
                   {item.cookedFromFrozen === 'yes' && (
                     <div className="flex flex-row justify-start items-center gap-1">
-                      <Image className='inline' src='/assets/images/frozen.svg' width={15} height={15} alt='' />
+                      <Image className='inline' src='/assets/images/frozen.svg' width={15} height={15} alt='cook from frozen' />
                       <p className={`text-sm text-normal`}>Can be cooked from frozen</p>
                     </div>
                   )}
                   {item.cookedFromFrozen === 'no' && (
                     <div className="flex flex-row justify-start items-center gap-1">
-                      <Image className='inline' src='/assets/images/defrost.svg' width={15} height={15} alt='' />
+                      <Image className='inline' src='/assets/images/defrost.svg' width={15} height={15} alt='defrost before eating' />
                       <p className={`text-sm text-normal`}>Must be defrosted</p>
                     </div>
                   )}

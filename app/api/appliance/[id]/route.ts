@@ -31,7 +31,6 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
 export const PUT = async (request: NextRequest, params: any, response: NextResponse) => {
   try {
     const { newName, userId } = await request.json();
-    console.log('owner', userId, 'New Name', newName, 'app id', params.params.id);
 
     if (!params.params.id) {
       return new Response('An appliance id is missing', { status: 400, statusText: 'An appliance id is missing' });

@@ -15,7 +15,6 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
       image,
     } = await request.json();
 
-    console.log('new item id', id);
     // Input validation
     if (!id) {
       console.log('id required for item');

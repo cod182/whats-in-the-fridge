@@ -129,7 +129,7 @@ const UserCreatedItems = ({ selectedArea, availableItems, userId, handleAddingTo
         itemType: selectedItem.itemType,
         itemMainType: selectedItem.itemMainType ? selectedItem.itemMainType : '',
         itemSubType: selectedItem.itemSubType ? selectedItem.itemSubType : '',
-        cookedFromFrozen: formValues.cookedFromFrozen ? formValues.cookedFromFrozen : null,
+        cookedFromFrozen: formValues.cookedFromFrozen ? formValues.cookedFromFrozen : undefined,
         addedDate: getCurrentDate(),
         expiryDate: formValues.expiryDate,
         quantity: parseInt(formValues.quantity),

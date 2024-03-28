@@ -25,7 +25,6 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
       cookedFromFrozen
     } = await request.json();
 
-    console.log('new item id', id);
     // Input validation
 
     if (!cookedFromFrozen) {

@@ -17,6 +17,7 @@ const page = () => {
         <a className='hover:text-blue-700' href="https://www.freepik.com/free-vector/big-set-flat-whole-sliced-fresh-fruits-vegetables-with-carrot-tomato-lemon-avocado-apple-banana-peach-isolated-vector-illustration_32074509.htm#query=vegetables&position=9&from_view=keyword&track=sph&uuid=6ce88b9d-f2f8-4569-bb2e-053c43bae17c">Image by macrovector on Freepik</a>
         <p className='hover:text-blue-700'>frozen food by Studio 365 from <a href="https://thenounproject.com/browse/icons/term/frozen-food/" target="_blank" title="frozen food Icons">Noun Project</a> (CC BY 3.0)</p>
         <p className='hover:text-blue-700'>Defrost by kystudio from <a href="https://thenounproject.com/browse/icons/term/defrost/" target="_blank" title="Defrost Icons">Noun Project</a> (CC BY 3.0)</p>
+        <p className='hover:text-blue-700'>Food by Maxie from <a href="https://thenounproject.com/browse/icons/term/food/" target="_blank" title="Food Icons">Noun Project</a> (CC BY 3.0)</p>
       </div>
     </div>
   )

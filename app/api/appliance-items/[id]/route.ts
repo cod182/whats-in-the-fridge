@@ -9,7 +9,6 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
   const headersList = headers();
   const ownerId = headersList.get("ownerId");
 
-  console.log(params)
   if (!ownerId || ownerId === 'undefined') {
     return new Response('No Owner Id Provided', { status: 400, statusText: 'No Owner Id Provided' })
   }
