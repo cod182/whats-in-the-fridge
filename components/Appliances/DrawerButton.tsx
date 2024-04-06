@@ -2,14 +2,18 @@ import { GiOpenedFoodCan } from 'react-icons/gi';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import React from 'react'
 
-const DrawerButton = ({ handleSelection, compartment, type, level, position, handleModalState, items }: PositionProps) => {
+type Props = PositionProps & { rotate?: string };
+
+
+const DrawerButton = ({ handleSelection, compartment, type, level, position, handleModalState, items, rotate }: Props) => {
+
   return (
     <>
       {/* Desktop */}
       <div
-        className="hidden md:flex group h-[80px] w-full text-center cursor-pointer border rounded-md flex-row items-center justify-around transition-all duration-200 ease-in hover:bg-gray-500/50 relative"
+        className="hidden md:flex group min-h-[80px] h-full w-full text-center cursor-pointer border rounded-md flex-row items-center justify-around transition-all duration-200 ease-in hover:bg-gray-500/50 relative"
       >
-        <div className='flex flex-col justify-center items-center h-full group-hover:absolute group-hover:h-0 overflow-hidden transition-all duration-200 ease'>
+        <div style={{ transform: `rotate(${rotate}deg)` }} className='flex flex-col justify-center items-center h-full group-hover:absolute group-hover:h-0 overflow-hidden transition-all duration-200 ease'>
 
           <p className='flex'>Drawer {level}</p>
           <p>{items.length} Item{items.length != 1 && 's'}</p>
@@ -36,7 +40,7 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
                 handleModalState('open', 'view');
                 handleSelection(items, items[0].level, compartment, type, position ? position : 128)
               }} aria-label={`View items in ${compartment} compartment, on ${type} ${level}, position ${position}`} className='w-[50%] h-full text-center hover:border-l-2 hidden group-hover:flex flex-row justify-center items-center hover:bg-gray-600/80 hover:text-gray-200 rounded-r-md transition-all duration-300 ease-in text-xl'>
-            <GiOpenedFoodCan className='text-2xl max-h-[40px] aspect-square' />
+            <GiOpenedFoodCan className={`text-2xl max-h-[40px] aspect-square`} style={{ transform: `rotate(${rotate}deg)` }} />
           </button>
         }
       </div>
@@ -45,9 +49,9 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
 
       {/* Mobile */}
       <div
-        className="h-[80px] w-full text-center cursor-pointer border rounded-md flex md:hidden flex-col items-center justify-around transition-all duration-200 ease-in  relative"
+        className="min-h-[80px] w-full text-center cursor-pointer border rounded-md flex md:hidden flex-col items-center justify-around transition-all duration-200 ease-in  relative"
       >
-        <div className='flex flex-col justify-center items-center h-[25%] border-b-[1px] w-full text-sm'>
+        <div className='flex flex-col justify-center items-center h-[25%] border-b-[1px] w-full text-sm' >
           <p className='flex'>Drawer {level}</p>
         </div>
         <div className='h-[50%] w-full flex flex-row '>
@@ -73,7 +77,7 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
               aria-label={`View items in ${compartment} compartment, on ${type} ${level}, position ${position}`}
               className='w-[50%] h-full text-center border-l-[1px] border-gray-800 flex flex-row justify-center items-center hover:bg-gray-600/80 bg-gray-200/80 hover:text-gray-200 rounded-r-md transition-all duration-300 ease-in text-xl'
             >
-              <GiOpenedFoodCan className='text-2xl max-h-[40px] aspect-square' />
+              <GiOpenedFoodCan className='text-2xl max-h-[40px] aspect-square' style={{ transform: `rotate(${rotate}deg)` }} />
             </button>
           }
         </div>
@@ -83,7 +87,7 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
             <p>{items.length} Item{items.length != 1 && 's'}</p>
           </div>
         </div>
-      </div>
+      </div >
     </>
   )
 }

@@ -21,7 +21,7 @@ export const appliances = [{
   fridgeCompartments: 1,
   freezerCompartments: 1,
   freezerCompartment: [
-    { drawers: [4, 3, 2, 1] },
+    { drawers: [1, 2, 3, 4] },
   ],
 },
   // {

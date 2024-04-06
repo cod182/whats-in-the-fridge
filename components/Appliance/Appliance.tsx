@@ -173,7 +173,7 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
           return <FridgeFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
 
         case 'chest_freezer':
-          return <ChestFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} />;
+          return <ChestFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
 
         default:
           return (<div>Unknown</div>)

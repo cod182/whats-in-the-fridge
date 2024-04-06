@@ -20,6 +20,10 @@ const config: Config = {
         midMd: '985px',
         midLg: '1152px',
       },
+      rotate: {
+        '180': '180deg',
+        '270': '270deg',
+      }
     },
   },
   plugins: [],

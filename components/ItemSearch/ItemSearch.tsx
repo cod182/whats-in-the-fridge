@@ -41,7 +41,7 @@ const ItemSearch = ({ items, handleUpdateItems }: Props) => {
   }
 
   return (
-    <div className={`z-[10] flex flex-wrap flex-col items-start my-2 p-2 bg-blue-200 rounded-md max-w-[400px] mx-auto sm:mx-0 sm:w-fit overflow-hidden h-fit transition-all ease duration-300`}>
+    <div className={`z-[10] flex flex-wrap flex-col items-start my-2 p-2 bg-blue-200 rounded-md w-fit mx-auto sm:mx-0 sm:w-fit overflow-hidden h-fit transition-all ease duration-300`}>
       <div className='flex flex-row flex-wrap items-center justify-start w-full sm:w-fit'>
         <p
           onClick={() => { setSearchState((prev) => !prev); setShowResults(false); }}
