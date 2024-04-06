@@ -19,38 +19,38 @@ type Props = {
   inSearch?: boolean;
 }
 
-const isValidImage = (url: string): Promise<boolean> => {
-  return new Promise((resolve) => {
-    const img = document.createElement('img');
-    img.onload = () => resolve(true);
-    img.onerror = () => resolve(false);
-    img.src = url;
-  });
-};
+// const isValidImage = (url: string): Promise<boolean> => {
+//   return new Promise((resolve) => {
+//     const img = document.createElement('img');
+//     img.onload = () => resolve(true);
+//     img.onerror = () => resolve(false);
+//     img.src = url;
+//   });
+// };
 
-const getImageUrl = async (url: string): Promise<string> => {
-  try {
-    const isValid = await isValidImage(url);
-    return isValid ? url : '/assets/images/items/default.png'; // Replace '/path/to/default.png' with your default image path
-  } catch (error) {
-    console.error('Error checking image validity:', error);
-    return '/assets/images/items/default.png'; // Return default image path in case of error
-  }
-}
+// const getImageUrl = async (url: string): Promise<string> => {
+//   try {
+//     const isValid = await isValidImage(url);
+//     return isValid ? url : '/assets/images/items/default.png'; // Replace '/path/to/default.png' with your default image path
+//   } catch (error) {
+//     console.error('Error checking image validity:', error);
+//     return '/assets/images/items/default.png'; // Return default image path in case of error
+//   }
+// }
 
 const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
 
 
-  const [displayImageUrl, setDisplayImageUrl] = useState('/assets/images/items/default.png');
+  // const [displayImageUrl, setDisplayImageUrl] = useState('/assets/images/items/default.png');
 
-  useEffect(() => {
-    const fetchImageUrl = async () => {
-      const validUrl = await getImageUrl(`/assets/images/items/${item.image}`);
-      setDisplayImageUrl(validUrl);
-    };
+  // useEffect(() => {
+  //   const fetchImageUrl = async () => {
+  //     const validUrl = await getImageUrl(`/assets/images/items/${item.image}`);
+  //     setDisplayImageUrl(validUrl);
+  //   };
 
-    fetchImageUrl();
-  }, [item.image]);
+  //   fetchImageUrl();
+  // }, [item.image]);
 
 
   const [containerStatus, setContainerStatus] = useState(false);
@@ -203,7 +203,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               {/* Item info */}
               <div className='flex flex-row items-center justify-start w-full' >
                 <div className='mr-2 flex flex-col justify-center items-center w-[75px] h-[75px] aspect-square relative'>
-                  <Image alt={`${item.name} `} src={displayImageUrl ? displayImageUrl : '/assets/images/items/default.pnh'} width={75} height={75} className='object-fill' />
+                  <Image alt={`${item.name} `} src={`/assets/images/items/${item.image}`} width={75} height={75} className='object-fill' />
                 </div>
                 <div>
                   <p className='capitalize text-md'>{item.name}</p>
@@ -333,7 +333,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               {/* Item info */}
               <div className='flex flex-row items-center justify-start w-full' >
                 <div className='mr-2 flex flex-col justify-center items-center w-[75px] h-[75px] aspect-square relative'>
-                  <Image alt={`${item.name} `} src={displayImageUrl ? displayImageUrl : '/assets/images/items/default.pnh'} width={75} height={75} className='object-fill' />
+                  <Image alt={`${item.name} `} src={`/assets/images/items/${item.image}`} width={75} height={75} className='object-fill' />
                 </div>
                 <div>
                   <p className='capitalize text-md'>{item.name}</p>
