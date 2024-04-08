@@ -44,25 +44,21 @@ const ProfileNotifications = ({ user }: Props) => {
   return (
     <>
       <FadeInHOC delayNumber={500} direction='down'>
-        <p className='font-bold my-2 text-2xl'>Notifications</p>
+        <p className='my-2 text-2xl font-bold'>Notifications</p>
       </FadeInHOC>
       <FadeInHOC delayNumber={600} direction='down'>
-        <div className='flex flex-wrap flex-row justify-start items-start gap-2'>
+        <div className='flex flex-row flex-wrap items-start justify-start gap-2'>
           {appliances != undefined && allItems != undefined &&
             appliances.map((appliance: appliance) => {
               const items = allItems.filter(item => item.applianceid === appliance.id)
               if (items.length > 0) {
                 return (
-                  <div key={appliance.id} className='bg-gray-500/50 rounded-lg px-4 py-2 max-w-[250px]'>
-                    <p className='capitalize w-full font-semibold'>{appliance.type.replace('_', " ")}: {appliance.name} has expiring items!</p>
-                    <div className='w-fit'>
-                      <ExpiryNotification items={items} />
-                    </div>
+                  <div key={appliance.id} className='max-w-[250px]'>
+                    <ExpiryNotification items={items} message={`${appliance.type.replace(/_/g, " ")}: ${appliance.name} has expiring items!`} boxStyles='bg-gray-400/40' />
                   </div>
                 )
               }
             })
-
           }
         </div>
       </FadeInHOC>
