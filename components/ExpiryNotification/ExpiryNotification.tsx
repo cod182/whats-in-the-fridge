@@ -114,21 +114,17 @@ const ExpiryNotification = ({ items, layout = 'vertical' }: Props) => {
         return 'Expired Items';
       case '1':
         return 'Expiring Tomorrow';
-      case '2':
-        return `Expiring on the ${calculateFutureDate(2)}`;
-      case '3':
-        return `Expiring on the ${calculateFutureDate(3)}`;
-      case '4':
-        return `Expiring on the ${calculateFutureDate(4)}`;
       default:
-        break;
+        return `Expiring on the ${calculateFutureDate(4)}`;
+
     }
   }
+
   if (expiringItems) {
     return (
       <div className={`flex ${layout === 'vertical' ? 'flex-col items-center justify-normal' : 'md:flex-row flex-wrap flex-col items-start justify-start gap-x-2'} w-full h-fit rounded-md p-2`}>
         {expiringItems.map((expiryObj) =>
-          expiryObj.items.length > 0 && (
+          expiryObj.items.length >= 1 && (
             <button
               key={expiryObj.name.replace(' ', '_')}
               onClick={() => setSelectedExpiry((prev) => prev === expiryObj.name.replace(' ', '_') ? null : expiryObj.name.replace(' ', '_'))}

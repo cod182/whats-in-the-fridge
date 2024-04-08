@@ -34,11 +34,13 @@ const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handl
       </div>
 
 
-      <div className='max-w-[400px] h-[800px] rounded-md md:p-1 border-2 border-black bg-gray-100 relative mr-2 xs:mx-auto sm:mx-0 lg:mx-auto'>
+      <div className='max-w-[400px] h-[800px] rounded-md md:p-1 border-2 border-black bg-gray-100 relative mr-2 xs:mx-auto sm:mx-0 lg:mx-auto shadow-inner'>
 
         {/* Door Start*/}
         {/* Door Compartment */}
-        <ApplianceDoor appliance={appliance!} positions={shelfPositions} handleSelect={handleSelect} handleModalState={handleModalState} items={itemsInLocation.door} />
+        <div className='h-[360px] absolute top-[10px] w-full sm:w-[400px] midLow:w-[310px]'>
+          <ApplianceDoor appliance={appliance!} positions={shelfPositions} handleSelect={handleSelect} handleModalState={handleModalState} items={itemsInLocation.door} />
+        </div>
         {/* Door End */}
 
         <div className='mx-auto z-[5] flex flex-col w-full h-full rounded-md p-[2px] border-[1px] border-gray-400 bg-white relative'>
@@ -54,13 +56,19 @@ const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handl
           {/* Middle Bar End*/}
 
           {/* Freezer compartment Start*/}
-          <div className='w-full h-[49%] rounded-md border-2 border-black my-auto p-2'>
+          <div className='w-full h-[49%] rounded-md border-2 border-black my-auto p-2 z-[1]'>
             {/* Freezer Compartment */}
             <FreezerCompartment appliance={appliance!} handleSelect={handleSelect} handleModalState={handleModalState} items={itemsInLocation.freezer} />
           </div>
           {/* Freezer compartment End*/}
 
+
+
         </div>
+        {/* Feet Start */}
+        <div className='absolute bottom-[-10px] left-[2%] w-[30px] h-[20px] bg-black rounded-md z-[-10]' />
+        <div className='absolute bottom-[-10px] right-[2%] w-[30px] h-[20px] bg-black rounded-md z-[-10]' />
+        {/* Feet End */}
       </div >
     </>
   )

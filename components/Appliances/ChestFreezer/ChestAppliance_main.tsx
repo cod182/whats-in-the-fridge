@@ -15,7 +15,7 @@ type Props = {
   handleUpdateItems: (items: applianceItem[]) => void;
 }
 
-const ChestFreezer = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems }: Props) => {
+const ChestAppliance = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems }: Props) => {
 
   const itemsInLocation = findItemLocation(items);
 
@@ -32,7 +32,7 @@ const ChestFreezer = ({ appliance, handleSelect, handleModalState, items, handle
         <ExpiryNotification layout='horizontal' items={items} />
       </div>
 
-      <div className='w-[800px] h-[400px] rounded-md md:p-1 border-2 border-black bg-gray-100 mx-auto'>
+      <div className='w-[800px] h-[400px] rounded-md md:p-1 border-2 border-black bg-gray-100 mx-auto shadow-2xl'>
         {/* Freezer compartment Start*/}
         <div className='w-full h-full rounded-md border-2 border-black p-2'>
           {/* Freezer Compartment */}
@@ -59,4 +59,4 @@ const ChestFreezer = ({ appliance, handleSelect, handleModalState, items, handle
   )
 }
 
-export default ChestFreezer
+export default ChestAppliance

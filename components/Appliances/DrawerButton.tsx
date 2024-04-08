@@ -11,7 +11,7 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
     <>
       {/* Desktop */}
       <div
-        className="hidden md:flex group min-h-[80px] h-full w-full text-center cursor-pointer border rounded-md flex-row items-center justify-around transition-all duration-200 ease-in hover:bg-gray-500/50 relative"
+        className="hidden md:flex group min-h-[80px]  h-full w-full text-center cursor-pointer border rounded-md flex-row items-center justify-around transition-all duration-200 ease-in hover:bg-gray-500/50 relative"
       >
         <div style={{ transform: `rotate(${rotate}deg)` }} className='flex flex-col justify-center items-center h-full group-hover:absolute group-hover:h-0 overflow-hidden transition-all duration-200 ease'>
 

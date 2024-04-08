@@ -81,7 +81,6 @@ const ApplianceForm = ({ formType, userId }: Props) => {
       !formData.applianceName && !formData.applianceType && setError('Please provide a name & type');
     }
   };
-
   return (
     <>
       <div className={`w-full bg-gray-300/40  border-red-600/40 flex flex-col justify-center items-center transition-opacity duration-200 ease ${error != '' ? 'h-[40px] border-[1px]' : 'h-0 border-0'}`}>
@@ -109,17 +108,17 @@ const ApplianceForm = ({ formType, userId }: Props) => {
               <label key={index} className='relative mx-auto'>
                 <input
                   type="radio"
-                  value={appliance.name.replace(' ', '_').toLowerCase()}
-                  checked={formData.applianceType === appliance.name.replace(' ', '_').toLowerCase()}
-                  onChange={() => handleRadioChange(appliance.name.replace(' ', '_').toLowerCase())}
+                  value={appliance.name.replace(/\s/g, "_").toLowerCase()}
+                  checked={formData.applianceType === appliance.name.replace(/\s/g, "_").toLowerCase()}
+                  onChange={() => handleRadioChange(appliance.name.replace(/\s/g, "_").toLowerCase())}
                   className='hidden'
                 />
                 <Image
-                  src={`/assets/images/appliances/${appliance.name.replace(' ', '_').toLowerCase()}.webp`}
-                  alt={appliance.name.replace(' ', '_').toLowerCase()}
+                  src={`/assets/images/appliances/${appliance.name.replace(/\s/g, "_").toLowerCase()}.webp`}
+                  alt={appliance.name.replace(/\s/g, "_").toLowerCase()}
                   width={100}
                   height={100}
-                  className={`cursor-pointer border-[1px] border-black rounded-md p-4 transition-all duration-200 ease hover:shadow-md ${formData.applianceType === appliance.name.replace(' ', '_').toLowerCase() ? 'bg-gradient-to-t from-green-300 to-blue-300' : 'bg-gradient-to-b from-blue-300 to-blue-300'}`}
+                  className={`cursor-pointer border-[1px] border-black rounded-md p-4 transition-all duration-200 ease hover:shadow-md ${formData.applianceType === appliance.name.replace(/\s/g, "_").toLowerCase() ? 'bg-gradient-to-t from-green-300 to-blue-300' : 'bg-gradient-to-b from-blue-300 to-blue-300'}`}
                 />
                 <span>{appliance.name}</span>
               </label>

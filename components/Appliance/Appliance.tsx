@@ -1,6 +1,6 @@
 'use client'
 
-import { ChestFreezer, FridgeFreezer, Modal } from '..';
+import { FridgeFreezer, Modal } from '..';
 import { IoCloseCircle, IoSaveSharp } from 'react-icons/io5';
 // components/Fridge.tsx
 import React, { useState } from 'react';
@@ -8,8 +8,10 @@ import { getAllAddableItems, getItemsInThisLocation, toggleBodyScrolling } from 
 
 import AddItem from '../AddingItems/AddItem';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
+import ChestAppliance from '../Appliances/ChestFreezer/ChestAppliance_main';
 import { FaEdit } from 'react-icons/fa';
 import { MdCancel } from 'react-icons/md';
+import TallAppliance_main from '../Appliances/TallAppliance/TallAppliance_main';
 import { TiTick } from 'react-icons/ti';
 import ViewItems from '../Appliances/ViewItems';
 import { appliances } from '@/static/appliances';
@@ -172,10 +174,17 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
         case 'fridge_freezer':
           return <FridgeFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
 
+        case 'tall_fridge':
+          return <TallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
+
+        case 'tall_freezer':
+          return <TallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
+
         case 'chest_freezer':
-          return <ChestFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
+          return <ChestAppliance handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
 
         default:
+          console.log(type)
           return (<div>Unknown</div>)
       }
     }
@@ -202,7 +211,7 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
             }
           </div>
         </Modal>
-        <div className='grow'>
+        <div className='grow my-4'>
           {/* Fridge Name */}
           <div className='flex flex-row items-center justify-start gap-2 mb-2'>
             <h1 className={`${editName ? 'max-w-[0px]' : 'max-w-[300px]'}  h-[36px] overflow-hidden text-3xl font-bold transition-all duration-200 ease`}>{currentApplianceName} </h1>

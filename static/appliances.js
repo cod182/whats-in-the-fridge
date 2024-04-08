@@ -24,6 +24,38 @@ export const appliances = [{
     { drawers: [1, 2, 3, 4] },
   ],
 },
+{
+  name: 'Tall Fridge',
+  description: ['Fridge: 5 Shelves, 4 Drawers', 'Door: 5 Shelves'],
+  fridgeCompartments: 1,
+  fridgeCompartment: [
+    { shelves: [1, 2, 3, 4, 5], drawers: [1, 2, 3, 4] },
+  ],
+  doorCompartments: 1,
+  doorCompartment: [
+    { shelves: [1, 2, 3, 4, 5] },
+  ],
+},
+{
+  name: 'Tall Freezer',
+  description: ['Freezer: 6 Drawers'],
+  freezerCompartments: 1,
+  freezerCompartment: [
+    { drawers: [1, 2, 3, 4, 5, 6, 7] },
+  ],
+},
+{
+  name: 'Under Counter Fridge',
+  description: ['Fridge: 3 Shelves, 1 Drawer', 'Door: 2 Shelves'],
+  fridgeCompartments: 1,
+  fridgeCompartment: [
+    { shelves: [1, 2, 3], drawers: [1] },
+  ],
+  doorCompartments: 1,
+  doorCompartment: [
+    { shelves: [1, 2] },
+  ],
+},
   // {
   //   name: 'American Fridge Freezer',
   //   description: ['Fridge: 5 Shelves, 2 Drawers', 'Fridge Door: 5 Shelves', 'Freezer: 5 Drawer', 'Freezer Door: 5 Shelves'],
@@ -41,30 +73,7 @@ export const appliances = [{
   //     { shelves: 5 }
   //   ],
   // },
-  // {
-  //   name: 'Tall Fridge',
-  //   description: ['Fridge: 5 Shelves, 2 Drawers', 'Door: 5 Shelves'],
-  //   fridgeCompartments: 1,
-  //   fridgeCompartment: [
-  //     { shelves: 5, drawers: 2 },
-  //   ],
-  //   doorCompartments: 1,
-  //   doorCompartment: [
-  //     { shelves: 5 },
-  //   ],
-  // },
-  // {
-  //   name: 'Under Counter Fridge',
-  //   description: ['Fridge: 3 Shelves, 1 Drawer', 'Door: 2 Shelves'],
-  //   fridgeCompartments: 1,
-  //   fridgeCompartment: [
-  //     { shelves: 3, drawers: 1 },
-  //   ],
-  //   doorCompartments: 1,
-  //   doorCompartment: [
-  //     { shelves: 2 },
-  //   ],
-  // },
+
   // {
   //   name: 'Under Counter Fridge with Freezer',
   //   description: ['Fridge: 3 Shelves, 1 Drawer', 'Door: 2 Shelves', 'Freezer: 1 Drawer'],
@@ -79,14 +88,6 @@ export const appliances = [{
   //   doorCompartments: 1,
   //   doorCompartment: [
   //     { shelves: 2 },
-  //   ],
-  // },
-  // {
-  //   name: 'Tall Freezer',
-  //   description: ['Freezer: 5 Drawers'],
-  //   freezerCompartments: 1,
-  //   freezerCompartment: [
-  //     { drawers: 5 },
   //   ],
   // },
   // {
