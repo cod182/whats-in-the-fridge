@@ -11,6 +11,7 @@ import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import ChestAppliance from '../Appliances/ChestFreezer/ChestAppliance_main';
 import { FaEdit } from 'react-icons/fa';
 import { MdCancel } from 'react-icons/md';
+import SmallAppliance_main from '../Appliances/SmallAppliance/SmallAppliance_main';
 import TallAppliance_main from '../Appliances/TallAppliance/TallAppliance_main';
 import { TiTick } from 'react-icons/ti';
 import ViewItems from '../Appliances/ViewItems';
@@ -182,6 +183,17 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
 
         case 'chest_freezer':
           return <ChestAppliance handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
+        case 'chest_fridge':
+          return <ChestAppliance handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
+
+        case 'under_counter_fridge':
+          return <SmallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
+
+        case 'under_counter_freezer':
+          return <SmallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
+
+        case 'under_counter_fridge_with_freezer':
+          return <SmallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
 
         default:
           console.log(type)

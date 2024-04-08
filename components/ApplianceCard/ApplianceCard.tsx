@@ -21,7 +21,7 @@ const ApplianceCard = ({ app, handleDelete }: Props) => {
 
         <div className='flex flex-col items-center justify-start mx-auto '>
           <p>{app.name}</p>
-          <p className='text-sm font-normal capitalize'>{app.type.replace("_", " ")}</p>
+          <p className='text-sm font-normal capitalize'>{app.type.replace(/_/g, " ")}</p>
         </div>
       </a>
       <div className='w-full h-[25px] absolute bottom-0 rounded-b-md overflow-hidden'>

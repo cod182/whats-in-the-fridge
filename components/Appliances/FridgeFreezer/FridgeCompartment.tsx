@@ -34,7 +34,7 @@ const FridgeCompartment = ({ appliance, positions, handleSelect, handleModalStat
 
           {/* Drawers */}
           {drawers != undefined &&
-            <div className={`grid grid-cols-2 grid-rows-1 gap-x-1 mx-auto mt-2`}>
+            <div className={`grid grid-cols-${drawers.length >= 2 ? '2' : '1'} grid-rows-${drawers.length} gap-x-1 mx-auto mt-2`}>
               {drawers.map((drawerNum) => (
                 <DrawerButton key={drawerNum} handleSelection={handleSelect} compartment='fridge' type='drawer' level={drawerNum} handleModalState={handleModalState} items={getItemsInThisLocation(drawerNum, items, 'drawer', 'fridge', 128)} />
               ))}

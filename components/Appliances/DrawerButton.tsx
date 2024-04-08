@@ -1,6 +1,8 @@
 import { GiOpenedFoodCan } from 'react-icons/gi';
+import Image from 'next/image';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import React from 'react'
+import { getImageForAppliance } from '../../utilities/functions';
 
 type Props = PositionProps & { rotate?: string };
 
@@ -8,17 +10,18 @@ type Props = PositionProps & { rotate?: string };
 const DrawerButton = ({ handleSelection, compartment, type, level, position, handleModalState, items, rotate }: Props) => {
 
   return (
-    <>
+    <div>
       {/* Desktop */}
       <div
-        className="hidden md:flex group min-h-[80px]  h-full w-full text-center cursor-pointer border rounded-md flex-row items-center justify-around transition-all duration-200 ease-in hover:bg-gray-500/50 relative"
+        className="hidden md:flex group min-h-[80px] h-full w-full text-center cursor-pointer border rounded-md flex-row items-center justify-around transition-all duration-200 ease-in hover:bg-gray-500/50 relative"
       >
-        <div style={{ transform: `rotate(${rotate}deg)` }} className='flex flex-col justify-center items-center h-full group-hover:absolute group-hover:h-0 overflow-hidden transition-all duration-200 ease'>
+        <div style={{ transform: `rotate(${rotate}deg)` }} className='flex flex-col items-center justify-center w-full h-full overflow-hidden transition-all duration-200 group-hover:absolute group-hover:h-0 ease'>
 
           <p className='flex'>Drawer {level}</p>
           <p>{items.length} Item{items.length != 1 && 's'}</p>
-
-
+          {compartment === 'freezer' && (
+            <Image src='/assets/images/frozen.svg' alt='freezer icon' className='absolute text-blue-500 fill-current right-10' width={30} height={30} />
+          )}
         </div>
 
         <button type='button' onClick={
@@ -52,9 +55,12 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
         className="min-h-[80px] w-full text-center cursor-pointer border rounded-md flex md:hidden flex-col items-center justify-around transition-all duration-200 ease-in  relative"
       >
         <div className='flex flex-col justify-center items-center h-[25%] border-b-[1px] w-full text-sm' >
-          <p className='flex'>Drawer {level}</p>
+          <p className='flex'>Drawer {level} {compartment === 'freezer' && (
+            <Image src='/assets/images/frozen.svg' alt='freezer icon' className=' fill-current text-blue-400 absolute right-[10px]' width={20} height={20} />
+          )}</p>
+
         </div>
-        <div className='h-[50%] w-full flex flex-row '>
+        <div className='h-[50%] w-full flex flex-row'>
           <button type='button' onClick={
             () => {
               handleModalState('open', 'add');
@@ -88,7 +94,7 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
           </div>
         </div>
       </div >
-    </>
+    </div>
   )
 }
 
