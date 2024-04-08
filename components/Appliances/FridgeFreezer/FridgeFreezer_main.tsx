@@ -34,7 +34,7 @@ const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handl
       </div>
 
 
-      <div className='max-w-[400px] h-[800px] rounded-md md:p-1 border-2 border-black bg-gray-100 relative mr-2 xs:mx-auto md:mx-0 lg:mx-auto shadow-inner'>
+      <div className='max-w-[400px] h-[800px] rounded-md md:p-1 border-2 border-black bg-gray-100 relative mr-[22px] xs:mx-auto ml-1 md:mx-0 lg:mx-auto shadow-inner'>
 
         {/* Door Start*/}
         {/* Door Compartment */}

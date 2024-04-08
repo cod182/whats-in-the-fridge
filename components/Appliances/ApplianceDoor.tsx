@@ -18,7 +18,7 @@ const Door = ({ appliance, positions, handleSelect, handleModalState, items }: P
   const [doorStatus, setDoorStatus] = useState(false);
 
   return (
-    <div className={`shadow-inner ${doorStatus ? ' left-[13px] midLow:left-[380px] z-[959] midLow:z-[0] bg-gray-100/100' : 'left-[13px] midLow:left-[100px] z-[0] bg-gray-400/100'} absolute top-[10px] h-full w-full sm:w-[400px] midLow:w-[310px] cursor-pointer border-2 border-black rounded-md flex flex-row items-end justify-space overflow-hidden transition-all duration-300 ease-in`}
+    <div className={`shadow-inner ${doorStatus ? ' left-[22px] sm:left-[16px] midLow:left-[380px] z-[959] midLow:z-[0] bg-gray-100/100' : 'left-[22px] sm:left-[16px] midLow:left-[102px] z-[0] bg-gray-400/100'} absolute top-[10px] h-full w-full sm:w-[400px] midLow:w-[310px] cursor-pointer border-2 border-black rounded-md flex flex-row items-end justify-space overflow-hidden transition-all duration-300 ease-in`}
     >
       <div className={`w-[95%] px-4 py-2 `}>
         {
@@ -42,7 +42,7 @@ const Door = ({ appliance, positions, handleSelect, handleModalState, items }: P
           ))
         }
       </div >
-      <div className='h-full w-[5%] flex flex-col justify-center items-center hover:bg-blue-600 border-l-[1px] border-gray-600 bg-blue-500 transition-all duration-200 ease select-none' onClick={() => { setDoorStatus((prev) => prev ? false : true) }}>
+      <div className='h-full w-[6%] min-w-[22px] flex flex-col justify-center items-center hover:bg-blue-600 border-l-[1px] border-gray-600 bg-blue-500 transition-all duration-200 ease select-none' onClick={() => { setDoorStatus((prev) => prev ? false : true) }}>
         <p className='origin-center transform rotate-90 w-[100px] text-center text-sm text-white'>{doorStatus ? 'Close Door' : 'Open Door'}</p>
       </div>
     </div >

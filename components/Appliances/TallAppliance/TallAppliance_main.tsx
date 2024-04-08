@@ -37,7 +37,7 @@ const TallAppliance_main = ({ appliance, handleSelect, handleModalState, items, 
       </div>
 
 
-      <div className={`max-w-[400px] h-fit rounded-md md:p-1 border-2 border-black bg-gray-100 relative mx-auto shadow-inner ${typeOfAppliance === 'tall_fridge' && 'mr-2 xs:mx-auto md:mx-0 lg:mx-auto'}`}>
+      <div className={`max-w-[400px] h-fit rounded-md md:p-1 border-2 border-black bg-gray-100 mx-auto relative shadow-inner ${typeOfAppliance === 'tall_fridge' && 'mr-[22px] xs:mx-auto md:mx-0 lg:mx-auto'}`}>
 
         {typeOfAppliance === 'tall_fridge' ? (
           <>
