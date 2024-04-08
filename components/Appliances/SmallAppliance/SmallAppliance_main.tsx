@@ -32,12 +32,12 @@ const SmallAppliance_main = ({ appliance, handleSelect, handleModalState, items,
 
       <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
 
-      <div className='w-fit mx-auto h-fit'>
+      <div className='mx-auto w-fit h-fit'>
         <ExpiryNotification layout='horizontal' items={items} />
       </div>
 
 
-      <div className='max-w-[400px] h-fit rounded-md md:p-1 border-2 border-black bg-gray-100 relative mx-auto shadow-inner'>
+      <div className={`max-w-[400px] h-fit rounded-md md:p-1 border-2 border-black bg-gray-100 relative mx-auto shadow-inner ${typeOfAppliance === 'under_counter_fridge' ? 'mr-2 xs:mx-auto md:mx-0 lg:mx-auto' : typeOfAppliance === 'under_counter_fridge_with_freezer' ? 'mr-2 xs:mx-auto md:mx-0 lg:mx-auto' : ''}`}>
 
         {typeOfAppliance === 'under_counter_fridge' && (
           <>
@@ -48,9 +48,9 @@ const SmallAppliance_main = ({ appliance, handleSelect, handleModalState, items,
             </div>
             {/* Door End */}
 
-            <div className='mx-auto z-[5] flex flex-col w-full h-full rounded-md p-[2px] border-[1px] border-gray-400 bg-white relative'>
+            <div className='mx-auto flex flex-col w-full h-full rounded-md p-[2px] border-[1px] border-gray-400 bg-white relative'>
               {/* Fridge compartment Start*/}
-              <div className='w-full z-[6] h-full rounded-md border-2 border-black p-2'>
+              <div className='w-full h-full p-2 border-2 border-black rounded-md'>
                 {/* Fridge Compartment */}
                 <FridgeCompartment appliance={appliance} positions={shelfPositions} handleSelect={handleSelect} handleModalState={handleModalState} items={itemsInLocation.fridge} />
               </div>
@@ -62,7 +62,7 @@ const SmallAppliance_main = ({ appliance, handleSelect, handleModalState, items,
 
         {typeOfAppliance === 'under_counter_freezer' && (
           // {/* Freezer compartment Start*/ }
-          <div className='w-full h-fit rounded-md border-2 border-black my-auto p-2 flex-flex-col items-center justify-center'>
+          <div className='items-center justify-center w-full p-2 my-auto border-2 border-black rounded-md h-fit flex-flex-col'>
             {/* Freezer Compartment */}
             <FreezerCompartment appliance={appliance} handleSelect={handleSelect} handleModalState={handleModalState} items={itemsInLocation.freezer} />
           </div>
@@ -75,12 +75,12 @@ const SmallAppliance_main = ({ appliance, handleSelect, handleModalState, items,
 
             {/* Door Start*/}
             {/* Door Compartment */}
-            <div className='h-[95%] absolute top-[-2px] w-full sm:w-[400px] midLow:w-[310px] z-[2]'>
+            <div className='h-[95%] absolute top-[-2px] w-full sm:w-[400px] midLow:w-[310px]'>
               < ApplianceDoor appliance={appliance} positions={shelfPositions} handleSelect={handleSelect} handleModalState={handleModalState} items={itemsInLocation.door} />
             </div>
             {/* Door End */}
 
-            <div className='mx-auto z-[5] flex flex-col w-full h-full rounded-md p-[2px] border-[1px] border-gray-400 bg-white relative'>
+            <div className='mx-auto z flex flex-col w-full h-full rounded-md p-[2px] border-[1px] border-gray-400 bg-white relative'>
 
               {/* // Freezer compartment Start */}
               <div className='w-full h-fit rounded-md border-2 border-black my-auto p-2 flex-flex-col items-center justify-center z-[10]'>
@@ -90,7 +90,7 @@ const SmallAppliance_main = ({ appliance, handleSelect, handleModalState, items,
               {/* // Freezer compartment End */}
 
               {/* Fridge compartment Start*/}
-              <div className='w-full z-[6] h-full rounded-md border-2 border-black p-2'>
+              <div className='w-full h-full p-2 border-2 border-black rounded-md z'>
                 {/* Fridge Compartment */}
                 <FridgeCompartment appliance={appliance} positions={shelfPositions} handleSelect={handleSelect} handleModalState={handleModalState} items={itemsInLocation.fridge} />
               </div>

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 
-import { PositionButton } from '..'
+import PositionButton from './PositionButton';
 import { getItemsInThisLocation } from '@/utilities/functions';
 
 type Props = {
@@ -42,7 +42,7 @@ const Door = ({ appliance, positions, handleSelect, handleModalState, items }: P
           ))
         }
       </div >
-      <div className='h-full w-[5%] flex flex-col justify-center items-center hover:bg-gray-400 border-l-[1px] border-gray-600 bg-blue-500' onClick={() => { setDoorStatus((prev) => prev ? false : true) }}>
+      <div className='h-full w-[5%] flex flex-col justify-center items-center hover:bg-blue-600 border-l-[1px] border-gray-600 bg-blue-500 transition-all duration-200 ease select-none' onClick={() => { setDoorStatus((prev) => prev ? false : true) }}>
         <p className='origin-center transform rotate-90 w-[100px] text-center text-sm text-white'>{doorStatus ? 'Close Door' : 'Open Door'}</p>
       </div>
     </div >
