@@ -1,7 +1,7 @@
 import { ApplianceDoor } from '@/components';
 import ExpiryNotification from '@/components/ExpiryNotification/ExpiryNotification';
-import FreezerCompartment from '../FridgeFreezer/FreezerCompartment';
-import FridgeCompartment from '../FridgeFreezer/FridgeCompartment';
+import FreezerCompartment from '../FreezerCompartment';
+import FridgeCompartment from '../FridgeCompartment';
 import ItemSearch from '@/components/ItemSearch/ItemSearch';
 import React from 'react'
 import { findItemLocation } from '@/utilities/functions';

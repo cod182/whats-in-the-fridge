@@ -2,13 +2,12 @@
 
 import { FridgeFreezer, Modal } from '..';
 import { IoCloseCircle, IoSaveSharp } from 'react-icons/io5';
-// components/Fridge.tsx
 import React, { useState } from 'react';
 import { getAllAddableItems, getItemsInThisLocation, toggleBodyScrolling } from '@/utilities/functions';
 
 import AddItem from '../AddingItems/AddItem';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
-import ChestAppliance from '../Appliances/ChestFreezer/ChestAppliance_main';
+import ChestAppliance from '../Appliances/ChestAppliance/ChestAppliance_main';
 import { FaEdit } from 'react-icons/fa';
 import { MdCancel } from 'react-icons/md';
 import SmallAppliance_main from '../Appliances/SmallAppliance/SmallAppliance_main';
@@ -183,6 +182,7 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
 
         case 'chest_freezer':
           return <ChestAppliance handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
+
         case 'chest_fridge':
           return <ChestAppliance handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
 
@@ -223,7 +223,7 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
             }
           </div>
         </Modal>
-        <div className='grow my-4'>
+        <div className='my-4 grow'>
           {/* Fridge Name */}
           <div className='flex flex-row items-center justify-start gap-2 mb-2'>
             <h1 className={`${editName ? 'max-w-[0px]' : 'max-w-[300px]'}  h-[36px] overflow-hidden text-3xl font-bold transition-all duration-200 ease`}>{currentApplianceName} </h1>

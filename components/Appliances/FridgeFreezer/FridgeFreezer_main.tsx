@@ -1,8 +1,8 @@
 import { ApplianceDoor, ExpiryNotification, ItemSearch, PositionButton } from '../..'
 
 import DrawerButton from '../DrawerButton'
-import FreezerCompartment from './FreezerCompartment';
-import FridgeCompartment from './FridgeCompartment';
+import FreezerCompartment from '../FreezerCompartment';
+import FridgeCompartment from '../FridgeCompartment';
 import React from 'react'
 import { findItemLocation } from '@/utilities/functions';
 
@@ -29,12 +29,12 @@ const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handl
 
       <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
 
-      <div className='w-fit mx-auto h-fit'>
+      <div className='mx-auto w-fit h-fit'>
         <ExpiryNotification layout='horizontal' items={items} />
       </div>
 
 
-      <div className='max-w-[400px] h-[800px] rounded-md md:p-1 border-2 border-black bg-gray-100 relative mr-2 xs:mx-auto sm:mx-0 lg:mx-auto shadow-inner'>
+      <div className='max-w-[400px] h-[800px] rounded-md md:p-1 border-2 border-black bg-gray-100 relative mr-2 xs:mx-auto md:mx-0 lg:mx-auto shadow-inner'>
 
         {/* Door Start*/}
         {/* Door Compartment */}

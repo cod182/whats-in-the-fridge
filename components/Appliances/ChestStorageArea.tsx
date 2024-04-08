@@ -1,4 +1,5 @@
 import { GiOpenedFoodCan } from 'react-icons/gi';
+import Image from 'next/image';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import React from 'react'
 type Props = PositionProps & { rotate?: string };
@@ -7,13 +8,15 @@ const ChestStorageArea = ({ handleSelection, compartment, type, level, position,
 
   return (
     <div
-      className="hidden md:flex group h-full w-full text-center cursor-pointer border rounded-md flex-col items-center justify-around transition-all duration-200 ease-in hover:bg-gray-500/50 relative"
+      className="relative flex-col items-center justify-around hidden w-full h-full text-center transition-all duration-200 ease-in border rounded-md cursor-pointer md:flex group hover:bg-gray-500/50"
     >
-      <div style={{ transform: `rotate(${rotate}deg)` }} className='flex flex-col justify-center items-center h-full group-hover:absolute group-hover:h-0 overflow-hidden transition-all duration-200 ease'>
+      <div style={{ transform: `rotate(${rotate}deg)` }} className='flex flex-col items-center justify-center h-full overflow-hidden transition-all duration-200 group-hover:absolute group-hover:h-0 ease'>
 
         <p className='flex'>Area {level}</p>
         <p>{items.length} Item{items.length != 1 && 's'}</p>
-
+        {compartment === 'freezer' && (
+          <Image src='/assets/images/frozen.svg' alt='freezer icon' className='absolute text-blue-500 fill-current top-10' width={30} height={30} />
+        )}
 
       </div>
 

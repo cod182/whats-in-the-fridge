@@ -3,7 +3,7 @@ import { findItemLocation, getItemsInThisLocation } from '@/utilities/functions'
 import ChestStorageArea from '../ChestStorageArea';
 import DrawerButton from '../DrawerButton';
 import ExpiryNotification from '@/components/ExpiryNotification/ExpiryNotification';
-import FreezerCompartment from '../FridgeFreezer/FreezerCompartment';
+import FreezerCompartment from '../FreezerCompartment';
 import ItemSearch from '@/components/ItemSearch/ItemSearch';
 import React from 'react'
 
@@ -28,15 +28,14 @@ const ChestAppliance = ({ appliance, handleSelect, handleModalState, items, hand
 
       <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
 
-      <div className='w-fit mx-auto h-fit'>
+      <div className='mx-auto w-fit h-fit'>
         <ExpiryNotification layout='horizontal' items={items} />
       </div>
 
       <div className='w-[800px] h-[400px] rounded-md md:p-1 border-2 border-black bg-gray-100 mx-auto shadow-2xl'>
-        {/* Freezer compartment Start*/}
-        <div className='w-full h-full rounded-md border-2 border-black p-2'>
+        <div className='w-full h-full p-2 border-2 border-black rounded-md'>
           {/* Freezer Compartment */}
-          {appliance?.freezerCompartment && appliance.freezerCompartment.map(({ shelves, drawers }: CompartmentProps, index: number) => (
+          {appliance.freezerCompartment && appliance.freezerCompartment.map(({ shelves, drawers }: CompartmentProps, index: number) => (
             <div key={index} className="w-full h-full">
               {/* Drawers */}
               {drawers != undefined &&
@@ -47,10 +46,22 @@ const ChestAppliance = ({ appliance, handleSelect, handleModalState, items, hand
                 </div>
               }
             </div>
+          ))}
 
+          {/* Fridge Compartment */}
+          {appliance.fridgeCompartment && appliance.fridgeCompartment.map(({ shelves, drawers }: CompartmentProps, index: number) => (
+            <div key={index} className="w-full h-full">
+              {/* Drawers */}
+              {drawers != undefined &&
+                <div className={`flex flex-row items-center gap-2 h-full w-full`}>
+                  {drawers.map((drawerNum, index) => (
+                    <ChestStorageArea key={index} handleSelection={handleSelect} compartment='fridge' type='drawer' level={drawerNum} handleModalState={handleModalState} items={getItemsInThisLocation(drawerNum, itemsInLocation.freezer, 'drawer', 'freezer', 128)} />
+                  ))}
+                </div>
+              }
+            </div>
           ))}
         </div>
-        {/* Freezer compartment End*/}
 
       </div>
 

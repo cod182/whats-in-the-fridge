@@ -1,7 +1,7 @@
 import { ApplianceDoor } from '@/components';
 import ExpiryNotification from '@/components/ExpiryNotification/ExpiryNotification';
-import FreezerCompartment from '../FridgeFreezer/FreezerCompartment';
-import FridgeCompartment from '../FridgeFreezer/FridgeCompartment';
+import FreezerCompartment from '../FreezerCompartment';
+import FridgeCompartment from '../FridgeCompartment';
 import ItemSearch from '@/components/ItemSearch/ItemSearch';
 import React from 'react'
 import { findItemLocation } from '@/utilities/functions';
@@ -32,12 +32,12 @@ const TallAppliance_main = ({ appliance, handleSelect, handleModalState, items, 
 
       <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
 
-      <div className='w-fit mx-auto h-fit'>
+      <div className='mx-auto w-fit h-fit'>
         <ExpiryNotification layout='horizontal' items={items} />
       </div>
 
 
-      <div className='max-w-[400px] h-fit rounded-md md:p-1 border-2 border-black bg-gray-100 relative mx-auto shadow-inner'>
+      <div className={`max-w-[400px] h-fit rounded-md md:p-1 border-2 border-black bg-gray-100 relative mx-auto shadow-inner ${typeOfAppliance === 'tall_fridge' && 'mr-2 xs:mx-auto md:mx-0 lg:mx-auto'}`}>
 
         {typeOfAppliance === 'tall_fridge' ? (
           <>

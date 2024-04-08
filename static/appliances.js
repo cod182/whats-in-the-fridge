@@ -18,8 +18,8 @@ export const appliances = [{
 {
   name: 'Chest Fridge',
   description: ['4 Sections'],
-  freezerCompartments: 1,
-  freezerCompartment: [
+  fridgeCompartments: 1,
+  fridgeCompartment: [
     { drawers: [1, 2, 3, 4] },
   ],
 },

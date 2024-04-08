@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 
-import { PositionButton } from '../..'
+import { PositionButton } from '..'
 import { getItemsInThisLocation } from '@/utilities/functions';
 
 type Props = {

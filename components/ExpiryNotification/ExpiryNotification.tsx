@@ -148,9 +148,9 @@ const ExpiryNotification = ({ items, layout = 'vertical' }: Props) => {
                     <div key={item.id} className="text-gray-300 w-full h-fit flex flex-col items-start justify-start bg-gray-800/60 rounded-lg px-2 py-[5px]">
                       <p className='text-start text-md font-normal min-w-[170px]' >{item.name}</p>
                       {expiryObj.name === 'expired' && (
-                        <p className="text-start  font-normal text-xs capitalize">Expired: {reverseDate(item.expiryDate)}</p>
+                        <p className="text-xs font-normal capitalize text-start">Expired: {reverseDate(item.expiryDate)}</p>
                       )}
-                      <p className="text-start  font-normal text-xs capitalize">Location: {item.compartment} {item.locationType} {item.level}</p>
+                      <p className="text-xs font-normal capitalize text-start">Location: {item.compartment} {item.locationType} {item.level}</p>
                     </div>
                   ))}
                 </div>
