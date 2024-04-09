@@ -23,11 +23,11 @@ const Door = ({ appliance, positions, handleSelect, handleModalState, items }: P
       <div className={`w-[95%] px-4 py-2 `}>
         {
           appliance?.doorCompartment && appliance.doorCompartment.map(({ shelves }: CompartmentProps, index: number) => (
-            <div key={index}>
+            <div className='' key={index}>
               {/* Shelves */}
               {shelves != undefined && shelves.map((shelfNum) => (
-                <div key={shelfNum}>
-                  <div className='grid grid-cols-3 grid-rows-1 mx-auto my-2 gap-x-1'>
+                <div className='w-full' key={shelfNum}>
+                  <div className={`grid grid-cols-${positions.length} grid-rows-1 mx-auto my-2 gap-x-1`}>
                     <span className='absolute text-xs font-normal select-none'>Shelf:{shelfNum}</span>
                     {/* Positions */}
                     {positions.map((position) => (

@@ -1,5 +1,6 @@
 import { findItemLocation, getItemsInThisLocation } from '@/utilities/functions';
 
+import ApplianceTitleArea from '../ApplianceTitleArea';
 import ChestStorageArea from '../ChestStorageArea';
 import DrawerButton from '../DrawerButton';
 import ExpiryNotification from '@/components/ExpiryNotification/ExpiryNotification';
@@ -21,14 +22,7 @@ const ChestAppliance = ({ appliance, handleSelect, handleModalState, items, hand
 
   return (
     <div className='flex flex-col items-start justify-start w-full h-full'>
-      <div className='mb-2'>
-        <h2 className='text-gray-800 text-normal'>{appliance.name}</h2>
-        <p className='text-sm italic text-gray-700'>
-          {appliance.description.map((desc: string, index) => (
-            <span key={index.toString()}>{desc} </span>
-          ))}
-        </p>
-      </div >
+      <ApplianceTitleArea appliance={appliance} />
 
       <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
 

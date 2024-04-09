@@ -1,4 +1,5 @@
 import { ApplianceDoor } from '@/components';
+import ApplianceTitleArea from '../ApplianceTitleArea';
 import ExpiryNotification from '@/components/ExpiryNotification/ExpiryNotification';
 import FreezerCompartment from '../FreezerCompartment';
 import FridgeCompartment from '../FridgeCompartment';
@@ -24,15 +25,7 @@ const TallAppliance_main = ({ appliance, handleSelect, handleModalState, items, 
 
   return (
     <>
-      <div className='mb-2'>
-        <h2 className='text-gray-800 text-normal'>{appliance.name}</h2>
-        <p className='text-sm italic text-gray-700'>
-          {appliance.description.map((desc: string, index) => (
-            <span key={index.toString()}>{desc} </span>
-          ))}
-        </p>
-      </div >
-
+      <ApplianceTitleArea appliance={appliance} />
 
       <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
 

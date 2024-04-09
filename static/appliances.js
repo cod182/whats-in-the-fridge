@@ -1,6 +1,6 @@
 export const appliances = [{
   name: 'Fridge Freezer',
-  description: ['Fridge: 3 Shelves, 2 Drawers', 'Fridge Door: 2 Shelves', 'Freezer: 4 Drawer'],
+  description: ['Fridge: 3 Shelves and 2 Drawers', 'Fridge Door: 2 Shelves', 'Freezer: 4 Drawer'],
   fridgeCompartments: 1,
   fridgeCompartment: [{
     shelves: [3, 2, 1],
@@ -17,7 +17,7 @@ export const appliances = [{
 },
 {
   name: 'Tall Fridge',
-  description: ['Fridge: 5 Shelves, 4 Drawers', 'Door: 5 Shelves'],
+  description: ['Fridge: 5 Shelves and 4 Drawers', 'Door: 5 Shelves'],
   fridgeCompartments: 1,
   fridgeCompartment: [
     { shelves: [1, 2, 3, 4, 5], drawers: [1, 2, 3, 4] },
@@ -37,7 +37,7 @@ export const appliances = [{
 },
 {
   name: 'Under Counter Fridge',
-  description: ['Fridge: 3 Shelves, 1 Drawer', 'Door: 2 Shelves'],
+  description: ['Fridge: 3 Shelves and 1 Drawer', 'Door: 2 Shelves'],
   fridgeCompartments: 1,
   fridgeCompartment: [
     { shelves: [1, 2], drawers: [1] },
@@ -57,7 +57,7 @@ export const appliances = [{
 },
 {
   name: 'Under Counter Fridge with Freezer',
-  description: ['Fridge: 2 Shelves, 1 Drawer', 'Door: 2 Shelves', 'Freezer: 1 Drawer'],
+  description: ['Fridge: 2 Shelves and 1 Drawer', 'Door: 2 Shelves', 'Freezer: 1 Drawer'],
   fridgeCompartments: 1,
   fridgeCompartment: [
     { shelves: [1, 2], drawers: [1] },
@@ -90,7 +90,7 @@ export const appliances = [{
 },
 {
   name: 'American Fridge Freezer',
-  description: ['Fridge: 5 Shelves, 2 Drawers', 'Fridge Door: 5 Shelves', 'Freezer: 5 Drawer', 'Freezer Door: 5 Shelves'],
+  description: ['Fridge: 5 Shelves and 2 Drawers', 'Fridge Door: 5 Shelves', 'Freezer: 5 Drawer', 'Freezer Door: 5 Shelves'],
   fridgeCompartments: 1,
   fridgeCompartment: [
     { shelves: [1, 2, 3, 4, 5], drawers: [1, 2] },
@@ -101,7 +101,6 @@ export const appliances = [{
   ],
   doorCompartments: 2,
   doorCompartment: [
-    { shelves: [1, 2, 3, 4, 5] },
     { shelves: [1, 2, 3, 4, 5] }
   ],
 },

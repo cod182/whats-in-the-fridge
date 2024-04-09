@@ -280,7 +280,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
 
             <div className='w-full my-4 h-fit '>
               {/* Cook from frozen button if in freezer */}
-              {item.compartment === 'freezer' && (
+              {(item.compartment === 'freezer' || item.compartment === 'doorFreezer') && (
                 <div>
                   <p className='mt-2'>Can be cooked from frozen?</p>
 
@@ -384,7 +384,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               </p>
             </div>
             <div className='w-full my-4 h-fit '>
-              {item.compartment === 'freezer' && item.cookedFromFrozen && (
+              {(item.compartment === 'freezer' || item.compartment === 'doorFreezer') && item.cookedFromFrozen && (
                 <>
                   {item.cookedFromFrozen === 'yes' && (
                     <div className="flex flex-row items-center justify-start gap-1">

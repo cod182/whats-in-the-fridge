@@ -49,7 +49,7 @@ const ItemSearch = ({ items, handleUpdateItems }: Props) => {
         >Search <FaChevronCircleUp className={`${!searchState ? 'sm:rotate-90 rotate-180' : ' sm:rotate-[-90deg]'} transition-all duration-300 ease inline`} />
         </p>
         <div className={`transition-all duration-200 ease overflow-hidden rounded-md ${searchState ? 'mt-2 sm:mt-0 w-full sm:w-fit sm:max-w-[2000px] sm:px-4' : 'max-w-0 p-0'}`}>
-          <input type="text" className='rounded-md border-[1px] border-black px-4 text-gray-500 h-[40px] sm:h-[30px] w-full' placeholder='Search for an item' onChange={(e) => handleSearch(e.target.value)} />
+          <input id='itemSearch' type="text" className='rounded-md border-[1px] border-black px-4 text-gray-500 h-[40px] sm:h-[30px] w-full' placeholder='Search for an item' onChange={(e) => handleSearch(e.target.value)} />
         </div>
       </div>
       {/* Results */}

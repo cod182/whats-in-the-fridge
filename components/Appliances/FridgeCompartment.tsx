@@ -20,7 +20,7 @@ const FridgeCompartment = ({ appliance, positions, handleSelect, handleModalStat
           {/* Shelves */}
           {shelves != undefined && shelves.map((shelfNum) => (
             <div key={shelfNum}>
-              <div className='grid grid-cols-3 grid-rows-1 mx-auto mt-2 gap-x-1'>
+              <div className={`grid grid-cols-${positions.length} grid-rows-1 mx-auto mt-2 gap-x-1`}>
                 <span className='absolute text-xs font-normal select-none'>Shelf:{shelfNum}</span>
 
                 {/* Positions */}

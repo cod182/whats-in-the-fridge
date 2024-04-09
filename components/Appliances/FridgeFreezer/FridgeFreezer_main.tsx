@@ -1,5 +1,6 @@
 import { ApplianceDoor, ExpiryNotification, ItemSearch, PositionButton } from '../..'
 
+import ApplianceTitleArea from '../ApplianceTitleArea';
 import DrawerButton from '../DrawerButton'
 import FreezerCompartment from '../FreezerCompartment';
 import FridgeCompartment from '../FridgeCompartment';
@@ -21,15 +22,7 @@ const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handl
 
   return (
     <>
-      <div className='mb-2'>
-        <h2 className='text-gray-800 text-normal'>{appliance.name}</h2>
-        <p className='text-sm italic text-gray-700'>
-          {appliance.description.map((desc: string, index) => (
-            <span key={index.toString()}>{desc} </span>
-          ))}
-        </p>
-      </div >
-
+      <ApplianceTitleArea appliance={appliance} />
 
       <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
 

@@ -19,18 +19,20 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
 
           <p className='flex'>Drawer {level}</p>
           <p>{items.length} Item{items.length != 1 && 's'}</p>
-          {compartment === 'freezer' && (
-            <Image src='/assets/images/frozen.svg' alt='freezer icon' className='absolute text-blue-500 fill-current right-10' width={30} height={30} />
-          )}
         </div>
+
+        {compartment === 'freezer' && (
+          <Image src='/assets/images/frozen.svg' alt='freezer icon' className='hidden xs:inline absolute text-blue-500 fill-current right-[5px] top-[5px]' width={25} height={25} />
+        )}
 
         <button type='button' onClick={
           () => {
             handleModalState('open', 'add');
             handleSelection(items, level, compartment, type, position ? position : 128);
 
-          }} aria-label={`Add an item to ${compartment} compartment, on ${type} ${level}, position ${position}`}
-          className={`${items.length > 0 ? 'w-[50%] hover:border-r-2 rounded-l-md' : 'w-full rounded-md'}  h-full text-center  hidden group-hover:flex flex-row justify-center items-center hover:bg-gray-600/80 hover:text-gray-200  transition-all duration-300 ease-in`}>
+          }}
+          aria-label={`Add an item to ${compartment} compartment, on ${type} ${level}, position ${position}`}
+          className={`${items.length > 0 ? 'w-[50%] hover:border-r-2 rounded-l-md' : 'w-full rounded-md'}  h-full text-center hidden group-hover:flex flex-row justify-center items-center hover:bg-gray-600/80 hover:text-gray-200  transition-all duration-300 ease-in`}>
           <span className='text-[2.9vw]'>
             <IoIosAddCircleOutline className='text-2xl max-h-[40px] aspect-square' />
           </span>
@@ -56,10 +58,10 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
       >
         <div className='flex flex-col justify-center items-center h-[25%] border-b-[1px] w-full text-sm' >
           <p className='flex'>Drawer {level} {compartment === 'freezer' && (
-            <Image src='/assets/images/frozen.svg' alt='freezer icon' className=' fill-current text-blue-400 absolute right-[10px]' width={20} height={20} />
+            <Image src='/assets/images/frozen.svg' alt='freezer icon' className='ml-2 text-blue-400 fill-current' width={20} height={20} />
           )}</p>
-
         </div>
+
         <div className='h-[50%] w-full flex flex-row'>
           <button type='button' onClick={
             () => {

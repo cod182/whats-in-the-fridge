@@ -1,14 +1,15 @@
 'use client'
 
 import { FridgeFreezer, Modal } from '..';
-import { IoCloseCircle, IoSaveSharp } from 'react-icons/io5';
 import React, { useState } from 'react';
 import { getAllAddableItems, getItemsInThisLocation, toggleBodyScrolling } from '@/utilities/functions';
 
 import AddItem from '../AddingItems/AddItem';
+import American from '../Appliances/American/American_main';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import ChestAppliance from '../Appliances/ChestAppliance/ChestAppliance_main';
 import { FaEdit } from 'react-icons/fa';
+import { IoSaveSharp } from 'react-icons/io5';
 import { MdCancel } from 'react-icons/md';
 import SmallAppliance_main from '../Appliances/SmallAppliance/SmallAppliance_main';
 import TallAppliance_main from '../Appliances/TallAppliance/TallAppliance_main';
@@ -174,26 +175,22 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
         case 'fridge_freezer':
           return <FridgeFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
 
+        case 'tall_freezer':
+
         case 'tall_fridge':
           return <TallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
 
-        case 'tall_freezer':
-          return <TallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
-
         case 'chest_freezer':
-          return <ChestAppliance handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
-
         case 'chest_fridge':
           return <ChestAppliance handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
 
         case 'under_counter_fridge':
-          return <SmallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
-
         case 'under_counter_freezer':
-          return <SmallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
-
         case 'under_counter_fridge_with_freezer':
           return <SmallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
+
+        case 'american_fridge_freezer':
+          return <American handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
 
         default:
           console.log(type)
