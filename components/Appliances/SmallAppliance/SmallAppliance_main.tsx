@@ -26,8 +26,12 @@ const SmallAppliance_main = ({ appliance, handleSelect, handleModalState, items,
     <>
       <div className='mb-2'>
         <h2 className='text-gray-800 text-normal'>{appliance.name}</h2>
-        <p className='text-sm italic text-gray-700'>{appliance.description}</p>
-      </div>
+        <p className='text-sm italic text-gray-700'>
+          {appliance.description.map((desc: string, index) => (
+            <span key={index.toString()}>{desc} </span>
+          ))}
+        </p>
+      </div >
 
 
       <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />

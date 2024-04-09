@@ -286,17 +286,17 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
 
                   <div className="flex flex-row items-center justify-start gap-2 ">
 
-                    <div className="flex flex-col items-center justify-center relative" onClick={() => setCookedFromFrozen('yes')}>
+                    <div className="relative flex flex-col items-center justify-center" onClick={() => setCookedFromFrozen('yes')}>
                       <input required defaultChecked={cookedFromFrozen === 'yes'} type="radio" name="cookedFrozen" id={`cookedFrozenYes_${item.id}`} className="peer absolute bottom-0 left-3 z-[1]" />
                       <label htmlFor={`cookedFrozenYes_${item.id}`} className='border-[1px] border-black h-[40px] w-[40px] peer-checked:bg-green-400 font-semibold bg-gray-200 z-[2] rounded-md peer-checked:border-black py-2 text-center hover:bg-gray-300 active:bg-gray-400'>Yes</label>
                     </div>
 
-                    <div className="flex flex-col items-center justify-center relative" onClick={() => setCookedFromFrozen('no')}>
+                    <div className="relative flex flex-col items-center justify-center" onClick={() => setCookedFromFrozen('no')}>
                       <input required defaultChecked={cookedFromFrozen === 'no'} type="radio" name="cookedFrozen" id={`cookedFrozenNo_${item.id}`} className="peer absolute bottom-0 left-3 z-[1]" />
                       <label htmlFor={`cookedFrozenNo_${item.id}`} className='border-[1px] border-black h-[40px] w-[40px] peer-checked:bg-red-300 font-semibold bg-gray-200 z-[2] rounded-md peer-checked:border-black py-2 text-center hover:bg-gray-300 active:bg-gray-400'>No</label>
                     </div>
 
-                    <div className="flex flex-col items-center justify-center relative" onClick={() => setCookedFromFrozen('NA')}>
+                    <div className="relative flex flex-col items-center justify-center" onClick={() => setCookedFromFrozen('NA')}>
                       <input required defaultChecked={cookedFromFrozen === 'NA'} type="radio" name="cookedFrozen" id={`cookedFrozenNA_${item.id}`} className="peer absolute bottom-0 left-3 z-[1]" />
                       <label htmlFor={`cookedFrozenNA_${item.id}`} className='border-[1px] h-[40px] w-[40px] peer-checked:bg-gray-500 peer-checked:text-gray-300 font-semibold bg-gray-200 z-[2] rounded-md  border-black py-2 text-center hover:bg-gray-300 active:bg-gray-400'>N/A</label>
                     </div>
@@ -360,7 +360,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
                 </div>
 
 
-                {/* Close Buttons */}
+                {/* Delete Buttons */}
                 <div className="relative group">
                   <div className="overflow-hidden absolute select-none top-[2px] right-[25px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
                     <p className="text-xs font-normal md:text-sm">Delete</p>
@@ -387,13 +387,13 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               {item.compartment === 'freezer' && item.cookedFromFrozen && (
                 <>
                   {item.cookedFromFrozen === 'yes' && (
-                    <div className="flex flex-row justify-start items-center gap-1">
+                    <div className="flex flex-row items-center justify-start gap-1">
                       <Image className='inline' src='/assets/images/frozen.svg' width={15} height={15} alt='cook from frozen' />
                       <p className={`text-sm text-normal`}>Can be cooked from frozen</p>
                     </div>
                   )}
                   {item.cookedFromFrozen === 'no' && (
-                    <div className="flex flex-row justify-start items-center gap-1">
+                    <div className="flex flex-row items-center justify-start gap-1">
                       <Image className='inline' src='/assets/images/defrost.svg' width={15} height={15} alt='defrost before eating' />
                       <p className={`text-sm text-normal`}>Must be defrosted</p>
                     </div>

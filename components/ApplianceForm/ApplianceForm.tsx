@@ -105,22 +105,23 @@ const ApplianceForm = ({ formType, userId }: Props) => {
           <p className='px-4 my-2 text-gray-600 text-normal'>Select the type of appliance you want to add.</p>
           <div className='grid grid-cols-2 gap-2 sm:grid-cols-4 md:grid-cols-5'>
             {appliances.map((appliance, index) => (
-              <label key={index} className='relative mx-auto'>
+              <label htmlFor={index.toString()} key={index} className='relative mx-auto text-center'>
                 <input
                   type="radio"
                   value={appliance.name.replace(/\s/g, "_").toLowerCase()}
                   checked={formData.applianceType === appliance.name.replace(/\s/g, "_").toLowerCase()}
                   onChange={() => handleRadioChange(appliance.name.replace(/\s/g, "_").toLowerCase())}
                   className='hidden'
+                  id={index.toString()}
                 />
                 <Image
                   src={`/assets/images/appliances/${appliance.name.replace(/\s/g, "_").toLowerCase()}.webp`}
                   alt={appliance.name.replace(/\s/g, "_").toLowerCase()}
                   width={100}
                   height={100}
-                  className={`cursor-pointer border-[1px] border-black rounded-md p-4 transition-all duration-200 ease hover:shadow-md ${formData.applianceType === appliance.name.replace(/\s/g, "_").toLowerCase() ? 'bg-gradient-to-t from-green-300 to-blue-300' : 'bg-gradient-to-b from-blue-300 to-blue-300'}`}
+                  className={`mx-auto cursor-pointer shadow-[1px_1px_0px_0px_#80808069] hover:scale-105 rounded-md p-4 transition-all duration-200 ease hover:shadow-md ${formData.applianceType === appliance.name.replace(/\s/g, "_").toLowerCase() ? 'border-2 border-green-400 bg-blue-400' : ''}`}
                 />
-                <span>{appliance.name}</span>
+                <span className='text-sm font-normal'>{appliance.name}</span>
               </label>
             ))}
           </div>

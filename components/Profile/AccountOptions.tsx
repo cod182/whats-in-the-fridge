@@ -1,4 +1,4 @@
-import DeleteButton from '../DeleteButton/DeleteButton';
+import DeleteButton from '../DeleteUserButton/DeleteUserButton';
 import React from 'react'
 import { getServerSession } from 'next-auth';
 import { nextAuthOptions } from '@/lib/nextAuthOptions';
@@ -13,7 +13,7 @@ const AccountOptions = async () => {
 
       <div className='my-2'>
         <p className='font-semibold'>Delete Your Account</p>
-        <p className='text-xs font-normal italic'>This will also delete any appliances, custom items and items added to any appliances.</p>
+        <p className='text-xs italic font-normal'>This will also delete any appliances, custom items and items added to any appliances.</p>
         <DeleteButton user={session?.user} apiRoute='/api/account/' />
       </div>
 

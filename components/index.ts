@@ -19,5 +19,5 @@ export { default as ApplianceForm } from './ApplianceForm/ApplianceForm';
 export { default as PageTitle } from './PageTitle/PageTitle';
 export { default as ItemSearch } from './ItemSearch/ItemSearch';
 export { default as AccountOptions } from './Profile/AccountOptions';
-export { default as DeleteButton } from './DeleteButton/DeleteButton';
+export { default as DeleteButton } from './DeleteUserButton/DeleteUserButton';
 export { default as ExpiryNotification } from './ExpiryNotification/ExpiryNotification';
