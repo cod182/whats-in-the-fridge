@@ -27,7 +27,7 @@ const Door = ({ appliance, positions, handleSelect, handleModalState, items }: P
               {/* Shelves */}
               {shelves != undefined && shelves.map((shelfNum) => (
                 <div className='w-full' key={shelfNum}>
-                  <div className={`grid grid-cols-${positions.length} grid-rows-1 mx-auto my-2 gap-x-1`}>
+                  <div className={`grid grid-rows-1 mx-auto my-2 gap-x-1`} style={{ gridTemplateColumns: `repeat(${positions.length},minmax(0,1fr) )` }}>
                     <span className='absolute text-xs font-normal select-none'>Shelf:{shelfNum}</span>
                     {/* Positions */}
                     {positions.map((position) => (

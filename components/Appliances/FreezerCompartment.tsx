@@ -17,7 +17,7 @@ const FreezerCompartment = ({ appliance, handleSelect, handleModalState, items, 
         <div key={index} className="w-full h-full">
           {/* Drawers */}
           {drawers != undefined &&
-            <div className={`grid grid-rows-${drawers.length} w-full h-full gap-2`}>
+            <div className={`grid w-full h-full gap-2`} style={{ gridTemplateRows: `repeat(${drawers.length},minmax(0,1fr) )` }}>
               {drawers.map((drawerNum, index) => (
                 <DrawerButton key={index} handleSelection={handleSelect} compartment='freezer' type='drawer' level={drawerNum} handleModalState={handleModalState} items={getItemsInThisLocation(drawerNum, items, 'drawer', 'freezer', 128)} rotate={rotate} />
               ))}
