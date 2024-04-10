@@ -96,14 +96,14 @@ const AppliancesList = () => {
         }
 
         {/* Add New Appliance Link */}
-        <a href={`/profile/add-appliance`} className='flex flex-row items-center justify-around w-full h-full p-4 overflow-hidden transition-all duration-300 rounded-md hover:scale-105 hover:shadow-lg shadow-[1px_1px_0px_0px_rgba(0,0,0,0.1)] ease'>
-          <div className='mx-2'>
+        <a href={`/profile/add-appliance`} className='flex flex-row items-center px-2 justify-center w-full h-full overflow-hidden transition-all duration-300 rounded-md hover:scale-105 hover:shadow-lg shadow-[1px_1px_0px_0px_rgba(0,0,0,0.1)] ease'>
+          <div className='flex items-center w-full h-full flex-center'>
             {/* Image */}
-            <IoAddOutline className='max-w-[100px] max-h-[100px] w-36 h-auto' />
+            <IoAddOutline className='max-w-[100px] max-h-[100px] w-36 h-auto mx-auto' />
           </div>
 
-          <div className='flex flex-col items-center justify-start mx-auto '>
-            <p className='font-bold'>Add New Appliance</p>
+          <div className='flex flex-col items-center justify-center w-full h-full mx-auto'>
+            <p className='font-bold'>New Appliance</p>
           </div>
         </a>
         {/* End Add New Appliance Link */}

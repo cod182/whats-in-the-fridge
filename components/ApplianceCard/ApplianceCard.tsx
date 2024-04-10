@@ -39,7 +39,7 @@ const ApplianceCard = ({ app, handleDelete }: Props) => {
       </a>
 
       {/* Delete Button */}
-      <div className='relative h-full w-fit'>
+      <div className='absolute top-[5px] right-[5px] h-full md:relative w-fit'>
         <button className='relative flex flex-row items-center justify-center rounded-md group bg-gray-300/30 md:bg-transparent'
           onClick={(e) => handleDeleteAppliance(e)}
         >
