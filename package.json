@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
+        "@vercel/analytics": "^1.2.2",
         "@vercel/postgres": "^0.5.1",
         "cypress": "^13.6.1",
         "hamburger-react": "^2.5.0",
