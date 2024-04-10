@@ -135,7 +135,7 @@ const ExpiryNotification = ({ items, message, layout = 'vertical', boxStyles }: 
             <button
               key={expiryObj.name.replace(/\s/g, "_")}
               onClick={() => setSelectedExpiry((prev) => prev === expiryObj.name.replace(/\s/g, "_") ? null : expiryObj.name.replace(/\s/g, "_"))}
-              className={`w-full group h-fit my-1 py-[2px] flex flex-col items-start justify-center overflow-hidden ${expiryObj.name === 'expired' ? 'bg-red-500/70 font-bold hover:bg-red-500/80 active:bg-red-500/90' : 'bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500/90'} active:shadow-inner w-fit rounded-lg transition-all duration-200 ease cursor-pointer select-none`}
+              className={`w-fit group h-fit my-1 py-[2px] flex flex-col items-start justify-center overflow-hidden ${expiryObj.name === 'expired' ? 'bg-red-500/70 font-bold hover:bg-red-500/80 active:bg-red-500/90' : 'bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500/90'} active:shadow-inner w-fit rounded-lg transition-all duration-200 ease cursor-pointer select-none`}
             >
               {/* TOP Notification Bar */}
               <div className='flex flex-row items-center justify-between w-full px-2' onClick={() => { }}>

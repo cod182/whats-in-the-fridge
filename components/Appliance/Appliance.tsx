@@ -176,7 +176,6 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
           return <FridgeFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
 
         case 'tall_freezer':
-
         case 'tall_fridge':
           return <TallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
 
