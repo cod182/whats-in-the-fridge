@@ -3,15 +3,18 @@
 import { calculateFutureDate, reverseDate } from "@/utilities/functions";
 import { useEffect, useState } from "react";
 
+import { FaArrowRight } from "react-icons/fa";
 import { IoIosWarning } from "react-icons/io";
+import Link from "next/link";
 
 type Props = {
   items: applianceItem[];
   message?: string;
+  linkToAppliance?: string;
   layout?: 'horizontal' | 'vertical';
   boxStyles?: string;
 }
-const ExpiryNotification = ({ items, message, layout = 'vertical', boxStyles }: Props) => {
+const ExpiryNotification = ({ items, message, linkToAppliance, layout = 'vertical', boxStyles }: Props) => {
 
 
   type expiringItem = {
@@ -117,7 +120,7 @@ const ExpiryNotification = ({ items, message, layout = 'vertical', boxStyles }: 
       case '1':
         return 'Expiring Tomorrow';
       default:
-        return `Expiring on the ${calculateFutureDate(4)}`;
+        return `Expiring on the ${calculateFutureDate(parseInt(text))}`;
 
     }
   }
@@ -128,6 +131,10 @@ const ExpiryNotification = ({ items, message, layout = 'vertical', boxStyles }: 
 
         {message && (
           <p className="px-2 font-semibold capitalize">{message}</p>
+        )}
+
+        {linkToAppliance && (
+          <Link href={linkToAppliance} className="w-full px-2 text-sm italic text-gray-600 transition-all duration-200 ease hover:text-blue-500 active:text-blue-600 text-start text-normal">Go to Appliance <FaArrowRight className="inline" /> </Link>
         )}
 
         {expiringItems.map((expiryObj) =>
