@@ -1,15 +1,18 @@
 'use client'
 
-import { ChestFreezer, FridgeFreezer, Modal } from '..';
-import { IoCloseCircle, IoSaveSharp } from 'react-icons/io5';
-// components/Fridge.tsx
+import { FridgeFreezer, Modal } from '..';
 import React, { useState } from 'react';
 import { getAllAddableItems, getItemsInThisLocation, toggleBodyScrolling } from '@/utilities/functions';
 
 import AddItem from '../AddingItems/AddItem';
+import American from '../Appliances/American/American_main';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
+import ChestAppliance from '../Appliances/ChestAppliance/ChestAppliance_main';
 import { FaEdit } from 'react-icons/fa';
+import { IoSaveSharp } from 'react-icons/io5';
 import { MdCancel } from 'react-icons/md';
+import SmallAppliance_main from '../Appliances/SmallAppliance/SmallAppliance_main';
+import TallAppliance_main from '../Appliances/TallAppliance/TallAppliance_main';
 import { TiTick } from 'react-icons/ti';
 import ViewItems from '../Appliances/ViewItems';
 import { appliances } from '@/static/appliances';
@@ -172,10 +175,24 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
         case 'fridge_freezer':
           return <FridgeFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
 
+        case 'tall_freezer':
+        case 'tall_fridge':
+          return <TallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
+
         case 'chest_freezer':
-          return <ChestFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} />;
+        case 'chest_fridge':
+          return <ChestAppliance handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
+
+        case 'under_counter_fridge':
+        case 'under_counter_freezer':
+        case 'under_counter_fridge_with_freezer':
+          return <SmallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
+
+        case 'american_fridge_freezer':
+          return <American handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
 
         default:
+          console.log(type)
           return (<div>Unknown</div>)
       }
     }
@@ -202,13 +219,13 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
             }
           </div>
         </Modal>
-        <div className='grow'>
+        <div className='my-4 grow'>
           {/* Fridge Name */}
           <div className='flex flex-row items-center justify-start gap-2 mb-2'>
             <h1 className={`${editName ? 'max-w-[0px]' : 'max-w-[300px]'}  h-[36px] overflow-hidden text-3xl font-bold transition-all duration-200 ease`}>{currentApplianceName} </h1>
             {/* Edit Form */}
             <form action="" method='PUT' onSubmit={(e) => handleChangeApplianceName(e)} className={`${!editName ? 'max-w-[0px]' : 'max-w-[1000px]'} left-0 text-3xl font-bold overflow-hidden transition-all duration-200 ease flex flex-row items-center gap-2`}>
-              <input className={`py-[5px] px-2 rounded-md ${!applianceName ? 'border-red-400' : 'border-black'}`} type="text" value={applianceName} onChange={(e) => setApplianceName(e.target.value)} />
+              <input id='nameInput' className={`py-[5px] px-2 rounded-md ${!applianceName ? 'border-red-400' : 'border-black'}`} type="text" value={applianceName} onChange={(e) => setApplianceName(e.target.value)} />
               <button className='' type="submit"><IoSaveSharp className={`w-[25px] h-[25px] hover:text-green-600 transition-all duration-200 ease ${loading || success ? 'hidden' : ''}`} /></button>
             </form>
             <MdCancel className={`w-[25px] h-[25px] hover:text-red-500 transition-all duration-200 ease cursor-pointer ${editName ? (loading || success ? 'hidden' : '') : 'hidden'}`} onClick={() => { setEditName(false); setApplianceName(currentApplianceName) }} />

@@ -108,14 +108,19 @@ export const getAllUserItems = async () => {
 // Takes items and filters them to an array of objects
 export const findItemLocation = (items: applianceItem[]) => {
   let doorItems: applianceItem[] = []; // Initialized array
+  let doorItemsFreezer: applianceItem[] = []; // Initialized array
   let fridgeItems: applianceItem[] = []; // Initialized array
   let freezerItems: applianceItem[] = []; // Initialized array
 
   // Mapping over items and pushing them to their compartment array using a switch
   items.map((item) => {
     switch (item.compartment) { // Condition of the item's compartment (fridge, freezer etc...)
-      case 'door': //Checking the condition
+      case 'door':
+      case 'doorFridge':
         doorItems.push(item) // Push item to array
+        break;
+      case 'doorFreezer':
+        doorItemsFreezer.push(item) // Push item to array
         break;
       case 'fridge':
         fridgeItems.push(item)
@@ -132,6 +137,7 @@ export const findItemLocation = (items: applianceItem[]) => {
   object.door = doorItems;
   object.fridge = fridgeItems;
   object.freezer = freezerItems;
+  object.doorItemsFreezer = doorItemsFreezer;
 
   // return the new filtered object of arrays
   return object;

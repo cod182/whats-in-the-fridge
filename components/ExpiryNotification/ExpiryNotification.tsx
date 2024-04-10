@@ -7,9 +7,11 @@ import { IoIosWarning } from "react-icons/io";
 
 type Props = {
   items: applianceItem[];
+  message?: string;
   layout?: 'horizontal' | 'vertical';
+  boxStyles?: string;
 }
-const ExpiryNotification = ({ items, layout = 'vertical' }: Props) => {
+const ExpiryNotification = ({ items, message, layout = 'vertical', boxStyles }: Props) => {
 
 
   type expiringItem = {
@@ -114,25 +116,26 @@ const ExpiryNotification = ({ items, layout = 'vertical' }: Props) => {
         return 'Expired Items';
       case '1':
         return 'Expiring Tomorrow';
-      case '2':
-        return `Expiring on the ${calculateFutureDate(2)}`;
-      case '3':
-        return `Expiring on the ${calculateFutureDate(3)}`;
-      case '4':
-        return `Expiring on the ${calculateFutureDate(4)}`;
       default:
-        break;
+        return `Expiring on the ${calculateFutureDate(4)}`;
+
     }
   }
-  if (expiringItems) {
+
+  if (expiringItems && expiringItems[0].items.length > 0 || expiringItems && expiringItems[1].items.length > 0 || expiringItems && expiringItems[2].items.length > 0 || expiringItems && expiringItems[3].items.length > 0 || expiringItems && expiringItems[4].items.length > 0) {
     return (
-      <div className={`flex ${layout === 'vertical' ? 'flex-col items-center justify-normal' : 'md:flex-row flex-wrap flex-col items-start justify-start gap-x-2'} w-full h-fit rounded-md p-2`}>
+      <div className={`${boxStyles} flex ${layout === 'vertical' ? 'flex-col items-center justify-normal' : 'md:flex-row flex-wrap flex-col items-start justify-start gap-x-2'} w-full h-fit rounded-md p-2`}>
+
+        {message && (
+          <p className="px-2 font-semibold capitalize">{message}</p>
+        )}
+
         {expiringItems.map((expiryObj) =>
-          expiryObj.items.length > 0 && (
+          expiryObj.items.length >= 1 && (
             <button
-              key={expiryObj.name.replace(' ', '_')}
-              onClick={() => setSelectedExpiry((prev) => prev === expiryObj.name.replace(' ', '_') ? null : expiryObj.name.replace(' ', '_'))}
-              className={`group h-fit my-1 py-[2px] flex flex-col items-start justify-center overflow-hidden ${expiryObj.name === 'expired' ? 'bg-red-500/70 font-bold hover:bg-red-500/80 active:bg-red-500/90' : 'bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500/90'} active:shadow-inner w-fit rounded-lg transition-all duration-200 ease cursor-pointer select-none`}
+              key={expiryObj.name.replace(/\s/g, "_")}
+              onClick={() => setSelectedExpiry((prev) => prev === expiryObj.name.replace(/\s/g, "_") ? null : expiryObj.name.replace(/\s/g, "_"))}
+              className={`w-fit group h-fit my-1 py-[2px] flex flex-col items-start justify-center overflow-hidden ${expiryObj.name === 'expired' ? 'bg-red-500/70 font-bold hover:bg-red-500/80 active:bg-red-500/90' : 'bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500/90'} active:shadow-inner w-fit rounded-lg transition-all duration-200 ease cursor-pointer select-none`}
             >
               {/* TOP Notification Bar */}
               <div className='flex flex-row items-center justify-between w-full px-2' onClick={() => { }}>
@@ -145,16 +148,16 @@ const ExpiryNotification = ({ items, layout = 'vertical' }: Props) => {
               </div>
 
               {/* Items that have / are expiring */}
-              <div className={`${selectedExpiry === expiryObj.name.replace(' ', '_') ? 'max-h-[400px] overflow-scroll py-[5px]' : 'max-h-[0px] overflow-hidden'} transition-all duration-200 ease flex flex-col items-start justify-start gap-y-2 w-full`}>
+              <div className={`${selectedExpiry === expiryObj.name.replace(/\s/g, "_") ? 'max-h-[400px] overflow-scroll py-[5px]' : 'max-h-[0px] overflow-hidden'} transition-all duration-200 ease flex flex-col items-start justify-start gap-y-2 w-full`}>
                 <hr className="w-full border-black" />
                 <div className={`px-2 transition-all duration-200 ease flex flex-col items-start justify-start gap-y-2 w-full`}>
                   {expiryObj.items.map((item) => (
                     <div key={item.id} className="text-gray-300 w-full h-fit flex flex-col items-start justify-start bg-gray-800/60 rounded-lg px-2 py-[5px]">
                       <p className='text-start text-md font-normal min-w-[170px]' >{item.name}</p>
                       {expiryObj.name === 'expired' && (
-                        <p className="text-start  font-normal text-xs capitalize">Expired: {reverseDate(item.expiryDate)}</p>
+                        <p className="text-xs font-normal capitalize text-start">Expired: {reverseDate(item.expiryDate)}</p>
                       )}
-                      <p className="text-start  font-normal text-xs capitalize">Location: {item.compartment} {item.locationType} {item.level}</p>
+                      <p className="text-xs font-normal capitalize text-start">Location: {item.compartment} {item.locationType} {item.level}</p>
                     </div>
                   ))}
                 </div>

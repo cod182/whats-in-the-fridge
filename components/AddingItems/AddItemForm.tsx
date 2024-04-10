@@ -66,23 +66,23 @@ const AddItemForm = ({ handleFormSubmit, quantity, setQuantity, quantityChange, 
       {/* End Item Quantity */}
 
       {/* Cook from frozen button if in freezer */}
-      {compartment === 'freezer' && (
+      {(compartment === 'freezer' || compartment === 'doorFreezer') && (
         <div>
           <p className='mt-2'>Can be cooked from frozen?</p>
 
           <div className="flex flex-row items-center justify-start gap-2 ">
 
-            <div className="flex flex-col items-center justify-center relative">
+            <div className="relative flex flex-col items-center justify-center">
               <input value='yes' required type="radio" name="cookedFromFrozen" id="cookedFrozenYes" className="peer absolute bottom-0 left-3 z-[1]" />
               <label htmlFor='cookedFrozenYes' className='h-[40px] w-[40px] peer-checked:bg-green-400 font-semibold bg-gray-200 z-[2] rounded-md peer-checked:border-[1px] peer-checked:border-black py-2 text-center hover:bg-gray-300 active:bg-gray-400'>Yes</label>
             </div>
 
-            <div className="flex flex-col items-center justify-center relative">
+            <div className="relative flex flex-col items-center justify-center">
               <input value='no' required type="radio" name="cookedFromFrozen" id="cookedFrozenNo" className="peer absolute bottom-0 left-3 z-[1]" />
               <label htmlFor='cookedFrozenNo' className='h-[40px] w-[40px] peer-checked:bg-red-300 font-semibold bg-gray-200 z-[2] rounded-md peer-checked:border-[1px] peer-checked:border-black py-2 text-center hover:bg-gray-300 active:bg-gray-400'>No</label>
             </div>
 
-            <div className="flex flex-col items-center justify-center relative">
+            <div className="relative flex flex-col items-center justify-center">
               <input value='NA' required type="radio" name="cookedFromFrozen" id="cookedFrozenNA" className="peer absolute bottom-0 left-3 z-[1]" />
               <label htmlFor='cookedFrozenNA' className='h-[40px] w-[40px] peer-checked:bg-red-300 font-semibold bg-gray-200 z-[2] rounded-md peer-checked:border-[1px] peer-checked:border-black py-2 text-center hover:bg-gray-300 active:bg-gray-400'>N/A</label>
             </div>

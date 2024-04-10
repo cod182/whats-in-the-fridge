@@ -7,7 +7,7 @@ const PositionButton = ({ handleSelection, compartment, type, level, position, h
     <>
 
       {/* Desktop */}
-      <div className="hidden md:flex group h-[80px] text-center cursor-pointer border rounded-md flex-row items-center justify-around transition-all duration-300 ease-in hover:bg-gray-500/50 relative"
+      <div className="hidden md:flex group w-full h-[80px] text-center cursor-pointer border rounded-md flex-row items-center justify-around transition-all duration-300 ease-in hover:bg-gray-500/50 relative"
       >
         <button type='button' onClick={
           () => {

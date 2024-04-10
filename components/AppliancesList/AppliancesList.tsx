@@ -81,7 +81,7 @@ const AppliancesList = () => {
 
   return (
     <>
-      <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4'>
+      <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
         {filteredAppliances?.map((app, index) => {
           return (
             <FadeInHOC key={app.id} delayNumber={index === 0 ? 200 : (index + 1) * 200} direction='up'>
@@ -94,16 +94,20 @@ const AppliancesList = () => {
           )
         })
         }
-        <a href={`/profile/add-appliance`} className='flex flex-row flex-wrap items-center justify-around w-full h-full p-4 transition-all duration-300 rounded-md aspect-auto bg-gray-200/30 hover:bg-gray-400/50 hover:shadow-xl ease'>
-          <div className='mx-2'>
+
+        {/* Add New Appliance Link */}
+        <a href={`/profile/add-appliance`} className='flex flex-row items-center px-2 justify-center w-full h-full overflow-hidden transition-all duration-300 rounded-md hover:scale-105 hover:shadow-lg shadow-[1px_1px_0px_0px_rgba(0,0,0,0.1)] ease'>
+          <div className='flex items-center w-full h-full flex-center'>
             {/* Image */}
-            <IoAddOutline className='w-[100px] h-[100px]' />
+            <IoAddOutline className='max-w-[100px] max-h-[100px] w-36 h-auto mx-auto' />
           </div>
 
-          <div className='flex flex-col items-center justify-start mx-auto '>
-            <p className='font-bold'>Add New Appliance</p>
+          <div className='flex flex-col items-center justify-center w-full h-full mx-auto'>
+            <p className='font-bold'>New Appliance</p>
           </div>
         </a>
+        {/* End Add New Appliance Link */}
+
 
       </div >
       {

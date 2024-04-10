@@ -15,9 +15,12 @@ const page = () => {
         <a className='hover:text-blue-700' href="https://www.flaticon.com/free-icons/freezer" title="freezer icons">Freezer icons created by POD Gladiator - Flaticon</a>
         <a className='hover:text-blue-700' href="https://www.flaticon.com/free-icons/freezer" title="freezer icons">Freezer icons created by Freepik - Flaticon</a>
         <a className='hover:text-blue-700' href="https://www.freepik.com/free-vector/big-set-flat-whole-sliced-fresh-fruits-vegetables-with-carrot-tomato-lemon-avocado-apple-banana-peach-isolated-vector-illustration_32074509.htm#query=vegetables&position=9&from_view=keyword&track=sph&uuid=6ce88b9d-f2f8-4569-bb2e-053c43bae17c">Image by macrovector on Freepik</a>
+        <a href="https://www.flaticon.com/free-icons/fridge" title="fridge icons">Fridge icons created by Cursor Creative - Flaticon</a>
+        <a href="https://www.flaticon.com/free-icons/fridge" title="fridge icons">Fridge icons created by amonrat rungreangfangsai - Flaticon</a>
         <p className='hover:text-blue-700'>frozen food by Studio 365 from <a href="https://thenounproject.com/browse/icons/term/frozen-food/" target="_blank" title="frozen food Icons">Noun Project</a> (CC BY 3.0)</p>
         <p className='hover:text-blue-700'>Defrost by kystudio from <a href="https://thenounproject.com/browse/icons/term/defrost/" target="_blank" title="Defrost Icons">Noun Project</a> (CC BY 3.0)</p>
         <p className='hover:text-blue-700'>Food by Maxie from <a href="https://thenounproject.com/browse/icons/term/food/" target="_blank" title="Food Icons">Noun Project</a> (CC BY 3.0)</p>
+
         Artichoke by Bstn Stnhr from <a href="https://thenounproject.com/browse/icons/term/artichoke/" target="_blank" title="Artichoke Icons">Noun Project</a> (CC BY 3.0)
         aubergine by Georgiana Ionescu from <a href="https://thenounproject.com/browse/icons/term/aubergine/" target="_blank" title="aubergine Icons">Noun Project</a> (CC BY 3.0)
         Asparagus by Icons Producer from <a href="https://thenounproject.com/browse/icons/term/asparagus/" target="_blank" title="Asparagus Icons">Noun Project</a> (CC BY 3.0)
