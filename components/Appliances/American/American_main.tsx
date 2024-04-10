@@ -1,4 +1,4 @@
-import AmericanDoorRight from './AmericanDoorRight';
+import AmericanDoorRight from './AmericanDoors';
 import { ApplianceDoor } from '@/components';
 import ApplianceTitleArea from '../ApplianceTitleArea';
 import ExpiryNotification from '@/components/ExpiryNotification/ExpiryNotification';
@@ -39,7 +39,7 @@ const American = ({ appliance, handleSelect, handleModalState, items, handleUpda
 
         {/* Doors Start*/}
         {/* Right Door */}
-        <div className='h-[98%] absolute top-[2px] w-[200px] right-0'>
+        <div className='h-[97%] absolute w-full left-0 top-[8px] bg-pink-500]'>
           < AmericanDoorRight appliance={appliance} positions={shelfPositions} handleSelect={handleSelect} handleModalState={handleModalState} itemsFridge={itemsInLocation.door} itemsFreezer={itemsInLocation.doorItemsFreezer} />
         </div>
         {/* Door End */}

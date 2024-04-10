@@ -16,12 +16,14 @@ type Props = {
 }
 
 
-const AmericanDoorRight = ({ appliance, positions, handleSelect, handleModalState, itemsFridge, itemsFreezer }: Props) => {
-  const [doorStatus, setDoorStatus] = useState(false);
+const AmericanDoors = ({ appliance, positions, handleSelect, handleModalState, itemsFridge, itemsFreezer }: Props) => {
+  const [doorLeftStatus, setDoorLeftStatus] = useState(false);
+  const [doorRightStatus, setDoorRightStatus] = useState(false);
+
 
   return (
     <>
-      <div className={`shadow-inner ${doorStatus ? ' left-[2px] midLow:left-[185px] z-[959] midLow:z-[0] bg-gray-100/100' : 'left-[2px] midLow:left-[20px] z-[0] bg-gray-400/100'} absolute top-[3px] h-full w-[220px] midLow:w-[200px] cursor-pointer border-2 border-black rounded-md flex flex-row items-end justify-space overflow-hidden transition-all duration-300 ease-in`}
+      <div className={`shadow-inner ${doorRightStatus ? 'right-[-24px] midLow:right-[-185px] z-[959] midLow:z-[0] bg-gray-100/100' : 'right-[-24px] midLow:right-[-20px] z-[0] bg-gray-400/100'} absolute top-[0px] h-full w-[220px] midLow:w-[200px] cursor-pointer border-2 border-black rounded-md flex flex-row items-end justify-space overflow-hidden transition-all duration-300 ease-in`}
       >
 
         <div className={`w-[95%] px-4 py-2 `}>
@@ -48,8 +50,8 @@ const AmericanDoorRight = ({ appliance, positions, handleSelect, handleModalStat
         </div >
 
         {/* Open / Close Door Area Start*/}
-        <div className='h-full w-[6%] min-w-[22px] flex flex-col justify-center items-center hover:bg-blue-600 border-l-[1px] border-gray-600 bg-blue-500 transition-all duration-200 ease select-none' onClick={() => { setDoorStatus((prev) => prev ? false : true) }}>
-          <p className='origin-center transform rotate-90 w-[100px] text-center text-sm text-white'>{doorStatus ? 'Close Door' : 'Open Door'}</p>
+        <div className='h-full w-[6%] min-w-[22px] flex flex-col justify-center items-center hover:bg-blue-600 border-l-[1px] border-gray-600 bg-blue-500 transition-all duration-200 ease select-none' onClick={() => { setDoorRightStatus((prev) => prev ? false : true) }}>
+          <p className='origin-center transform rotate-90 w-[100px] text-center text-sm text-white'>{doorRightStatus ? 'Close Door' : 'Open Door'}</p>
         </div>
         {/* Open / Close Door Area End*/}
 
@@ -58,12 +60,12 @@ const AmericanDoorRight = ({ appliance, positions, handleSelect, handleModalStat
 
 
       {/* LEFT DOOR */}
-      <div className={`shadow-inner ${doorStatus ? ' right-0 xs:right-[200px] midLow:right-[380px] z-[959] midLow:z-[0] bg-gray-100/100' : 'right-[200px] midLow:right-[216px] z-[0] bg-gray-400/100'} absolute top-[3px] h-full w-[220px] midLow:w-[200px] cursor-pointer border-2 border-black rounded-md flex flex-row items-end justify-space overflow-hidden transition-all duration-300 ease-in`}
+      <div className={`shadow-inner ${doorLeftStatus ? 'left-[-24px] midLow:left-[-185px] z-[959] midLow:z-[0] bg-gray-100/100' : 'left-[-24px] midLow:left-[-20px] z-[0] bg-gray-400/100'} absolute top-[0px] h-full w-[220px] midLow:w-[200px] cursor-pointer border-2 border-black rounded-md flex flex-row items-end justify-space overflow-hidden transition-all duration-300 ease-in`}
       >
 
         {/* Open / Close Door Area Start*/}
-        <div className='h-full w-[6%] min-w-[22px] flex flex-col justify-center items-center hover:bg-blue-600 border-l-[1px] border-gray-600 bg-blue-500 transition-all duration-200 ease select-none' onClick={() => { setDoorStatus((prev) => prev ? false : true) }}>
-          <p className='origin-center transform rotate-90 w-[100px] text-center text-sm text-white'>{doorStatus ? 'Close Doors' : 'Open Doors'}</p>
+        <div className='h-full w-[6%] min-w-[22px] flex flex-col justify-center items-center hover:bg-blue-600 border-l-[1px] border-gray-600 bg-blue-500 transition-all duration-200 ease select-none' onClick={() => { setDoorLeftStatus((prev) => prev ? false : true) }}>
+          <p className='origin-center transform rotate-90 w-[100px] text-center text-sm text-white'>{doorLeftStatus ? 'Close Door' : 'Open Door'}</p>
         </div>
         {/* Open / Close Door Area End*/}
 
@@ -99,4 +101,4 @@ const AmericanDoorRight = ({ appliance, positions, handleSelect, handleModalStat
   )
 }
 
-export default AmericanDoorRight
+export default AmericanDoors
