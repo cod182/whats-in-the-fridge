@@ -54,22 +54,25 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
 
       {/* Mobile */}
       <div
-        className="min-h-[80px] w-full text-center cursor-pointer border rounded-md flex md:hidden flex-col items-center justify-around transition-all duration-200 ease-in  relative"
+        className="min-h-[80px] w-full text-center cursor-pointer border overflow-hidden rounded-md flex md:hidden flex-col items-center justify-between transition-all duration-200 ease-in relative "
       >
-        <div className='flex flex-col justify-center items-center h-[25%] border-b-[1px] w-full text-sm' >
-          <p className='flex'>Drawer {level} {compartment === 'freezer' && (
-            <Image src='/assets/images/frozen.svg' alt='freezer icon' className='ml-2 text-blue-400 fill-current' width={20} height={20} />
-          )}</p>
+        <div className='flex gap-2 flex-row justify-center items-center min-h-[40px] xxs:min-h-[20px] border-b-[1px] w-full text-xs xs:text-normal' >
+          <p className='flex text-xs xs:text-normal'>Drawer {level}
+          </p>
+          {compartment === 'freezer' ? (
+            <Image src='/assets/images/frozen.svg' alt='freezer icon' className=' text-blue-400 fill-current' width={20} height={20} />
+          ) : (<span className='hidden xs:inline'>-</span>)}
+          <p className='text-xs xs:text-normal'>{items.length} Item{items.length != 1 && 's'}</p>
         </div>
 
-        <div className='h-[50%] w-full flex flex-row'>
+        <div className='h-[40px] xxs:min-h-[60px] xxs:h-[60px] w-full flex flex-row items-center justify-center'>
           <button type='button' onClick={
             () => {
               handleModalState('open', 'add');
               handleSelection(items, level, compartment, type, position ? position : 128);
 
             }} aria-label={`Add an item to ${compartment} compartment, on ${type} ${level}, position ${position}`}
-            className={`${items.length > 0 ? 'w-[50%] border-r-[1px] border-gray-800 rounded-l-md' : 'w-full rounded-md'} h-full text-center flex flex-row justify-center items-center bg-gray-200/80 hover:bg-gray-600/80 hover:text-gray-200 transition-all duration-300 ease-in`}>
+            className={`h-full ${items.length > 0 ? 'w-[50%] border-r-[1px] border-gray-800 rounded-l-md' : 'w-full rounded-md'}  text-center flex flex-row justify-center items-center bg-gray-200/80 hover:bg-gray-600/80 hover:text-gray-200 transition-all duration-300 ease-in`}>
             <span className='text-[2.9vw]'>
               <IoIosAddCircleOutline className='text-2xl max-h-[40px] aspect-square' />
             </span>
@@ -90,11 +93,11 @@ const DrawerButton = ({ handleSelection, compartment, type, level, position, han
           }
         </div>
 
-        <div className='flex flex-col justify-center items-center h-[25%] border-t-[1px] w-full text-sm'>
+        {/* <div className='flex flex-col justify-center items-center h-[25%] border-t-[1px] w-full text-sm'>
           <div className='flex flex-col items-center justify-center w-full h-full overflow-hidden transition-all duration-200 ease-in-out'>
             <p>{items.length} Item{items.length != 1 && 's'}</p>
           </div>
-        </div>
+        </div> */}
       </div >
     </div>
   )
