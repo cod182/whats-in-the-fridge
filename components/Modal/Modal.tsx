@@ -47,7 +47,7 @@ const Modal = ({ children, setModalState, modalState, dataTest }: Props) => {
         }}
       />
       <div
-        className="relative z-[999] flex flex-col w-full h-screen sm:w-[90%] max-w-[850px] sm:h-fit max-h-full p-2 sm:p-4 pb-0  bg-blue-300 rounded-lg drop-shadow-2xl "
+        className="relative z-[999] flex flex-col w-full max-h-full sm:w-[90%] max-w-[850px] sm:max-h-full p-2 sm:p-4 pb-4 bg-blue-300 rounded-lg drop-shadow-2xl "
         onClick={() => { }}
       >
         <div className="w-full h-[60px] flex flex-row justify-end items-center mb-4 sm:mb-0 z-[990]">
@@ -62,15 +62,9 @@ const Modal = ({ children, setModalState, modalState, dataTest }: Props) => {
             Close
           </button>
         </div>
-        <div className="overflow-scroll transition-all duration-200 ease">
+        <div className="overflow-scroll transition-all duration-200 ease rounded-md">
           {children}
         </div>
-        {/* <div className='h-[130px] absolute w-full bg-slate-200/80 bottom-0 left-0 flex flex-row justify-center items-center'>
-          <div className='bg-gray-800/30 w-[25%] h-[20px] rounded-l-md'></div>
-          <div className='bg-gray-800/30 w-[30%] h-[40px] rounded-t-lg rounded-b-md'></div>
-          <div className='bg-gray-800/30 w-[25%] h-[20px] rounded-r-md'></div>
-
-        </div> */}
       </div>
     </div>
   );
