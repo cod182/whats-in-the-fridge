@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 
 import { BiDotsHorizontalRounded } from "react-icons/bi";
+import { CiCircleChevDown } from 'react-icons/ci';
+import { FaArrowCircleUp } from "react-icons/fa";
 import { FaEdit } from 'react-icons/fa'
 import Image from 'next/image';
 import { IoCloseSharp } from 'react-icons/io5'
@@ -193,7 +195,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
 
       <div
         id={`${item.name.toLowerCase().replace(/\s/g, '-')}-${item.id}-container`}
-        className={`flex flex-col justify-start items-start p-2 w-full max-h-[110px] rounded-md relative border-[1px] border-gray-400 bg-gray-200 overflow-hidden transition-all duration-200 ease-in-out ${containerStatus ? 'max-h-[500px]' : 'max-h-[110px]'}`}
+        className={`flex flex-col my-[2px] justify-start items-start p-2 w-full max-h-[110px] rounded-md relative shadow-[1px_1px_1px_0px_rgb(0,0,0,0.2)] overflow-hidden transition-all duration-500 ease-in-out ${containerStatus ? 'max-h-[500px]' : 'max-h-[110px]'}`}
       >
         {/* form selection depending on the editActivated State */}
         {editActivated ? (
@@ -270,11 +272,12 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
 
               {/* More Info Button */}
               <p
-                className='w-full h-[15px] select-none cursor-pointer text-center rounded-t-md absolute text-xs bottom-0 left-0 bg-gray-300 hover:bg-gray-400 hover:text-gray-300 border-t-[1px] border-gray-600 transition-all duration-300 ease-in-out'
+                className='group w-fit h-fit flex flex-row items-center select-none cursor-pointer text-center rounded-t-md hover:scale-105 hover:bg-gray-300/20 absolute bottom-0 right-0 transition-all duration-300 ease-in-out pr-2 py-1 pl-2 text-md text-blue-600 hover:text-blue-500'
                 onClick={() => setContainerStatus((prev) => !prev)
                 }
               >
-                {containerStatus ? 'Less Info' : 'More Info'}
+                {/* {containerStatus ? 'Less Info' : 'More Info'} */}
+                Details <CiCircleChevDown className={`${containerStatus ? 'rotate-180' : 'rotate-0'}  transition-all duration-300 ease h-[20px] w-[20px] ml-2`} />
               </p>
             </div>
 
@@ -376,11 +379,13 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               {/* More Info Button */}
               <p
                 id={`${item.name.toLowerCase().replace(/\s/g, '-')}-${item.id}-button`}
-                className='w-full h-[15px] select-none cursor-pointer text-center rounded-t-md absolute text-xs bottom-0 bg-gray-300 hover:bg-gray-400 hover:text-gray-300 border-t-[1px] border-gray-600 transition-all duration-300 ease-in-out'
+                className='group w-fit h-fit flex flex-row items-center select-none cursor-pointer text-center rounded-t-md hover:scale-105 hover:bg-gray-300/20 absolute bottom-0 right-0 transition-all duration-300 ease-in-out pr-2 py-1 pl-2 text-md text-blue-600 hover:text-blue-500'
                 onClick={() => setContainerStatus((prev) => !prev)
                 }
               >
-                {containerStatus ? 'Less Info' : 'More Info'}
+
+                Details <CiCircleChevDown className={`${containerStatus ? 'rotate-180' : 'rotate-0'}  transition-all duration-300 ease h-[20px] w-[20px] ml-2`} />
+                {/* {containerStatus ? 'Less Info' : 'More Info'} */}
               </p>
             </div>
             <div className='w-full my-4 h-fit '>
