@@ -250,7 +250,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
                   <select
                     name="itemName"
                     id="itemName"
-                    className='w-full px-4 py-2 my-2 font-semibold capitalize rounded-md shadow-inner h-fit'
+                    className='w-full px-4 py-2 my-2 font-semibold capitalize rounded-md shadow-inner h-fit min-h-[35px]'
                     onChange={(e) => handleChangeSelectedItem(JSON.parse(e.target.value))}
                     defaultValue="" // set default value to an empty string
                   >

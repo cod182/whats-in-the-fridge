@@ -41,7 +41,7 @@ const AppliancePage = () => {
       }
     };
     fetchData();
-  }, [user?.id, status, applianceId]);
+  }, [user?.id, status, applianceId, router]);
 
   useEffect(() => {
     const getAllApplianceItems = async () => {
