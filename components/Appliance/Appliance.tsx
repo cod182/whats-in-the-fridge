@@ -202,8 +202,9 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
   if (appliance != null) {
     return (
       <>
+        {/* Modal Start */}
         <Modal modalState={modalState} setModalState={handleModalState}>
-          <div className="mt-4">
+          <div className="mt-4 mb-4 sm:mb-4">
             {modalType === 'view' &&
               <ViewItems
                 selectedArea={selectedArea}
@@ -219,6 +220,8 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
             }
           </div>
         </Modal>
+        {/* Modal End */}
+
         <div className='my-4 grow'>
           {/* Fridge Name */}
           <div className='flex flex-row items-center justify-start gap-2 mb-2'>
