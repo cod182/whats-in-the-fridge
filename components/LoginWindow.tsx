@@ -22,7 +22,7 @@ const LoginWindow = () => {
 
   return (
     <div className='mt-4 w-fit mx-auto h-full min-w-[50vw] min-h-[50vh] max-w-[500px] max-h-[500px] bg-gray-100/40 rounded-lg p-10 border-[1px] border-gray-700 flex flex-col items-center'>
-      <h1 className='text-bold text-5xl underline'>Login / Register</h1>
+      <h1 className='text-bold text-5xl underline text-center'>Login / Register</h1>
       <div className='mt-8 flex flex-col items-center justify-center grow'>
         {providers ?
           Object.values(providers).map((provider) => (

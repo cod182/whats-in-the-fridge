@@ -47,7 +47,7 @@ const Modal = ({ children, setModalState, modalState, dataTest }: Props) => {
         }}
       />
       <div
-        className="relative z-[999] flex flex-col w-full sm:w-[90%] max-w-[850px] h-[100dvh] sm:max-h-full p-2 sm:p-4 pb-4 bg-blue-300 rounded-lg drop-shadow-2xl "
+        className="z-[999] flex flex-col w-full sm:w-[90%] max-w-[850px]  h-[100dvh] xs:h-auto xs:max-h-full p-2 xs:p-4 bg-blue-300 rounded-lg drop-shadow-2xl xs:relative absolute top-0"
         onClick={() => { }}
       >
         <div className="w-full h-[60px] flex flex-row justify-end items-center mb-4 sm:mb-0 z-[990]">
