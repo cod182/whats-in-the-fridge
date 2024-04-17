@@ -1,28 +1,44 @@
 'use client'
 
+import { MdCancel, MdError } from "react-icons/md";
 import React, { useState } from 'react'
+import { TiTick, TiTrash } from "react-icons/ti";
 
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
 import { ImSpinner6 } from "react-icons/im";
 import Image from 'next/image';
-import { MdError } from "react-icons/md";
+import { IoSaveSharp } from 'react-icons/io5';
 import { customImages } from '@/static/custom-item-images';
 import { getUserCustomItems } from '@/utilities/functions';
 
 const ManageCustomItems = () => {
+
+  // STATES
   const [managementPane, setManagementPane] = useState<boolean>(false);
   const [customItems, setCustomItems] = useState<userCreatedItem[]>();
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [selectedItem, setSelectedItem] = useState<userCreatedItem>()
   const [selectedIcon, setSelectedIcon] = useState<string>();
+  const [updating, setUpdating] = useState(false)
+  const [updateSuccess, setUpdateSuccess] = useState(false)
+  const [updateError, setUpdateError] = useState('')
+
+
+  // FUNCTIONS
+  // handles getting all custom items and sets the state
+  const getCustomCreatedItems = async () => {
+    const userItemsArray: userCreatedItem[] = await getUserCustomItems();
+    setCustomItems(userItemsArray);
+    return true;
+  }
 
   const handleLookUpItems = async () => {
     if (!managementPane) {
       setLoading(true)
-      const userItemsArray: userCreatedItem[] = await getUserCustomItems();
-      setCustomItems(userItemsArray);
+      await getCustomCreatedItems()
       if (customItems && customItems.length < 1) {
         setLoading(false);
         setError(true)
@@ -36,12 +52,78 @@ const ManageCustomItems = () => {
     }
   }
 
+  // Handles when the selected option is changed
   const handleChangeSelectedItem = (selectedItem: userCreatedItem) => {
+    // Sets the selected item
     setSelectedItem(selectedItem);
+    // Sets the selected icon from the selecteditem
     setSelectedIcon(selectedItem.image)
   }
 
-  const handleUpdatingItem = (e: any) => { }
+  // Handles teh updating of and item when save is clicked
+  const handleUpdatingItem = async (e: any) => {
+    e.preventDefault();
+
+    // Ensure the selected item is present
+    if (!selectedItem) {
+      setUpdateError('No item id found');
+      return;
+    }
+    // getting the form data from the event
+    const formData = new FormData(e.target as HTMLFormElement);
+    // initilize formValues
+    const formValues: Record<string, string> = {};
+    setUpdateError('');
+    // set a key:value in formValues for each of the values in formData
+    formData.forEach((value, key) => {
+      formValues[key] = value.toString();
+    });
+
+    // creat the updateitem object
+    const updatedItem = {
+      id: selectedItem.id,
+      creatorId: selectedItem.creatorId,
+      name: formValues.name,
+      itemMainType: formValues.itemMainType,
+      itemSubType: formValues.itemSubType,
+      itemType: formValues.itemType,
+      image: formValues.itemIcon
+    }
+
+    try {
+      setUpdating(true)
+      const response = await fetch(`/api/appliance-items/custom/${selectedItem.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedItem),
+      });
+      if (response.ok) {
+        // handlingUpdateLocalItem(updatedItem);
+        setUpdating(false)
+        setUpdateSuccess(true);
+        // Set states to false after 1 second
+        setTimeout(() => {
+          setUpdateSuccess(false);
+          setSelectedIcon(undefined);
+          getCustomCreatedItems();
+        }, 1000);
+      } else {
+        setUpdateError(response.statusText);
+        // Set success to false after 1 second
+        setTimeout(() => {
+          setUpdateError('');
+        }, 1000);
+        setUpdating(false)
+        setUpdateSuccess(false)
+      }
+    } catch (error) {
+      console.error('Error while sending data', error);
+      setUpdateError('Error while sending data, please try again');
+      setUpdating(false)
+    }
+  }
 
   return (
     <div className='flex flex-col justify-start items-start w-full h-fit transition-all duration-300 ease bg-pink'>
@@ -49,7 +131,7 @@ const ManageCustomItems = () => {
       {/* Area for Managing Items */}
       <div className={`${managementPane ? 'max-h-[1000px] py-2' : 'max-h-[0px] py-0'} bg-gray-400/30 w-full rounded-md overflow-hidden transition-all duration-300 ease px-2`}>
         <select
-          className='rounded-md px-2 min-h-[35px] capitalize'
+          className='rounded-md px-2 min-h-[45px] capitalize'
           name="custom_item_selection"
           defaultValue="" // set default value to an empty string
           onChange={(e) => handleChangeSelectedItem(JSON.parse(e.target.value))}
@@ -123,6 +205,59 @@ const ManageCustomItems = () => {
                   </div>
                 </div>
                 {/* End Icon Selection */}
+
+
+                {/* Icons & Buttons */}
+                <div
+                  className='flex flex-col flex-wrap justify-between items-end w-full h-fit my-4'>
+                  {updating &&
+                    (
+                      <div className="mx-auto flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
+                        <p className="text-md font-normal md:text-lg">Updating!</p>
+                        <BiDotsHorizontalRounded className='h-[20px] w-[20px] text-blue-500  hover:scale-110 transition-all duration-200 ease-in-out animate-spin' />
+                      </div>
+
+                    )
+                  }
+
+                  {updateSuccess &&
+                    (
+                      <div className="mx-auto flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
+                        <p className="text-md font-normal md:text-lg">Updated!</p>
+                        <TiTick className='h-[45px] w-[45px] text-green-500  hover:scale-110 transition-all duration-200 ease-in-out' />
+                      </div>
+                    )
+                  }
+
+                  {!updating && !updateSuccess &&
+                    <div className="w-full h-fit flex flex-row justify-around items-center">
+                      {/* Save Button */}
+
+                      <div className="relative group w-fit h-auto">
+                        <div className="overflow-hidden absolute select-none top-[13px] right-[55px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+                          <p className="text-xs font-normal md:text-sm">Update</p>
+                        </div>
+                        <button
+                          type='submit'>
+                          <IoSaveSharp className='bg-gray-300/60 rounded-md p-2 h-[45px] w-[45px] text-green-500 hover:text-green-600 hover:scale-110 transition-all duration-200 ease-in-out' />
+                        </button>
+                      </div>
+
+                      {/* Delete Button */}
+                      <div className="relative group">
+
+                        <div className="overflow-hidden absolute select-none top-[13px] right-[55px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+                          <p className="text-xs font-normal md:text-sm">Delete</p>
+                        </div>
+                        <button className='relative'
+                          onClick={() => { }}
+                        >
+                          <TiTrash className='bg-gray-300/60 rounded-md p-2 h-[45px] w-[45px] text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out' />
+                        </button>
+                      </div>
+                    </div>
+                  }
+                </div>
 
               </form>
             </div>
