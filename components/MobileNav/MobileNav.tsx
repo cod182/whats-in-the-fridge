@@ -32,7 +32,7 @@ const MobileNav = () => {
     <>
       <nav className="flex-row items-center justify-center w-full h-auto sm:items-end sm:hidden">
         <div className="flex flex-row items-center justify-between w-full sm:justify-around">
-          <div className={`z-[999] sm:hidden flex flex-row justify-center items-center ${isNavOpen ? 'text-secondary hover:scale-105' : 'text-primary hover:text-secondary'}  hover:drop-shadow-2xl w-fit font-[calc(10px + 10vw)]`}>
+          <div className={`z-[900] sm:hidden flex flex-row justify-center items-center ${isNavOpen ? 'text-secondary hover:scale-105' : 'text-primary hover:text-secondary'}  hover:drop-shadow-2xl w-fit font-[calc(10px + 10vw)]`}>
             <Hamburger toggled={isNavOpen} toggle={toggleNav} />
           </div>
 
@@ -42,7 +42,7 @@ const MobileNav = () => {
         </div>
       </nav>
       <div
-        className={`absolute top sm:hidden bg-gradient-to-b from-sky-400 to-indigo-600 z-[998] w-full transition-all ease-in duration-300 ${isNavOpen ? 'h-[100svh] overflow-scroll pt-10' : 'h-0 overflow-hidden pt-0'
+        className={`absolute top sm:hidden bg-gradient-to-b from-sky-400 to-indigo-600 z-[899] w-full transition-all ease-in duration-300 ${isNavOpen ? 'h-[100svh] overflow-scroll pt-10' : 'h-0 overflow-hidden pt-0'
           }`}
       >
 

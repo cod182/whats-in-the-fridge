@@ -12,7 +12,7 @@ const AddItemForm = ({ handleFormSubmit, quantity, setQuantity, quantityChange, 
     <form onSubmit={(e) => handleFormSubmit(e)} className='flex flex-col items-start justify-center gap-2'>
       {/* Expiry Date Section */}
       <label htmlFor='expiryDate' className='mt-2'>Set the Expiry Date <span className='text-sm italic font-normal text-gray-100'>(Optional)</span></label>
-      <input id='expiryDate' type="date" name='expiryDate' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner min-h-[37px]' />
+      <input id='expiryDate' type="date" name='expiryDate' className='w-full px-4 py-2 mb-2 font-semibold rounded-md shadow-inner min-h-[37px] capitalize' />
 
       {/* Item Quantity */}
       <div className='w-full'>

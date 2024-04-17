@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+input {
+    -webkit-appearance: none;
+}
+
+input[type="date"]:not(:focus):not(.has-value):before {
+    color: black;
+    content: attr(placeholder);
+}
