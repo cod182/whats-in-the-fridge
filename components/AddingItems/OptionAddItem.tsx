@@ -29,6 +29,8 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
   const [message, setMessage] = useState<string>();
 
   // Use Effects
+
+  // This is getting the id of the appliance from the url
   useEffect(() => {
     const pathname = window.location.pathname;
     const segments = pathname.split('/');
@@ -37,6 +39,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
   }, []);
 
 
+  // This resets the items type and selected item type on load
   useEffect(() => {
     setItemType('');
     setSelectItemType('');
@@ -75,7 +78,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
     return itemsOfType;
   }
 
-
+  // handles the setting of the selected items, type and nullifies the selected tim
   const handleSelectChange = (e: any) => {
     // Handling a change and setting states
     setSelectItemType(e.target.value);
@@ -83,6 +86,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
     setSelectedItem(null);
   }
 
+  // Handles the setting of the selected item
   const handleChangeSelectedItem = (item: any) => {
     setSelectedItem(item);
   };
@@ -99,7 +103,7 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
     }
   };
 
-
+  // Handles teh submitting of the form
   const handleFormSubmit = async (e: any) => {
     e.preventDefault();
     setError('');

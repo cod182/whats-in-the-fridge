@@ -37,6 +37,9 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
     let newItemsList = items;
     newItemsList.push(item)
     updateItems(newItemsList);
+    setTimeout(() => {
+      setAddType('');
+    }, 1000)
   }
 
 
