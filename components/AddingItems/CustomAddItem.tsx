@@ -254,7 +254,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
             {/* Item expiry Date */}
             <div className='w-full'>
               <label htmlFor='expiryDate' className='mt-2'>Set the Expiry Date <span className='mb-1 text-sm italic font-normal text-gray-100'>(Optional)</span></label>
-              <input id='expiryDate' type="date" name='expiryDate' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit min-h-[35px]' />
+              <input id='expiryDate' type="date" name='expiryDate' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-[37px] block' placeholder='DD/MM/YYYY' />
             </div>
 
             {/* End Item expiry Date */}
