@@ -66,6 +66,18 @@ export const removeItemFromDb = async (query: string, values: [] = []) => {
   }
 }
 
+export const getUserCustomItems = async () => {
+  try {
+    const response = await fetch('/api/appliance-items/custom')
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return false;
+  }
+}
+
 export const getAllAddableItems = async (query?: string) => {
   if (query) {
     try {
