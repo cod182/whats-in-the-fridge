@@ -1,9 +1,20 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
 
+import { authOptions } from '@/utilities/authOptions';
 import { executeQuery } from '@/lib/db';
+import { getServerSession } from 'next-auth/next';
 
-export const POST = async (request: NextRequest, params: any, response: NextResponse) => {
+export const POST = async (request: NextRequest, params: any, response: NextApiResponse) => {
+
+  // API Protection
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    // Not Signed in
+    return NextResponse.json({ error: "You must be logged in': ", status: 401 })
+  }
+
+
   const { userId, applianceType, applianceName } = await request.json();
 
   if (!applianceName || !applianceType) {

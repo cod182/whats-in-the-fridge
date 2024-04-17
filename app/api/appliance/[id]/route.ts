@@ -1,10 +1,21 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
+import { authOptions } from "@/utilities/authOptions";
 import { executeQuery } from "@/lib/db";
+import { getServerSession } from "next-auth/next";
 import { headers } from "next/headers";
 
 export const DELETE = async (req: any, { params }: any, res: any) => {
+
+  // API Protection
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    // Not Signed in
+    return NextResponse.json({ error: "You must be logged in': ", status: 401 })
+  }
+
+
   const headersList = headers();
   const ownerId = headersList.get("ownerId");
 

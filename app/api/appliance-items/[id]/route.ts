@@ -1,11 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { NextApiRequest } from "next";
+import { authOptions } from "@/utilities/authOptions";
 import { executeQuery } from "@/lib/db";
+import { getServerSession } from "next-auth/next";
 import { getSession } from "next-auth/react";
 import { headers } from "next/headers";
 
 export const DELETE = async (req: any, { params }: any, res: any) => {
+
+  // API Protection
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    // Not Signed in
+    return NextResponse.json({ error: "You must be logged in': ", status: 401 })
+  }
+
+
   const headersList = headers();
   const ownerId = headersList.get("ownerId");
 
@@ -28,6 +39,15 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
 }
 
 export const PUT = async (request: NextRequest, params: any, response: NextResponse) => {
+
+  // API Protection
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    // Not Signed in
+    return NextResponse.json({ error: "You must be logged in': ", status: 401 })
+  }
+
+
   try {
     const {
       id,

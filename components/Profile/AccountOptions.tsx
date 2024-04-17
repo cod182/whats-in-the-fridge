@@ -9,16 +9,11 @@ const AccountOptions = async () => {
 
   return (
     <div className='w-full h-full'>
-      <hr className='border-[1px]' />
-
-      <div className='my-2'>
+      <div className=''>
         <p className='font-semibold'>Delete Your Account</p>
         <p className='text-xs italic font-normal'>This will also delete any appliances, custom items and items added to any appliances.</p>
         <DeleteButton user={session?.user} apiRoute='/api/account/' />
       </div>
-
-      <hr className='border-[1px]' />
-
     </div>
   )
 }
