@@ -42,7 +42,7 @@ const MobileNav = () => {
         </div>
       </nav>
       <div
-        className={`absolute top sm:hidden bg-primary z-[998] w-full transition-all ease-in duration-300 ${isNavOpen ? 'h-[100svh] overflow-scroll pt-10' : 'h-0 overflow-hidden pt-0'
+        className={`absolute top sm:hidden bg-gradient-to-b from-sky-400 to-indigo-600 z-[998] w-full transition-all ease-in duration-300 ${isNavOpen ? 'h-[100svh] overflow-scroll pt-10' : 'h-0 overflow-hidden pt-0'
           }`}
       >
 
@@ -51,7 +51,7 @@ const MobileNav = () => {
           <li className="w-full">
             <a
               href="/"
-              className="flex flex-row items-center justify-start my-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray-600 hover:border-2 hover:shadow-2xl"
+              className="flex flex-row items-center justify-center my-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
             >
               <GoHomeFill />
               <span className="text-[30px] inline">Home</span>
@@ -61,7 +61,7 @@ const MobileNav = () => {
             <li className="w-full">
               <a
                 href="/login"
-                className="flex flex-row items-center justify-start my-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray-600 hover:border-2 hover:shadow-2xl"
+                className="flex flex-row items-center justify-center my-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
               >
                 <IoLogIn />
                 <span className="text-[30px] inline">Login / Register</span>
@@ -71,34 +71,34 @@ const MobileNav = () => {
               <li className="w-full">
                 <a
                   href="/profile"
-                  className="flex flex-row items-center justify-start w-full mt-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray-600 hover:border-2 hover:shadow-2xl"
+                  className="flex flex-row items-center justify-center w-full mt-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
                 >
                   <BiSolidFridge />
                   <span className="text-[30px] inline">Account</span>
                 </a>
               </li>
-              <ul className='ml-4'>
-                <li className='my-2'>
-                  <a href="/profile/appliances" className="mb-[5px] flex flex-row items-center justify-start px-2 font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800 hover:border-[1px] hover:border-b-0 hover:shadow-2xl"
+              <ul className=''>
+                <li className='my-[2px]'>
+                  <a href="/profile/appliances" className="text-center mb-[3px] flex flex-row items-center justify-center px-2 font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800   hover:scale-105"
                   >Appliances</a>
-                  <hr className='border-gray-800 w-full mb-1' />
+                  <hr className='border-gray-800 max-w-[150px] mx-auto mb-1' />
                 </li>
-                <li className='my-2'>
-                  <a href="/profile/add-appliance" className="mb-[5px] flex flex-row items-center justify-start px-2 font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800 hover:border-[1px] hover:border-b-0 hover:shadow-2xl"
+                <li className='my-[2px]'>
+                  <a href="/profile/add-appliance" className="text-center mb-[3px] flex flex-row items-center justify-center px-2 font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800   hover:scale-105"
                   >Add New Appliance</a>
-                  <hr className='border-gray-800 w-full mb-1' />
+                  <hr className='border-gray-800 max-w-[150px] mx-auto mb-1' />
                 </li>
-                <li className='my-2'>
-                  <a href="/profile/account" className="mb-[5px] flex flex-row items-center justify-start px-2 font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800 hover:border-[1px] hover:border-b-0 hover:shadow-2xl"
+                <li className='my-[2px]'>
+                  <a href="/profile/account" className="text-center mb-[3px] flex flex-row items-center justify-center px-2 font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800   hover:scale-105"
                   >Account</a>
-                  <hr className='border-gray-800 w-full mb-1' />
+                  <hr className='border-gray-800 max-w-[150px] mx-auto mb-1' />
                 </li>
               </ul>
 
               <li className="w-full">
                 <button
                   onClick={() => signOut()}
-                  className="flex flex-row items-center justify-start w-full my-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray-600 hover:border-2 hover:shadow-2xl"
+                  className="flex flex-row items-center justify-center w-full my-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray-800 hover:scale-105"
                 >
                   <IoLogOut />
                   <span className="text-[30px] inline">Logout</span>
@@ -107,6 +107,9 @@ const MobileNav = () => {
             </>
           )}
         </ul>
+        <div className="flex items-center justify-center w-full absolute bottom-0">
+          <Image priority src={logo} alt="Logo" className="w-[400px] h-auto" />
+        </div>
       </div>
     </>
   );
