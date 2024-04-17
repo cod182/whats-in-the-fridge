@@ -21,7 +21,6 @@ const ManageCustomItems = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [selectedItem, setSelectedItem] = useState<userCreatedItem>()
-  const [selectedIcon, setSelectedIcon] = useState<string>();
   const [updating, setUpdating] = useState(false)
   const [updateSuccess, setUpdateSuccess] = useState(false)
   const [updateError, setUpdateError] = useState('')
@@ -56,8 +55,6 @@ const ManageCustomItems = () => {
   const handleChangeSelectedItem = (selectedItem: userCreatedItem) => {
     // Sets the selected item
     setSelectedItem(selectedItem);
-    // Sets the selected icon from the selecteditem
-    setSelectedIcon(selectedItem.image)
   }
 
   // Handles teh updating of and item when save is clicked
@@ -69,25 +66,19 @@ const ManageCustomItems = () => {
       setUpdateError('No item id found');
       return;
     }
-    // getting the form data from the event
-    const formData = new FormData(e.target as HTMLFormElement);
-    // initilize formValues
-    const formValues: Record<string, string> = {};
-    setUpdateError('');
-    // set a key:value in formValues for each of the values in formData
-    formData.forEach((value, key) => {
-      formValues[key] = value.toString();
-    });
 
-    // creat the updateitem object
+    setUpdateError('');
+
+
+    // create the updateitem object
     const updatedItem = {
       id: selectedItem.id,
       creatorId: selectedItem.creatorId,
-      name: formValues.name,
-      itemMainType: formValues.itemMainType,
-      itemSubType: formValues.itemSubType,
-      itemType: formValues.itemType,
-      image: formValues.itemIcon
+      name: selectedItem.name,
+      itemMainType: selectedItem.itemMainType,
+      itemSubType: selectedItem.itemSubType,
+      itemType: selectedItem.itemType,
+      image: selectedItem.image
     }
 
     try {
@@ -106,7 +97,7 @@ const ManageCustomItems = () => {
         // Set states to false after 1 second
         setTimeout(() => {
           setUpdateSuccess(false);
-          setSelectedIcon(undefined);
+          setSelectedItem(undefined);
           getCustomCreatedItems();
         }, 1000);
       } else {
@@ -122,6 +113,9 @@ const ManageCustomItems = () => {
       console.error('Error while sending data', error);
       setUpdateError('Error while sending data, please try again');
       setUpdating(false)
+      setTimeout(() => {
+        setUpdateError('');
+      }, 1000);
     }
   }
 
@@ -129,7 +123,9 @@ const ManageCustomItems = () => {
     <div className='flex flex-col justify-start items-start w-full h-fit transition-all duration-300 ease bg-pink'>
       <p className={`font-semibold ${managementPane ? 'pb-2' : 'pb-0'}`}>Manage Your Custom Items {error ? (<><MdError className='text-red-500/90 w-[25px] h-[25px] inline transition-all duration-300 ease' /><span className='inline text-xs text-gray-800 italic'>You have not created any items</span></>) : loading ? (<ImSpinner6 className='animate-spin text-blue-500 w-[25px] h-[25px] inline transition-all duration-300 ease' />) : (<FaCircleArrowRight onClick={() => handleLookUpItems()} className={`${managementPane ? 'rotate-90' : 'rotate-0'} cursor-pointer w-[25px] h-[25px] inline transition-all duration-300 ease hover:text-blue-500  hover:scale-105`} />)}</p>
       {/* Area for Managing Items */}
-      <div className={`${managementPane ? 'max-h-[1000px] py-2' : 'max-h-[0px] py-0'} bg-gray-400/30 w-full rounded-md overflow-hidden transition-all duration-300 ease px-2`}>
+      <div className={`relative ${managementPane ? 'max-h-[1000px] py-2' : 'max-h-[0px] py-0'} bg-gray-400/30 w-full rounded-md overflow-hidden transition-all duration-300 ease px-2`}>
+        {error && <div className=' top-0 w-full mb-4 italic text-black bg-red-500/80 h-fit p-4 text-md font-semibold rounded-md'>Error:{error}</div>}
+
         <select
           className='rounded-md px-2 min-h-[45px] capitalize'
           name="custom_item_selection"
@@ -151,28 +147,28 @@ const ManageCustomItems = () => {
                 {/* Name Entry */}
                 <div className='w-full'>
                   <label htmlFor="name" className='mb-1'>Name your item:</label>
-                  <input type="text" id='name' name='name' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' defaultValue={selectedItem.name} />
+                  <input type="text" id='name' name='name' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' value={selectedItem.name} onChange={(e) => setSelectedItem({ ...selectedItem, name: e.target.value })} />
                 </div>
                 {/* End Name Entry */}
 
                 {/* Item Main Type */}
                 <div className='w-full'>
                   <label htmlFor="itemMainType" className='my-2'>Set the main type of the item: <span className='block mb-1 text-sm italic font-normal text-gray-700'>e.g Herb, Red Meat, Savory Snack, Seafood  </span></label>
-                  <input type="text" id='itemMainType' name='itemMainType' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' defaultValue={selectedItem.itemMainType} />
+                  <input type="text" id='itemMainType' name='itemMainType' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' value={selectedItem.itemMainType} onChange={(e) => setSelectedItem({ ...selectedItem, itemMainType: e.target.value })} />
                 </div>
                 {/* End Item Main Type */}
 
                 {/* Item Type */}
                 <div className='w-full'>
                   <label htmlFor="itemType" className='my-2'>Set the type of the item: <span className='block mb-1 text-sm italic font-normal text-gray-700'>e.g Vegetable, Meat, Snack, Fish </span></label>
-                  <input type="text" id='itemType' name='itemType' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' defaultValue={selectedItem.itemType} />
+                  <input type="text" id='itemType' name='itemType' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' value={selectedItem.itemType} onChange={(e) => setSelectedItem({ ...selectedItem, itemType: e.target.value })} />
                 </div>
                 {/* End Item Type */}
 
                 {/* Item Sub Type */}
                 <div className='w-full'>
                   <label htmlFor="itemSubType" className='my-2'>Set the sub type of the item: <span className='block mb-1 text-sm italic font-normal text-gray-700'>Optional </span></label>
-                  <input type="text" id='itemSubType' name='itemSubType' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' defaultValue={selectedItem.itemSubType} />
+                  <input type="text" id='itemSubType' name='itemSubType' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-fit' value={selectedItem.itemSubType} onChange={(e) => setSelectedItem({ ...selectedItem, itemSubType: e.target.value })} />
                 </div>
                 {/* End Item Sub Type */}
 
@@ -187,15 +183,15 @@ const ManageCustomItems = () => {
                           type="radio"
                           name="itemIcon"
                           value={item.icon}
-                          onChange={(e) => setSelectedIcon(e.target.value)}
+                          onChange={(e) => setSelectedItem({ ...selectedItem, image: e.target.value })}
                           className='hidden mr-2 group'
-                          checked={selectedIcon === item.icon}
+                          checked={selectedItem.image === item.icon}
                         />
                         <div className="flex flex-col items-center justify-center mx-auto">
                           <Image
                             src={`/assets/images/itemTypes/${item.icon}`}
                             alt={item.name}
-                            className={`mx-auto hover:scale-110 cursor-pointer transition-all duration-200 ease ${selectedIcon === item.icon ? 'rounded-full scale-110 border-[2px] shadow-xl border-green-400' : ''} `}
+                            className={`mx-auto hover:scale-110 cursor-pointer transition-all duration-200 ease ${selectedItem.image === item.icon ? 'rounded-full scale-110 border-[2px] shadow-xl border-green-400' : ''} `}
                             width={50}
                             height={50}
                           />
