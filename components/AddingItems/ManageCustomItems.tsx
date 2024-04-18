@@ -1,15 +1,18 @@
 'use client'
 
-import { MdCancel, MdError } from "react-icons/md";
+import { BiCross, BiDotsHorizontalRounded } from "react-icons/bi";
+import { GiCancel, GiCrossMark } from "react-icons/gi";
+import { ImCross, ImSpinner6 } from "react-icons/im";
+import { IoClose, IoSaveSharp } from 'react-icons/io5';
+import { MdCancel, MdError, MdFreeCancellation } from "react-icons/md";
 import React, { useState } from 'react'
-import { TiTick, TiTrash } from "react-icons/ti";
+import { TiCancel, TiTick, TiTrash } from "react-icons/ti";
 
-import { BiDotsHorizontalRounded } from "react-icons/bi";
+import { Cross } from "hamburger-react";
 import { FaCircleArrowRight } from "react-icons/fa6";
+import { FaCross } from "react-icons/fa";
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
-import { ImSpinner6 } from "react-icons/im";
 import Image from 'next/image';
-import { IoSaveSharp } from 'react-icons/io5';
 import { customImages } from '@/static/custom-item-images';
 import { getUserCustomItems } from '@/utilities/functions';
 
@@ -66,10 +69,7 @@ const ManageCustomItems = () => {
       setUpdateError('No item id found');
       return;
     }
-
     setUpdateError('');
-
-
     // create the updateitem object
     const updatedItem = {
       id: selectedItem.id,
@@ -82,6 +82,7 @@ const ManageCustomItems = () => {
     }
 
     try {
+      setDeleteConfirmCheck(false);
       setUpdating(true)
       const response = await fetch(`/api/appliance-items/custom/${selectedItem.id}`, {
         method: 'PUT',
@@ -119,12 +120,59 @@ const ManageCustomItems = () => {
     }
   }
 
+  const [deleteConfirmCheck, setDeleteConfirmCheck] = useState(false);
+
+
+  // Called for deleting an custom item from the database
+  const handleDeleteCustomItem = async (customItemId: number) => {
+    if (deleteConfirmCheck) {
+      try {
+        setUpdating(true)
+        const response = await fetch(`/api/appliance-items/custom/${customItemId}`, {
+          method: 'DELETE',
+        });
+        if (response.ok) {
+          // handlingUpdateLocalItem(updatedItem);
+          setUpdating(false)
+          setUpdateSuccess(true);
+          // Set states to false after 1 second
+          setTimeout(() => {
+            setDeleteConfirmCheck(false);
+            setUpdateSuccess(false);
+            setSelectedItem(undefined);
+            getCustomCreatedItems();
+          }, 1000);
+        } else {
+          console.log(response)
+          setUpdateError(response.statusText);
+          setDeleteConfirmCheck(false);
+          // Set success to false after 1 second
+          setTimeout(() => {
+            setUpdateError('');
+          }, 2000);
+          setUpdating(false)
+          setUpdateSuccess(false)
+        }
+      } catch (error) {
+        setDeleteConfirmCheck(false);
+        console.error('Error while deleting', error);
+        setUpdateError('Error while deleting data, please try again');
+        setUpdating(false)
+        setTimeout(() => {
+          setUpdateError('');
+        }, 2000);
+      }
+    } else {
+      setDeleteConfirmCheck(true);
+    }
+  }
+
   return (
     <div className='flex flex-col justify-start items-start w-full h-fit transition-all duration-300 ease bg-pink'>
       <p className={`font-semibold ${managementPane ? 'pb-2' : 'pb-0'}`}>Manage Your Custom Items {error ? (<><MdError className='text-red-500/90 w-[25px] h-[25px] inline transition-all duration-300 ease' /><span className='inline text-xs text-gray-800 italic'>You have not created any items</span></>) : loading ? (<ImSpinner6 className='animate-spin text-blue-500 w-[25px] h-[25px] inline transition-all duration-300 ease' />) : (<FaCircleArrowRight onClick={() => handleLookUpItems()} className={`${managementPane ? 'rotate-90' : 'rotate-0'} cursor-pointer w-[25px] h-[25px] inline transition-all duration-300 ease hover:text-blue-500  hover:scale-105`} />)}</p>
       {/* Area for Managing Items */}
       <div className={`relative ${managementPane ? 'max-h-[1000px] py-2' : 'max-h-[0px] py-0'} bg-gray-400/30 w-full rounded-md overflow-hidden transition-all duration-300 ease px-2`}>
-        {error && <div className=' top-0 w-full mb-4 italic text-black bg-red-500/80 h-fit p-4 text-md font-semibold rounded-md'>Error:{error}</div>}
+        <div className={`top-0 w-full italic text-black bg-red-500/80 px-4 text-md font-semibold rounded-md text-center overflow-hidden ${updateError != '' ? 'max-h-[200px] py-4 mb-4' : 'max-h-[0px] py-0 mb-0'} transition-all duration-300 ease`}>Error: {updateError}</div>
 
         <select
           className='rounded-md px-2 min-h-[45px] capitalize'
@@ -132,7 +180,7 @@ const ManageCustomItems = () => {
           defaultValue="" // set default value to an empty string
           onChange={(e) => handleChangeSelectedItem(JSON.parse(e.target.value))}
         >
-          <option value="" disabled hidden>Select an Item</option> {/* make the default option hidden */}
+          <option value="" disabled >Select an Item</option> {/* make the default option hidden */}
 
           {customItems && customItems.map((item) => (
             <option key={item.id} value={JSON.stringify(item)}>{item.name}</option>
@@ -209,7 +257,7 @@ const ManageCustomItems = () => {
                   {updating &&
                     (
                       <div className="mx-auto flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
-                        <p className="text-md font-normal md:text-lg">Updating!</p>
+                        <p className="text-md font-normal md:text-lg">{deleteConfirmCheck ? 'Deleting...' : 'Updating...'}</p>
                         <BiDotsHorizontalRounded className='h-[20px] w-[20px] text-blue-500  hover:scale-110 transition-all duration-200 ease-in-out animate-spin' />
                       </div>
 
@@ -219,7 +267,7 @@ const ManageCustomItems = () => {
                   {updateSuccess &&
                     (
                       <div className="mx-auto flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
-                        <p className="text-md font-normal md:text-lg">Updated!</p>
+                        <p className="text-md font-normal md:text-lg">{deleteConfirmCheck ? 'Deleted!' : 'Updated!'}</p>
                         <TiTick className='h-[45px] w-[45px] text-green-500  hover:scale-110 transition-all duration-200 ease-in-out' />
                       </div>
                     )
@@ -239,18 +287,64 @@ const ManageCustomItems = () => {
                         </button>
                       </div>
 
-                      {/* Delete Button */}
-                      <div className="relative group">
+                      {/* DELETE BUTTON START */}
+                      <div className="">
 
-                        <div className="overflow-hidden absolute select-none top-[13px] right-[55px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
-                          <p className="text-xs font-normal md:text-sm">Delete</p>
+                        {/* Initial Delete Button START*/}
+                        <div className={`relative group ${deleteConfirmCheck ? 'hidden' : 'inline'}`}>
+                          {/* Pop Out button */}
+                          <div className={`overflow-hidden absolute select-none top-[-16px] right-[55px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease`}>
+                            <p className="text-xs font-normal md:text-sm">Delete</p>
+                          </div>
+                          {/* Button */}
+                          <button className='relative h-[45px] w-[45px]'
+                            onClick={(e) => { e.preventDefault(); handleDeleteCustomItem(selectedItem.id); }}
+                            aria-label="Delete the custom item"
+                          >
+                            <TiTrash className={`bg-gray-300/60 rounded-md p-2 h-full w-full text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out`} />
+                          </button>
                         </div>
-                        <button className='relative'
-                          onClick={() => { }}
-                        >
-                          <TiTrash className='bg-gray-300/60 rounded-md p-2 h-[45px] w-[45px] text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out' />
-                        </button>
+                        {/* Initial Delete Button END*/}
+
+                        {/* Confirm / Cancel Buttons START*/}
+                        <div className={`flex flex-row justify-center items-center gap-4 ${deleteConfirmCheck ? 'inline' : 'hidden'}`}>
+
+                          {/* Confirm Delete Button */}
+                          <div className="relative group">
+                            {/* Pop Out text */}
+                            <div className={`overflow-hidden absolute select-none bottom-[60px] right-[-8px] group-hover:flex h-fit w-fit md:h-0 group-hover:h-fit flex-row items-center justify-center p-0 group-hover:py-[5px] px-2 md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease`}>
+                              <p className="text-xs font-normal md:text-sm">Confirm</p>
+                            </div>
+                            {/* Button */}
+                            <button className='relative h-[45px] w-[45px]'
+                              onClick={(e) => { e.preventDefault(); handleDeleteCustomItem(selectedItem.id); }}
+                            >
+                              <TiTick className={`bg-gray-300/60 rounded-md p-2 w-full h-full text-orange-500 hover:text-orange-600 hover:scale-110 transition-all duration-200 ease-in-out`} />
+                            </button>
+                          </div>
+                          {/* End Confirm Delete Button */}
+
+                          {/* Cancel Delete Button */}
+                          <div className="relative group">
+                            {/* Pop Out text */}
+                            <div className={`overflow-hidden absolute select-none bottom-[60px] right-[-8px] group-hover:flex h-fit w-fit md:h-0 group-hover:h-fit flex-row items-center justify-center p-0 group-hover:py-[5px] px-2 md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease`}>
+                              <p className="text-xs font-normal md:text-sm">Cancel</p>
+                            </div>
+                            {/* Button */}
+                            <button className='relative w-[45px] h-[45px]'
+                              onClick={(e) => { e.preventDefault(); setDeleteConfirmCheck(false); }}
+                            >
+                              <IoClose className={`bg-gray-300/60 rounded-md p-2 w-full h-full text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out`} />
+                            </button>
+                          </div>
+                          {/* End Cancel Delete Button */}
+
+                        </div>
+                        {/* Confirm / Cancel Buttons END */}
+
                       </div>
+                      {/* DELETE BUTTON END */}
+
                     </div>
                   }
                 </div>
