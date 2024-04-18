@@ -27,6 +27,8 @@ const ManageCustomItems = () => {
   const [updating, setUpdating] = useState(false)
   const [updateSuccess, setUpdateSuccess] = useState(false)
   const [updateError, setUpdateError] = useState('')
+  const [deleteConfirmCheck, setDeleteConfirmCheck] = useState(false);
+
 
 
   // FUNCTIONS
@@ -120,7 +122,6 @@ const ManageCustomItems = () => {
     }
   }
 
-  const [deleteConfirmCheck, setDeleteConfirmCheck] = useState(false);
 
 
   // Called for deleting an custom item from the database
