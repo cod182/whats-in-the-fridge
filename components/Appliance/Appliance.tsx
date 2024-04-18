@@ -2,7 +2,7 @@
 
 import { FridgeFreezer, Modal } from '..';
 import React, { useState } from 'react';
-import { getAllAddableItems, getItemsInThisLocation, toggleBodyScrolling } from '@/utilities/functions';
+import { getAllAddableItems, getItemsInThisLocation, getUserCustomItems, toggleBodyScrolling } from '@/utilities/functions';
 
 import AddItem from '../AddingItems/AddItem';
 import American from '../Appliances/American/American_main';
@@ -74,9 +74,10 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
     const getAvailableItemsToAdd = async () => {
       const itemsArray: availableItem[] = await getAllAddableItems();
       setAvailableItems(itemsArray)
-      const userItemsArray: userCreatedItem[] = await getAllAddableItems(`SELECT * FROM customAvailableItems WHERE creatorId=${userId}`);
-      setUserCreatedItems(userItemsArray)
 
+      const userItemsArray: userCreatedItem[] = await getUserCustomItems();
+      // const userItemsArray: userCreatedItem[] = await getAllAddableItems(`SELECT * FROM customAvailableItems WHERE creatorId=${userId}`);
+      setUserCreatedItems(userItemsArray)
     }
     // Matches the type to type of appliance
     getApplianceType();

@@ -203,25 +203,28 @@ const UserCreatedItems = ({ selectedArea, availableItems, userId, handleAddingTo
               </div>
             }
             {/* Loading Overlay End */}
-            <div className='w-full h-full border-[1px] border-black xxxs:p-4 rounded-md transition-all duration-200 ease overflow-hidden relative'>
 
+            <div className='w-full h-full border-[1px] border-black xxxs:p-4 rounded-md transition-all duration-200 ease overflow-hidden relative'>
               {/* Select Item */}
               <div className={`flex w-full h-fit`}>
                 <FadeInHOC delayNumber={200} direction='up' classes='w-full'>
-                  <select
-                    name="itemName"
-                    id="itemName"
-                    className='w-full px-4 py-2 my-2 font-semibold capitalize rounded-md shadow-inner h-fit'
-                    onChange={(e) => handleChangeSelectedItem(JSON.parse(e.target.value))}
-                    defaultValue="" // set default value to an empty string
-                  >
-                    <option value="" disabled hidden>Item Types</option> {/* make the default option hidden */}
-                    {availableItems.map((item: availableItem, index) => (
-                      <option key={index} value={JSON.stringify(item)} >
-                        {item.name}
-                      </option>
-                    ))}
-                  </select>
+
+                  <>
+                    <select
+                      name="itemName"
+                      id="itemName"
+                      className='w-full px-4 py-2 my-2 font-semibold capitalize rounded-md shadow-inner h-fit'
+                      onChange={(e) => handleChangeSelectedItem(JSON.parse(e.target.value))}
+                      defaultValue="" // set default value to an empty string
+                    >
+                      <option value="" disabled hidden>Item Types</option> {/* make the default option hidden */}
+                      {availableItems.map((item: availableItem, index) => (
+                        <option key={index} value={JSON.stringify(item)} >
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                  </>
                 </FadeInHOC>
               </div>
 

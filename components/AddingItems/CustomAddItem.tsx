@@ -254,7 +254,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
             {/* Item expiry Date */}
             <div className='w-full'>
               <label htmlFor='expiryDate' className='mt-2'>Set the Expiry Date <span className='mb-1 text-sm italic font-normal text-gray-100'>(Optional)</span></label>
-              <input id='expiryDate' type="date" name='expiryDate' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-[37px] block' placeholder='DD/MM/YYYY' />
+              <input id='expiryDate' type="date" name='expiryDate' className='w-full px-4 py-2 mb-2 font-semibold capitalize rounded-md shadow-inner h-[37px] block' />
             </div>
 
             {/* End Item expiry Date */}
@@ -329,7 +329,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
                   </div>
 
                   <div className="flex flex-col items-center justify-center relative">
-                    <input value='NA' required type="radio" name="cookedFromFrozen" id="cookedFrozenNA" className="peer absolute bottom-0 left-3 z-[1]" />
+                    <input value='NA' required type="radio" name="cookedFrozen" id="cookedFrozenNA" className="peer absolute bottom-0 left-3 z-[1]" />
                     <label htmlFor='cookedFrozenNA' className='h-[40px] w-[40px] peer-checked:bg-red-300 font-semibold bg-gray-200 z-[2] rounded-md peer-checked:border-[1px] peer-checked:border-black py-2 text-center hover:bg-gray-300 active:bg-gray-400'>N/A</label>
                   </div>
 

@@ -221,20 +221,20 @@ const OptionAddItem = ({ availableItems, selectedArea, userId, handleAddingToCur
                           <input
                             type="radio"
                             name="itemName"
-                            value={(item as string).toLowerCase().replace(' ', '_')}
-                            checked={selectItemType === (item as string).toLowerCase().replace(' ', '_')}
+                            value={(item as string).replace(/\s/g, "_").toLowerCase()}
+                            checked={selectItemType === (item as string).replace(/\s/g, "_").toLowerCase()}
                             onChange={(e) => handleSelectChange(e)}
                             className='hidden mr-2 group'
                           />
                           <div className="flex flex-col items-center justify-center mx-auto cursor-pointer">
                             <Image
-                              src={`/assets/images/itemTypes/${(item as string).toLowerCase().replace(' ', '_')}.svg`}
+                              src={`/assets/images/itemTypes/${(item as string).replace(/\s/g, "_").toLowerCase()}.svg`}
                               alt={(item as string)}
-                              className={`mx-auto hover:scale-110 transition-all duration-200 ease ${selectItemType === (item as string).toLowerCase().replace(' ', '_') ? 'rounded-full scale-110 border-[1px] shadow-xl border-green-200' : ''} `}
+                              className={`mx-auto hover:scale-110 transition-all duration-200 ease ${selectItemType === (item as string).replace(/\s/g, "_").toLowerCase() ? 'rounded-full scale-110 border-[1px] shadow-xl border-green-200' : ''} `}
                               width={50}
                               height={50}
                             />
-                            <p className={`capitalize cursor-pointer ${selectItemType === (item as string).toLowerCase().replace(' ', '_') ? 'font-semibold' : ''}`}>
+                            <p className={`capitalize cursor-pointer ${selectItemType === (item as string).replace(/\s/g, "_").toLowerCase() ? 'font-semibold' : ''}`}>
                               {(item as string)}
                             </p>
                           </div>
