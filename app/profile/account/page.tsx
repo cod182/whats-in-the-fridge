@@ -22,9 +22,9 @@ const page = async () => {
         <PageTitle title='Your Account Options' titleClasses='text-[20px] md:text-[30px] text-gray-100 font-semibold' underlineClasses='border-gray-100' />
       </h1>
       <hr className='border-[1px] my-2' />
-      <AccountOptions />
-      <hr className='border-[1px] my-2' />
       <ManageCustomItems />
+      <hr className='border-[1px] my-2' />
+      <AccountOptions />
       <hr className='border-[1px] my-2' />
     </div>
 

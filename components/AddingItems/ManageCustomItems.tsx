@@ -35,23 +35,30 @@ const ManageCustomItems = () => {
   // handles getting all custom items and sets the state
   const getCustomCreatedItems = async () => {
     const userItemsArray: userCreatedItem[] = await getUserCustomItems();
-    setCustomItems(userItemsArray);
-    return true;
+    if (userItemsArray.length >= 1) {
+      setCustomItems(userItemsArray);
+      return true
+    } else {
+      setCustomItems([]);
+      return false;
+    }
   }
 
   const handleLookUpItems = async () => {
     if (!managementPane) {
       setLoading(true)
-      await getCustomCreatedItems()
-      if (customItems && customItems.length < 1) {
+      const response = await getCustomCreatedItems()
+      if (!response) {
         setLoading(false);
         setError(true)
+        setManagementPane(false);
       } else {
+        console.log(customItems);
         setLoading(false);
-        setManagementPane((prev) => !prev);
+        setManagementPane(true);
       }
     } else {
-      setManagementPane((prev) => !prev);
+      setManagementPane(false);
       setSelectedItem(undefined);
     }
   }
@@ -184,9 +191,18 @@ const ManageCustomItems = () => {
 
   return (
     <div className='flex flex-col justify-start items-start w-full h-fit transition-all duration-300 ease bg-pink'>
-      <p className={`font-semibold ${managementPane ? 'pb-2' : 'pb-0'}`}>Manage Your Custom Items {error ? (<><MdError className='text-red-500/90 w-[25px] h-[25px] inline transition-all duration-300 ease' /><span className='inline text-xs text-gray-800 italic'>You have not created any items</span></>) : loading ? (<ImSpinner6 className='animate-spin text-blue-500 w-[25px] h-[25px] inline transition-all duration-300 ease' />) : (<FaCircleArrowRight onClick={() => handleLookUpItems()} className={`${managementPane ? 'rotate-90' : 'rotate-0'} cursor-pointer w-[25px] h-[25px] inline transition-all duration-300 ease hover:text-blue-500  hover:scale-105`} />)}</p>
+      <p className={`font-semibold ${managementPane ? 'pb-2' : 'pb-0'}`}>
+        Manage Your Custom Items {error ? (<><MdError className='text-red-500/90 w-[25px] h-[25px] inline transition-all duration-300 ease' /><span className='inline text-xs text-gray-800 italic'>You have not created any items</span></>) : loading ? (
+          <ImSpinner6 className='animate-spin text-blue-500 w-[25px] h-[25px] inline transition-all duration-300 ease' />
+        )
+          :
+          (
+            <FaCircleArrowRight onClick={() => handleLookUpItems()} className={`${managementPane ? 'rotate-90' : 'rotate-0'} cursor-pointer w-[25px] h-[25px] inline transition-all duration-300 ease hover:text-blue-500  hover:scale-105`} />
+          )
+        }
+      </p>
       {/* Area for Managing Items */}
-      <div className={`relative ${managementPane ? 'max-h-[1000px] py-2' : 'max-h-[0px] py-0'} bg-gray-400/30 w-full rounded-md overflow-hidden transition-all duration-300 ease px-2`}>
+      <div className={`relative ${!loading && managementPane ? 'max-h-[1000px] py-2' : 'max-h-[0px] py-0'} bg-gray-400/30 w-full rounded-md overflow-hidden transition-all duration-300 ease px-2`}>
         <div className={`top-0 w-full italic text-black bg-red-500/80 px-4 text-md font-semibold rounded-md text-center overflow-hidden ${updateError != '' ? 'max-h-[200px] py-4 mb-4' : 'max-h-[0px] py-0 mb-0'} transition-all duration-300 ease`}>Error: {updateError}</div>
 
         <select

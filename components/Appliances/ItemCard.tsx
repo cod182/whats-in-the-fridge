@@ -319,7 +319,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               }
 
               <label htmlFor="expiryDate" className='text-sm text-normal'>Expiry:</label>
-              <input id='expiryDate' type="date" name='expiryDate' value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} placeholder='Expiry Date (Optional)' className='ml-[5px] px-2 my-[5px] font-semibold capitalize rounded-md shadow-inner h-fit' />
+              <input id='expiryDate' type="date" name='expiryDate' value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} className='ml-[5px] px-2 my-[5px] font-semibold capitalize rounded-md shadow-inner h-fit' />
 
               <p className='text-sm text-normal'>Date Added: <span className='italic'>{item.addedDate}</span></p>
 
