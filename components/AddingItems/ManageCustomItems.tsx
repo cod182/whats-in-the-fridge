@@ -253,7 +253,7 @@ const ManageCustomItems = () => {
 
                 {/* Icons & Buttons */}
                 <div
-                  className='flex flex-col flex-wrap justify-between items-end w-full h-fit my-4'>
+                  className='flex flex-col flex-wrap justify-between items-end w-full h-fit my-10'>
                   {updating &&
                     (
                       <div className="mx-auto flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
@@ -274,11 +274,11 @@ const ManageCustomItems = () => {
                   }
 
                   {!updating && !updateSuccess &&
-                    <div className="w-full h-fit flex flex-row justify-around items-center">
+                    <div className="w-full h-fit flex flex-row justify-around items-center gap-6">
                       {/* Save Button */}
 
-                      <div className="relative group w-fit h-auto">
-                        <div className="overflow-hidden absolute select-none top-[13px] right-[55px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+                      <div className="relative group w-fit h-auto flex flex-row items-center justify-center">
+                        <div className={`overflow-hidden absolute select-none top-[50px] right-[-8px] group-hover:flex h-fit w-fit md:h-0 group-hover:h-fit flex-row items-center justify-center p-0 group-hover:py-[5px] px-2 md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease`}>
                           <p className="text-xs font-normal md:text-sm">Update</p>
                         </div>
                         <button
@@ -288,61 +288,61 @@ const ManageCustomItems = () => {
                       </div>
 
                       {/* DELETE BUTTON START */}
-                      <div className="">
 
-                        {/* Initial Delete Button START*/}
-                        <div className={`relative group ${deleteConfirmCheck ? 'hidden' : 'inline'}`}>
-                          {/* Pop Out button */}
-                          <div className={`overflow-hidden absolute select-none top-[-16px] right-[55px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease`}>
-                            <p className="text-xs font-normal md:text-sm">Delete</p>
+
+                      {/* Initial Delete Button START*/}
+                      <div className={`relative group w-fit h-auto flex flex-row items-center justify-center ${deleteConfirmCheck ? 'hidden' : 'inline'}`}>
+                        {/* Pop Out button */}
+                        <div className={`overflow-hidden absolute select-none top-[50px] right-[-5px] group-hover:flex h-fit w-fit md:h-0 group-hover:h-fit flex-row items-center justify-center p-0 group-hover:py-[5px] px-2 md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease`}>
+                          <p className="text-xs font-normal md:text-sm">Delete</p>
+                        </div>
+                        {/* Button */}
+                        <button className='relative h-[45px] w-[45px]'
+                          onClick={(e) => { e.preventDefault(); handleDeleteCustomItem(selectedItem.id); }}
+                          aria-label="Delete the custom item"
+                        >
+                          <TiTrash className={`bg-gray-300/60 rounded-md p-2 h-full w-full text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out`} />
+                        </button>
+                      </div>
+                      {/* Initial Delete Button END*/}
+
+                      {/* Confirm / Cancel Buttons START*/}
+                      <div className={`flex flex-row justify-center items-center gap-4 ${deleteConfirmCheck ? 'inline' : 'hidden'}`}>
+
+                        {/* Confirm Delete Button */}
+                        <div className="relative group">
+                          {/* Pop Out text */}
+                          <div className={`overflow-hidden absolute select-none top-[50px] right-[-12px] group-hover:flex h-fit w-fit md:h-0 group-hover:h-fit flex-row items-center justify-center p-0 group-hover:py-[5px] px-2 md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease`}>
+                            <p className="text-xs font-normal md:text-sm">Confirm</p>
                           </div>
                           {/* Button */}
                           <button className='relative h-[45px] w-[45px]'
                             onClick={(e) => { e.preventDefault(); handleDeleteCustomItem(selectedItem.id); }}
-                            aria-label="Delete the custom item"
                           >
-                            <TiTrash className={`bg-gray-300/60 rounded-md p-2 h-full w-full text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out`} />
+                            <TiTick className={`bg-gray-300/60 rounded-md p-2 w-full h-full text-orange-500 hover:text-orange-600 hover:scale-110 transition-all duration-200 ease-in-out`} />
                           </button>
                         </div>
-                        {/* Initial Delete Button END*/}
+                        {/* End Confirm Delete Button */}
 
-                        {/* Confirm / Cancel Buttons START*/}
-                        <div className={`flex flex-row justify-center items-center gap-4 ${deleteConfirmCheck ? 'inline' : 'hidden'}`}>
-
-                          {/* Confirm Delete Button */}
-                          <div className="relative group">
-                            {/* Pop Out text */}
-                            <div className={`overflow-hidden absolute select-none bottom-[60px] right-[-8px] group-hover:flex h-fit w-fit md:h-0 group-hover:h-fit flex-row items-center justify-center p-0 group-hover:py-[5px] px-2 md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease`}>
-                              <p className="text-xs font-normal md:text-sm">Confirm</p>
-                            </div>
-                            {/* Button */}
-                            <button className='relative h-[45px] w-[45px]'
-                              onClick={(e) => { e.preventDefault(); handleDeleteCustomItem(selectedItem.id); }}
-                            >
-                              <TiTick className={`bg-gray-300/60 rounded-md p-2 w-full h-full text-orange-500 hover:text-orange-600 hover:scale-110 transition-all duration-200 ease-in-out`} />
-                            </button>
+                        {/* Cancel Delete Button */}
+                        <div className="relative group">
+                          {/* Pop Out text */}
+                          <div className={`overflow-hidden absolute select-none top-[50px] right-[-8px] group-hover:flex h-fit w-fit md:h-0 group-hover:h-fit flex-row items-center justify-center p-0 group-hover:py-[5px] px-2 md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease`}>
+                            <p className="text-xs font-normal md:text-sm">Cancel</p>
                           </div>
-                          {/* End Confirm Delete Button */}
-
-                          {/* Cancel Delete Button */}
-                          <div className="relative group">
-                            {/* Pop Out text */}
-                            <div className={`overflow-hidden absolute select-none bottom-[60px] right-[-8px] group-hover:flex h-fit w-fit md:h-0 group-hover:h-fit flex-row items-center justify-center p-0 group-hover:py-[5px] px-2 md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease`}>
-                              <p className="text-xs font-normal md:text-sm">Cancel</p>
-                            </div>
-                            {/* Button */}
-                            <button className='relative w-[45px] h-[45px]'
-                              onClick={(e) => { e.preventDefault(); setDeleteConfirmCheck(false); }}
-                            >
-                              <IoClose className={`bg-gray-300/60 rounded-md p-2 w-full h-full text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out`} />
-                            </button>
-                          </div>
-                          {/* End Cancel Delete Button */}
-
+                          {/* Button */}
+                          <button className='relative w-[45px] h-[45px]'
+                            onClick={(e) => { e.preventDefault(); setDeleteConfirmCheck(false); }}
+                          >
+                            <IoClose className={`bg-gray-300/60 rounded-md p-2 w-full h-full text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out`} />
+                          </button>
                         </div>
-                        {/* Confirm / Cancel Buttons END */}
+                        {/* End Cancel Delete Button */}
 
                       </div>
+                      {/* Confirm / Cancel Buttons END */}
+
+
                       {/* DELETE BUTTON END */}
 
                     </div>
