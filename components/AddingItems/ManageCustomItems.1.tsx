@@ -1,32 +1,29 @@
-'use client'
+'use client';
 
-import { BiCross, BiDotsHorizontalRounded } from "react-icons/bi";
-import { GiCancel, GiCrossMark } from "react-icons/gi";
-import { ImCross, ImSpinner6 } from "react-icons/im";
 import { IoClose, IoSaveSharp } from 'react-icons/io5';
-import { MdCancel, MdError, MdFreeCancellation } from "react-icons/md";
-import React, { useState } from 'react'
-import { TiCancel, TiTick, TiTrash } from "react-icons/ti";
+import React, { useState } from 'react';
+import { TiTick, TiTrash } from "react-icons/ti";
 
-import { Cross } from "hamburger-react";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { FaCircleArrowRight } from "react-icons/fa6";
-import { FaCross } from "react-icons/fa";
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
+import { ImSpinner6 } from "react-icons/im";
 import Image from 'next/image';
+import { MdError } from "react-icons/md";
 import { customImages } from '@/static/custom-item-images';
 import { getUserCustomItems } from '@/utilities/functions';
 
-const ManageCustomItems = () => {
+export const ManageCustomItems = () => {
 
   // STATES
   const [managementPane, setManagementPane] = useState<boolean>(false);
   const [customItems, setCustomItems] = useState<userCreatedItem[]>();
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
-  const [selectedItem, setSelectedItem] = useState<userCreatedItem>()
-  const [updating, setUpdating] = useState(false)
-  const [updateSuccess, setUpdateSuccess] = useState(false)
-  const [updateError, setUpdateError] = useState('')
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<userCreatedItem>();
+  const [updating, setUpdating] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [updateError, setUpdateError] = useState('');
   const [deleteConfirmCheck, setDeleteConfirmCheck] = useState(false);
 
 
@@ -37,15 +34,15 @@ const ManageCustomItems = () => {
     const userItemsArray: userCreatedItem[] = await getUserCustomItems();
     setCustomItems(userItemsArray);
     return true;
-  }
+  };
 
   const handleLookUpItems = async () => {
     if (!managementPane) {
-      setLoading(true)
-      await getCustomCreatedItems()
+      setLoading(true);
+      await getCustomCreatedItems();
       if (customItems && customItems.length < 1) {
         setLoading(false);
-        setError(true)
+        setError(true);
       } else {
         setLoading(false);
         setManagementPane((prev) => !prev);
@@ -54,13 +51,13 @@ const ManageCustomItems = () => {
       setManagementPane((prev) => !prev);
       setSelectedItem(undefined);
     }
-  }
+  };
 
   // Handles when the selected option is changed
   const handleChangeSelectedItem = (selectedItem: userCreatedItem) => {
     // Sets the selected item
     setSelectedItem(selectedItem);
-  }
+  };
 
   // Handles teh updating of and item when save is clicked
   const handleUpdatingItem = async (e: any) => {
@@ -82,13 +79,13 @@ const ManageCustomItems = () => {
       itemSubType: selectedItem.itemSubType,
       itemType: selectedItem.itemType,
       image: selectedItem.image
-    }
+    };
 
     try {
       // Turns off the confirm check incase it had been activated
       setDeleteConfirmCheck(false);
       // Sets that updating is on
-      setUpdating(true)
+      setUpdating(true);
       // Makes the fetch request
       const response = await fetch(`/api/appliance-items/custom/${selectedItem.id}`, {
         method: 'PUT',
@@ -101,7 +98,7 @@ const ManageCustomItems = () => {
       // If response is ok
       if (response.ok) {
         // Turns off the updating
-        setUpdating(false)
+        setUpdating(false);
         // Turns on success
         setUpdateSuccess(true);
         // Resets states to false after 1 second
@@ -117,18 +114,18 @@ const ManageCustomItems = () => {
         setTimeout(() => {
           setUpdateError('');
         }, 1000);
-        setUpdating(false)
-        setUpdateSuccess(false)
+        setUpdating(false);
+        setUpdateSuccess(false);
       }
     } catch (error) {
       console.error('Error while sending data', error);
       setUpdateError('Error while sending data, please try again');
-      setUpdating(false)
+      setUpdating(false);
       setTimeout(() => {
         setUpdateError('');
       }, 1000);
     }
-  }
+  };
 
 
 
@@ -137,18 +134,17 @@ const ManageCustomItems = () => {
     if (deleteConfirmCheck) {
       try {
         // Sets the updating to on
-        setUpdating(true)
+        setUpdating(true);
         // Makes teh api call
         const response = await fetch(`/api/appliance-items/custom/${customItemId}`, {
           method: 'DELETE',
         });
-        // If the response is ok
+
         if (response.ok) {
-          // Turns off updating
-          setUpdating(false)
-          // Turns on success
+          // handlingUpdateLocalItem(updatedItem);
+          setUpdating(false);
           setUpdateSuccess(true);
-          // reset states to false after 1 second
+          // Set states to false after 1 second
           setTimeout(() => {
             setDeleteConfirmCheck(false);
             setUpdateSuccess(false);
@@ -156,23 +152,21 @@ const ManageCustomItems = () => {
             getCustomCreatedItems();
           }, 1000);
         } else {
-          // REsponse not ok
-          console.log(response)
-          // Set the error to the response
+          console.log(response);
           setUpdateError(response.statusText);
           setDeleteConfirmCheck(false);
-          // reset success to false after 2 second
+          // Set success to false after 1 second
           setTimeout(() => {
             setUpdateError('');
           }, 2000);
-          setUpdating(false)
-          setUpdateSuccess(false)
+          setUpdating(false);
+          setUpdateSuccess(false);
         }
       } catch (error) {
         setDeleteConfirmCheck(false);
         console.error('Error while deleting', error);
         setUpdateError('Error while deleting data, please try again');
-        setUpdating(false)
+        setUpdating(false);
         setTimeout(() => {
           setUpdateError('');
         }, 2000);
@@ -180,7 +174,7 @@ const ManageCustomItems = () => {
     } else {
       setDeleteConfirmCheck(true);
     }
-  }
+  };
 
   return (
     <div className='flex flex-col justify-start items-start w-full h-fit transition-all duration-300 ease bg-pink'>
@@ -195,7 +189,7 @@ const ManageCustomItems = () => {
           defaultValue="" // set default value to an empty string
           onChange={(e) => handleChangeSelectedItem(JSON.parse(e.target.value))}
         >
-          <option value="" disabled >Select an Item</option> {/* make the default option hidden */}
+          <option value="" disabled>Select an Item</option> {/* make the default option hidden */}
 
           {customItems && customItems.map((item) => (
             <option key={item.id} value={JSON.stringify(item)}>{item.name}</option>
@@ -240,7 +234,7 @@ const ManageCustomItems = () => {
                   <p className='my-2'>Choose an Icon:</p>
                   <div className='grid grid-cols-1 gap-2 xxxs:grid-cols-2 xxs:grid-cols-3 xs:grid-cols-4 sm:grid-cols-5 md:grid-cols-6'>
                     {customImages.map((item, index) => (
-                      <label key={index} className='flex items-center w-full mx-auto transition-all duration-200 active:scale-110 ease' >
+                      <label key={index} className='flex items-center w-full mx-auto transition-all duration-200 active:scale-110 ease'>
 
                         <input
                           type="radio"
@@ -248,16 +242,14 @@ const ManageCustomItems = () => {
                           value={item.icon}
                           onChange={(e) => setSelectedItem({ ...selectedItem, image: e.target.value })}
                           className='hidden mr-2 group'
-                          checked={selectedItem.image === item.icon}
-                        />
+                          checked={selectedItem.image === item.icon} />
                         <div className="flex flex-col items-center justify-center mx-auto">
                           <Image
                             src={`/assets/images/itemTypes/${item.icon}`}
                             alt={item.name}
                             className={`mx-auto hover:scale-110 cursor-pointer transition-all duration-200 ease ${selectedItem.image === item.icon ? 'rounded-full scale-110 border-[2px] shadow-xl border-green-400' : ''} `}
                             width={50}
-                            height={50}
-                          />
+                            height={50} />
                         </div>
                       </label>
                     ))}
@@ -276,8 +268,7 @@ const ManageCustomItems = () => {
                         <BiDotsHorizontalRounded className='h-[20px] w-[20px] text-blue-500  hover:scale-110 transition-all duration-200 ease-in-out animate-spin' />
                       </div>
 
-                    )
-                  }
+                    )}
 
                   {updateSuccess &&
                     (
@@ -285,8 +276,7 @@ const ManageCustomItems = () => {
                         <p className="text-md font-normal md:text-lg">{deleteConfirmCheck ? 'Deleted!' : 'Updated!'}</p>
                         <TiTick className='h-[45px] w-[45px] text-green-500  hover:scale-110 transition-all duration-200 ease-in-out' />
                       </div>
-                    )
-                  }
+                    )}
 
                   {!updating && !updateSuccess &&
                     <div className="w-full h-fit flex flex-row justify-around items-center gap-6">
@@ -360,18 +350,14 @@ const ManageCustomItems = () => {
 
                       {/* DELETE BUTTON END */}
 
-                    </div>
-                  }
+                    </div>}
                 </div>
 
               </form>
             </div>
-          </FadeInHOC>
-        }
+          </FadeInHOC>}
 
-      </div >
-    </div >
-  )
-}
-
-export default ManageCustomItems
+      </div>
+    </div>
+  );
+};

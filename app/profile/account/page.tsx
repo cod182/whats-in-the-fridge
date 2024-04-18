@@ -1,6 +1,6 @@
 import { AccountOptions, PageTitle } from '@/components';
 
-import ManageCustomItems from '@/components/AddingItems/ManageCustomItems';
+import ManageCustomItems from "@/components/AddingItems/ManageCustomItems";
 import { Metadata } from 'next'
 import { getServerSession } from 'next-auth';
 import { nextAuthOptions } from '@/lib/nextAuthOptions';
