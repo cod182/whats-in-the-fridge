@@ -14,12 +14,6 @@ export const GET = async (req: any, params: any, res: any) => {
     return NextResponse.json({ error: "You must be logged in': ", status: 401 })
   }
 
-  // const headersList = headers();
-  // const query = headersList.get("query-header");
-
-  // if (!query) {
-  //   return NextResponse.json({ message: 'No Query Provided' });
-  // }
 
   const query = "SELECT * FROM appliances WHERE ownerid=?"
 

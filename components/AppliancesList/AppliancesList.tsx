@@ -1,12 +1,12 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { getAllAppliances, removeApplianceItemFromDb } from '@/utilities/functions';
 
 import ApplianceCard from '../ApplianceCard/ApplianceCard';
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
 import FridgeLoader from '../FridgeLoader/FridgeLoader';
 import { IoAddOutline } from "react-icons/io5";
-import { getAllAppliances } from '@/utilities/functions';
 import { useSession } from 'next-auth/react';
 
 const AppliancesList = () => {
@@ -24,14 +24,14 @@ const AppliancesList = () => {
   // useEffects
   useEffect(() => {
     // Fetches the list of appliances
-    const fetchAppliances = async () => {
+    const fetchAllAppliances = async () => {
       if (user) {
         const appliances: appliance[] = await getAllAppliances();
         setAppliances(appliances)
       }
     };
-    // Calls fetch appliances
-    fetchAppliances();
+    // Get all user appliances
+    fetchAllAppliances();
   }, [user]);
 
   useEffect(() => {
@@ -53,17 +53,16 @@ const AppliancesList = () => {
   // Called for deleting an appliance from the databaase then updaing the current state of items instead ot calling the db again
   const handleDeleteAppliance = async (applianceId: number) => {
     try {
-      // await removeItemFromDb(`DELETE FROM appliances WHERE id=${applianceId} AND ownerid=${user.id}`)
-      await fetch(`/api/appliance/${applianceId}`, {
-        method: 'DELETE',
-        headers: {
-          'ownerid': user.id.toString()
-        }
-      });
-      const filteredItems = appliances!.filter(
-        (i) => i.id != applianceId
-      )
-      setAppliances(filteredItems);
+      const response = await removeApplianceItemFromDb(applianceId);
+      if (response.ok) {
+        const filteredItems = appliances!.filter(
+          (i) => i.id != applianceId
+        )
+        setAppliances(filteredItems);
+      } else {
+        console.log(response.message);
+        return response.message;
+      }
     } catch (error) {
       console.log(error)
     }

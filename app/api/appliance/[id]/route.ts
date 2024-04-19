@@ -36,21 +36,15 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
     return NextResponse.json({ error: "You must be logged in': ", status: 401 })
   }
 
-
-  const headersList = headers();
-  const ownerId = headersList.get("ownerId");
-
-
-  if (!ownerId) {
-    return NextResponse.json({ message: 'No ownerId Provided' });
-  }
-
   if (!params.id) {
     return NextResponse.json({ message: 'No appliance Id provided' });
   }
 
   try {
-    const response = await executeQuery(`DELETE FROM appliances WHERE id=${params.id} AND ownerid=${ownerId}`);
+
+    const query = 'DELETE FROM appliances WHERE id=? AND ownerid=?'
+
+    const response = await executeQuery(query, [params.id, session.user.id]);
     console.log('deleted')
     return NextResponse.json(response);
   } catch (error: any) {

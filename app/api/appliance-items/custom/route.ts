@@ -13,12 +13,7 @@ export const GET = async (req: NextApiRequest, params: any, res: NextResponse) =
     // Not Signed in
     return NextResponse.json({ error: "You must be logged in': ", status: 401 })
   }
-  console.log(session);
-  // const headersList = headers();
-  // const query = headersList.get("query-header");
-  // if (!query) {
-  //   return NextResponse.json({ message: 'No Query Provided' });
-  // }
+
   try {
     let query = `SELECT * FROM customAvailableItems WHERE creatorId=${session.user.id}`
     const response = await executeQuery(query);

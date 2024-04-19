@@ -53,19 +53,16 @@ export const getOneApplianceItems = async (applianceId: any) => {
   }
 }
 
-export const removeItemFromDb = async (query: string, values: [] = []) => {
+export const removeApplianceItemFromDb = async (applianceId: any) => {
   try {
-    const response = await fetch('/api/appliance-items', {
+    const response = await fetch(`/api/appliance/${applianceId}`, {
       method: 'DELETE',
-      headers: {
-        'query-header': query,
-      }
     });
     const responseData = await response.json();
     return responseData;
   } catch (error) {
     console.error('Error fetching data:', error);
-    return false;
+    return error;
   }
 }
 
