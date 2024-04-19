@@ -1,7 +1,7 @@
 'use client'
 
 import { Appliance, ExpiryNotification, FridgeLoader } from '@/components';
-import { getAppliance, getApplianceItems } from '@/utilities/functions';
+import { getAppliance, getOneApplianceItems } from '@/utilities/functions';
 import { redirect, useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -46,7 +46,7 @@ const AppliancePage = () => {
   useEffect(() => {
     const getAllApplianceItems = async () => {
       if (appliance) {
-        const selectedApplianceItems = await getApplianceItems(`SELECT * FROM applianceItems WHERE ownerid=${user.id} AND applianceid=${applianceId}`)
+        const selectedApplianceItems = await getOneApplianceItems(applianceId)
         if (selectedApplianceItems) {
           setApplianceItems(selectedApplianceItems);
           setLoading(false);

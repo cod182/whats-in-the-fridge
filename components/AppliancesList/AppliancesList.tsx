@@ -1,13 +1,13 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { getApplianceItems, getAppliances } from '@/utilities/functions';
 
 import ApplianceCard from '../ApplianceCard/ApplianceCard';
 import ExpiryNotification from '../ExpiryNotification/ExpiryNotification';
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
 import FridgeLoader from '../FridgeLoader/FridgeLoader';
 import { IoAddOutline } from "react-icons/io5";
+import { getAppliances } from '@/utilities/functions';
 import { useSession } from 'next-auth/react';
 
 const AppliancesList = () => {

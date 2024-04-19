@@ -31,18 +31,29 @@ export const getAppliances = async () => {
   }
 }
 
-export const getApplianceItems = async (query: string) => {
+export const getAllApplianceItems = async () => {
   try {
-    const response = await fetch('/api/appliance-items', {
+    const response = await fetch(`/api/appliance-items`, {
       method: 'GET',
-      headers: {
-        'query-header': query,
-      },
     });
     const responseData = await response.json();
     return responseData;
   } catch (error) {
     console.error('Error fetching data:', error);
+    return false;
+  }
+}
+
+
+
+export const getOneApplianceItems = async (applianceId: any) => {
+  try {
+    const response = await fetch(`/api/appliance-items/${applianceId}`, {
+      method: 'GET',
+    });
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
     return false;
   }
 }

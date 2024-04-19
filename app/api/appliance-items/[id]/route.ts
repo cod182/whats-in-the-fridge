@@ -4,11 +4,35 @@ import { NextApiRequest } from "next";
 import { authOptions } from "@/utilities/authOptions";
 import { executeQuery } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
-import { getSession } from "next-auth/react";
 import { headers } from "next/headers";
 
-export const DELETE = async (req: any, { params }: any, res: any) => {
+export const GET = async (req: NextApiRequest, params: any, res: any) => {
 
+  // API Protection
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    // Not Signed in
+    return NextResponse.json({ error: "You must be logged in': ", status: 401 })
+  }
+
+  if (!params.params.id) {
+    return NextResponse.json({ message: 'No item Id provided' });
+  }
+
+  const query = 'SELECT * FROM applianceItems WHERE ownerid=? AND applianceid=?'
+
+  try {
+    const response = await executeQuery(query, [session.user.id, params.params.id]);
+    // console.log(response);
+    return NextResponse.json(response);
+  } catch (error: any) {
+    return NextResponse.json({ message: error.message });
+
+  }
+}
+
+
+export const DELETE = async (req: any, { params }: any, res: any) => {
   // API Protection
   const session = await getServerSession(authOptions);
   if (!session) {

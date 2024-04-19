@@ -25,7 +25,7 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
   }
 
   if (!params.id) {
-    return NextResponse.json({ message: 'No item Id provided' });
+    return NextResponse.json({ message: 'No appliance Id provided' });
   }
 
   try {
