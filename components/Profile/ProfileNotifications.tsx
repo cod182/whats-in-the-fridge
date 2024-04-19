@@ -1,6 +1,6 @@
 'use client'
 
-import { getAllApplianceItems, getAppliances } from '@/utilities/functions';
+import { getAllApplianceItems, getAllAppliances } from '@/utilities/functions';
 import { useEffect, useState } from 'react';
 
 import ExpiryNotification from '../ExpiryNotification/ExpiryNotification';
@@ -21,7 +21,7 @@ const ProfileNotifications = ({ user }: Props) => {
     // Fetches the list of appliances
     const fetchAppliances = async () => {
       if (user) {
-        const appliances: appliance[] = await getAppliances();
+        const appliances: appliance[] = await getAllAppliances();
         setAppliances(appliances)
       }
     };

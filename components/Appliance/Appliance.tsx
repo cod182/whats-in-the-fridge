@@ -169,7 +169,7 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
   }
 
 
-  const getAppliance = () => {
+  const getApplianceComponent = () => {
     if (appliance != null) {
 
       switch (type) {
@@ -240,7 +240,7 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
             <BiDotsHorizontalRounded className={`${loading && editName ? 'h-[40px] w-[40px] text-blue-500' : 'hidden'} animate-spin transition-all duration-200 ease`} />
           </div>
 
-          {getAppliance()}
+          {getApplianceComponent()}
         </div >
 
       </>

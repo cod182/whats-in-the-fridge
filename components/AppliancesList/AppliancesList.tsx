@@ -3,11 +3,10 @@
 import React, { useEffect, useState } from 'react'
 
 import ApplianceCard from '../ApplianceCard/ApplianceCard';
-import ExpiryNotification from '../ExpiryNotification/ExpiryNotification';
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
 import FridgeLoader from '../FridgeLoader/FridgeLoader';
 import { IoAddOutline } from "react-icons/io5";
-import { getAppliances } from '@/utilities/functions';
+import { getAllAppliances } from '@/utilities/functions';
 import { useSession } from 'next-auth/react';
 
 const AppliancesList = () => {
@@ -27,9 +26,7 @@ const AppliancesList = () => {
     // Fetches the list of appliances
     const fetchAppliances = async () => {
       if (user) {
-        const appliances: appliance[] = await getAppliances();
-
-        // const appliances: appliance[] = await getAppliances(`SELECT * FROM appliances WHERE ownerid=${user?.id}`);
+        const appliances: appliance[] = await getAllAppliances();
         setAppliances(appliances)
       }
     };

@@ -2,13 +2,10 @@ export const toggleBodyScrolling = (state: boolean) => {
   state ? document.body.classList.remove('overflow-hidden') : document.body.classList.add('overflow-hidden')
 };
 
-export const getAppliance = async (query: string) => {
+export const getOneAppliance = async (applianceId: any) => {
   try {
-    const response = await fetch('/api/appliance', {
+    const response = await fetch(`/api/appliance/${applianceId}`, {
       method: 'GET',
-      headers: {
-        'query-header': query,
-      },
     });
     const responseData = await response.json();
     return responseData;
@@ -18,7 +15,7 @@ export const getAppliance = async (query: string) => {
   }
 }
 
-export const getAppliances = async () => {
+export const getAllAppliances = async () => {
   try {
     const response = await fetch('/api/appliance', {
       method: 'GET'
@@ -43,8 +40,6 @@ export const getAllApplianceItems = async () => {
     return false;
   }
 }
-
-
 
 export const getOneApplianceItems = async (applianceId: any) => {
   try {

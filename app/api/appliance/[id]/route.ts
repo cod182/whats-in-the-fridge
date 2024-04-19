@@ -6,6 +6,27 @@ import { executeQuery } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 import { headers } from "next/headers";
 
+export const GET = async (req: any, params: any, res: any) => {
+  // API Protection
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    // Not Signed in
+    return NextResponse.json({ error: "You must be logged in': ", status: 401 })
+  }
+
+  if (!params.params.id) {
+    return NextResponse.json({ message: 'No item Id provided' });
+  }
+  const query = "SELECT * FROM appliances WHERE ownerid=? AND id=?"
+  try {
+    const response = await executeQuery(query, [session.user.id, params.params.id]);
+    return NextResponse.json(response);
+  } catch (error: any) {
+    return NextResponse.json({ message: error.message });
+
+  }
+}
+
 export const DELETE = async (req: any, { params }: any, res: any) => {
 
   // API Protection
