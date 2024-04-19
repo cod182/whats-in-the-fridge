@@ -111,6 +111,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
         position: position,
         image: formValues.itemIcon,
       };
+
       try {
         setSubmitting(true)
         const response = await fetch('/api/appliance-items/new', {

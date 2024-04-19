@@ -76,9 +76,9 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
       setAvailableItems(itemsArray)
 
       const userItemsArray: userCreatedItem[] = await getUserCustomItems();
-      // const userItemsArray: userCreatedItem[] = await getAllAddableItems(`SELECT * FROM customAvailableItems WHERE creatorId=${userId}`);
       setUserCreatedItems(userItemsArray)
     }
+
     // Matches the type to type of appliance
     getApplianceType();
     // Gets all the items in teh database that can be added to the appliance
@@ -88,6 +88,8 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
 
 
   // Functions
+
+
   // Called when a element is selected (e.g clicked on shelf 0 position 0. Gets all the items in the area
   const handleSelect = (items: applianceItem[], level: number, compartment: string, type: string, position: number) => {
     const obj: selectionProps = {
@@ -162,10 +164,12 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
   // Updated the items by callback to items state by updateItems()
   // Filters down the updatedItems to just the items in the current area/level/position
   // updates the selectedArea state just providing the new items list
-  const handleUpdateItems = (updatedItems: applianceItem[]) => {
+  const handleUpdateItems = async (updatedItems: applianceItem[]) => {
     updateItems(updatedItems);
     const filteredItems = getItemsInThisLocation(selectedArea.level, updatedItems, selectedArea.type, selectedArea.compartment, selectedArea?.position);
     setSelectedArea({ ...selectedArea, items: filteredItems })
+    const userItemsArray: userCreatedItem[] = await getUserCustomItems();
+    setUserCreatedItems(userItemsArray)
   }
 
 
