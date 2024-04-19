@@ -1,6 +1,6 @@
 {
-    "name": "WITF?!",
-    "short_name": "WITF?!",
+    "name": "WITF?",
+    "short_name": "WITF?",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
+    "theme_color": "#1b87d3",
+    "background_color": "#1b87d3",
     "display": "standalone"
 }
