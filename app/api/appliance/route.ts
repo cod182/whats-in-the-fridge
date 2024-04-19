@@ -14,15 +14,17 @@ export const GET = async (req: any, params: any, res: any) => {
     return NextResponse.json({ error: "You must be logged in': ", status: 401 })
   }
 
-  const headersList = headers();
-  const query = headersList.get("query-header");
+  // const headersList = headers();
+  // const query = headersList.get("query-header");
 
-  if (!query) {
-    return NextResponse.json({ message: 'No Query Provided' });
-  }
+  // if (!query) {
+  //   return NextResponse.json({ message: 'No Query Provided' });
+  // }
+
+  const query = "SELECT * FROM appliances WHERE ownerid=?"
 
   try {
-    const response = await executeQuery(query);
+    const response = await executeQuery(query, [session.user.id]);
     return NextResponse.json(response);
   } catch (error: any) {
     return NextResponse.json({ message: error.message });

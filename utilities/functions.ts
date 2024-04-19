@@ -18,13 +18,10 @@ export const getAppliance = async (query: string) => {
   }
 }
 
-export const getAppliances = async (query: string) => {
+export const getAppliances = async () => {
   try {
     const response = await fetch('/api/appliance', {
-      method: 'GET',
-      headers: {
-        'query-header': query,
-      },
+      method: 'GET'
     });
     const responseData = await response.json();
     return responseData;

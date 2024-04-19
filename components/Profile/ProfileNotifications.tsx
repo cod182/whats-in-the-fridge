@@ -21,7 +21,7 @@ const ProfileNotifications = ({ user }: Props) => {
     // Fetches the list of appliances
     const fetchAppliances = async () => {
       if (user) {
-        const appliances: appliance[] = await getAppliances(`SELECT * FROM appliances WHERE ownerid=${user?.id}`);
+        const appliances: appliance[] = await getAppliances();
         setAppliances(appliances)
       }
     };
