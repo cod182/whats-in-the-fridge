@@ -30,7 +30,6 @@ const ManageCustomItems = () => {
   const [deleteConfirmCheck, setDeleteConfirmCheck] = useState(false);
 
 
-
   // FUNCTIONS
   // handles getting all custom items and sets the state
   const getCustomCreatedItems = async () => {
@@ -53,7 +52,6 @@ const ManageCustomItems = () => {
         setError(true)
         setManagementPane(false);
       } else {
-        console.log(customItems);
         setLoading(false);
         setManagementPane(true);
       }
@@ -64,9 +62,13 @@ const ManageCustomItems = () => {
   }
 
   // Handles when the selected option is changed
-  const handleChangeSelectedItem = (selectedItem: userCreatedItem) => {
+  const handleChangeSelectedItem = (selectedItem: string) => {
     // Sets the selected item
-    setSelectedItem(selectedItem);
+    if (selectedItem === 'Select an Item') {
+      setSelectedItem(undefined);
+    } else {
+      setSelectedItem(JSON.parse(selectedItem));
+    }
   }
 
   // Handles teh updating of and item when save is clicked
@@ -206,19 +208,19 @@ const ManageCustomItems = () => {
         <div className={`top-0 w-full italic text-black bg-red-500/80 px-4 text-md font-semibold rounded-md text-center overflow-hidden ${updateError != '' ? 'max-h-[200px] py-4 mb-4' : 'max-h-[0px] py-0 mb-0'} transition-all duration-300 ease`}>Error: {updateError}</div>
 
         <select
-          className='rounded-md px-2 min-h-[45px] capitalize'
+          className={`rounded-md px-2 min-h-[45px] capitalize ${selectedItem === undefined && 'font-semibold'}`}
           name="custom_item_selection"
           defaultValue="" // set default value to an empty string
-          onChange={(e) => handleChangeSelectedItem(JSON.parse(e.target.value))}
+          onChange={(e) => handleChangeSelectedItem(e.target.value)}
         >
-          <option value="" disabled >Select an Item</option> {/* make the default option hidden */}
+          <option value={undefined} className="font-semibold">Select an Item</option> {/* make the default option hidden */}
 
           {customItems && customItems.map((item) => (
             <option key={item.id} value={JSON.stringify(item)}>{item.name}</option>
           ))}
         </select>
 
-        {selectedItem &&
+        {selectedItem != undefined &&
           <FadeInHOC delayNumber={200} direction='up' classes='w-full'>
             <div className={`${selectedItem ? 'max-h-[1000px]' : 'max-h-[0px]'} my-2`}>
               <form method='PUT' onSubmit={(e) => handleUpdatingItem(e)} className='w-full h-fit'>
