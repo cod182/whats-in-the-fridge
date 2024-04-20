@@ -9,6 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@ducanh2912/next-pwa": "^10.2.6",
         "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
         "@vercel/analytics": "^1.2.2",
         "@vercel/postgres": "^0.5.1",
