@@ -19,7 +19,7 @@ const AppliancesList = () => {
   const [appliances, setAppliances] = useState<appliance[]>()
   const [numberOfResults, setNumberOfResults] = useState(11)
   const [filteredAppliances, setFilteredAppliances] = useState<appliance[]>()
-
+  const [errorMessage, setErrorMessage] = useState<string>()
 
   // useEffects
   useEffect(() => {
@@ -54,14 +54,19 @@ const AppliancesList = () => {
   const handleDeleteAppliance = async (applianceId: number) => {
     try {
       const response = await removeApplianceItemFromDb(applianceId);
-      if (response.ok) {
+      if (response.message) {
+        // if there is an error message
+        console.log(response.message)
+        setErrorMessage('Error deleting appliance')
+        setTimeout(() => {
+          setErrorMessage(undefined)
+        }, 2000)
+      } else {
+        console.log('request to delete response', response);
         const filteredItems = appliances!.filter(
           (i) => i.id != applianceId
         )
         setAppliances(filteredItems);
-      } else {
-        console.log(response.message);
-        return response.message;
       }
     } catch (error) {
       console.log(error)
@@ -79,14 +84,13 @@ const AppliancesList = () => {
 
   return (
     <>
+      <div className={`${errorMessage ? 'max-h-[500px] py-2' : 'max-h-[0px] py-0'} mx-auto w-full sm:w-[80%] bg-gray-400/40 rounded-lg text-center overflow-hidden transition-all duration-200 ease`}>{errorMessage}</div>
       <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
         {filteredAppliances?.map((app, index) => {
           return (
             <FadeInHOC key={app.id} delayNumber={index === 0 ? 200 : (index + 1) * 200} direction='up'>
               <>
                 <ApplianceCard app={app} handleDelete={handleDeleteAppliance} />
-
-                {/* <ExpiryNotification items={items} layout='vertical' /> */}
               </>
             </FadeInHOC>
           )

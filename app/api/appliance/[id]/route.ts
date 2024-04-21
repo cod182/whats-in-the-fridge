@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
+import { OkPacket, ResultSetHeader } from "mysql2";
 
 import { authOptions } from "@/utilities/authOptions";
 import { executeQuery } from "@/lib/db";
@@ -44,9 +45,14 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
 
     const query = 'DELETE FROM appliances WHERE id=? AND ownerid=?'
 
-    const response = await executeQuery(query, [params.id, session.user.id]);
-    console.log('deleted')
-    return NextResponse.json(response);
+    const response = await executeQuery(query, [params.id, session.user.id]) as ResultSetHeader;
+
+    if (response && response?.affectedRows && response?.affectedRows > 0) {
+      console.log('THE RESPONSE', response);
+      return NextResponse.json(response);
+    } else {
+      return NextResponse.json({ message: 'Invalid appliance ID or unauthorized access' });
+    }
   } catch (error: any) {
     return NextResponse.json({ message: error.message });
 

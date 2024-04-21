@@ -59,6 +59,7 @@ export const removeApplianceItemFromDb = async (applianceId: any) => {
       method: 'DELETE',
     });
     const responseData = await response.json();
+
     return responseData;
   } catch (error) {
     console.error('Error fetching data:', error);
