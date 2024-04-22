@@ -71,12 +71,16 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
 
     if (result) {
       console.log('deleting item');
-
+      console.log(e)
       try {
-        const response = await removeItemFromDb(999999)
+        const response = await removeItemFromDb(item.id)
 
         if (response.message) {
           console.log('Not Deleted', response)
+          setError('Failed to delete item')
+          setTimeout(() => {
+            setError('')
+          }, 2000);
         } else {
           console.log('Delete Item Response Ok', response.ok);
           const filteredItems = items.filter(
@@ -122,7 +126,6 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
         body: JSON.stringify(updatedItem),
       });
       if (response.ok) {
-        console.log('claimed ok', response)
         handlingUpdateLocalItem(updatedItem);
         setUpdating(false)
         setSuccess(true);
@@ -194,7 +197,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
         className={`flex flex-col my-[2px] justify-start items-start p-2 w-full max-h-[110px] rounded-md relative shadow-[1px_1px_1px_0px_rgb(0,0,0,0.2)] overflow-hidden transition-all duration-500 ease-in-out ${containerStatus ? 'max-h-[500px]' : 'max-h-[110px]'}`}
       >
         {/* Error Message */}
-        <div className={` ${error ? 'max-h-[200px] py-2' : 'max-h-[0px] py-0'} overflow-hidden px-2 rounded-lg w-full italic text-black bg-red-500/50 transition-all duration-200 ease`}>Error:{error}</div>
+        <div className={` ${error ? 'max-h-[200px] py-2' : 'max-h-[0px] py-0'} absolute top-0 overflow-hidden px-2 rounded-lg w-[90%] italic text-black bg-red-500 z-[10] transition-all duration-200 ease`}>Error:{error}</div>
 
         {/* form selection depending on the editActivated State */}
         {editActivated ? (
@@ -339,6 +342,26 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
                 <div>
                   <p className='capitalize text-md'>{item.name}</p>
                   <p className='text-sm'>Quantity: {item.quantity}</p>
+                  {item.expiryDate &&
+                    <p className='text-sm text-normal'>Expiry: <span className='italic'>{reverseDate(item.expiryDate)}</span></p>
+                  }
+                  {(item.compartment === 'freezer' || item.compartment === 'doorFreezer') && item.cookedFromFrozen && (
+                    <>
+                      {item.cookedFromFrozen === 'yes' && (
+                        <div className="flex flex-row items-center justify-start gap-1">
+                          <Image className='inline' src='/assets/images/frozen.svg' width={15} height={15} alt='cook from frozen' />
+                          <p className={`text-sm text-normal`}>Can be cooked from frozen</p>
+                        </div>
+                      )}
+                      {item.cookedFromFrozen === 'no' && (
+                        <div className="flex flex-row items-center justify-start gap-1">
+                          <Image className='inline' src='/assets/images/defrost.svg' width={15} height={15} alt='defrost before eating' />
+                          <p className={`text-sm text-normal`}>Must be defrosted</p>
+                        </div>
+                      )}
+                      {item.cookedFromFrozen === 'NA' && null}
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -387,7 +410,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               </p>
             </div>
             <div className='w-full my-4 h-fit '>
-              {(item.compartment === 'freezer' || item.compartment === 'doorFreezer') && item.cookedFromFrozen && (
+              {/* {(item.compartment === 'freezer' || item.compartment === 'doorFreezer') && item.cookedFromFrozen && (
                 <>
                   {item.cookedFromFrozen === 'yes' && (
                     <div className="flex flex-row items-center justify-start gap-1">
@@ -403,7 +426,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
                   )}
                   {item.cookedFromFrozen === 'NA' && null}
                 </>
-              )}
+              )} */}
 
               {item.itemType &&
                 <p className='text-sm text-normal'>Item Type: <span className='italic'>{item.itemType}</span></p>
@@ -416,9 +439,9 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               }
 
 
-              {item.expiryDate &&
+              {/* {item.expiryDate &&
                 <p className='text-sm text-normal'>Expiry: <span className='italic'>{reverseDate(item.expiryDate)}</span></p>
-              }
+              } */}
               <p className='text-sm text-normal'>Date Added: <span className='italic'>{item.addedDate}</span></p>
               {item.comment &&
                 <p className='mb-2 text-sm text-normal'>Comment: <span className='block text-sm text-normal border-gray-300 border-[1px] rounded-md bg-gray-100 p-2 italic text-gray-600'>{item.comment}</span></p>
