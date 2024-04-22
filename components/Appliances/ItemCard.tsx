@@ -1,5 +1,6 @@
 'use client'
 
+import { removeItemFromDb, reverseDate } from "@/utilities/functions";
 import { useEffect, useState } from 'react';
 
 import { BiDotsHorizontalRounded } from "react-icons/bi";
@@ -11,7 +12,6 @@ import { IoCloseSharp } from 'react-icons/io5'
 import { IoSaveSharp } from "react-icons/io5";
 import { MdCancel } from "react-icons/md";
 import { TiTick } from "react-icons/ti";
-import { reverseDate } from "@/utilities/functions";
 
 type Props = {
   item: applianceItem;
@@ -71,21 +71,19 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
 
     if (result) {
       console.log('deleting item');
-      try {
-        let response = await fetch(`/api/appliance-items/${item.id}`, {
-          method: 'DELETE',
-          headers: {
-            'ownerid': userId.toString()
-          }
-        });
-        if (response.ok) {
 
+      try {
+        const response = await removeItemFromDb(999999)
+
+        if (response.message) {
+          console.log('Not Deleted', response)
+        } else {
+          console.log('Delete Item Response Ok', response.ok);
           const filteredItems = items.filter(
             (i) => i.id != item.id
           )
           updateItems(filteredItems);
         }
-        console.log(response)
       } catch (error) {
         console.log(error)
       }
@@ -114,7 +112,6 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
       expiryDate: formValues.expiryDate,
       comment: formValues.comment,
     }
-    console.log(updatedItem);
     try {
       setUpdating(true)
       const response = await fetch(`/api/appliance-items/${item.id}`, {
@@ -125,6 +122,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
         body: JSON.stringify(updatedItem),
       });
       if (response.ok) {
+        console.log('claimed ok', response)
         handlingUpdateLocalItem(updatedItem);
         setUpdating(false)
         setSuccess(true);
@@ -139,7 +137,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
         // Set success to false after 1 second
         setTimeout(() => {
           setError('');
-        }, 1000);
+        }, 2000);
         setUpdating(false)
         setSuccess(false)
       }
@@ -181,8 +179,6 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
     }
 
     const updatedItems = [...items]; // creates new array of item
-    // console.log('Original List', items)
-    // console.log('New List', updatedItems)
     updatedItems.splice(index, 1, updatedItem); // Replace the item at the found index with the updated item
     updateItems(updatedItems);
   };
@@ -197,6 +193,9 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
         id={`${item.name.toLowerCase().replace(/\s/g, '-')}-${item.id}-container`}
         className={`flex flex-col my-[2px] justify-start items-start p-2 w-full max-h-[110px] rounded-md relative shadow-[1px_1px_1px_0px_rgb(0,0,0,0.2)] overflow-hidden transition-all duration-500 ease-in-out ${containerStatus ? 'max-h-[500px]' : 'max-h-[110px]'}`}
       >
+        {/* Error Message */}
+        <div className={` ${error ? 'max-h-[200px] py-2' : 'max-h-[0px] py-0'} overflow-hidden px-2 rounded-lg w-full italic text-black bg-red-500/50 transition-all duration-200 ease`}>Error:{error}</div>
+
         {/* form selection depending on the editActivated State */}
         {editActivated ? (
           // Form for editing
@@ -327,7 +326,6 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               <textarea name="comment" id="comment" placeholder='Comment (Optional)' value={itemComment} onChange={(e) => setItemComment(e.target.value)} className='px-2 py-[] rounded-md block mb-[5px]'></textarea>
 
             </div>
-            {error && <div className='w-full mb-4 italic text-black bg-red-500 h-fit'>Error:{error}</div>}
           </form>
         ) : (
 

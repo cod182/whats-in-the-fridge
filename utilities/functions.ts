@@ -53,7 +53,7 @@ export const getOneApplianceItems = async (applianceId: any) => {
   }
 }
 
-export const removeApplianceItemFromDb = async (applianceId: any) => {
+export const removeApplianceFromDb = async (applianceId: any) => {
   try {
     const response = await fetch(`/api/appliance/${applianceId}`, {
       method: 'DELETE',
@@ -65,6 +65,20 @@ export const removeApplianceItemFromDb = async (applianceId: any) => {
     console.error('Error fetching data:', error);
     return error;
   }
+}
+
+export const removeItemFromDb = async (itemId: any) => {
+  try {
+    const response = await fetch(`/api/appliance-items/${itemId}`, {
+      method: 'DELETE',
+    });
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return error;
+  }
+
 }
 
 export const getUserCustomItems = async () => {

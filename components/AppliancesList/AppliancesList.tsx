@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { getAllAppliances, removeApplianceItemFromDb } from '@/utilities/functions';
+import { getAllAppliances, removeApplianceFromDb } from '@/utilities/functions';
 
 import ApplianceCard from '../ApplianceCard/ApplianceCard';
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
@@ -53,7 +53,7 @@ const AppliancesList = () => {
   // Called for deleting an appliance from the databaase then updaing the current state of items instead ot calling the db again
   const handleDeleteAppliance = async (applianceId: number) => {
     try {
-      const response = await removeApplianceItemFromDb(applianceId);
+      const response = await removeApplianceFromDb(applianceId);
       if (response.message) {
         // if there is an error message
         console.log(response.message)

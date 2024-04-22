@@ -71,7 +71,6 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
       image,
     ]);
 
-    console.log(queryResponse);
 
     // Return success response
     return new Response('', { status: 200, statusText: 'Success' });
