@@ -57,13 +57,19 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
 
   const [containerStatus, setContainerStatus] = useState(false);
   const [editActivated, setEditActivated] = useState(false);
-  const [itemQuantity, setItemQuantity] = useState(item.quantity);
-  const [itemComment, setItemComment] = useState(item.comment || '');
-  const [expiryDate, setExpiryDate] = useState(item.expiryDate || '');
-  const [cookedFromFrozen, setCookedFromFrozen] = useState<string | undefined>(item.cookedFromFrozen);
   const [updating, setUpdating] = useState(false);
   const [success, setSuccess] = useState<boolean>();
   const [error, setError] = useState<string>();
+
+  // States for updating an item
+  const [itemName, setItemName] = useState(item.name);
+  const [itemQuantity, setItemQuantity] = useState(item.quantity);
+  const [expiryDate, setExpiryDate] = useState(item.expiryDate || '');
+  const [cookedFromFrozen, setCookedFromFrozen] = useState<string | undefined>(item.cookedFromFrozen);
+  const [itemSubType, setItemSubType] = useState(item.itemSubType || '');
+  const [itemMainType, setItemMainType] = useState(item.itemMainType)
+  const [itemType, setItemType] = useState(item.itemType || '')
+  const [itemComment, setItemComment] = useState(item.comment || '');
 
   // Functions
   const handleDelete = async (e: any) => {
@@ -109,12 +115,16 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
 
     const updatedItem = {
       id: item.id,
+      name: formValues.itemName,
       applianceid: item.applianceid,
       ownerid: item.ownerid,
       quantity: formValues.quantity,
       cookedFromFrozen: cookedFromFrozen,
       expiryDate: formValues.expiryDate,
       comment: formValues.comment,
+      itemType: formValues.itemType,
+      itemMainType: formValues.itemMainType,
+      itemSubType: formValues.itemSubType,
     }
     try {
       setUpdating(true)
@@ -156,13 +166,13 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
     const index = items.findIndex(item => item.id === updatedItemPart.id); // finds the item that matches
 
     const updatedItem = {
-      id: updatedItemPart.id,
-      ownerid: updatedItemPart.ownerid,
-      applianceid: updatedItemPart.applianceid,
-      name: item.name,
-      itemType: item.itemType,
-      itemMainType: item.itemMainType,
-      itemSubType: item.itemSubType,
+      id: item.id,
+      ownerid: item.ownerid,
+      applianceid: item.applianceid,
+      name: updatedItemPart.name,
+      itemType: updatedItemPart.itemType,
+      itemMainType: updatedItemPart.itemMainType,
+      itemSubType: updatedItemPart.itemSubType,
       addedDate: item.addedDate,
       expiryDate: updatedItemPart.expiryDate,
       cookedFromFrozen: cookedFromFrozen,
@@ -209,10 +219,12 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
                 <div className='mr-2 flex flex-col justify-center items-center w-[75px] h-[75px] aspect-square relative'>
                   <Image alt={`${item.name} `} src={`/assets/images/items/${item.image}`} width={75} height={75} className='object-fill' />
                 </div>
-                <div>
-                  <p className='capitalize text-md'>{item.name}</p>
-                  <label htmlFor="quantity" className='text-sm'>Quantity:</label>
-                  <input id='quantity' name='quantity' type="number" min={1} required value={itemQuantity} onChange={(e) => setItemQuantity(Number(e.target.value))} className='px-2 rounded-md w-[65px] ml-[5px]' />
+                <div className="flex flex-col">
+                  <input required id='itemName' type="text" name='itemName' value={itemName} onChange={(e) => setItemName(e.target.value)} className='my-2 px-2 font-semibold capitalize rounded-md shadow-inner h-fit w-fit' />
+                  <div className="flex flex-row">
+                    <label htmlFor="quantity" className='text-sm'>Quantity:</label>
+                    <input required id='quantity' name='quantity' type="number" min={1} value={itemQuantity} onChange={(e) => setItemQuantity(Number(e.target.value))} className='px-2 rounded-md w-[65px] ml-[5px]' />
+                  </div>
                 </div>
               </div>
 
@@ -283,7 +295,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               </p>
             </div>
 
-            <div className='w-full my-4 h-fit '>
+            <div className='w-full my-4 h-fit flex flex-col '>
               {/* Cook from frozen button if in freezer */}
               {(item.compartment === 'freezer' || item.compartment === 'doorFreezer') && (
                 <div>
@@ -310,18 +322,26 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
               )}
               {/* End cook from frozen */}
 
-              {item.itemType &&
-                <p className='text-sm text-normal'>Item Type: <span className='italic'>{item.itemType}</span></p>
-              }
-              {item.itemMainType &&
-                <p className='text-sm text-normal'>Item Type 2: <span className='italic'>{item.itemMainType}</span></p>
-              }
-              {item.itemSubType &&
-                <p className='text-sm text-normal'>Item sub Type: <span className='italic'>{item.itemSubType}</span></p>
-              }
+
+              <>
+                <label htmlFor="itemType" className='text-sm text-normal w-fit'>Item Main Type::</label>
+                <input required id='itemType' type="text" name='itemType' value={itemType} onChange={(e) => setItemType(e.target.value)} className='ml-[5px] px-2 my-[5px] font-semibold capitalize rounded-md shadow-inner h-fit w-fit' />
+              </>
+
+              <>
+                <label htmlFor="itemMainType" className='text-sm text-normal w-fit'>Item Main Type::</label>
+                <input required id='itemMainType' type="text" name='itemMainType' value={itemMainType} onChange={(e) => setItemMainType(e.target.value)} className='ml-[5px] px-2 my-[5px] font-semibold capitalize rounded-md shadow-inner h-fit w-fit' />
+              </>
+
+
+              <>
+                <label htmlFor="itemSubType" className='text-sm text-normal w-fit'>Item sub Type::</label>
+                <input id='itemSubType' type="text" name='itemSubType' value={itemSubType} onChange={(e) => setItemSubType(e.target.value)} className='ml-[5px] px-2 my-[5px] font-semibold capitalize rounded-md shadow-inner h-fit w-fit' />
+              </>
+
 
               <label htmlFor="expiryDate" className='text-sm text-normal'>Expiry:</label>
-              <input id='expiryDate' type="date" name='expiryDate' value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} className='ml-[5px] px-2 my-[5px] font-semibold capitalize rounded-md shadow-inner h-fit' />
+              <input id='expiryDate' type="date" name='expiryDate' value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} className='ml-[5px] px-2 my-[5px] font-semibold capitalize rounded-md shadow-inner h-fit w-fit' />
 
               <p className='text-sm text-normal'>Date Added: <span className='italic'>{item.addedDate}</span></p>
 
@@ -432,10 +452,10 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch }: Props) => {
                 <p className='text-sm text-normal'>Item Type: <span className='italic'>{item.itemType}</span></p>
               }
               {item.itemMainType &&
-                <p className='text-sm text-normal'>Item Type 2: <span className='italic'>{item.itemMainType}</span></p>
+                <p className='text-sm text-normal'>Item Main Type: <span className='italic'>{item.itemMainType}</span></p>
               }
               {item.itemSubType &&
-                <p className='text-sm text-normal'>Item sub Type: <span className='italic'>{item.itemSubType}</span></p>
+                <p className='text-sm text-normal'>Item Sub Type: <span className='italic'>{item.itemSubType}</span></p>
               }
 
 

@@ -72,6 +72,10 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
       id,
       applianceid,
       ownerid,
+      name,
+      itemType,
+      itemMainType,
+      itemSubType,
       quantity,
       expiryDate,
       comment,
@@ -95,11 +99,10 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
     }
 
     // SQL query with parameterized values
-    const query = `UPDATE applianceItems SET quantity=?, cookedFromFrozen=?, expiryDate=?, comment=? WHERE id=? AND ownerid=? AND applianceid=?`;
+    const query = `UPDATE applianceItems SET name=?, itemType=?, itemMainType=?, itemSubType=?, quantity=?, cookedFromFrozen=?, expiryDate=?, comment=? WHERE id=? AND ownerid=? AND applianceid=?`;
 
-    const queryResponse = await executeQuery(query, [quantity, cookedFromFrozen, expiryDate, comment, params.id, session.user.id, applianceid]) as ResultSetHeader;
+    const queryResponse = await executeQuery(query, [name, itemType, itemMainType, itemSubType, quantity, cookedFromFrozen, expiryDate, comment, params.id, session.user.id, applianceid]) as ResultSetHeader;
 
-    console.log('QUERY RESPONSE', queryResponse)
 
     if (queryResponse && queryResponse.affectedRows && queryResponse.affectedRows > 0) {
       // Return success response
