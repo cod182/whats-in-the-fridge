@@ -203,6 +203,8 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
     }
   }
 
+
+
   // Checks appliance exists
   if (appliance != null) {
     return (
@@ -216,6 +218,7 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
                 updateItems={handleUpdateItems}
                 items={items}
                 userId={userId}
+                applianceType={type}
               />
             }
 

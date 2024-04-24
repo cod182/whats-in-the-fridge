@@ -5,9 +5,10 @@ type Props = {
   updateItems: (items: applianceItem[]) => void;
   items: applianceItem[]
   userId: string;
+  applianceType: string;
 }
 
-const ViewItems = ({ selectedArea, updateItems, items, userId }: Props) => {
+const ViewItems = ({ selectedArea, updateItems, items, userId, applianceType }: Props) => {
 
   return (
     <>
@@ -15,7 +16,7 @@ const ViewItems = ({ selectedArea, updateItems, items, userId }: Props) => {
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
         {selectedArea && selectedArea?.items?.map((item: applianceItem, index: number) =>
           <div key={index} className='w-full h-full px-[1px]'>
-            <ItemCard item={item} items={items} updateItems={updateItems} userId={userId} />
+            <ItemCard item={item} items={items} updateItems={updateItems} userId={userId} applianceType={applianceType} selectedArea={selectedArea} />
           </div>
         )}
       </div>

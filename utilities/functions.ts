@@ -279,3 +279,16 @@ export const reverseDate = (inputDate: string): string => {
   const reversedDate: string = `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}`;
   return reversedDate;
 };
+
+
+export const getAvailableCompartments = (applianceType: string) => {
+
+  // Use find instead of map to find the first matching appliance
+  const foundAppliance = appliances.find((appliance) => {
+    // Match the appliance name with supplied applianceType
+    return appliance.name.replace(/\s/g, "_").toLowerCase() === applianceType.replace(/\s/g, "_").toLowerCase();
+  });
+
+  // If appliance is found, return its available compartments, otherwise return null
+  return foundAppliance && foundAppliance.availableCompartments
+};

@@ -2,7 +2,6 @@ import { GiOpenedFoodCan } from 'react-icons/gi';
 import Image from 'next/image';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import React from 'react'
-import { getImageForAppliance } from '../../utilities/functions';
 
 type Props = PositionProps & { rotate?: string };
 
