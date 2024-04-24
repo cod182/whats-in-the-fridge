@@ -17,7 +17,7 @@ const DrawerButton_min = ({ handleMoveItem, compartment, locationType, level, po
 
   return (
 
-    <div className={`hover:scale-105 hover:bg-green-400 hover:shadow-md flex group w-full min-h-[30px] max-h-[80px] text-center cursor-pointer border rounded-md flex-row items-center justify-around transition-all duration-300 ease-in  relative ${compartment === currentPlacement.compartment && locationType === currentPlacement.locationType && level === currentPlacement.level ? 'bg-blue-600 hover:bg-blue-500 active:bg-blue-700' : 'bg-gray-400'}`}
+    <div className={` flex group w-full min-h-[30px] max-h-[80px] text-center cursor-pointer border rounded-md flex-row items-center justify-around transition-all duration-300 ease-in  relative ${compartment === currentPlacement.compartment && locationType === currentPlacement.locationType && level === currentPlacement.level ? 'bg-blue-600 hover:bg-blue-500 active:bg-blue-700' : 'bg-gray-400 hover:scale-105 hover:bg-green-400 hover:shadow-md'}`}
       onClick={() => { handleMoveItem(level, compartment, locationType) }}
     >
       {compartment === currentPlacement.compartment && locationType === currentPlacement.locationType && level === currentPlacement.level ?

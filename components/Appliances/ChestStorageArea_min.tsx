@@ -21,7 +21,7 @@ const ChestStorageArea_min = ({ handleMoveItem, locationType, compartment, level
 
   return (
     <div
-      className={`hover:scale-105 hover:bg-green-400 hover:shadow-md relative flex flex-col items-center justify-around w-full h-full text-center transition-all duration-200 ease-in border rounded-md cursor-pointer group ${compartment === currentPlacement.compartment && locationType === currentPlacement.locationType && level === currentPlacement.level ? 'bg-blue-600 hover:bg-blue-500 active:bg-blue-700' : 'bg-gray-400'}`}
+      className={`relative flex flex-col items-center justify-around w-full h-full text-center transition-all duration-200 ease-in border rounded-md cursor-pointer group ${compartment === currentPlacement.compartment && locationType === currentPlacement.locationType && level === currentPlacement.level ? 'bg-blue-600 hover:bg-blue-500 active:bg-blue-700' : 'bg-gray-400 hover:scale-105 hover:bg-green-400 hover:shadow-md'}`}
       onClick={() => handleMoveItem(level, compartment, locationType, position)}
     >
       <div style={{ transform: `rotate(${rotate}deg)` }} className='flex flex-col items-center justify-center w-full h-full overflow-hidden transition-all duration-200 ease'
