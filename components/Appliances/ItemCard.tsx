@@ -26,9 +26,6 @@ type Props = {
 
 const ItemCard = ({ item, updateItems, items, userId, inSearch, applianceType, selectedArea }: Props) => {
 
-
-
-
   // Use States
   const [containerStatus, setContainerStatus] = useState(false);
   const [editActivated, setEditActivated] = useState(false);

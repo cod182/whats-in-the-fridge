@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 
 import Appliance from '../Appliance/Appliance';
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 import FridgeFreezer_min from "./FridgeFreezer/FridgeFreezer_min";
 import { MdCancel } from "react-icons/md";
+import { TiTick } from "react-icons/ti";
 import { appliances } from "@/static/appliances";
 import { getAvailableCompartments } from "@/utilities/functions";
 
@@ -20,17 +22,35 @@ type Props = {
 
 
 const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea, item, applianceType, selectedArea }: Props) => {
+
+  // UseStates
   const [appliance, setAppliance] = useState<ApplianceProp>()
   const [updating, setUpdating] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [success, setSuccess] = useState(false)
 
 
+  // Use Effects
+  useEffect(() => {
+    const getAppliance = () => {
+      appliances.map((applianceChoice: ApplianceProp) => {
+        if (applianceChoice.name.toLowerCase().replace(/\s/g, '_') === applianceType.toLowerCase().replace(/\s/g, '_')) {
+          setAppliance(applianceChoice);
+        }
+      })
+    }
+    getAppliance();
+  }, [applianceType])
+
+
+  // FUNCTIONS
+
+  // Function for handling the movement of an item
   const handleMoveItem = async (level: number, compartment: string, locationType: string, position?: number) => {
+    // make sure error message is blank
     setErrorMessage('');
 
-    console.log(position && position)
-
+    // Building the updated item
     const updatedItem = {
       id: item.id,
       ownerid: item.ownerid,
@@ -42,7 +62,9 @@ const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea,
     }
 
     try {
+      // Start the updating process
       setUpdating(true);
+      // Api Call
       const response = await fetch(`/api/appliance-items/${item.id}`, {
         method: 'PUT',
         headers: {
@@ -51,17 +73,23 @@ const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea,
         },
         body: JSON.stringify(updatedItem),
       });
+      // If response is pk
       if (response.ok) {
-        handlingUpdateLocalItem(updatedItem);
+        // Updating off
         setUpdating(false)
+        // Success off
         setSuccess(true);
         // Set states to false after 1 second
         setTimeout(() => {
+          // Call to the function to update the local items
+          handlingUpdateLocalItem(updatedItem);
           setSuccess(false);
           setMoveArea(false);
           setEditActivated(false);
-        }, 1000);
+        }, 500);
       } else {
+        // Response no ok
+        // Set the message from the error
         setErrorMessage(response.statusText);
         // Set success to false after 1 second
         setTimeout(() => {
@@ -111,22 +139,8 @@ const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea,
     updatedItems.splice(index, 1, updatedItem); // Replace the item at the found index with the updated item
     updateItems(updatedItems);
   };
-
-
-
-  useEffect(() => {
-    const getAppliance = () => {
-      appliances.map((applianceChoice: ApplianceProp) => {
-        if (applianceChoice.name.toLowerCase().replace(/\s/g, '_') === applianceType.toLowerCase().replace(/\s/g, '_')) {
-          setAppliance(applianceChoice);
-        }
-      })
-    }
-    getAppliance();
-  }, [applianceType])
-
+  // Only retuns if there is an application
   if (appliance) {
-
     return (
       <div className={`${moveArea ? 'h-[100%] py-2' : 'h-[0%] py-0'} overflow-hidden flex flex-col items-start px-2 absolute top-0 left-0 z-[999] w-full bg-gray-500/90 transition-all duration-200 ease`} >
         <div className="flex flex-row items-center justify-between w-full">
@@ -149,10 +163,37 @@ const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea,
         </div>
 
         {/* Item Locator Are */}
+        <div
+          className={`flex flex-col flex-wrap justify-center items-center ${updating || success || errorMessage !== '' ? 'max-h-[200px] py-4' : 'max-h-[0px]'} overflow-hidden w-full transition-all duration-200 ease`}>
 
+          {updating &&
+            (
+              <div className="flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
+                <p className="text-xs font-normal md:text-sm">Moving!</p>
+                <BiDotsHorizontalRounded className='h-[20px] w-[20px] text-blue-500  hover:scale-110 transition-all duration-200 ease-in-out animate-spin' />
+              </div>
+
+            )
+          }
+
+          {success &&
+            (
+              <div className="flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
+                <p className="text-xs font-normal md:text-sm">Moved!</p>
+                <TiTick className='h-[25px] w-[25px] text-green-500  hover:scale-110 transition-all duration-200 ease-in-out' />
+              </div>
+            )
+          }
+        </div>
         <div className="w-full h-full">
           <FridgeFreezer_min appliance={appliance} handleMoveItem={handleMoveItem} currentPlacement={{ compartment: item.compartment, locationType: item.locationType, level: item.level, position: item.position ? item.position : 128 }} />
         </div>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        Error
       </div>
     )
   }
