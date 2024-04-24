@@ -14,7 +14,7 @@ type Props = {
   typeOfAppliance: string;
 }
 
-const TallAppliance_main = ({ appliance, handleMoveItem, currentPlacement, typeOfAppliance }: Props) => {
+const TallAppliance_min = ({ appliance, handleMoveItem, currentPlacement, typeOfAppliance }: Props) => {
 
   const shelfPositions = [1, 2, 3]; // How many areas there are on a shelf
 
@@ -62,4 +62,4 @@ const TallAppliance_main = ({ appliance, handleMoveItem, currentPlacement, typeO
   )
 }
 
-export default TallAppliance_main
+export default TallAppliance_min

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { BiDotsHorizontalRounded } from "react-icons/bi";
+import ChestAppliance_min from "./ChestAppliance/ChestAppliance_min";
 import FridgeFreezer_min from './FridgeFreezer/FridgeFreezer_min';
 import { MdCancel } from "react-icons/md";
 import TallAppliance_min from "./TallAppliance/TallAppliance_min";
@@ -154,7 +155,7 @@ const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea,
 
         case 'chest_freezer':
         case 'chest_fridge':
-        // return <ChestAppliance_min appliance={appliance} handleMoveItem={handleMoveItem} currentPlacement={{ compartment: item.compartment, locationType: item.locationType, level: item.level, position: item.position ? item.position : 128 }} />;
+        return <ChestAppliance_min appliance={appliance} handleMoveItem={handleMoveItem} currentPlacement={{ compartment: item.compartment, locationType: item.locationType, level: item.level, position: item.position ? item.position : 128 }} />;
 
         case 'under_counter_fridge':
         case 'under_counter_freezer':

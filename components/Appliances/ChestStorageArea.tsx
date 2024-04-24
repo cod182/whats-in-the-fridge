@@ -5,7 +5,6 @@ import React from 'react'
 type Props = PositionProps & { rotate?: string };
 
 const ChestStorageArea = ({ handleSelection, compartment, type, level, position, handleModalState, items, rotate }: Props) => {
-
   return (
     <div
       className="relative flex flex-col items-center justify-around w-full h-full text-center transition-all duration-200 ease-in border rounded-md cursor-pointer group hover:bg-gray-500/50"
