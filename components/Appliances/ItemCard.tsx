@@ -188,7 +188,7 @@ const ItemCard = ({ item, updateItems, items, userId, inSearch, applianceType, s
 
 
         {/* Moving Item Location START */}
-        <MoveArea setMoveArea={setMoveArea} moveArea={moveArea} item={item} applianceType={applianceType} selectedArea={selectedArea} />
+        <MoveArea setEditActivated={setEditActivated} updateItems={updateItems} items={items} setMoveArea={setMoveArea} moveArea={moveArea} item={item} applianceType={applianceType} selectedArea={selectedArea} />
         {/* MOVING ITEM LOCATION END */}
 
         {/* form selection depending on the editActivated State */}

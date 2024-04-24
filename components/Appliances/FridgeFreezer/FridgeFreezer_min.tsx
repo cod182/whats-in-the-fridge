@@ -23,7 +23,6 @@ const FridgeFreezer_min = ({ appliance, handleMoveItem, currentPlacement }: Prop
 
   const shelfPositions = [1, 2, 3]; // How many areas there are on a shelf
 
-  console.log(currentPlacement);
   return (
     <>
       <div className='w-[96%] max-w-[370px] max-h-full rounded-md md:p-1 border-2 border-black bg-gray-100 relative mr-[22px]'>

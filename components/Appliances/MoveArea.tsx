@@ -12,12 +12,105 @@ type Props = {
   item: applianceItem;
   applianceType: string;
   selectedArea: selectionProps;
+  items: applianceItem[];
+  updateItems: (items: applianceItem[]) => void;
+  setEditActivated: (state: boolean) => void;
 }
 
 
 
-const MoveArea = ({ setMoveArea, moveArea, item, applianceType, selectedArea }: Props) => {
+const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea, item, applianceType, selectedArea }: Props) => {
   const [appliance, setAppliance] = useState<ApplianceProp>()
+  const [updating, setUpdating] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [success, setSuccess] = useState(false)
+
+
+  const handleMoveItem = async (level: number, compartment: string, locationType: string, position?: number) => {
+    setErrorMessage('');
+
+    console.log(position && position)
+
+    const updatedItem = {
+      id: item.id,
+      ownerid: item.ownerid,
+      applianceid: item.applianceid,
+      compartment: compartment,
+      level: level,
+      locationType: locationType,
+      position: position ? position : 128,
+    }
+
+    try {
+      setUpdating(true);
+      const response = await fetch(`/api/appliance-items/${item.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'update-type': 'move'
+        },
+        body: JSON.stringify(updatedItem),
+      });
+      if (response.ok) {
+        handlingUpdateLocalItem(updatedItem);
+        setUpdating(false)
+        setSuccess(true);
+        // Set states to false after 1 second
+        setTimeout(() => {
+          setSuccess(false);
+          setMoveArea(false);
+          setEditActivated(false);
+        }, 1000);
+      } else {
+        setErrorMessage(response.statusText);
+        // Set success to false after 1 second
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 2000);
+        setUpdating(false)
+        setSuccess(false)
+      }
+    } catch (error) {
+      console.error('Error while sending data', error);
+      setErrorMessage('Error while sending data, please try again');
+      setUpdating(false)
+    }
+  };
+
+  // Takes the updated item, adds the uneffected original item parts. Find the item, removes it and adds it to a new array then updates the local array
+  const handlingUpdateLocalItem = (updatedItemPart: any) => {
+    const index = items.findIndex(item => item.id === updatedItemPart.id); // finds the item that matches
+
+    const updatedItem = {
+      id: updatedItemPart.id,
+      ownerid: updatedItemPart.ownerid,
+      applianceid: updatedItemPart.applianceid,
+      name: item.name,
+      itemType: item.itemType,
+      itemMainType: item.itemMainType,
+      itemSubType: item.itemSubType,
+      addedDate: item.addedDate,
+      expiryDate: updatedItemPart.expiryDate,
+      cookedFromFrozen: item.cookedFromFrozen,
+      quantity: item.quantity,
+      comment: updatedItemPart.comment,
+      compartment: updatedItemPart.compartment,
+      level: updatedItemPart.level,
+      locationType: updatedItemPart.locationType,
+      position: updatedItemPart.position,
+      image: item.image,
+    }
+
+    if (index === -1) {
+      // If the item is not found, return the original array
+      console.log('item not found')
+      return items;
+    }
+
+    const updatedItems = [...items]; // creates new array of item
+    updatedItems.splice(index, 1, updatedItem); // Replace the item at the found index with the updated item
+    updateItems(updatedItems);
+  };
 
 
 
@@ -58,7 +151,7 @@ const MoveArea = ({ setMoveArea, moveArea, item, applianceType, selectedArea }: 
         {/* Item Locator Are */}
 
         <div className="w-full h-full">
-          <FridgeFreezer_min appliance={appliance} handleMoveItem={() => { }} currentPlacement={{ compartment: item.compartment, locationType: item.locationType, level: item.level, position: item.position ? item.position : 128 }} />
+          <FridgeFreezer_min appliance={appliance} handleMoveItem={handleMoveItem} currentPlacement={{ compartment: item.compartment, locationType: item.locationType, level: item.level, position: item.position ? item.position : 128 }} />
         </div>
       </div>
     )
