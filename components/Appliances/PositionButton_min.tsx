@@ -26,8 +26,8 @@ const PositionButton_min = ({ handleMoveItem, compartment, locationType, level, 
           <p className='text-white text-xs select-none text-center'>Current Location</p>
           :
           <>
-            <p className='block text-xs font-normal select-none'>Shelf:{level}</p>
-            <p className='block text-xs font-normal select-none'>Position:{position}</p>
+            {/* <p className='block text-xs font-normal select-none'>Shelf:{level}</p> */}
+            {/* <p className='block text-xs font-normal select-none'>Position:{position}</p> */}
           </>
         }
       </div >

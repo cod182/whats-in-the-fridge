@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import American_min from "./American/American_min";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import ChestAppliance_min from "./ChestAppliance/ChestAppliance_min";
 import FridgeFreezer_min from './FridgeFreezer/FridgeFreezer_min';
@@ -164,7 +165,7 @@ const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea,
           return <SmallAppliance_min appliance={appliance} handleMoveItem={handleMoveItem} currentPlacement={{ compartment: item.compartment, locationType: item.locationType, level: item.level, position: item.position ? item.position : 128 }} typeOfAppliance={applianceType} />;
 
         case 'american_fridge_freezer':
-        // return <American_min appliance={appliance} handleMoveItem={handleMoveItem} currentPlacement={{ compartment: item.compartment, locationType: item.locationType, level: item.level, position: item.position ? item.position : 128 }} />;
+          return <American_min appliance={appliance} handleMoveItem={handleMoveItem} currentPlacement={{ compartment: item.compartment, locationType: item.locationType, level: item.level, position: item.position ? item.position : 128 }} />;
 
         default:
           return (<div>Unknown</div>)

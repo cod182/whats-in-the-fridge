@@ -24,7 +24,7 @@ const DrawerButton_min = ({ handleMoveItem, compartment, locationType, level, po
         <p className='text-white text-xs select-none text-center'>Current Location</p>
         :
         <div className='flex flex-col items-center justify-center w-full h-full overflow-hidden transition-all duration-200 ease'>
-          <p className='flex'>Drawer {level}</p>
+          {/* <p className='flex'>Drawer {level}</p> */}
         </div>
       }
 
