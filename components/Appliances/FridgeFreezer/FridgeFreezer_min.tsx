@@ -1,12 +1,7 @@
-import { ExpiryNotification, ItemSearch, PositionButton } from '../..'
-
 import ApplianceDoor_min from '../ApplianceDoor_min';
-import ApplianceTitleArea from '../ApplianceTitleArea';
-import DrawerButton from '../DrawerButton'
 import FreezerCompartment_min from '../FreezerCompartment_min';
 import FridgeCompartment_min from '../FridgeCompartment_min';
 import React from 'react'
-import { findItemLocation } from '@/utilities/functions';
 
 type Props = {
   appliance: ApplianceProp;

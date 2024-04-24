@@ -197,7 +197,6 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
           return <American handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
 
         default:
-
           return (<div>Unknown</div>)
       }
     }

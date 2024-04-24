@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 
-import Appliance from '../Appliance/Appliance';
 import { BiDotsHorizontalRounded } from "react-icons/bi";
-import FridgeFreezer_min from "./FridgeFreezer/FridgeFreezer_min";
+import FridgeFreezer_min from './FridgeFreezer/FridgeFreezer_min';
 import { MdCancel } from "react-icons/md";
+import TallAppliance_min from "./TallAppliance/TallAppliance_min";
 import { TiTick } from "react-icons/ti";
 import { appliances } from "@/static/appliances";
-import { getAvailableCompartments } from "@/utilities/functions";
 
 type Props = {
   setMoveArea: (bool: boolean) => void;
@@ -139,6 +138,39 @@ const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea,
     updatedItems.splice(index, 1, updatedItem); // Replace the item at the found index with the updated item
     updateItems(updatedItems);
   };
+
+
+  const getApplianceComponent = () => {
+    if (appliance != null) {
+
+
+      switch (applianceType.replace(/\s/g, "_").toLowerCase()) {
+        case 'fridge_freezer':
+          return <FridgeFreezer_min appliance={appliance} handleMoveItem={handleMoveItem} currentPlacement={{ compartment: item.compartment, locationType: item.locationType, level: item.level, position: item.position ? item.position : 128 }} />
+
+        case 'tall_freezer':
+        case 'tall_fridge':
+          return <TallAppliance_min appliance={appliance} handleMoveItem={handleMoveItem} currentPlacement={{ compartment: item.compartment, locationType: item.locationType, level: item.level, position: item.position ? item.position : 128 }} typeOfAppliance={applianceType.replace(/\s/g, "_").toLowerCase()} />;
+
+        case 'chest_freezer':
+        case 'chest_fridge':
+        // return <ChestAppliance_min appliance={appliance} handleMoveItem={handleMoveItem} currentPlacement={{ compartment: item.compartment, locationType: item.locationType, level: item.level, position: item.position ? item.position : 128 }} />;
+
+        case 'under_counter_fridge':
+        case 'under_counter_freezer':
+        case 'under_counter_fridge_with_freezer':
+        // return <SmallAppliance_min appliance={appliance} handleMoveItem={handleMoveItem} currentPlacement={{ compartment: item.compartment, locationType: item.locationType, level: item.level, position: item.position ? item.position : 128 }} typeOfAppliance={applianceType} />;
+
+        case 'american_fridge_freezer':
+        // return <American_min appliance={appliance} handleMoveItem={handleMoveItem} currentPlacement={{ compartment: item.compartment, locationType: item.locationType, level: item.level, position: item.position ? item.position : 128 }} />;
+
+        default:
+          return (<div>Unknown</div>)
+      }
+    }
+  }
+
+
   // Only retuns if there is an application
   if (appliance) {
     return (
@@ -186,7 +218,7 @@ const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea,
           }
         </div>
         <div className="w-full h-full">
-          <FridgeFreezer_min appliance={appliance} handleMoveItem={handleMoveItem} currentPlacement={{ compartment: item.compartment, locationType: item.locationType, level: item.level, position: item.position ? item.position : 128 }} />
+          {getApplianceComponent()}
         </div>
       </div>
     )
