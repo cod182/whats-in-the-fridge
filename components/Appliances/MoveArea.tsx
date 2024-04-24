@@ -179,7 +179,7 @@ const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea,
     return (
       <div className={`${moveArea ? 'h-[100%] py-2' : 'h-[0%] py-0'} overflow-hidden flex flex-col items-start px-2 absolute top-0 left-0 z-[999] w-full bg-gray-500/90 transition-all duration-200 ease`} >
         <div className="flex flex-row items-center justify-between w-full">
-          <p className="underline my-2 font-bold text-2xl ">Move Item!</p>
+          <p className="underline my-2 font-bold text-2xl text-gray-100">Move Item!</p>
 
 
           {/* Cancel Button */}
