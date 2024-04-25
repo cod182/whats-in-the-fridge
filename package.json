@@ -15,7 +15,7 @@
         "@vercel/postgres": "^0.5.1",
         "cypress": "^13.6.1",
         "hamburger-react": "^2.5.0",
-        "mysql2": "^3.9.2",
+        "mysql2": "^3.9.7",
         "net": "^1.0.2",
         "next": "14.0.4",
         "next-auth": "^4.24.6",
