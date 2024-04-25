@@ -60,11 +60,11 @@ const ItemSearch = ({ items, handleUpdateItems, selectedArea, applianceType }: P
             <p className='font-semibold underline'>Results:</p><span className=''>{searchResults?.length}</span>
           </div>
           <div
-            className={`gap-2 w-full max-h-[300px] overflow-scroll p-4 grid grid-cols-4`}
+            className={`gap-2 w-full max-h-[300px] overflow-scroll md: grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3`}
           >
             {searchResults && searchResults.length > 0 ?
               searchResults?.map((item) => (
-                <div key={item.id} className={`transition-all duration-200 ease ${searchResults && searchResults.length < 2 ? 'w-fit md:w-[300px]' : 'lg:w-fit md:w-[48%] w-full'}`}>
+                <div key={item.id} className={`transition-all duration-200 ease ${searchResults && searchResults.length < 2 ? 'w-[340px]' : 'w-[340px]'}`}>
                   <ItemCard item={item} items={items} updateItems={handleUpdateItemsIntercept} selectedArea={selectedArea} applianceType={applianceType} inSearch />
                 </div>
               ))
