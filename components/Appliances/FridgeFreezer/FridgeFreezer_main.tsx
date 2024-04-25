@@ -13,9 +13,11 @@ type Props = {
   handleModalState: (state: string, toDisplay?: 'add' | 'view') => void;
   items: applianceItem[];
   handleUpdateItems: (items: applianceItem[]) => void;
+  selectedArea: selectionProps;
+  applianceType: string;
 }
 
-const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems }: Props) => {
+const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems, selectedArea, applianceType }: Props) => {
 
   const itemsInLocation = findItemLocation(items);
   const shelfPositions = [1, 2, 3]; // How many areas there are on a shelf
@@ -24,7 +26,7 @@ const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handl
     <>
       <ApplianceTitleArea appliance={appliance} />
 
-      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
+      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} applianceType={applianceType} selectedArea={selectedArea} />
 
       <div className='mx-auto w-fit h-fit'>
         <ExpiryNotification layout='horizontal' items={items} />

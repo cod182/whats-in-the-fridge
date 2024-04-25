@@ -8,8 +8,10 @@ import ItemCard from '../Appliances/ItemCard';
 type Props = {
   items: applianceItem[];
   handleUpdateItems: (items: applianceItem[]) => void;
+  applianceType: string;
+  selectedArea: selectionProps;
 }
-const ItemSearch = ({ items, handleUpdateItems }: Props) => {
+const ItemSearch = ({ items, handleUpdateItems, selectedArea, applianceType }: Props) => {
   // States
   const [searchState, setSearchState] = useState(false);
   const [searchResults, setSearchResults] = useState<applianceItem[]>()
@@ -58,12 +60,12 @@ const ItemSearch = ({ items, handleUpdateItems }: Props) => {
             <p className='font-semibold underline'>Results:</p><span className=''>{searchResults?.length}</span>
           </div>
           <div
-            className={`gap-2 w-full max-h-[300px] overflow-scroll p-4 flex flex-wrap justify-start items-center mx-auto`}
+            className={`gap-2 w-full max-h-[300px] overflow-scroll p-4 grid grid-cols-4`}
           >
             {searchResults && searchResults.length > 0 ?
               searchResults?.map((item) => (
-                <div key={item.id} className={`min-w-[260px]  ${searchResults && searchResults.length < 2 ? 'w-fit md:w-[300px]' : 'lg:w-fit md:w-[48%] w-full'}`}>
-                  <ItemCard item={item} items={items} userId={item.ownerid.toString()} updateItems={handleUpdateItemsIntercept} inSearch />
+                <div key={item.id} className={`transition-all duration-200 ease ${searchResults && searchResults.length < 2 ? 'w-fit md:w-[300px]' : 'lg:w-fit md:w-[48%] w-full'}`}>
+                  <ItemCard item={item} items={items} updateItems={handleUpdateItemsIntercept} selectedArea={selectedArea} applianceType={applianceType} inSearch />
                 </div>
               ))
               :

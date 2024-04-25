@@ -14,9 +14,11 @@ type Props = {
   items: applianceItem[];
   handleUpdateItems: (items: applianceItem[]) => void;
   typeOfAppliance: 'under_counter_fridge' | 'under_counter_fridge_with_freezer' | 'under_counter_freezer';
+  selectedArea: selectionProps;
+
 }
 
-const SmallAppliance_main = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems, typeOfAppliance }: Props) => {
+const SmallAppliance_main = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems, typeOfAppliance, selectedArea }: Props) => {
 
   const itemsInLocation = findItemLocation(items);
   const shelfPositions = [1, 2, 3]; // How many areas there are on a shelf
@@ -27,7 +29,7 @@ const SmallAppliance_main = ({ appliance, handleSelect, handleModalState, items,
     <>
       <ApplianceTitleArea appliance={appliance} />
 
-      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
+      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} applianceType={typeOfAppliance} selectedArea={selectedArea} />
 
       <div className='mx-auto w-fit h-fit'>
         <ExpiryNotification layout='horizontal' items={items} />

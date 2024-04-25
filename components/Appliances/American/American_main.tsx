@@ -14,9 +14,11 @@ type Props = {
   handleModalState: (state: string, toDisplay?: 'add' | 'view') => void;
   items: applianceItem[];
   handleUpdateItems: (items: applianceItem[]) => void;
+  selectedArea: selectionProps;
+  applianceType: string;
 }
 
-const American = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems }: Props) => {
+const American = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems, selectedArea, applianceType }: Props) => {
 
   const itemsInLocation = findItemLocation(items);
   const shelfPositions = [1, 2]; // How many areas there are on a shelf
@@ -27,7 +29,7 @@ const American = ({ appliance, handleSelect, handleModalState, items, handleUpda
     <>
       <ApplianceTitleArea appliance={appliance} />
 
-      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
+      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} applianceType={applianceType} selectedArea={selectedArea} />
 
       <div className='mx-auto w-fit h-fit'>
         <ExpiryNotification layout='horizontal' items={items} />

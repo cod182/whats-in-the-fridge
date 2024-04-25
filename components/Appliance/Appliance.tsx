@@ -178,23 +178,23 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
 
       switch (type) {
         case 'fridge_freezer':
-          return <FridgeFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
+          return <FridgeFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} applianceType={type} />;
 
         case 'tall_freezer':
         case 'tall_fridge':
-          return <TallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
+          return <TallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} typeOfAppliance={type} />;
 
         case 'chest_freezer':
         case 'chest_fridge':
-          return <ChestAppliance handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
+          return <ChestAppliance handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} applianceType={type} />;
 
         case 'under_counter_fridge':
         case 'under_counter_freezer':
         case 'under_counter_fridge_with_freezer':
-          return <SmallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} typeOfAppliance={type} />;
+          return <SmallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} typeOfAppliance={type} />;
 
         case 'american_fridge_freezer':
-          return <American handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} />;
+          return <American handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} applianceType={type} />;
 
         default:
           return (<div>Unknown</div>)
@@ -214,10 +214,10 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
             {modalType === 'view' &&
               <ViewItems
                 selectedArea={selectedArea}
+                applianceType={type}
                 updateItems={handleUpdateItems}
                 items={items}
                 userId={userId}
-                applianceType={type}
               />
             }
 

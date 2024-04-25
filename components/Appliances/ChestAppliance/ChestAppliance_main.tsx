@@ -14,16 +14,18 @@ type Props = {
   handleModalState: (state: string, toDisplay?: 'add' | 'view') => void;
   items: applianceItem[];
   handleUpdateItems: (items: applianceItem[]) => void;
+  selectedArea: selectionProps;
+  applianceType: string;
 }
 
-const ChestAppliance = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems }: Props) => {
+const ChestAppliance = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems, selectedArea, applianceType }: Props) => {
   const itemsInLocation = findItemLocation(items);
 
   return (
     <div className='flex flex-col items-start justify-start w-full h-full'>
       <ApplianceTitleArea appliance={appliance} />
 
-      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} />
+      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} applianceType={applianceType} selectedArea={selectedArea} />
 
       <div className='mx-auto w-fit h-fit'>
         <ExpiryNotification layout='horizontal' items={items} />

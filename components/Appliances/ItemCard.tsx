@@ -18,13 +18,12 @@ type Props = {
   item: applianceItem;
   updateItems: (items: applianceItem[]) => void;
   items: applianceItem[]
-  userId: string;
   applianceType: string;
   selectedArea: selectionProps;
   inSearch?: boolean;
 }
 
-const ItemCard = ({ item, updateItems, items, userId, inSearch, applianceType, selectedArea }: Props) => {
+const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedArea }: Props) => {
 
   // Use States
   const [containerStatus, setContainerStatus] = useState(false);
