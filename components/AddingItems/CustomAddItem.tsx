@@ -314,7 +314,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
             {/* Cook from frozen button if in freezer */}
             {compartment === 'freezer' && (
               <div>
-                <p className='mt-2'>Can be cooked from frozen? <span className='text-sm italic font-normal text-gray-100'>(Optional)</span></p>
+                <p className='mt-2'>Cook from frozen? <span className='text-sm italic font-normal text-gray-100'>(Optional)</span></p>
 
                 <div className="flex flex-row items-center justify-start gap-2 ">
 

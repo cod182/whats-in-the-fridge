@@ -68,7 +68,7 @@ const AddItemForm = ({ handleFormSubmit, quantity, setQuantity, quantityChange, 
       {/* Cook from frozen button if in freezer */}
       {(compartment === 'freezer' || compartment === 'doorFreezer') && (
         <div>
-          <p className='mt-2'>Can be cooked from frozen?</p>
+          <p className='mt-2'>Cook from frozen?</p>
 
           <div className="flex flex-row items-center justify-start gap-2 ">
 

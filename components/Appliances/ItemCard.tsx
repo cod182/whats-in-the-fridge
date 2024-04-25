@@ -209,7 +209,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
 
                 {/* Buttons */}
                 <div
-                  className='flex flex-col flex-wrap justify-between items-end h-[75px] w-fit right-0'>
+                  className='hidden md:flex flex-col flex-wrap justify-between items-end h-[75px] w-fit right-0'>
                   {updating &&
                     (
                       <div className="flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
@@ -235,7 +235,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
                       {/* Save Button */}
 
                       <div className="relative group">
-                        <div className="overflow-hidden absolute select-none top-[2px] right-[28px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+                        <div className="overflow-hidden absolute select-none top-[2px] right-[25px] group-hover:flex w-0 group-hover:w-fit flex-row items-center justify-center md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
                           <p className="text-xs font-normal md:text-sm">Save</p>
                         </div>
                         <button
@@ -247,7 +247,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
                       {/* Cancel Button */}
                       <div className="relative group">
 
-                        <div className="overflow-hidden absolute select-none top-[2px] right-[28px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+                        <div className="overflow-hidden absolute select-none top-[2px] right-[25px] group-hover:flex w-0 group-hover:w-fit flex-row items-center justify-center md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
                           <p className="text-xs font-normal md:text-sm">Cancel</p>
                         </div>
                         <button className='relative'
@@ -259,7 +259,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
 
                       {/* Move Item Start*/}
                       <div className="relative group">
-                        <div className="overflow-hidden absolute select-none top-[2px] right-[30px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+                        <div className="overflow-hidden absolute select-none top-[2px] right-[25px] group-hover:flex w-0 group-hover:w-fit flex-row items-center justify-center md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
                           <p className="text-xs font-normal md:text-sm">Move</p>
                         </div>
                         <button className='relative'
@@ -271,18 +271,79 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
                       {/* Move Item End*/}
                     </div>
                   }
-
                 </div>
-
-
-
               </div>
 
               <div className='w-full my-4 h-fit flex flex-col '>
+
+                {/* START SMALLnButtons */}
+                <div
+                  className='flex md:hidden flex-col xxs:flex-row flex-wrap justify-between items-end h-fit my-2 w-full gap-2'>
+                  {updating &&
+                    (
+                      <div className="flex flex-row items-center justify-center px-2 w-full bg-gray-300 rounded-lg gap-x-2 z-2">
+                        <p className="text-xs font-normal md:text-sm">Updating!</p>
+                        <BiDotsHorizontalRounded className='h-[20px] w-[20px] text-blue-500  hover:scale-110 transition-all duration-200 ease-in-out animate-spin' />
+                      </div>
+
+                    )
+                  }
+
+                  {success &&
+                    (
+                      <div className="flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
+                        <p className="text-xs font-normal md:text-sm">Updated!</p>
+                        <TiTick className='h-[25px] w-[25px] text-green-500  hover:scale-110 transition-all duration-200 ease-in-out' />
+                      </div>
+                    )
+                  }
+
+                  {/* If updating and success is false, show the save and cancel buttons */}
+                  {!updating && !success &&
+                    <div className="flex flex-row items-center justify-around w-full">
+                      {/* Save Button */}
+
+                      <div className="relative group">
+
+                        <button className='relative flex flex-row items-center justify-center gap-2 border-[1px] border-gray-400/60 px-2 py-[5px] rounded-md group-hover:bg-green-300 transition-all duration-200 ease'
+                          type='submit'>
+                          <IoSaveSharp className='h-[23px] w-[23px] text-green-500 group-hover:text-green-600 group-hover:scale-110 transition-all duration-200 ease-in-out' />
+
+
+                        </button>
+                      </div>
+
+                      {/* Move Item Start*/}
+                      <div className="relative group">
+
+                        <button className='relative flex flex-row items-center justify-center gap-2 border-[1px] border-gray-400/60 px-2 py-[5px] rounded-md group-hover:bg-blue-300 transition-all duration-200 ease'
+                          onClick={(e) => { e.preventDefault(); setMoveArea(true); }}
+                        >
+                          <BsBoxArrowRight className='h-[25px] w-[25px] text-blue-500 hover:text-blue-600 hover:scale-110 transition-all duration-200 ease-in-out' />
+
+                        </button>
+                      </div>
+                      {/* Move Item End*/}
+
+                      {/* Cancel Button */}
+                      <div className="relative group">
+                        <button className='relative flex flex-row items-center justify-center gap-2 border-[1px] border-gray-400/60 px-2 py-[5px] rounded-md group-hover:bg-red-300 transition-all duration-200 ease'
+                          onClick={() => { setEditActivated(false); setContainerStatus(false) }}
+                        >
+                          <MdCancel className='h-[25px] w-[25px] text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out' />
+
+                        </button>
+                      </div>
+
+                    </div>
+                  }
+                </div>
+                {/* ENd of Small Buttons */}
+
                 {/* Cook from frozen button if in freezer */}
                 {(item.compartment === 'freezer' || item.compartment === 'doorFreezer') && (
                   <div>
-                    <p className='mt-2'>Can be cooked from frozen?</p>
+                    <p className='mt-2'>Cook from frozen?</p>
 
                     <div className="flex flex-row items-center justify-start gap-2 ">
 
@@ -335,38 +396,37 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
             </form>
 
           ) : (
-
+            // Not Editing
             <>
-              <div className='flex flex-row items-start justify-around w-full mb-2'>
+              <div className='flex flex-row items-start justify-between w-full mb-2'>
                 {/* Item info */}
-                <div className='flex flex-row items-center justify-start w-full' >
-                  <div className='mr-2 flex flex-col justify-center items-center w-[75px] h-[75px] aspect-square relative'>
-                    <Image alt={`${item.name} `} src={`/assets/images/items/${item.image}`} width={75} height={75} className='object-fill' />
-                  </div>
-                  <div>
-                    <p className='capitalize text-md'>{item.name}</p>
-                    <p className='text-sm'>Quantity: {item.quantity}</p>
-                    {item.expiryDate &&
-                      <p className='text-sm text-normal'>Expiry: <span className='italic'>{reverseDate(item.expiryDate)}</span></p>
-                    }
-                    {(item.compartment === 'freezer' || item.compartment === 'doorFreezer') && item.cookedFromFrozen && (
-                      <>
-                        {item.cookedFromFrozen === 'yes' && (
-                          <div className="flex flex-row items-center justify-start gap-1">
-                            <Image className='inline' src='/assets/images/frozen.svg' width={15} height={15} alt='cook from frozen' />
-                            <p className={`text-sm text-normal`}>Can be cooked from frozen</p>
-                          </div>
-                        )}
-                        {item.cookedFromFrozen === 'no' && (
-                          <div className="flex flex-row items-center justify-start gap-1">
-                            <Image className='inline' src='/assets/images/defrost.svg' width={15} height={15} alt='defrost before eating' />
-                            <p className={`text-sm text-normal`}>Must be defrosted</p>
-                          </div>
-                        )}
-                        {item.cookedFromFrozen === 'NA' && null}
-                      </>
-                    )}
-                  </div>
+
+                <div className='mr-2 flex flex-col justify-center items-center w-[75px] h-[75px] aspect-square relative'>
+                  <Image alt={`${item.name} `} src={`/assets/images/items/${item.image}`} width={75} height={75} className='object-fill' />
+                </div>
+                <div className="w-full overflow-scroll">
+                  <p className='capitalize text-md max-h-[24px] truncate'>{item.name}</p>
+                  <p className='text-sm'>Quantity: {item.quantity}</p>
+                  {item.expiryDate &&
+                    <p className='text-sm text-normal'>Expiry: <span className='italic'>{reverseDate(item.expiryDate)}</span></p>
+                  }
+                  {(item.compartment === 'freezer' || item.compartment === 'doorFreezer') && item.cookedFromFrozen && (
+                    <>
+                      {item.cookedFromFrozen === 'yes' && (
+                        <div className="flex flex-row items-center justify-start gap-1">
+                          <Image className='inline' src='/assets/images/frozen.svg' width={15} height={15} alt='cook from frozen' />
+                          <p className={`text-sm text-normal`}>Cook from frozen</p>
+                        </div>
+                      )}
+                      {item.cookedFromFrozen === 'no' && (
+                        <div className="flex flex-row items-center justify-start gap-1">
+                          <Image className='inline' src='/assets/images/defrost.svg' width={15} height={15} alt='defrost before eating' />
+                          <p className={`text-sm text-normal`}>Must be defrosted</p>
+                        </div>
+                      )}
+                      {item.cookedFromFrozen === 'NA' && null}
+                    </>
+                  )}
                 </div>
 
                 {/* Buttons */}
@@ -375,7 +435,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
                   {/* Edit Button */}
 
                   <div className="relative group">
-                    <div className="overflow-hidden absolute select-none top-[2px] right-[25px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+                    <div className="overflow-hidden absolute select-none top-[2px] right-[25px] group-hover:flex w-0 group-hover:w-fit flex-row items-center justify-center md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
                       <p className="text-xs font-normal md:text-sm">Edit</p>
                     </div>
                     <button
@@ -390,7 +450,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
 
                   {/* Delete Buttons */}
                   <div className="relative group">
-                    <div className="overflow-hidden absolute select-none top-[2px] right-[25px] group-hover:flex w-fit md:w-0 group-hover:w-fit flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+                    <div className="overflow-hidden absolute select-none top-[2px] right-[25px] group-hover:flex w-0 group-hover:w-fit flex-row items-center justify-center md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300 md:bg-none  group-hover:bg-gray-300 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
                       <p className="text-xs font-normal md:text-sm">Delete</p>
                     </div>
                     <button className='relative'

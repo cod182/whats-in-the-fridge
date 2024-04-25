@@ -64,7 +64,7 @@ const ItemSearch = ({ items, handleUpdateItems, selectedArea, applianceType }: P
           >
             {searchResults && searchResults.length > 0 ?
               searchResults?.map((item) => (
-                <div key={item.id} className={`transition-all duration-200 ease ${searchResults && searchResults.length < 2 ? 'w-[340px]' : 'w-[340px]'}`}>
+                <div key={item.id} className={`transition-all duration-200 ease w-full xs:w-[340px]`}>
                   <ItemCard item={item} items={items} updateItems={handleUpdateItemsIntercept} selectedArea={selectedArea} applianceType={applianceType} inSearch />
                 </div>
               ))
