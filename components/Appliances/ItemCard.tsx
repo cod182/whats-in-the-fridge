@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { CiCircleChevDown } from 'react-icons/ci';
 import { FaEdit } from 'react-icons/fa'
+import IconSearch from "../IconSearch/IconSearch";
 import Image from 'next/image';
 import { IoCloseSharp } from 'react-icons/io5'
 import { IoSaveSharp } from "react-icons/io5";
@@ -42,8 +43,10 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
   const [itemMainType, setItemMainType] = useState(item.itemMainType)
   const [itemType, setItemType] = useState(item.itemType || '')
   const [itemComment, setItemComment] = useState(item.comment || '');
-
-
+  const [changeIcon, setChangeIcon] = useState(false);
+  const [iconError, setIconError] = useState('');
+  const [iconSuccess, setIconSuccess] = useState(false);
+  const [iconUpdating, setIconUpdating] = useState(false);
 
 
   // Functions
@@ -60,7 +63,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
           console.log('Not Deleted', response)
           setError('Failed to delete item')
           setTimeout(() => {
-            setError('')
+            setError('');
           }, 2000);
         } else {
           console.log('Delete Item Response Ok', response.ok);
@@ -77,6 +80,50 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
     }
   }
 
+  // Function to update an items's icons
+  const handleUpdateIcon = async (icon: string) => {
+    // Api call to only update the icon used for the selected item
+    try {
+      setIconUpdating(true);
+      const update = { id: item.id, applianceid: item.applianceid, ownerid: item.ownerid, image: icon }
+      const response = await fetch(`/api/appliance-items/${item.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'update-type': 'iconUpdate'
+        },
+        body: JSON.stringify(update),
+      });
+      // If successful, update the Item locally
+      if (response.ok) {
+        const index = items.findIndex(item => item.id === update.id); // finds the item that matches
+        const updatedItem = { ...item, image: icon, }
+        if (index === -1) {
+          // If the item is not found, return the original array
+          console.log('item not found')
+          return items;
+        }
+        const updatedItems = [...items]; // creates new array of item
+        updatedItems.splice(index, 1, updatedItem); // Replace the item at the found index with the updated item
+        updateItems(updatedItems);
+        setIconUpdating(false);
+        setIconSuccess(true);
+        // Set states to false after 1 second
+        setTimeout(() => {
+          setIconSuccess(false);
+          setChangeIcon(false);
+        }, 2000);
+
+      } else {
+        setIconError('Error while sending data, please try again');
+      }
+    } catch (error) {
+      console.error('Error while sending data', error);
+    }
+
+    // Call to update the local items
+  };
+
 
   const handleUpdatingItem = async (e: any) => {
     e.preventDefault();
@@ -89,10 +136,8 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
     });
 
     const updatedItem = {
-      id: item.id,
+      ...item,
       name: formValues.itemName,
-      applianceid: item.applianceid,
-      ownerid: item.ownerid,
       quantity: formValues.quantity,
       cookedFromFrozen: cookedFromFrozen,
       expiryDate: formValues.expiryDate,
@@ -107,6 +152,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'update-type': 'update'
         },
         body: JSON.stringify(updatedItem),
       });
@@ -187,6 +233,49 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
         <MoveArea setEditActivated={setEditActivated} updateItems={updateItems} items={items} setMoveArea={setMoveArea} moveArea={moveArea} item={item} applianceType={applianceType} selectedArea={selectedArea} />
         {/* MOVING ITEM LOCATION END */}
 
+        {/* START Change Item Icon */}
+        <div className={` bg-blue-500/90 absolute top-0 backdrop-blur-[2px] left-0 w-full h-full overflow-scroll z-[990] transition-all duration-200 ease ${changeIcon ? 'max-h-[100%] max-w-[100%]' : 'max-h-[0%] max-w-[0%]'}`}>
+          <div className={`absolute top-0 bg-gray-300/70 z-[999] transition-all duration-300 ease w-full overflow-hidden ${iconUpdating || iconSuccess || iconError ? 'h-full' : 'h-[0%]'}`} >
+            <div className="flex flex-col justify-center items-center h-full w-full">
+
+              {/* UPDATING ICON START */}
+              {iconUpdating &&
+                <div className={`flex h-fit w-fit flex-col items-center justify-center border-[1px] border-black bg-gray-400/60 rounded-lg p-4`}>
+                  <p className="text-xs font-normal md:text-sm">Updating Icon!</p>
+                  <BiDotsHorizontalRounded className='h-[30px] w-[30px] text-blue-500  hover:scale-110 transition-all duration-200 ease-in-out animate-spin' />
+                </div>
+              }
+              {/* UPDATING ICON END */}
+
+              {/* SUCCESS ICON START */}
+              {iconSuccess &&
+                <div className={`flex h-fit w-fit flex-col items-center justify-center border-[1px] border-black bg-gray-400/60 rounded-lg p-4`}>
+                  <p className="text-xs font-normal md:text-sm">Icon Updated!</p>
+                  <TiTick className='h-[45px] w-[45px] text-green-500  hover:scale-110 transition-all duration-200 ease-in-out' />
+                </div>
+              }
+              {/* SUCCESS ICON END */}
+
+              {/* ERROR ICON START */}
+              {iconError &&
+                <div className={`flex h-fit w-fit flex-col items-center justify-center border-[1px] border-black bg-gray-400/60 rounded-lg p-4`}>
+                  <div className="flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
+                    <p className="text-xs font-normal md:text-sm">{iconError}</p>
+                  </div>
+                </div>
+              }
+              {/* SUERRORCCESS ICON END */}
+            </div>
+          </div>
+          <div className="w-full h-fit flex flex-row items-center justify-end p-2">
+            <button onClick={(e) => { e.preventDefault(); setChangeIcon(false) }}>
+              <MdCancel className='h-[25px] w-[25px] text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out' />
+            </button>
+          </div>
+          <IconSearch handleUpdateIcon={handleUpdateIcon} currentIcon={item.image} />
+        </div>
+        {/* End Change Item Icon */}
+
         {/* form selection depending on the editActivated State */}
         {
           editActivated ? (
@@ -195,8 +284,13 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
               <div className='flex flex-row items-start justify-around w-full mb-2'>
                 {/* Item info */}
                 <div className='flex flex-row items-center justify-start w-full' >
-                  <div className='mr-2 flex flex-col justify-center items-center w-[75px] h-[75px] aspect-square relative'>
-                    <Image alt={`${item.name} `} src={`/assets/images/items/${item.image}`} width={75} height={75} className='object-fill' />
+                  <div className='mr-2 flex flex-col justify-center items-center max-w-[75px] max-h-[75px] min-h-[50px] min-w-[50px] aspect-square relative rounded-full'>
+                    <div className="h-full w-full rounded-full overflow-hidden relative">
+                      <Image alt={`${item.name} `} src={`/assets/images/items/${item.image}`} width={75} height={75} className='object-fill' />
+                      <button onClick={(e) => { e.preventDefault(); setChangeIcon(true); }} className="absolute bottom-0 transition-all duration-300 ease hover:font-bold hover:h-full w-full h-[30%] bg-gray-500/80 active:bg-gray-600/80 text-white prose-sm hover:bg-gray-500/90 cursor-pointer">
+                        edit
+                      </button>
+                    </div>
                   </div>
                   <div className="flex flex-col">
                     <input required id='itemName' type="text" name='itemName' value={itemName} onChange={(e) => setItemName(e.target.value)} className='my-2 px-2 font-semibold capitalize rounded-md shadow-inner h-fit w-fit' />

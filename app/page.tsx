@@ -1,4 +1,4 @@
-import { WelcomeArea } from '@/components';
+import { IconSearch, WelcomeArea } from '@/components';
 
 const page = () => {
   return (

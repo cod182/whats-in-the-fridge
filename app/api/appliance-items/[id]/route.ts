@@ -110,7 +110,9 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
       console.error(error);
       return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error', message: error.message }));
     }
-  } else {
+  }
+
+  if (typeOfUpdate === 'update') {
     try {
       const {
         id,
@@ -153,6 +155,46 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
         return new NextResponse('', { status: 200, statusText: 'Success' });
       } else {
         return new NextResponse('', { status: 404, statusText: 'Failed to update item' });
+      }
+
+    } catch (error: any) {
+      console.error(error);
+      return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error', message: error.message }));
+    }
+  }
+
+  if (typeOfUpdate === 'iconUpdate') {
+    try {
+      const {
+        id,
+        applianceid,
+        ownerid,
+        image
+      } = await request.json();
+
+
+      if (id != params.id) {
+        return new Response('Item ID Doesnt Match', { status: 400, statusText: 'Item ID Doesnt Match' })
+      }
+
+
+      if (ownerid != session.user.id) {
+        return new Response('Owner ID Doesnt match', {
+          status: 400, statusText: 'Owner ID Doesnt match'
+        })
+      }
+
+      // SQL query with parameterized values
+      const query = `UPDATE applianceItems SET image=? WHERE id=? AND ownerid=? AND applianceid=?`;
+
+      const queryResponse = await executeQuery(query, [image, params.id, session.user.id, applianceid]) as ResultSetHeader;
+
+
+      if (queryResponse && queryResponse.affectedRows && queryResponse.affectedRows > 0) {
+        // Return success response
+        return new NextResponse('', { status: 200, statusText: 'Success' });
+      } else {
+        return new NextResponse('', { status: 404, statusText: 'Failed to update image' });
       }
 
     } catch (error: any) {
