@@ -4,7 +4,6 @@ const page = () => {
   return (
     <div className='grow'>
       <WelcomeArea />
-      <IconSearch />
     </div>
   );
 };
