@@ -43,9 +43,10 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
   const [itemMainType, setItemMainType] = useState(item.itemMainType)
   const [itemType, setItemType] = useState(item.itemType || '')
   const [itemComment, setItemComment] = useState(item.comment || '');
-  const [changeIcon, setChangeIcon] = useState(false)
-
-
+  const [changeIcon, setChangeIcon] = useState(false);
+  const [iconError, setIconError] = useState('');
+  const [iconSuccess, setIconSuccess] = useState(false);
+  const [iconUpdating, setIconUpdating] = useState(false);
 
 
   // Functions
@@ -62,7 +63,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
           console.log('Not Deleted', response)
           setError('Failed to delete item')
           setTimeout(() => {
-            setError('')
+            setError('');
           }, 2000);
         } else {
           console.log('Delete Item Response Ok', response.ok);
@@ -83,6 +84,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
   const handleUpdateIcon = async (icon: string) => {
     // Api call to only update the icon used for the selected item
     try {
+      setIconUpdating(true);
       const update = { id: item.id, applianceid: item.applianceid, ownerid: item.ownerid, image: icon }
       const response = await fetch(`/api/appliance-items/${item.id}`, {
         method: 'PUT',
@@ -95,7 +97,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
       // If successful, update the Item locally
       if (response.ok) {
         const index = items.findIndex(item => item.id === update.id); // finds the item that matches
-        const updatedItem = { ...item, image: update.image, }
+        const updatedItem = { ...item, image: icon, }
         if (index === -1) {
           // If the item is not found, return the original array
           console.log('item not found')
@@ -104,14 +106,19 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
         const updatedItems = [...items]; // creates new array of item
         updatedItems.splice(index, 1, updatedItem); // Replace the item at the found index with the updated item
         updateItems(updatedItems);
+        setIconUpdating(false);
+        setIconSuccess(true);
         // Set states to false after 1 second
-        return response;
+        setTimeout(() => {
+          setIconSuccess(false);
+          setChangeIcon(false);
+        }, 2000);
+
       } else {
-        return response
+        setIconError('Error while sending data, please try again');
       }
     } catch (error) {
       console.error('Error while sending data', error);
-      return error;
     }
 
     // Call to update the local items
@@ -228,6 +235,38 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
 
         {/* START Change Item Icon */}
         <div className={` bg-blue-500/90 absolute top-0 backdrop-blur-[2px] left-0 w-full h-full overflow-scroll z-[990] transition-all duration-200 ease ${changeIcon ? 'max-h-[100%] max-w-[100%]' : 'max-h-[0%] max-w-[0%]'}`}>
+          <div className={`absolute top-0 bg-gray-300/70 z-[999] transition-all duration-300 ease w-full overflow-hidden ${iconUpdating || iconSuccess || iconError ? 'h-full' : 'h-[0%]'}`} >
+            <div className="flex flex-col justify-center items-center h-full w-full">
+
+              {/* UPDATING ICON START */}
+              {iconUpdating &&
+                <div className={`flex h-fit w-fit flex-col items-center justify-center border-[1px] border-black bg-gray-400/60 rounded-lg p-4`}>
+                  <p className="text-xs font-normal md:text-sm">Updating Icon!</p>
+                  <BiDotsHorizontalRounded className='h-[30px] w-[30px] text-blue-500  hover:scale-110 transition-all duration-200 ease-in-out animate-spin' />
+                </div>
+              }
+              {/* UPDATING ICON END */}
+
+              {/* SUCCESS ICON START */}
+              {iconSuccess &&
+                <div className={`flex h-fit w-fit flex-col items-center justify-center border-[1px] border-black bg-gray-400/60 rounded-lg p-4`}>
+                  <p className="text-xs font-normal md:text-sm">Icon Updated!</p>
+                  <TiTick className='h-[45px] w-[45px] text-green-500  hover:scale-110 transition-all duration-200 ease-in-out' />
+                </div>
+              }
+              {/* SUCCESS ICON END */}
+
+              {/* ERROR ICON START */}
+              {iconError &&
+                <div className={`flex h-fit w-fit flex-col items-center justify-center border-[1px] border-black bg-gray-400/60 rounded-lg p-4`}>
+                  <div className="flex flex-row items-center justify-center px-2 bg-gray-300 rounded-lg gap-x-2 z-2">
+                    <p className="text-xs font-normal md:text-sm">{iconError}</p>
+                  </div>
+                </div>
+              }
+              {/* SUERRORCCESS ICON END */}
+            </div>
+          </div>
           <div className="w-full h-fit flex flex-row items-center justify-end p-2">
             <button onClick={(e) => { e.preventDefault(); setChangeIcon(false) }}>
               <MdCancel className='h-[25px] w-[25px] text-red-500 hover:text-red-600 hover:scale-110 transition-all duration-200 ease-in-out' />
