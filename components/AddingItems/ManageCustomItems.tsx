@@ -12,6 +12,7 @@ import { Cross } from "hamburger-react";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { FaCross } from "react-icons/fa";
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
+import IconSearch from "../IconSearch/IconSearch";
 import Image from 'next/image';
 import { customImages } from '@/static/custom-item-images';
 import { getUserCustomItems } from '@/utilities/functions';
@@ -28,6 +29,7 @@ const ManageCustomItems = () => {
   const [updateSuccess, setUpdateSuccess] = useState(false)
   const [updateError, setUpdateError] = useState('')
   const [deleteConfirmCheck, setDeleteConfirmCheck] = useState(false);
+  const [selectedIcon, setSelectedIcon] = useState<string>();
 
 
   // FUNCTIONS
@@ -84,13 +86,8 @@ const ManageCustomItems = () => {
 
     // create the updated item object
     const updatedItem = {
-      id: selectedItem.id,
-      creatorId: selectedItem.creatorId,
-      name: selectedItem.name,
-      itemMainType: selectedItem.itemMainType,
-      itemSubType: selectedItem.itemSubType,
-      itemType: selectedItem.itemType,
-      image: selectedItem.image
+      ...selectedItem,
+      image: selectedIcon
     }
 
     try {
@@ -191,6 +188,11 @@ const ManageCustomItems = () => {
     }
   }
 
+
+  const handleSetIcon = (icon: string) => {
+    setSelectedIcon(icon);
+  }
+
   return (
     <div className='flex flex-col justify-start items-start w-full h-fit transition-all duration-300 ease bg-pink'>
       <p className={`font-semibold ${managementPane ? 'pb-2' : 'pb-0'}`}>
@@ -255,7 +257,8 @@ const ManageCustomItems = () => {
 
                 {/* Icon Selection */}
                 <div className='w-full'>
-                  <p className='my-2'>Choose an Icon:</p>
+                  <IconSearch handleUpdateIcon={handleSetIcon} currentIcon={selectedItem.image} />
+                  {/* <p className='my-2'>Choose an Icon:</p>
                   <div className='grid grid-cols-1 gap-2 xxxs:grid-cols-2 xxs:grid-cols-3 xs:grid-cols-4 sm:grid-cols-5 md:grid-cols-6'>
                     {customImages.map((item, index) => (
                       <label key={index} className='flex items-center w-full mx-auto transition-all duration-200 active:scale-110 ease' >
@@ -279,7 +282,7 @@ const ManageCustomItems = () => {
                         </div>
                       </label>
                     ))}
-                  </div>
+                  </div> */}
                 </div>
                 {/* End Icon Selection */}
 
