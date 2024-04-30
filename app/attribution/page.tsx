@@ -45,6 +45,20 @@ const page = () => {
         lettuce by parkjisun from <a href="https://thenounproject.com/browse/icons/term/lettuce/" target="_blank" title="lettuce Icons">Noun Project</a> (CC BY 3.0)
         mustard greens by Phạm Thanh Lộc from <a href="https://thenounproject.com/browse/icons/term/mustard-greens/" target="_blank" title="mustard greens Icons">Noun Project</a> (CC BY 3.0)
         Spinach by Icons Producer from <a href="https://thenounproject.com/browse/icons/term/spinach/" target="_blank" title="Spinach Icons">Noun Project</a> (CC BY 3.0)
+        alfalfa sprouts by Amethyst Studio from <a href="https://thenounproject.com/browse/icons/term/alfalfa-sprouts/" target="_blank" title="alfalfa sprouts Icons">Noun Project</a> (CC BY 3.0)
+        azuki beans by Lima Studio from <a href="https://thenounproject.com/browse/icons/term/azuki-beans/" target="_blank" title="azuki beans Icons">Noun Project</a> (CC BY 3.0)
+        black beans by Bangun puji Lestari from <a href="https://thenounproject.com/browse/icons/term/black-beans/" target="_blank" title="black beans Icons">Noun Project</a> (CC BY 3.0)
+        Gourmet Peas by Icons Producer from <a href="https://thenounproject.com/browse/icons/term/gourmet-peas/" target="_blank" title="Gourmet Peas Icons">Noun Project</a> (CC BY 3.0)
+        lima beans and pod by Oleksandr Panasovskyi from <a href="https://thenounproject.com/browse/icons/term/lima-beans-and-pod/" target="_blank" title="lima beans and pod Icons">Noun Project</a> (CC BY 3.0)
+        Chickpeas by nuengrutai from <a href="https://thenounproject.com/browse/icons/term/chickpeas/" target="_blank" title="Chickpeas Icons">Noun Project</a> (CC BY 3.0)
+        green beans by rendicon from <a href="https://thenounproject.com/browse/icons/term/green-beans/" target="_blank" title="green beans Icons">Noun Project</a> (CC BY 3.0)
+        kidney beans by Muhammad Ikraam from <a href="https://thenounproject.com/browse/icons/term/kidney-beans/" target="_blank" title="kidney beans Icons">Noun Project</a> (CC BY 3.0)
+        Lentils by nuengrutai from <a href="https://thenounproject.com/browse/icons/term/lentils/" target="_blank" title="Lentils Icons">Noun Project</a> (CC BY 3.0)
+        Lima beans by Amethyst Studio from <a href="https://thenounproject.com/browse/icons/term/lima-beans/" target="_blank" title="Lima beans Icons">Noun Project</a> (CC BY 3.0)
+        mung beans by nuengrutai from <a href="https://thenounproject.com/browse/icons/term/mung-beans/" target="_blank" title="mung beans Icons">Noun Project</a> (CC BY 3.0)
+        peanuts by Kartik Malhotra from <a href="https://thenounproject.com/browse/icons/term/peanuts/" target="_blank" title="peanuts Icons">Noun Project</a> (CC BY 3.0)
+        
+        
       </div>
     </div>
   )

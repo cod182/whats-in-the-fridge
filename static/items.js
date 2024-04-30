@@ -239,13 +239,6 @@ export const vegetables = [{
     "itemMainType": "vegetables"
 },
 {
-    "name": "Borlotti Bean",
-    "type": "Legume",
-    "subtype": "",
-    "image": "borlotti_bean.webp",
-    "itemMainType": "vegetables"
-},
-{
     "name": "Broad Beans",
     "type": "Legume",
     "subtype": "",
@@ -292,13 +285,6 @@ export const vegetables = [{
     "type": "Legume",
     "subtype": "",
     "image": "mung_beans.webp",
-    "itemMainType": "vegetables"
-},
-{
-    "name": "Navy Beans",
-    "type": "Legume",
-    "subtype": "",
-    "image": "navy_beans.webp",
     "itemMainType": "vegetables"
 },
 {

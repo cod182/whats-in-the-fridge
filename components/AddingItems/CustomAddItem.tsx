@@ -4,6 +4,7 @@ import { generateUniqueId, getCurrentDate } from '@/utilities/functions';
 import { useEffect, useRef, useState } from 'react';
 
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
+import IconSearch from '../IconSearch/IconSearch';
 import Image from 'next/image';
 import { customImages } from '../../static/custom-item-images';
 import { setTimeout } from 'timers/promises';
@@ -22,7 +23,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
   const [error, setError] = useState<string>()
   // Id of the current appliance
   const [id, setId] = useState<string>();
-  const [selectedIcon, setSelectedIcon] = useState<string>()
+  const [selectedIcon, setSelectedIcon] = useState<string>('')
   const [submitting, setSubmitting] = useState(false)
   const [message, setMessage] = useState<string>()
 
@@ -109,7 +110,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
         level: level,
         locationType: locationType,
         position: position,
-        image: formValues.itemIcon,
+        image: selectedIcon,
       };
 
       try {
@@ -157,6 +158,9 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
     }
   };
 
+  const handleIcon = () => {
+
+  }
 
   return (
     <>
@@ -174,7 +178,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
       <FadeInHOC delayNumber={800} direction='up'>
         <div className='w-full h-full border-[1px] border-black xxxs:p-4 rounded-md transition-all duration-200 ease overflow-hidden relative my-4'>
           {submitting &&
-            <div className={`absolute top-0 left-0 w-full h-full bg-gray-400/80 z-[999] flex flex-col justify-center items-center`}>
+            <div className={`absolute top- 0 left-0 w - full h - full bg - gray - 400 / 80 z - [999] flex flex - col justify - center items - center`}>
               <p className='text-xl font-bold animate-ping'>Adding...</p>
             </div>
           }
@@ -223,7 +227,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
             {/* End Item Sub Type */}
 
             {/* Icon Selection */}
-            <div className='w-full'>
+            {/* <div className='w-full'>
               <p className='my-2'>Choose an Icon:</p>
               <div className='grid grid-cols-1 gap-2 xxxs:grid-cols-2 xxs:grid-cols-3 xs:grid-cols-4 sm:grid-cols-5 md:grid-cols-6'>
                 {customImages.map((item, index) => (
@@ -238,9 +242,9 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
                     />
                     <div className="flex flex-col items-center justify-center mx-auto">
                       <Image
-                        src={`/assets/images/itemTypes/${item.icon}`}
+                        src={`/ assets / images / itemTypes / ${item.icon} `}
                         alt={item.name}
-                        className={`mx-auto hover:scale-110 cursor-pointer transition-all duration-200 ease ${selectedIcon === item.icon ? 'rounded-full scale-110 border-[2px] shadow-xl border-green-400' : ''} `}
+                        className={`mx - auto hover: scale - 110 cursor - pointer transition - all duration - 200 ease ${selectedIcon === item.icon ? 'rounded-full scale-110 border-[2px] shadow-xl border-green-400' : ''} `}
                         width={50}
                         height={50}
                       />
@@ -248,7 +252,9 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
                   </label>
                 ))}
               </div>
-            </div>
+            </div> */}
+
+            <IconSearch handleUpdateIcon={setSelectedIcon} currentIcon={selectedIcon} />
             {/* End Icon Selection */}
 
             {/* Item expiry Date */}
@@ -268,7 +274,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
                   type='button'
                   disabled={quantity === 1}
                   onClick={() => void quantityChange('decrement')}
-                  className={`${quantity === 1 ? 'bg-gray-300' : 'bg-red-300 hover:bg-red-400 active:bg-red-300'} hidden xxs:inline rounded-md transition-all duration-200 ease w-[40px] h-[40px] aspect-square`}
+                  className={`${quantity === 1 ? 'bg-gray-300' : 'bg-red-300 hover:bg-red-400 active:bg-red-300'} hidden font-bold xxs:inline rounded-md transition-all duration-200 ease w-[40px] h-[40px] aspect-square`}
                 >
                   -
                 </button>
@@ -285,7 +291,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
                 <button
                   type='button'
                   onClick={() => void quantityChange('increment')}
-                  className="hidden xxs:inline rounded-md bg-blue-500 hover:bg-blue-600 active:bg-blue-500 transition-all duration-200 ease w-[40px] h-[40px] aspect-square"
+                  className="hidden xxs:inline rounded-md bg-blue-500 hover:bg-blue-600 active:bg-blue-500 transition-all duration-200 ease w-[40px] h-[40px] aspect-square font-bold"
                 >
                   +
                 </button>
@@ -296,7 +302,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
                   type='button'
                   disabled={quantity === 1}
                   onClick={() => void quantityChange('decrement')}
-                  className={`${quantity === 1 ? 'bg-gray-300' : ' bg-red-300 hover:bg-red-400 active:bg-red-300'} rounded-md transition-all duration-200 ease w-[50%] h-[40px] aspect-square`}
+                  className={`${quantity === 1 ? 'bg-gray-300' : ' bg-red-300 hover:bg-red-400 active:bg-red-300'} rounded - md transition - all duration - 200 ease w - [50 %] h - [40px] aspect - square`}
                 >
                   -
                 </button>

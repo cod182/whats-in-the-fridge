@@ -64,8 +64,8 @@ const IconSearch = ({ handleUpdateIcon, currentIcon }: Props) => {
     <div className='w-full h-fit p-2'>
       <div className='flex flex-row items-center justify-start gap-2'>
         <div className='flex flex-col items-center justify-normal'>
-          <p>Choose a new icon.</p>
-          <p className='text-xs italic text-gray-800'>Click on an icon to update</p>
+          <p>Choose {currentIcon ? 'a new' : 'an'} icon</p>
+          <p className='text-xs italic text-gray-800'>Click on an icon to choose</p>
         </div>
         {currentIcon &&
           <div className='flex flex-row items-center justify-start gap-2 px-2 py-[5px] bg-gray-400/50 rounded-md border-[1px] border-gray-800'>
