@@ -57,8 +57,8 @@ const page = () => {
         Lima beans by Amethyst Studio from <a href="https://thenounproject.com/browse/icons/term/lima-beans/" target="_blank" title="Lima beans Icons">Noun Project</a> (CC BY 3.0)
         mung beans by nuengrutai from <a href="https://thenounproject.com/browse/icons/term/mung-beans/" target="_blank" title="mung beans Icons">Noun Project</a> (CC BY 3.0)
         peanuts by Kartik Malhotra from <a href="https://thenounproject.com/browse/icons/term/peanuts/" target="_blank" title="peanuts Icons">Noun Project</a> (CC BY 3.0)
-        
-        
+
+
       </div>
     </div>
   )

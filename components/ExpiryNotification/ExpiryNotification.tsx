@@ -134,7 +134,7 @@ const ExpiryNotification = ({ items, message, linkToAppliance, layout = 'vertica
         )}
 
         {linkToAppliance && (
-          <Link href={linkToAppliance} className="w-full px-2 text-sm italic text-gray-600 transition-all duration-200 ease hover:text-blue-500 active:text-blue-600 text-start text-normal">Go to Appliance <FaArrowRight className="inline" /> </Link>
+          <Link href={linkToAppliance} className="w-full px-2 text-sm italic text-gray-600 transition-all duration-200 ease hover:text-blue-500 active:text-blue-600 text-start text-normal group">Go to Appliance <FaArrowRight className="inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /> </Link>
         )}
 
         {expiringItems.map((expiryObj) =>
