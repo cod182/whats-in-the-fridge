@@ -17,9 +17,9 @@ const page = async () => {
   return (
 
 
-    <div className='sm:px-5 grow'>
+    <div className='grow py-2'>
       <h1 className='my-2'>
-        <PageTitle title='Your Account Options' titleClasses='text-[20px] md:text-[30px] text-gray-100 font-semibold' underlineClasses='border-gray-100' />
+        <PageTitle title='Your Account Options' titleClasses='text-[20px] md:text-[30px] text-black font-semibold' underlineClasses='border-black' />
       </h1>
       <hr className='border-[1px] my-2' />
       <ManageCustomItems />

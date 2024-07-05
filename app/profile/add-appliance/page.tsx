@@ -15,8 +15,8 @@ const page = async () => {
   }
 
   return (
-    <div className='max-w-2xl py-4 mx-auto grow'>
-      <PageTitle title='Add your appliance' titleClasses='text-[20px] md:text-[30px] text-[#202074] font-semibold' underlineClasses='border-[#202074]' />
+    <div className='max-w-2xl py-4 grow'>
+      <PageTitle title='Add your appliance' titleClasses='text-[20px] md:text-[30px] text-[black] font-semibold' underlineClasses='border-[black]' />
       <ApplianceForm formType='Create' userId={session.user.id} />
     </div>
   )

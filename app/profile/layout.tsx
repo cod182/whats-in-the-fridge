@@ -28,7 +28,9 @@ const layout = async ({
   return (
     <div className='grow'>
       <ProfileNav path={pathname} />
-      {children}
+      <div className='mx-2 sm:mx-4'>
+        {children}
+      </div>
     </div>
   )
 }

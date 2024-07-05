@@ -16,7 +16,7 @@ const page = async () => {
 
 
   return (
-    <div className='px-2 py-4 grow'>
+    <div className='py-4 grow'>
       <AppliancesList />
     </div>
   )
