@@ -24,7 +24,7 @@ const ApplianceCard = ({ app, handleDelete }: Props) => {
   const image = getImageForAppliance(app.type)
 
   return (
-    <div className=' p-4 flex flex-row items-center justify-around w-full h-full overflow-hidden transition-all duration-300 rounded-md hover:scale-105 hover:shadow-lg shadow-[1px_1px_0px_0px_rgba(0,0,0,0.1)] ease'>
+    <div className=' p-4 flex flex-row items-center justify-space w-full h-full overflow-hidden transition-all duration-300 rounded-md hover:scale-105 hover:shadow-lg shadow-[1px_1px_0px_0px_rgba(0,0,0,0.1)] ease'>
 
       <a href={`/appliance/${app.id}`} className='flex flex-row items-center justify-center h-full gap-2 w-fit'>
         <div className='flex items-center justify-center'>
