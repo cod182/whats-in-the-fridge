@@ -53,8 +53,8 @@ const ProfileNotifications = ({ user }: Props) => {
               const items = allItems.filter(item => item.applianceid === appliance.id)
               if (items.length > 0) {
                 return (
-                  <div key={appliance.id} className='max-w-[250px]'>
-                    <ExpiryNotification items={items} message={`${appliance.name} has expiring items!`} linkToAppliance={`/appliance/${appliance.id}`} boxStyles='shadow-[1px_1px_0px_0px_rgba(0,0,0,0.1)]' />
+                  <div key={appliance.id} className='w-full md:max-w-[250px]'>
+                    <ExpiryNotification items={items} message={`${appliance.name}`} linkToAppliance={`/appliance/${appliance.id}`} boxStyles='shadow-[1px_1px_0px_0px_rgba(0,0,0,0.1)]' />
                   </div>
                 )
               }

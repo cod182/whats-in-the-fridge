@@ -17,10 +17,10 @@ const page = async () => {
   }
 
   return (
-    <div className="grow px-2">
+    <div className="px-2 grow">
       <ProfileHome user={session.user} />
       <FadeInHOC delayNumber={600} direction='down'>
-        <hr className='my-4 border-black border-2' />
+        <hr className='my-4 border-2 border-black' />
       </FadeInHOC>
       <ProfileNotifications user={session.user} />
     </div>

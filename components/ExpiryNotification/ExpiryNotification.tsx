@@ -127,7 +127,7 @@ const ExpiryNotification = ({ items, message, linkToAppliance, layout = 'vertica
 
   if (expiringItems && expiringItems[0].items.length > 0 || expiringItems && expiringItems[1].items.length > 0 || expiringItems && expiringItems[2].items.length > 0 || expiringItems && expiringItems[3].items.length > 0 || expiringItems && expiringItems[4].items.length > 0) {
     return (
-      <div className={`${boxStyles} flex ${layout === 'vertical' ? 'flex-col items-center justify-normal' : 'md:flex-row flex-wrap flex-col items-start justify-start gap-x-2'} w-full h-fit rounded-md p-2`}>
+      <div className={`${boxStyles} flex ${layout === 'vertical' ? 'flex-col items-start justify-center' : 'md:flex-row flex-wrap flex-col items-start justify-start gap-x-2'} w-full h-fit rounded-md p-2`}>
 
         {message && (
           <p className="px-2 font-semibold capitalize">{message}</p>
@@ -142,7 +142,7 @@ const ExpiryNotification = ({ items, message, linkToAppliance, layout = 'vertica
             <button
               key={expiryObj.name.replace(/\s/g, "_")}
               onClick={() => setSelectedExpiry((prev) => prev === expiryObj.name.replace(/\s/g, "_") ? null : expiryObj.name.replace(/\s/g, "_"))}
-              className={`w-fit group h-fit my-1 py-[2px] flex flex-col items-start justify-center overflow-hidden ${expiryObj.name === 'expired' ? 'bg-red-500/70 font-bold hover:bg-red-500/80 active:bg-red-500/90' : 'bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500/90'} active:shadow-inner w-fit rounded-lg transition-all duration-200 ease cursor-pointer select-none`}
+              className={`w-full group h-fit my-1 py-[2px] flex flex-col items-start justify-center overflow-hidden ${expiryObj.name === 'expired' ? 'bg-red-500/70 font-bold hover:bg-red-500/80 active:bg-red-500/90' : 'bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500/90'} active:shadow-inner w-fit rounded-lg transition-all duration-200 ease cursor-pointer select-none`}
             >
               {/* TOP Notification Bar */}
               <div className='flex flex-row items-center justify-between w-full px-2' onClick={() => { }}>
