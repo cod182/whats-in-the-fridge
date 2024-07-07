@@ -8,7 +8,7 @@ const page = () => {
   return (
     <div className='grow'>
       <object data="/assets/terms.pdf" type="application/pdf" className="w-full h-[100vh]">
-        <p>Alternative text - include a link <a href="/assets/terms.pdf">to the PDF!</a></p>
+        <p><a href="/assets/terms.pdf">Click to view terms pdf</a></p>
       </object>
     </div>
   )
