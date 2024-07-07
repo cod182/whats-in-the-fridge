@@ -1,65 +1,134 @@
 import { FadeInHOC } from '..';
 import Image from 'next/image';
+import addItems from '@/public/assets/images/add_items.webp'
+import createAppliance from '@/public/assets/images/create_appliance.webp'
+import logoLarge from '@/public/assets/logoWhite.webp'
+import remoteConnect from '@/public/assets/images/remote_connection.webp'
 
 const WelcomeArea = () => {
 
   return (
-    <div className='relative'>
-      {/* Background Image */}
-      <Image
-        priority
-        src='/assets/images/background.webp'
-        alt="background house scene"
-        className="w-full h-auto select-none"
-        height={1000}
-        width={1000}
-      />
+    <div className='relative flex flex-col w-full px-2'>
+
+      <div className='relative flex flex-col items-center justify-end w-full gap-4 mt-10 sm:flex-row'>
+        {/* Logo */}
+        <FadeInHOC
+          delayNumber={2000}
+          direction="up"
+          distance={0}
+        >
+          <div className='sm:w-full w-[50%] mx-auto'>
+            <Image src={logoLarge} alt='Logo Large' width={450} height={450} className='' />
+          </div>
+        </FadeInHOC>
+
+        {/* Text Area */}
+        <div className='w-full sm:w-[50%] h-full flex-col justify-normal items-center'>
+          <FadeInHOC
+            delayNumber={1500}
+            direction="up"
+            distance={0}
+          >
+            <div className="font-semibold text-center text-white md:text-lg sm:text-start">
+
+              <p className="">
+                Have you ever wondered what was in your fridge while you were
+                shopping?&nbsp;
+              </p>
+              <p className='font-bold'>Now you can!</p>
+
+              <p>Just fill up your fridge and check it whilst you&apos;re out.</p>
+            </div>
+          </FadeInHOC>
+
+          {/* Call To Action */}
+          <div className='w-full mx-auto gap-2 my-10 grid grid-cols-1 grid-rows-2 sm:grid-cols-2 sm:grid-rows-1 items-center justify-center'>
+
+            {/* Text Area */}
+            <div className='w-full h-full flex justify-center items-center'>
+              <FadeInHOC
+                delayNumber={1500}
+                direction="up"
+                distance={50}
+              >
+                <p className="font-semibold text-center text-white md:text-lg">
+                  Register for an account and always know what&apos;s in your fridge.
+                </p>
 
 
-      {/* Text Area */}
-      <FadeInHOC
-        delayNumber={500}
-        direction="left"
-        distance={500}
-        classes="sm:top-[25%] sm:left-[8%]  w-full xs:absolute sm:w-[30%] mx-auto p-4 xs:p-0 bg-primary xs:bg-transparent text-white xs:text-black xs:bottom-[0] sm:max-w-[387px]"
-      >
-        <div className="text-xs xs:text-sm sm:text-md lg:text-xl w-full font-semibold xs:pl-4 xs:pb-4  flex flex-col items-start justify-between gap-2 text-start overflow-hidden max-h-[50%]">
-          <p className="">
-            Have you ever wondered what was in your fridge while you were
-            shopping?&nbsp;<span>Now you can!</span>
-          </p>
+              </FadeInHOC>
+            </div>
+            {/* End Text */}
 
-          <p>Just fill up your fridge and check it whilst you&apos;re out.</p>
+            {/* BUtton */}
+            <FadeInHOC
+              direction="up"
+              distance={60}
+              classes='mx-auto w-full px-6 sm:px-0'
+            >
+
+              <a href='/login' aria-label='login / sign up link' className='sm:max-w-[140px] w-full h-fit px-6 py-2 sm:py-4 rounded-md border-[1px] border-white text-white hover:bg-blue-500/50 flex flex-nowrap justify-center items-center transition-all duration-300 ease'>
+                Sign Up
+              </a>
+
+            </FadeInHOC>
+
+            {/* End Button */}
+          </div>
+
         </div>
-      </FadeInHOC>
 
-      {/* Fridge Image */}
-      <FadeInHOC
-        delayNumber={500}
-        direction="up"
-        distance={500}
-        classes="top-[20%] left-[41%] absolute w-[20%] max-w-[257px]"
-      >
-        <a href="/profile" className="" >
-          <Image
-            src='/assets/images/fridge.webp'
-            alt="image of fridge"
-            className="w-full hover:drop-shadow-2xl shadow-primary shadow-none transition-all ease-in duration-200 overflow-hidden"
-            width={230}
-            height={399}
-          />
-        </a>
-      </FadeInHOC >
+      </div>
 
-      {/* Window Image */}
-      < FadeInHOC
-        delayNumber={500}
-        direction="right"
-        distance={500}
-        classes="top-[18%] left-[70%] absolute w-[20%] max-w-[258px] select-none overflow-hidden"
-      >
-        <Image src='/assets/images/fridgewind.webp' alt="image of window" className="select-none" width={258} height={258} />
-      </ FadeInHOC>
+
+      {/* Info Boxes */}
+      <div className='grid items-center justify-center w-full grid-cols-1 grid-rows-3 gap-2 p-0 mx-auto my-4 xxxs:px-10 xs:grid-rows-none xs:grid-cols-3'>
+        {/* Create Appliance */}
+        <FadeInHOC
+          delayNumber={1000}
+          direction="up"
+          distance={200}
+        >
+          <div className='gap-4 flex flex-col items-center justify-center w-full h-full p-4 mx-auto aspect-square max-w-full xxs:max-w-[150px] sm:max-w-[300px]'>
+            <div>
+              <Image src={createAppliance} alt='' width={150} height={150} />
+            </div>
+            <p className='font-semibold text-center text-white'>Create your Appliance</p>
+          </div>
+        </FadeInHOC>
+
+        {/* Add Your Items */}
+        <FadeInHOC
+          delayNumber={1250}
+          direction="up"
+          distance={200}
+        >
+          <div className='gap-4 flex flex-col items-center justify-center w-full h-auto p-4 mx-auto aspect-square max-w-full xxs:max-w-[150px] sm:max-w-[300px]'>
+            <div>
+              <Image src={addItems} alt='' width={150} height={150} />
+            </div>
+            <p className='font-semibold text-center text-white'>Add Your Items</p>
+          </div>
+        </FadeInHOC>
+
+        {/* Access anywhere */}
+        <FadeInHOC
+          delayNumber={1500}
+          direction="up"
+          distance={200}
+        >
+          <div className='gap-4 flex flex-col items-center justify-center w-full h-full p-4 mx-auto aspect-square max-w-full xxs:max-w-[150px] sm:max-w-[300px]'>
+            <div>
+              <Image src={remoteConnect} alt='' width={150} height={150} />
+            </div>
+            <p className='font-semibold text-center text-white'>View Anywhere!</p>
+          </div>
+        </FadeInHOC>
+      </div>
+
+
+
+
     </div >
   );
 };

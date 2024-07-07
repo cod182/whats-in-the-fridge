@@ -81,17 +81,17 @@ const MobileNav = () => {
               <ul className='mx-auto w-fit'>
                 <li className='my-[3px] w-fit pl-6'>
                   <a href="/profile/appliances" className="text-start mb-[3px] font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800   hover:scale-105"
-                  >Appliances <FaArrowRight className="ml-2 italic inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /></a>
+                  >Appliances <FaArrowRight className=" italic inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /></a>
                   {/* <hr className='border-gray-800 max-w-[150px] mx-auto mb-1' /> */}
                 </li>
                 <li className='my-[3px] w-fit pl-6'>
                   <a href="/profile/add-appliance" className="text-start mb-[3px] font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800   hover:scale-105"
-                  >Add New Appliance <FaArrowRight className="ml-2 italic inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /></a>
+                  >Add New Appliance <FaArrowRight className=" italic inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /></a>
                   {/* <hr className='border-gray-800 max-w-[150px] mx-auto mb-1' /> */}
                 </li>
                 <li className='my-[3px] w-fit pl-6'>
                   <a href="/profile/account" className="text-start mb-[3px] font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800   hover:scale-105"
-                  >Account <FaArrowRight className="ml-2 italic inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /></a>
+                  >Account <FaArrowRight className=" italic inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /></a>
                   {/* <hr className='border-gray-800 max-w-[150px] mx-auto mb-1' /> */}
                 </li>
               </ul>
