@@ -82,7 +82,7 @@ const WelcomeArea = () => {
 
 
       {/* Info Boxes */}
-      <div className='grid items-center justify-center w-full grid-cols-1 grid-rows-3 gap-2 p-0 mx-auto my-4 xxxs:px-10 xs:grid-rows-none xs:grid-cols-3'>
+      <div className='grid items-center justify-center w-full grid-cols-1 grid-rows-3 sm:gap-2 gap-10 p-0 mx-auto mb-10 xxxs:px-10 xs:grid-rows-none xs:grid-cols-3'>
         {/* Create Appliance */}
         <FadeInHOC
           delayNumber={1000}
