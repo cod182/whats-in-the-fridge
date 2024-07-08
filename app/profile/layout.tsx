@@ -28,7 +28,7 @@ const layout = async ({
   return (
     <div className='grow'>
       <ProfileNav path={pathname} />
-      <div className='mx-2 sm:mx-4'>
+      <div className='mx-auto px-2 sm:px-4'>
         {children}
       </div>
     </div>
