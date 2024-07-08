@@ -6,8 +6,10 @@ import { useEffect, useState } from 'react';
 
 import { BiSolidFridge } from 'react-icons/bi';
 import { FaArrowRight } from 'react-icons/fa6';
+import { FaPlusSquare } from 'react-icons/fa';
 import Hamburger from 'hamburger-react';
 import Image from 'next/image';
+import { MdAccountBox } from "react-icons/md";
 import { RiHome2Fill } from "react-icons/ri";
 import logo from '@/public/assets/images/witf-logo.webp';
 import { toggleBodyScrolling } from '@/utilities/functions';
@@ -51,10 +53,10 @@ const MobileNav = () => {
         <ul className="py-4 mx-auto w-fit">
           <li className="w-fit">
             <a
-              href="/"
+              href={session?.user ? '/profile' : '/'}
               className="flex flex-row items-center justify-start my-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
             >
-              <RiHome2Fill />
+              <RiHome2Fill className='w-[60px] h-auto' />
               <span className="text-[30px] inline">Home</span>
             </a>
           </li>
@@ -64,37 +66,60 @@ const MobileNav = () => {
                 href="/login"
                 className="flex flex-row items-center justify-start my-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
               >
-                <IoLogIn />
+                <IoLogIn className='w-[60px] h-auto' />
                 <span className="text-[30px] inline">Login / Register</span>
               </a>
             </li>) : (
             <>
               <li className="w-fit">
                 <a
-                  href="/profile"
+                  href="/profile/appliances"
                   className="translate-x-[-3px] flex flex-row items-center justify-start w-full mt-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
                 >
-                  <BiSolidFridge />
+                  <BiSolidFridge className='w-[60px] h-auto' />
+                  <span className="text-[30px] inline">Appliances</span>
+                </a>
+              </li>
+
+              <li className="w-fit">
+                <a
+                  href="/profile/add-appliance"
+                  className="translate-x-[-3px] flex flex-row items-center justify-start w-full mt-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
+                >
+                  <FaPlusSquare className='mx-1 w-[52px] h-auto' />
+                  <span className="text-[30px] inline">New Appliance</span>
+                </a>
+              </li>
+
+              <li className="w-fit ">
+                <a
+                  href="/profile/account"
+                  className=" translate-x-[-3px] flex flex-row items-center justify-start w-full mt-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
+                >
+                  <MdAccountBox className='w-[60px] h-auto' />
                   <span className="text-[30px] inline">Account</span>
                 </a>
               </li>
+
+
+              {/*               
               <ul className='mx-auto w-fit'>
                 <li className='my-[3px] w-fit pl-6'>
                   <a href="/profile/appliances" className="text-start mb-[3px] font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800   hover:scale-105"
                   >Appliances <FaArrowRight className=" italic inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /></a>
-                  {/* <hr className='border-gray-800 max-w-[150px] mx-auto mb-1' /> */}
+
                 </li>
                 <li className='my-[3px] w-fit pl-6'>
                   <a href="/profile/add-appliance" className="text-start mb-[3px] font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800   hover:scale-105"
                   >Add New Appliance <FaArrowRight className=" italic inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /></a>
-                  {/* <hr className='border-gray-800 max-w-[150px] mx-auto mb-1' /> */}
+
                 </li>
                 <li className='my-[3px] w-fit pl-6'>
                   <a href="/profile/account" className="text-start mb-[3px] font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800   hover:scale-105"
                   >Account <FaArrowRight className=" italic inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /></a>
-                  {/* <hr className='border-gray-800 max-w-[150px] mx-auto mb-1' /> */}
-                </li>
-              </ul>
+
+                </li> */}
+
 
               <li className="w-fit">
                 <button

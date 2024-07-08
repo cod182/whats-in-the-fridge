@@ -18,7 +18,7 @@ const Nav = async () => {
           <ul className="flex-row items-center justify-start hidden sm:flex ">
             <li className="mx-2">
               <a
-                href="/"
+                href={session?.user ? '/profile' : '/'}
                 className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
               >
                 <GoHomeFill className='group-hover:translate-y-[-5px] transition-all duration-200 ease' />
@@ -29,11 +29,11 @@ const Nav = async () => {
 
               <li className="mx-2">
                 <a
-                  href="/profile"
+                  href="/profile/appliances"
                   className="group hover:text-gray-600 font-semibold text-primary duration-100 transition-all ease text-[30px] flex flex-col justify-center items-center"
                 >
                   <BiSolidFridge className='group-hover:translate-y-[-5px] transition-all duration-200 ease' />
-                  <span className="text-[15px] hidden sm:inline">Account</span>
+                  <span className="text-[15px] hidden sm:inline">Appliances</span>
                 </a>
               </li>) : null}
           </ul>
