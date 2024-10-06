@@ -33,9 +33,9 @@ const MobileNav = () => {
 
   return (
     <>
-      <nav className="flex-row items-center justify-center w-full h-auto sm:items-end sm:hidden">
+      <nav className=" z-[900] flex-row items-center justify-center w-full h-auto sm:items-end sm:hidden">
         <div className="flex flex-row items-center justify-between w-full sm:justify-around">
-          <div className={`z-[900] sm:hidden flex flex-row justify-center items-center ${isNavOpen ? 'text-secondary hover:scale-105' : 'text-primary hover:text-secondary'}  hover:drop-shadow-2xl w-fit font-[calc(10px + 10vw)]`}>
+          <div className={` sm:hidden flex flex-row justify-center items-center ${isNavOpen ? 'text-secondary hover:scale-105' : 'text-primary hover:text-secondary'}  hover:drop-shadow-2xl w-fit font-[calc(10px + 10vw)]`}>
             <Hamburger toggled={isNavOpen} toggle={toggleNav} />
           </div>
 
@@ -43,100 +43,93 @@ const MobileNav = () => {
             <Image priority src={logo} alt="Logo" className="w-[400px] h-auto" />
           </div>
         </div>
-      </nav>
-      <div
-        className={`absolute top sm:hidden bg-gradient-to-b from-sky-400 to-indigo-600 z-[899] w-full transition-all ease-in duration-300 ${isNavOpen ? 'h-[100svh] overflow-scroll pt-10' : 'h-0 overflow-hidden pt-0'
-          }`}
-      >
+
+        <div
+          className={` absolute bottom sm:hidden rounded-b-md bg-blue-400 z-[899] w-full transition-all ease-in duration-300 overflow-hidden ${isNavOpen ? 'max-h-[400px] overflow-scroll' : 'max-h-[0px]'}`}
+        >
 
 
-        <ul className="py-4 mx-auto w-fit">
-          <li className="w-fit">
-            <a
-              href={session?.user ? '/profile' : '/'}
-              className="flex flex-row items-center justify-start my-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
-            >
-              <RiHome2Fill className='w-[60px] h-auto' />
-              <span className="text-[30px] inline">Home</span>
-            </a>
-          </li>
-          {!session?.user ? (
-            <li className="w-fit">
+          <ul className="py-2 mx-auto w-full px-2 flex flex-col items-start justify-start gap-2">
+
+            {/* Home Link */}
+            <li className="border-2 border-black w-full">
               <a
-                href="/login"
-                className="flex flex-row items-center justify-start my-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
+                href={session?.user ? '/profile' : '/'}
+                className=" left flex flex-row items-center text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
               >
-                <IoLogIn className='w-[60px] h-auto' />
-                <span className="text-[30px] inline">Login / Register</span>
+                <RiHome2Fill className='w-[20px] h-auto' />
+                <span className="text-[20px] inline">Home</span>
               </a>
-            </li>) : (
-            <>
-              <li className="w-fit">
+            </li>
+
+            {/* Dependant on sign in status */}
+
+            {!session?.user ? (
+              // Login Button
+              <li className="border-2 border-black w-full">
                 <a
-                  href="/profile/appliances"
-                  className="translate-x-[-3px] flex flex-row items-center justify-start w-full mt-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
+                  href="/login"
+                  className="flex flex-row items-center text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
                 >
-                  <BiSolidFridge className='w-[60px] h-auto' />
-                  <span className="text-[30px] inline">Appliances</span>
+                  <IoLogIn className='w-[20px] h-auto' />
+                  <span className="text-[20px] inline">Login / Register</span>
                 </a>
-              </li>
-
-              <li className="w-fit">
-                <a
-                  href="/profile/add-appliance"
-                  className="translate-x-[-3px] flex flex-row items-center justify-start w-full mt-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
-                >
-                  <FaPlusSquare className='mx-1 w-[52px] h-auto' />
-                  <span className="text-[30px] inline">New Appliance</span>
-                </a>
-              </li>
-
-              <li className="w-fit ">
-                <a
-                  href="/profile/account"
-                  className=" translate-x-[-3px] flex flex-row items-center justify-start w-full mt-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
-                >
-                  <MdAccountBox className='w-[60px] h-auto' />
-                  <span className="text-[30px] inline">Account</span>
-                </a>
-              </li>
-
-
-              {/*               
-              <ul className='mx-auto w-fit'>
-                <li className='my-[3px] w-fit pl-6'>
-                  <a href="/profile/appliances" className="text-start mb-[3px] font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800   hover:scale-105"
-                  >Appliances <FaArrowRight className=" italic inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /></a>
-
+              </li>) : (
+              <>
+                {/* All Appliances Link */}
+                <li className="border-2 border-black w-full">
+                  <a
+                    href="/profile/appliances"
+                    className="flex flex-row items-center text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
+                  >
+                    <BiSolidFridge className='w-[20px] h-auto' />
+                    <span className="text-[20px] inline">Appliances</span>
+                  </a>
                 </li>
-                <li className='my-[3px] w-fit pl-6'>
-                  <a href="/profile/add-appliance" className="text-start mb-[3px] font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800   hover:scale-105"
-                  >Add New Appliance <FaArrowRight className=" italic inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /></a>
 
+                {/* Add Appliance Link */}
+                <li className="border-2 border-black w-full">
+                  <a
+                    href="/profile/add-appliance"
+                    className="flex flex-row items-center text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
+                  >
+                    <FaPlusSquare className='w-[20px] h-auto' />
+                    <span className="text-[20px] inline">New Appliance</span>
+                  </a>
                 </li>
-                <li className='my-[3px] w-fit pl-6'>
-                  <a href="/profile/account" className="text-start mb-[3px] font-semibold text-black transition-all duration-200 ease-in border-black rounded text-md w-full hover:text-gray-800   hover:scale-105"
-                  >Account <FaArrowRight className=" italic inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /></a>
 
-                </li> */}
+                {/* Account Link */}
+                <li className="border-2 border-black w-full">
+                  <a
+                    href="/profile/account"
+                    className="flex flex-row items-center text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
+                  >
+                    <MdAccountBox className='w-[20px] h-auto' />
+                    <span className="text-[20px] inline">Account</span>
+                  </a>
+                </li>
 
+                {/* Log out link */}
+                <li className="border-2 border-black w-full">
+                  <button
+                    onClick={() => signOut()}
+                    className="flex flex-row items-center text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
+                  >
+                    <IoLogOut className='w-[20px] h-auto' />
+                    <span className="text-[20px] inline">Logout</span>
+                  </button>
+                </li>
+              </>
+            )}
 
-              <li className="w-fit">
-                <button
-                  onClick={() => signOut()}
-                  className="flex flex-row items-center justify-start w-full my-4 text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray-800 hover:scale-105"
-                >
-                  <IoLogOut />
-                  <span className="text-[30px] inline">Logout</span>
-                </button>
-              </li>
-            </>
-          )}
-        </ul>
-        <div className="absolute bottom-0 flex items-center justify-center w-full">
-          <Image priority src={logo} alt="Logo" className="w-[400px] h-auto" />
+            {/* Bottom Image */}
+          </ul>
+          <div className="flex items-center justify-center w-full">
+            <Image priority src={logo} alt="Logo" className="w-[200px] h-auto" />
+          </div>
         </div>
-      </div>
+      </nav>
+      <div className={`w-full absolute bottom left backdrop-blur-sm transition-all duration-200 ease ${isNavOpen ? 'z-[800] h-[100dvh]' : ' h-[0dvh] z-[-1]'}`} onClick={() => toggleNav()}></div>
     </>
   );
 };
