@@ -45,14 +45,14 @@ const MobileNav = () => {
         </div>
 
         <div
-          className={` absolute bottom sm:hidden rounded-b-md bg-blue-400 z-[899] w-full transition-all ease-in duration-300 overflow-hidden ${isNavOpen ? 'max-h-[400px] overflow-scroll' : 'max-h-[0px]'}`}
+          className={` absolute bottom left-2 sm:hidden rounded-md bg-blue-400 z-[899] transition-all ease-in duration-300  ${isNavOpen ? 'max-h-[400px] w-fit max-w-[100%] overflow-scroll' : 'overflow-hidden max-h-[0px] max-w-[0%]'}`}
         >
 
 
-          <ul className="py-2 mx-auto w-full px-2 flex flex-col items-start justify-start gap-2">
+          <ul className="py-2 mx-auto w-full px-2 flex flex-col items-start justify-start ">
 
             {/* Home Link */}
-            <li className="border-2 border-black w-full">
+            <li className="border-x-2 border-t-2 border-b-2 border-black w-full py-1 pl-4 pr-2 hover:bg-gray-400/40 transition-all duration-200 ease">
               <a
                 href={session?.user ? '/profile' : '/'}
                 className=" left flex flex-row items-center text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
@@ -66,18 +66,18 @@ const MobileNav = () => {
 
             {!session?.user ? (
               // Login Button
-              <li className="border-2 border-black w-full">
+              <li className="border-x-2 border-b-2 border-black w-full py-1 pl-4 pr-2 hover:bg-gray-400/40 transition-all duration-200 ease">
                 <a
                   href="/login"
-                  className="flex flex-row items-center text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
+                  className="w-full flex flex-row items-center text-6xl font-semibold text-black transition-all duration-300 ease-in border-black rounded hover:text-gray hover:scale-105  "
                 >
                   <IoLogIn className='w-[20px] h-auto' />
-                  <span className="text-[20px] inline">Login / Register</span>
+                  <span className="text-[20px] ">Login / Register</span>
                 </a>
               </li>) : (
               <>
                 {/* All Appliances Link */}
-                <li className="border-2 border-black w-full">
+                <li className="border-x-2 border-b-2 border-black w-full py-1 pl-4 pr-2 hover:bg-gray-400/40 transition-all duration-200 ease">
                   <a
                     href="/profile/appliances"
                     className="flex flex-row items-center text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
@@ -88,7 +88,7 @@ const MobileNav = () => {
                 </li>
 
                 {/* Add Appliance Link */}
-                <li className="border-2 border-black w-full">
+                <li className="border-x-2 border-b-2 border-black w-full py-1 pl-4 pr-2 hover:bg-gray-400/40 transition-all duration-200 ease">
                   <a
                     href="/profile/add-appliance"
                     className="flex flex-row items-center text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
@@ -99,7 +99,7 @@ const MobileNav = () => {
                 </li>
 
                 {/* Account Link */}
-                <li className="border-2 border-black w-full">
+                <li className="border-x-2 border-b-2 border-black w-full py-1 pl-4 pr-2 hover:bg-gray-400/40 transition-all duration-200 ease">
                   <a
                     href="/profile/account"
                     className="flex flex-row items-center text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
@@ -110,26 +110,28 @@ const MobileNav = () => {
                 </li>
 
                 {/* Log out link */}
-                <li className="border-2 border-black w-full">
-                  <button
-                    onClick={() => signOut()}
+                <li className="border-x-2 border-b-2 border-black w-full py-1 pl-4 pr-2 hover:bg-gray-400/40 transition-all duration-200 ease">
+                  <a href='#'
+                    aria-label='Logout'
+                    onClick={() => signOut({ callbackUrl: '/' })}
                     className="flex flex-row items-center text-6xl font-semibold text-black transition-all duration-200 ease-in border-black rounded hover:text-gray hover:scale-105"
                   >
                     <IoLogOut className='w-[20px] h-auto' />
                     <span className="text-[20px] inline">Logout</span>
-                  </button>
+                  </a>
                 </li>
               </>
             )}
 
             {/* Bottom Image */}
           </ul>
-          <div className="flex items-center justify-center w-full">
+          <div className="flex items-center justify-center w-full my-2">
             <Image priority src={logo} alt="Logo" className="w-[200px] h-auto" />
           </div>
         </div>
       </nav>
-      <div className={`w-full absolute bottom left backdrop-blur-sm transition-all duration-200 ease ${isNavOpen ? 'z-[800] h-[100dvh]' : ' h-[0dvh] z-[-1]'}`} onClick={() => toggleNav()}></div>
+      {/* Background blur */}
+      <div className={`w-full absolute top left backdrop-blur-sm transition-all duration-0 ease ${isNavOpen ? 'z-[800] h-[100vh]' : ' h-[0vh] z-[-1]'}`} onClick={() => toggleNav()}></div>
     </>
   );
 };
