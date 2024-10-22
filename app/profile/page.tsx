@@ -1,4 +1,4 @@
-import { FadeInHOC, ProfileHome } from "@/components"
+import { FadeInHOC, PlannerContainer, ProfileHome } from "@/components"
 
 import { Metadata } from 'next'
 import ProfileNotifications from '@/components/Profile/ProfileNotifications';
@@ -23,6 +23,7 @@ const page = async () => {
         <hr className='my-4 border-2 border-black' />
       </FadeInHOC>
       <ProfileNotifications user={session.user} />
+      <PlannerContainer />
     </div>
   )
 }
