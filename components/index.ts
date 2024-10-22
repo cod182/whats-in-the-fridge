@@ -22,3 +22,4 @@ export { default as AccountOptions } from './Profile/AccountOptions';
 export { default as DeleteButton } from './DeleteUserButton/DeleteUserButton';
 export { default as ExpiryNotification } from './ExpiryNotification/ExpiryNotification';
 export { default as IconSearch } from './IconSearch/IconSearch';
+export { default as PlannerContainer } from './Planner/PlannerContainer';
