@@ -292,3 +292,22 @@ export const getAvailableCompartments = (applianceType: string) => {
   // If appliance is found, return its available compartments, otherwise return null
   return foundAppliance && foundAppliance.availableCompartments
 };
+
+
+export const removeShare = async (applianceId: number, email: string) => {
+  try {
+    const response = await fetch(`/api/sharing/${applianceId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }), // Send email in the request body
+    });
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return error;
+  }
+};

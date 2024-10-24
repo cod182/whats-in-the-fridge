@@ -7,6 +7,7 @@ import { ImConnection } from 'react-icons/im'
 import { MdDeleteForever } from "react-icons/md";
 import { RiUserShared2Line } from 'react-icons/ri'
 import { TiTick } from "react-icons/ti";
+import { removeShare } from '@/utilities/functions';
 
 type Props = {
 	applianceData: applianceWithShared;
@@ -16,7 +17,15 @@ type Props = {
 
 const SharingMenu = ({ applianceData }: Props) => {
 
+	// States
 	const [menuState, setMenuState] = useState(false)
+
+	// Functions
+
+	const handleDeletingShare = (email: string) => {
+		removeShare(applianceData.id, email)
+	}
+
 	return (
 		<div className='relative flex flex-col items-center justify-center'>
 			<div className={`flex flex-row justify-end items-center }`}>
@@ -62,7 +71,7 @@ const SharingMenu = ({ applianceData }: Props) => {
 											<p className="right-[20px] absolute text-xs font-normal overflow-hidden w-0 group-hover:w-fit group-hover:px-2 transition-all duration-400 ease min-w-[0px] group-hover:min-w-[20px] bg-gray-300/90 group-hover:border-[1px] group-hover:border-black rounded">Remove</p>
 											{/* Button */}
 											<button>
-												<MdDeleteForever className='text-red-400 h-[25px] w-[25px]' aria-label='delete share invite' />
+												<MdDeleteForever className='text-red-400 h-[25px] w-[25px]' aria-label='delete share invite' onClick={() => { handleDeletingShare(sharedData.email) }} />
 											</button>
 										</div>
 
