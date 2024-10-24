@@ -23,7 +23,7 @@ type Props = {
   items: applianceItem[];
   updateItems: (items: applianceItem[]) => void;
   userId: string;
-  applianceData: appliance;
+  applianceData: applianceWithShared;
 }
 
 const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Props) => {
@@ -45,6 +45,7 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>()
   const [success, setSuccess] = useState(false)
+
 
   // The state for the currently selected area (e.g shelf 0 position 0)
   // Contains the level (shelf / drawer number), compartment (e.g fridge, freezer, door), and optional position (0,1,2)

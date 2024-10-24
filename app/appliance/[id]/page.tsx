@@ -12,7 +12,8 @@ const AppliancePage = () => {
   const router = useRouter();
 
   const { id } = useParams();
-  const applianceId = id;
+
+  const applianceId: string = id as string;
 
   const { data: session, status } = useSession();
   let user: any;
@@ -22,21 +23,23 @@ const AppliancePage = () => {
   }
   // States
   const [loading, setLoading] = useState(true);
-  const [appliance, setAppliance] = useState<appliance>({ id: 0, ownerid: 0, name: 'null', type: '' });
+  const [appliance, setAppliance] = useState<applianceWithShared>({ id: 0, ownerid: 0, name: 'null', type: '', sharedWith: [] });
   const [applianceItems, setApplianceItems] = useState<applianceItem[]>();
   const [error, setError] = useState<string>();
+
+  console.log(appliance)
 
   // Use Effects
   useEffect(() => {
     const fetchData = async () => {
       if (status === 'authenticated') {
         const selectedAppliance = await getOneAppliance(applianceId);
-        if (selectedAppliance.length < 1) {
+        if (!selectedAppliance) {
           router.push("/profile");
 
           setError('There has been an error getting the appliance.')
         } else {
-          setAppliance(selectedAppliance[0]);
+          setAppliance(selectedAppliance);
         }
       }
     };

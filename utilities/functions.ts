@@ -2,7 +2,7 @@ export const toggleBodyScrolling = (state: boolean) => {
   state ? document.body.classList.remove('overflow-hidden') : document.body.classList.add('overflow-hidden')
 };
 
-export const getOneAppliance = async (applianceId: any) => {
+export const getOneAppliance = async (applianceId: string) => {
   try {
     const response = await fetch(`/api/appliance/${applianceId}`, {
       method: 'GET',

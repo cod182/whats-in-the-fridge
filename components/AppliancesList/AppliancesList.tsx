@@ -21,7 +21,6 @@ const AppliancesList = () => {
   const [filteredAppliances, setFilteredAppliances] = useState<applianceWithShared[]>()
   const [errorMessage, setErrorMessage] = useState<string>()
 
-  console.log(appliances);
 
   // useEffects
   useEffect(() => {

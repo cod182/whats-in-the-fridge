@@ -88,25 +88,40 @@ export const GET = async (req: any, params: any, res: any) => {
 
 
 export const DELETE = async (req: any, params: any, res: any) => {
-
   // API Protection
   const session = await getServerSession(authOptions);
   if (!session) {
-    // Not Signed in
-    return NextResponse.json({ error: "You must be logged in': ", status: 401 })
+    return NextResponse.json({ error: "You must be logged in", status: 401 });
   }
 
+  // Get headers, expecting an appliance id from the request
   const headersList = headers();
-  const query = headersList.get("query-header");
-  if (!query) {
-    return NextResponse.json({ message: 'No Query Provided' });
+  const applianceId = headersList.get("appliance-id");
+  if (!applianceId) {
+    return NextResponse.json({ message: 'No Appliance ID Provided' });
   }
+
+  // SQL query to delete appliance and associated sharing records
+  const deleteApplianceQuery = `DELETE FROM appliances WHERE id = ? AND ownerid = ?`;
+  const deleteSharingQuery = `DELETE FROM sharing WHERE applianceid = ?`;
 
   try {
-    const response = await executeQuery(query);
-    return NextResponse.json(response);
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message });
+    // Start transaction to ensure both operations (deleting appliance and sharing records) are atomic
+    await executeQuery('START TRANSACTION');
 
+    // Delete from the sharing table where applianceid matches
+    await executeQuery(deleteSharingQuery, [applianceId]);
+
+    // Delete the appliance itself
+    const deleteResponse = await executeQuery(deleteApplianceQuery, [applianceId, session.user.id]);
+
+    // Commit transaction
+    await executeQuery('COMMIT');
+
+    return NextResponse.json({ message: 'Appliance and related sharing records deleted successfully' });
+  } catch (error: any) {
+    // Rollback transaction in case of an error
+    await executeQuery('ROLLBACK');
+    return NextResponse.json({ message: error.message });
   }
-}
+};
