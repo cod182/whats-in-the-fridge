@@ -16,17 +16,19 @@ const AppliancesList = () => {
   const user: any = session?.user;
 
   // States
-  const [appliances, setAppliances] = useState<appliance[]>()
+  const [appliances, setAppliances] = useState<applianceWithShared[]>()
   const [numberOfResults, setNumberOfResults] = useState(11)
-  const [filteredAppliances, setFilteredAppliances] = useState<appliance[]>()
+  const [filteredAppliances, setFilteredAppliances] = useState<applianceWithShared[]>()
   const [errorMessage, setErrorMessage] = useState<string>()
+
+  console.log(appliances);
 
   // useEffects
   useEffect(() => {
     // Fetches the list of appliances
     const fetchAllAppliances = async () => {
       if (user) {
-        const appliances: appliance[] = await getAllAppliances();
+        const appliances: applianceWithShared[] = await getAllAppliances();
         setAppliances(appliances)
       }
     };
@@ -38,7 +40,7 @@ const AppliancesList = () => {
     // Paginates the appliances
     const paginateAppliances = () => {
       if (appliances != undefined) {
-        let pagAppliances: appliance[] = appliances.slice(0, numberOfResults);
+        let pagAppliances: applianceWithShared[] = appliances.slice(0, numberOfResults);
         setFilteredAppliances(pagAppliances);
       } else {
         setFilteredAppliances(appliances);

@@ -97,3 +97,14 @@ type customIcons = {
   name: string;
   icon: string;
 }
+
+type ShareProps = {
+  id: number;
+  applianceId: number;
+  email: string;
+  accepted: boolean;
+}
+
+interface applianceWithShared extends appliance {
+  sharedWith: ShareProps[]
+}
