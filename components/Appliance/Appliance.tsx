@@ -179,11 +179,11 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
 
       switch (type) {
         case 'fridge_freezer':
-          return <FridgeFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} applianceType={type} />;
+          return <FridgeFreezer applianceData={applianceData} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} applianceType={type} />;
 
         case 'tall_freezer':
         case 'tall_fridge':
-          return <TallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} typeOfAppliance={type} />;
+          return <TallAppliance_main applianceData={applianceData} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} typeOfAppliance={type} />;
 
         case 'chest_freezer':
         case 'chest_fridge':

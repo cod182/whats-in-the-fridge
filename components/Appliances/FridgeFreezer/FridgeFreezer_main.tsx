@@ -4,10 +4,14 @@ import ApplianceTitleArea from '../ApplianceTitleArea';
 import DrawerButton from '../DrawerButton'
 import FreezerCompartment from '../FreezerCompartment';
 import FridgeCompartment from '../FridgeCompartment';
+import { ImConnection } from 'react-icons/im';
 import React from 'react'
+import { RiUserShared2Line } from 'react-icons/ri';
+import SharingMenu from '../SharingMenu';
 import { findItemLocation } from '@/utilities/functions';
 
 type Props = {
+  applianceData: applianceWithShared;
   appliance: ApplianceProp;
   handleSelect: (items: applianceItem[], level: number, compartment: string, type: string, position: number) => void;
   handleModalState: (state: string, toDisplay?: 'add' | 'view') => void;
@@ -17,14 +21,23 @@ type Props = {
   applianceType: string;
 }
 
-const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems, selectedArea, applianceType }: Props) => {
+const FridgeFreezer = ({ applianceData, appliance, handleSelect, handleModalState, items, handleUpdateItems, selectedArea, applianceType }: Props) => {
 
   const itemsInLocation = findItemLocation(items);
   const shelfPositions = [1, 2, 3]; // How many areas there are on a shelf
 
   return (
-    <>
-      <ApplianceTitleArea appliance={appliance} />
+    <div>
+      <div className='flex flex-row justify-between items-center'>
+
+        <ApplianceTitleArea appliance={appliance} />
+
+        {/* Start Sharing Section */}
+        <div>
+          <SharingMenu applianceData={applianceData} />
+        </div>
+        {/* End Sharing Section */}
+      </div>
 
       <ItemSearch items={items} handleUpdateItems={handleUpdateItems} applianceType={applianceType} selectedArea={selectedArea} />
 
@@ -69,7 +82,7 @@ const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handl
         <div className='absolute bottom-[-10px] right-[2%] w-[30px] h-[20px] bg-black rounded-md z-[-10]' />
         {/* Feet End */}
       </div >
-    </>
+    </div>
   )
 }
 

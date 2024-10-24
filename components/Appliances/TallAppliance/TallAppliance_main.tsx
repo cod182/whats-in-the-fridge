@@ -5,9 +5,12 @@ import FreezerCompartment from '../FreezerCompartment';
 import FridgeCompartment from '../FridgeCompartment';
 import ItemSearch from '@/components/ItemSearch/ItemSearch';
 import React from 'react'
+import SharingMenu from '../SharingMenu';
 import { findItemLocation } from '@/utilities/functions';
 
 type Props = {
+  applianceData: applianceWithShared;
+
   appliance: ApplianceProp;
   handleSelect: (items: applianceItem[], level: number, compartment: string, type: string, position: number) => void;
   handleModalState: (state: string, toDisplay?: 'add' | 'view') => void;
@@ -17,7 +20,7 @@ type Props = {
   selectedArea: selectionProps;
 }
 
-const TallAppliance_main = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems, typeOfAppliance, selectedArea }: Props) => {
+const TallAppliance_main = ({ applianceData, appliance, handleSelect, handleModalState, items, handleUpdateItems, typeOfAppliance, selectedArea }: Props) => {
 
   const itemsInLocation = findItemLocation(items);
   const shelfPositions = [1, 2, 3]; // How many areas there are on a shelf
@@ -26,8 +29,16 @@ const TallAppliance_main = ({ appliance, handleSelect, handleModalState, items, 
 
   return (
     <>
-      <ApplianceTitleArea appliance={appliance} />
+      <div className='flex flex-row justify-between items-center'>
 
+        <ApplianceTitleArea appliance={appliance} />
+
+        {/* Start Sharing Section */}
+        <div>
+          <SharingMenu applianceData={applianceData} />
+        </div>
+        {/* End Sharing Section */}
+      </div>
       <ItemSearch items={items} handleUpdateItems={handleUpdateItems} applianceType={typeOfAppliance} selectedArea={selectedArea} />
 
       <div className='mx-auto w-fit h-fit'>

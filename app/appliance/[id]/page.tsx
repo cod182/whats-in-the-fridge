@@ -27,7 +27,6 @@ const AppliancePage = () => {
   const [applianceItems, setApplianceItems] = useState<applianceItem[]>();
   const [error, setError] = useState<string>();
 
-  console.log(appliance)
 
   // Use Effects
   useEffect(() => {
