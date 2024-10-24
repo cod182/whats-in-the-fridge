@@ -9,7 +9,7 @@ interface Params {
 	id: string;   // Appliance ID
 }
 
-export const DELETE = async (req: NextRequest, { params }: { params: Params }) => {
+export const POST = async (req: NextRequest, { params }: { params: Params }) => {
 	// API Protection: Check if the user is authenticated
 	const session = await getServerSession(authOptions);
 	if (!session) {
@@ -21,27 +21,31 @@ export const DELETE = async (req: NextRequest, { params }: { params: Params }) =
 		return NextResponse.json({ message: "No appliance ID provided", status: 400 });
 	}
 
-	// Parse the request body to get the email
-	const { email } = await req.json(); // Extract the email from the body
+
+	// Parse the request body and ensure email is a string
+	const body = await req.json();
+	const { email } = body;
+
 	if (!email) {
 		return NextResponse.json({ message: "No email provided", status: 400 });
 	}
 
-	const deleteSharingQuery = "DELETE FROM sharing WHERE applianceid=? AND email=?";
+	const insertSharingQuery = "INSERT INTO sharing (applianceId, email, accepted) VALUES (?, ?, ?)";
+
 
 	try {
-		// Execute the deletion query and explicitly cast the result to OkPacket
-		const response = await executeQuery<OkPacket>(deleteSharingQuery, [params.id, email]);
+		// Execute the INSERT query and explicitly cast the result to OkPacket
+		const response = await executeQuery<OkPacket>(insertSharingQuery, [params.id, email, 'false']);
 
-		// Check the affectedRows to see if any record was deleted
+		// Check the affectedRows to see if any record was inserted
 		if (response.affectedRows > 0) {
 			return NextResponse.json({
-				message: "Appliance and related sharing records deleted successfully",
+				message: "Sharing record created successfully",
 				status: 200,
 			});
 		} else {
 			return NextResponse.json({
-				message: "Invalid appliance ID or unauthorized access",
+				message: "Failed to create sharing record",
 				status: 404,
 			});
 		}
@@ -49,5 +53,3 @@ export const DELETE = async (req: NextRequest, { params }: { params: Params }) =
 		return NextResponse.json({ message: error.message, status: 500 });
 	}
 };
-
-

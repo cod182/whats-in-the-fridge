@@ -311,3 +311,21 @@ export const removeShare = async (applianceId: number, email: string) => {
     return error;
   }
 };
+
+export const addShare = async (applianceId: number, email: string) => {
+  try {
+    const response = await fetch(`/api/sharing/new/${applianceId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }), // Send email as a string in the body
+    });
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error adding share:', error);
+    return error;
+  }
+};
