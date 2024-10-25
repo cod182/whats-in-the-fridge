@@ -22,11 +22,12 @@ type Props = {
   type: string;
   items: applianceItem[];
   updateItems: (items: applianceItem[]) => void;
+  updateAppliance: (appliance: applianceWithShared) => void;
   userId: string;
   applianceData: applianceWithShared;
 }
 
-const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Props) => {
+const Appliance = ({ type = '', items, updateItems, updateAppliance, userId, applianceData }: Props) => {
   // States
 
   // The modal State for open or closed
@@ -174,16 +175,18 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
   }
 
 
+
+
   const getApplianceComponent = () => {
     if (appliance != null) {
 
       switch (type) {
         case 'fridge_freezer':
-          return <FridgeFreezer applianceData={applianceData} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} applianceType={type} />;
+          return <FridgeFreezer updateAppliance={updateAppliance} applianceData={applianceData} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} applianceType={type} />;
 
         case 'tall_freezer':
         case 'tall_fridge':
-          return <TallAppliance_main applianceData={applianceData} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} typeOfAppliance={type} />;
+          return <TallAppliance_main updateAppliance={updateAppliance} applianceData={applianceData} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} typeOfAppliance={type} />;
 
         case 'chest_freezer':
         case 'chest_fridge':

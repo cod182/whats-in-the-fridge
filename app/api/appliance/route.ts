@@ -71,6 +71,8 @@ export const GET = async (req: any, params: any, res: any) => {
 
       // Attach shared data to appliance object
       appliance.sharedWith = sharedForAppliance.map((share: any) => ({
+        id: share.id,
+        applianceId: share.applianceId,
         email: share.email,
         accepted: share.accepted
       }));

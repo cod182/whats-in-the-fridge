@@ -68,6 +68,8 @@ export const GET = async (req: NextRequest, params: any) => {
     const applianceWithSharing = {
       ...appliance[0], // Assuming appliance is a single result, we take the first item
       sharedWith: sharingData.map((share: any) => ({
+        id: share.id,
+        applianceId: share.applianceId,
         email: share.email,
         accepted: share.accepted,
       })),

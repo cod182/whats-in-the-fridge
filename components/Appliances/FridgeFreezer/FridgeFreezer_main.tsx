@@ -7,7 +7,7 @@ import FridgeCompartment from '../FridgeCompartment';
 import { ImConnection } from 'react-icons/im';
 import React from 'react'
 import { RiUserShared2Line } from 'react-icons/ri';
-import SharingMenu from '../SharingMenu';
+import SharingMenu from '../../sharingMenu/SharingMenu';
 import { findItemLocation } from '@/utilities/functions';
 
 type Props = {
@@ -16,12 +16,13 @@ type Props = {
   handleSelect: (items: applianceItem[], level: number, compartment: string, type: string, position: number) => void;
   handleModalState: (state: string, toDisplay?: 'add' | 'view') => void;
   items: applianceItem[];
+  updateAppliance: (appliance: applianceWithShared) => void;
   handleUpdateItems: (items: applianceItem[]) => void;
   selectedArea: selectionProps;
   applianceType: string;
 }
 
-const FridgeFreezer = ({ applianceData, appliance, handleSelect, handleModalState, items, handleUpdateItems, selectedArea, applianceType }: Props) => {
+const FridgeFreezer = ({ applianceData, appliance, handleSelect, handleModalState, items, updateAppliance, handleUpdateItems, selectedArea, applianceType }: Props) => {
 
   const itemsInLocation = findItemLocation(items);
   const shelfPositions = [1, 2, 3]; // How many areas there are on a shelf
@@ -34,7 +35,7 @@ const FridgeFreezer = ({ applianceData, appliance, handleSelect, handleModalStat
 
         {/* Start Sharing Section */}
         <div>
-          <SharingMenu applianceData={applianceData} />
+          <SharingMenu applianceData={applianceData} updateAppliance={updateAppliance} />
         </div>
         {/* End Sharing Section */}
       </div>

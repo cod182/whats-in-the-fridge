@@ -9,25 +9,24 @@ import { GiSandsOfTime } from "react-icons/gi";
 import { ImConnection } from 'react-icons/im'
 import { MdDeleteForever } from "react-icons/md";
 import { RiUserShared2Line } from 'react-icons/ri'
+import SharedToItem from './SharedToItem';
 import { TiTick } from "react-icons/ti";
 
 type Props = {
 	applianceData: applianceWithShared;
+	updateAppliance: (appliance: applianceWithShared) => void;
 }
 
 
 
-const SharingMenu = ({ applianceData }: Props) => {
+const SharingMenu = ({ applianceData, updateAppliance }: Props) => {
 
 	// States
 	const [menuState, setMenuState] = useState(false)
 	const [submittingNewShare, setSubmittingNewShare] = useState(false);
-	const [newShareStatus, setNewShareStatus] = useState(false)
-	// Functions
+	const [newShareStatus, setNewShareStatus] = useState<true | false | null>(null)
 
-	const handleDeletingShare = (email: string) => {
-		removeShare(applianceData.id, email)
-	}
+	// Functions
 
 	const handleAddingShare = async (e: FormEvent<HTMLFormElement>) => {
 		setSubmittingNewShare(true);
@@ -36,18 +35,38 @@ const SharingMenu = ({ applianceData }: Props) => {
 
 		let shareStatus = await addShare(applianceData.id, (form.elements[0] as HTMLInputElement).value)
 		if (shareStatus.status === 200) {
+			handleUpdatingApplianceAfterShareAdded(applianceData.id, (form.elements[0] as HTMLInputElement).value);
 			setSubmittingNewShare(false);
 			setNewShareStatus(true);
-			setMenuState(false);
 		} else {
 			setSubmittingNewShare(false);
 			setNewShareStatus(false);
 		}
+	}
 
+	// Handles updating the appliance locally when a share is added to avoid unnecessary api calls
+	const handleUpdatingApplianceAfterShareAdded = (applianceId: number, email: string) => {
+
+		const updatedShares = [...applianceData.sharedWith, { id: Math.random(), applianceId: applianceId, email: email, accepted: false }]
+
+		const updatedAppliance = { ...applianceData, sharedWith: updatedShares }
+
+		updateAppliance(updatedAppliance);
+	}
+
+	// Handles updating the appliance locally when a share is deleted to avoid unnecessary api calls
+	const handleUpdatingApplianceAfterShareDelete = (removedId: number) => {
+		const updatedShares = applianceData.sharedWith.filter(
+			(i) => i.id != removedId
+		)
+
+		const updatedAppliance = { ...applianceData, sharedWith: updatedShares }
+
+		updateAppliance(updatedAppliance);
 	}
 
 	return (
-		<div className='relative flex flex-col items-center justify-center'>
+		<div className='relative flex flex-col items-center justify-center z-[600]'>
 			<div className={`flex flex-row justify-end items-center }`}>
 
 				{applianceData.sharedWith.length > 0 ?
@@ -64,7 +83,7 @@ const SharingMenu = ({ applianceData }: Props) => {
 
 			</div>
 
-			<div className={` absolute right-0 top-[30px]  bg-gray-200/80 rounded transition-all duration-200 ease h-auto ${menuState ? 'max-h-[500px] w-[250px] overflow-hidden shadow-xl' : ' max-h-[0px] w-[250px] overflow-hidden shadow-none'}}`}>
+			<div className={` absolute right-0 top-[30px] bg-gray-200/90 rounded transition-all duration-200 ease h-auto ${menuState ? 'max-h-[500px] w-[250px] overflow-hidden shadow-xl' : ' max-h-[0px] w-[250px] overflow-hidden shadow-none'}}`}>
 
 				<div className='w-full h-full p-2'>
 					{applianceData.sharedWith.length > 0
@@ -75,31 +94,12 @@ const SharingMenu = ({ applianceData }: Props) => {
 								<hr className='border-gray-500 w-full' />
 
 								{/* All Sharing Data */}
-								{applianceData.sharedWith.map((sharedData, index) => (
-									<div key={index} className='w-full flex flex-row items-center justify-between gap-4 relative'>
-										<p className=''>{sharedData.email} </p>
-										<div className='flex flex-row items-center justify-center gap-2'>
-											<div className='relative flex flex-row items-center justify-start group z-[1] hover:z-[4]'>
-												{/* Tooltip */}
-												<p className="left-[17px] absolute text-xs font-normal overflow-hidden w-0 group-hover:w-fit group-hover:px-2 transition-all duration-400 ease min-w-[0px] group-hover:min-w-[10px] bg-gray-300/90 group-hover:border-[1px] group-hover:border-black rounded">{sharedData.accepted === true ? 'Accepted' : 'Pending'}</p>
-												{/* Icon */}
-												{sharedData.accepted === true ? (<TiTick className='text-green-600 h-[20px] w-[20px] group-icon' aria-label='accepted share' />) : (<GiSandsOfTime className='group-icon h-[20px] w-[20px]' aria-label='Pending share' />)}
-											</div>
+								<div className='my-2 w-full'>
+									{applianceData.sharedWith.map((sharedData, index) => (
+										<SharedToItem key={index} sharedData={sharedData} updateAppliance={handleUpdatingApplianceAfterShareDelete} />
+									))}
+								</div>
 
-											{/* Delete button */}
-											<div className='relative flex flex-row items-center justify-start group z-[1] hover:z-[4]'>
-												{/* Tooltip */}
-												<p className="right-[20px] absolute text-xs font-normal overflow-hidden w-0 group-hover:w-fit group-hover:px-2 transition-all duration-400 ease min-w-[0px] group-hover:min-w-[20px] bg-gray-300/90 group-hover:border-[1px] group-hover:border-black rounded">Remove</p>
-												{/* Button */}
-												<button>
-													<MdDeleteForever className='text-red-400 h-[25px] w-[25px]' aria-label='delete share invite' onClick={() => { handleDeletingShare(sharedData.email) }} />
-												</button>
-											</div>
-										</div>
-
-
-									</div>
-								))}
 
 								<hr className='my-2 border-[1px] border-gray-500 w-full' />
 								<div className='flex flex-col items-center justify-center w-full h-fit gap-2'>
@@ -109,7 +109,7 @@ const SharingMenu = ({ applianceData }: Props) => {
 										<button name='share' type='submit' disabled={submittingNewShare} className='flex flex-col items-center justify-center bg-blue-600 hover:bg-blue-500 hover:shadow-sm active:bg-blue-600/80 transition-all duration-200 ease rounded  w-[36px] h-[36px] p-2'>
 											{submittingNewShare
 												?
-												<FaSpinner className='text-white h-[25px] w-[25px]' />
+												<FaSpinner className='text-blue-400 h-[20px] w-[20px] animate-spin' />
 												:
 												<FaShare className='text-white h-[25px] w-[25px]' />
 
