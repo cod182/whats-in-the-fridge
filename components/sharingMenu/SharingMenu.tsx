@@ -13,8 +13,8 @@ import SharedToItem from './SharedToItem';
 import { TiTick } from "react-icons/ti";
 
 type Props = {
-	applianceData: applianceWithShared;
-	updateAppliance: (appliance: applianceWithShared) => void;
+	applianceData: appliance;
+	updateAppliance: (appliance: appliance) => void;
 }
 
 
@@ -103,7 +103,7 @@ const SharingMenu = ({ applianceData, updateAppliance }: Props) => {
 
 								<hr className='my-2 border-[1px] border-gray-500 w-full' />
 								<div className='flex flex-col items-center justify-center w-full h-fit gap-2'>
-									<p className='text-sm font-normal'>Enter a users email to share {applianceData.name} with them.</p>
+									<p className='text-sm font-normal'>Enter a users email to share &quot;{applianceData.name}&quot; with.</p>
 									<form className='flex flex-row items-center justify-center 2-full gap-2' onSubmit={(e) => { handleAddingShare(e) }}>
 										<input type='email' required placeholder='example@email.com' className='w-full px-4 py-2 font-normal rounded-md shadow-inner min-h-[30px] text-sm' />
 										<button name='share' type='submit' disabled={submittingNewShare} className='flex flex-col items-center justify-center bg-blue-600 hover:bg-blue-500 hover:shadow-sm active:bg-blue-600/80 transition-all duration-200 ease rounded  w-[36px] h-[36px] p-2'>
@@ -123,7 +123,7 @@ const SharingMenu = ({ applianceData, updateAppliance }: Props) => {
 						:
 						(
 							<div className='flex flex-col items-center justify-center w-full h-fit gap-2'>
-								<p className='text-sm font-normal'>Enter a users email to share {applianceData.name} with them.</p>
+								<p className='text-sm font-normal'>Enter a users email to share &quot;{applianceData.name}&quot; with.</p>
 								<form className='flex flex-row items-center justify-center 2-full gap-2' onSubmit={(e) => { handleAddingShare(e) }}>
 									<input type='email' required placeholder='example@email.com' className='w-full px-4 py-2 font-normal rounded-md shadow-inner min-h-[30px] text-sm' />
 									<button name='share' type='submit' disabled={submittingNewShare} className='flex flex-col items-center justify-center bg-blue-600 hover:bg-blue-500 hover:shadow-sm active:bg-blue-600/80 transition-all duration-200 ease rounded  w-[36px] h-[36px] p-2'>

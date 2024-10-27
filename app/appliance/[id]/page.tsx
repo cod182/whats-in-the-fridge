@@ -23,7 +23,7 @@ const AppliancePage = () => {
   }
   // States
   const [loading, setLoading] = useState(true);
-  const [appliance, setAppliance] = useState<applianceWithShared>({ id: 0, ownerid: 0, name: 'null', type: '', sharedWith: [] });
+  const [appliance, setAppliance] = useState<appliance>({ id: 0, ownerid: 0, name: 'null', type: '', sharedWith: [] });
   const [applianceItems, setApplianceItems] = useState<applianceItem[]>();
   const [error, setError] = useState<string>();
 
@@ -33,7 +33,8 @@ const AppliancePage = () => {
     const fetchData = async () => {
       if (status === 'authenticated') {
         const selectedAppliance = await getOneAppliance(applianceId);
-        if (!selectedAppliance) {
+
+        if (selectedAppliance.message) {
           router.push("/profile");
 
           setError('There has been an error getting the appliance.')

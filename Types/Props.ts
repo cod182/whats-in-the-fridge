@@ -45,11 +45,20 @@ type userProps = {
   password: string;
 }
 
+type ShareProps = {
+  id: number;
+  applianceId: number;
+  email: string;
+  accepted: boolean;
+}
+
 type appliance = {
   id: number;
   ownerid: number;
   name: string;
   type: string;
+  sharedWith: ShareProps[]
+
 }
 
 type applianceItem = {
@@ -98,13 +107,3 @@ type customIcons = {
   icon: string;
 }
 
-type ShareProps = {
-  id: number;
-  applianceId: number;
-  email: string;
-  accepted: boolean;
-}
-
-interface applianceWithShared extends appliance {
-  sharedWith: ShareProps[]
-}

@@ -1,16 +1,18 @@
 'use client'
 
-import { FridgeFreezer, Modal } from '..';
+import { ExpiryNotification, FridgeFreezer, ItemSearch, Modal } from '..';
 import React, { useState } from 'react';
 import { getAllAddableItems, getItemsInThisLocation, getUserCustomItems, toggleBodyScrolling } from '@/utilities/functions';
 
 import AddItem from '../AddingItems/AddItem';
 import American from '../Appliances/American/American_main';
+import ApplianceTitleArea from '../Appliances/ApplianceTitleArea';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import ChestAppliance from '../Appliances/ChestAppliance/ChestAppliance_main';
 import { FaEdit } from 'react-icons/fa';
 import { IoSaveSharp } from 'react-icons/io5';
 import { MdCancel } from 'react-icons/md';
+import SharingMenu from '../sharingMenu/SharingMenu';
 import SmallAppliance_main from '../Appliances/SmallAppliance/SmallAppliance_main';
 import TallAppliance_main from '../Appliances/TallAppliance/TallAppliance_main';
 import { TiTick } from 'react-icons/ti';
@@ -22,9 +24,9 @@ type Props = {
   type: string;
   items: applianceItem[];
   updateItems: (items: applianceItem[]) => void;
-  updateAppliance: (appliance: applianceWithShared) => void;
+  updateAppliance: (appliance: appliance) => void;
   userId: string;
-  applianceData: applianceWithShared;
+  applianceData: appliance;
 }
 
 const Appliance = ({ type = '', items, updateItems, updateAppliance, userId, applianceData }: Props) => {
@@ -248,6 +250,25 @@ const Appliance = ({ type = '', items, updateItems, updateAppliance, userId, app
             <div className={`bg-gray-800/60 text-red-500 font-semibold overflow-hidden transition-all duration-200 ease  ${errorMessage ? 'max-w-[1000px] overflow-scroll py-[5px] px-2 rounded-lg' : 'max-w-[0px] p-0'}`}>{errorMessage}</div>
             <TiTick className={`${success && editName ? 'h-[40px] w-[40px] text-green-500' : 'hidden'} transition-all duration-200 ease`} />
             <BiDotsHorizontalRounded className={`${loading && editName ? 'h-[40px] w-[40px] text-blue-500' : 'hidden'} animate-spin transition-all duration-200 ease`} />
+          </div>
+
+          {/* Title Area */}
+          <div className='flex flex-row justify-between items-center'>
+            {/* Title */}
+            <ApplianceTitleArea appliance={appliance} />
+
+            {/* Start Sharing Section */}
+
+            <SharingMenu applianceData={applianceData} updateAppliance={updateAppliance} />
+
+          </div>
+
+          {/* Item search */}
+          <ItemSearch items={items} handleUpdateItems={handleUpdateItems} applianceType={type} selectedArea={selectedArea} />
+
+          {/* Expiry area */}
+          <div className='mx-auto w-fit h-fit'>
+            <ExpiryNotification layout='horizontal' items={items} />
           </div>
 
           {getApplianceComponent()}

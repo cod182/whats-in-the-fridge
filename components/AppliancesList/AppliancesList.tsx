@@ -16,9 +16,9 @@ const AppliancesList = () => {
   const user: any = session?.user;
 
   // States
-  const [appliances, setAppliances] = useState<applianceWithShared[]>()
+  const [appliances, setAppliances] = useState<appliance[]>()
   const [numberOfResults, setNumberOfResults] = useState(11)
-  const [filteredAppliances, setFilteredAppliances] = useState<applianceWithShared[]>()
+  const [filteredAppliances, setFilteredAppliances] = useState<appliance[]>()
   const [errorMessage, setErrorMessage] = useState<string>()
 
 
@@ -27,7 +27,7 @@ const AppliancesList = () => {
     // Fetches the list of appliances
     const fetchAllAppliances = async () => {
       if (user) {
-        const appliances: applianceWithShared[] = await getAllAppliances();
+        const appliances: appliance[] = await getAllAppliances();
         setAppliances(appliances)
       }
     };
@@ -39,7 +39,7 @@ const AppliancesList = () => {
     // Paginates the appliances
     const paginateAppliances = () => {
       if (appliances != undefined) {
-        let pagAppliances: applianceWithShared[] = appliances.slice(0, numberOfResults);
+        let pagAppliances: appliance[] = appliances.slice(0, numberOfResults);
         setFilteredAppliances(pagAppliances);
       } else {
         setFilteredAppliances(appliances);
@@ -51,7 +51,7 @@ const AppliancesList = () => {
 
   // Functions
 
-  // Called for deleting an appliance from the databaase then updaing the current state of items instead ot calling the db again
+  // Called for deleting an appliance from the database then updating the current state of items instead ot calling the db again
   const handleDeleteAppliance = async (applianceId: number) => {
     try {
       const response = await removeApplianceFromDb(applianceId);

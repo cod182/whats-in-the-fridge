@@ -27,13 +27,7 @@ const American = ({ appliance, handleSelect, handleModalState, items, handleUpda
 
   return (
     <>
-      <ApplianceTitleArea appliance={appliance} />
 
-      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} applianceType={applianceType} selectedArea={selectedArea} />
-
-      <div className='mx-auto w-fit h-fit'>
-        <ExpiryNotification layout='horizontal' items={items} />
-      </div>
 
 
       {/* Central Compartments Start */}

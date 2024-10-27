@@ -5,7 +5,7 @@ import { RiUserShared2Line } from 'react-icons/ri';
 import { getImageForAppliance } from '@/utilities/functions'
 
 type Props = {
-  app: applianceWithShared;
+  app: appliance;
   handleDelete: (applianceId: number) => void;
 }
 
@@ -22,11 +22,6 @@ const ApplianceCard = ({ app, handleDelete }: Props) => {
   }
 
 
-  const handleShareAppliance = async (e: any) => {
-
-
-
-  }
 
   // Get the image for the appliance type
   const image = getImageForAppliance(app.type)
@@ -59,28 +54,19 @@ const ApplianceCard = ({ app, handleDelete }: Props) => {
           <IoCloseSharp className='h-[25px] w-[25px] text-red-500 hover:text-red-600 active:text-red-700 group-hover:scale-110 transition-all duration-200 ease-in-out' />
         </button>
 
-        {/* Share Button */}
-        <button className='relative flex flex-row items-center justify-center rounded-md group bg-gray-300/30 md:bg-transparent'
-          onClick={(e) => handleShareAppliance(e)}
-        >
-          <div className="overflow-hidden select-none hidden md:flex absolute top-[2px] right-[25px] group-hover:md:flex md:w-0 group-hover:sm:w-max flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300/70 md:bg-none  group-hover:bg-gray-300/80 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
-            <p className="text-xs font-normal md:text-sm">{app.sharedWith.length > 0 ? 'Stop Sharing' : 'Share'}</p>
-          </div>
+        {/* Share Icon */}
+        {app.sharedWith.length > 0 &&
+          <div className='relative flex flex-row items-center justify-center rounded-md group bg-gray-300/30 md:bg-transparent'
+          >
+            <div className="overflow-hidden select-none hidden md:flex absolute top-[2px] right-[25px] group-hover:md:flex md:w-0 group-hover:sm:w-max flex-row items-center justify-center px-2 md:p-0 group-hover:px-2 py-[2px] md:bg-transparent bg-gray-300/70 md:bg-none  group-hover:bg-gray-300/80 rounded-lg gap-x-2 z-2 transition-all duration-200 ease">
+              <p className="text-xs font-normal md:text-sm">Shared</p>
+            </div>
 
-          {app.sharedWith.length > 0 ?
             <>
-              <p className="inline ml-2 text-xs font-normal transition-all duration-200 w-fit md:hidden md:text-sm group-hover:font-bold ease">Stop Sharing</p>
               <ImConnection className={`h-[25px] w-[25px] rotate-[45deg]  hover:text-blue-600 active:text-blue-700 group-hover:scale-105 transition-all duration-200 ease-in-out text-blue-500 }`} />
             </>
-
-            :
-            <>
-              <p className="inline ml-2 text-xs font-normal transition-all duration-200 w-fit md:hidden md:text-sm group-hover:font-bold ease">Share</p>
-              <RiUserShared2Line className={`h-[20px] w-[20px]  hover:text-blue-600 active:text-blue-700 group-hover:scale-105 transition-all duration-200 ease-in-out text-black`} />
-            </>
-          }
-
-        </button>
+          </div>
+        }
 
       </div>
 

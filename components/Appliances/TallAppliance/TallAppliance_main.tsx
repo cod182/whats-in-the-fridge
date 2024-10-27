@@ -9,8 +9,8 @@ import SharingMenu from '../../sharingMenu/SharingMenu';
 import { findItemLocation } from '@/utilities/functions';
 
 type Props = {
-  applianceData: applianceWithShared;
-  updateAppliance: (appliance: applianceWithShared) => void;
+  applianceData: appliance;
+  updateAppliance: (appliance: appliance) => void;
   appliance: ApplianceProp;
   handleSelect: (items: applianceItem[], level: number, compartment: string, type: string, position: number) => void;
   handleModalState: (state: string, toDisplay?: 'add' | 'view') => void;
@@ -29,22 +29,6 @@ const TallAppliance_main = ({ applianceData, appliance, handleSelect, updateAppl
 
   return (
     <>
-      <div className='flex flex-row justify-between items-center'>
-
-        <ApplianceTitleArea appliance={appliance} />
-
-        {/* Start Sharing Section */}
-        <div>
-          <SharingMenu applianceData={applianceData} updateAppliance={updateAppliance} />
-        </div>
-        {/* End Sharing Section */}
-      </div>
-      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} applianceType={typeOfAppliance} selectedArea={selectedArea} />
-
-      <div className='mx-auto w-fit h-fit'>
-        <ExpiryNotification layout='horizontal' items={items} />
-      </div>
-
 
       <div className={`max-w-[400px] h-fit rounded-md md:p-1 border-2 border-black bg-gray-100 mx-auto relative shadow-inner ${typeOfAppliance === 'tall_fridge' && 'mr-[22px] xs:mx-auto md:mx-0 lg:mx-auto'}`}>
 

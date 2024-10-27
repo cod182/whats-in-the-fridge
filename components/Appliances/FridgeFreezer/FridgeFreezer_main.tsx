@@ -11,12 +11,12 @@ import SharingMenu from '../../sharingMenu/SharingMenu';
 import { findItemLocation } from '@/utilities/functions';
 
 type Props = {
-  applianceData: applianceWithShared;
-  appliance: ApplianceProp;
+  applianceData: appliance; // All data for the appliance with shared info
+  appliance: ApplianceProp; // Info abotu the current appliance structure
   handleSelect: (items: applianceItem[], level: number, compartment: string, type: string, position: number) => void;
   handleModalState: (state: string, toDisplay?: 'add' | 'view') => void;
   items: applianceItem[];
-  updateAppliance: (appliance: applianceWithShared) => void;
+  updateAppliance: (appliance: appliance) => void;
   handleUpdateItems: (items: applianceItem[]) => void;
   selectedArea: selectionProps;
   applianceType: string;
@@ -29,22 +29,7 @@ const FridgeFreezer = ({ applianceData, appliance, handleSelect, handleModalStat
 
   return (
     <div>
-      <div className='flex flex-row justify-between items-center'>
 
-        <ApplianceTitleArea appliance={appliance} />
-
-        {/* Start Sharing Section */}
-        <div>
-          <SharingMenu applianceData={applianceData} updateAppliance={updateAppliance} />
-        </div>
-        {/* End Sharing Section */}
-      </div>
-
-      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} applianceType={applianceType} selectedArea={selectedArea} />
-
-      <div className='mx-auto w-fit h-fit'>
-        <ExpiryNotification layout='horizontal' items={items} />
-      </div>
 
 
       <div className='max-w-[400px] h-[800px] rounded-md md:p-1 border-2 border-black bg-gray-100 relative mr-[22px] xs:mx-auto ml-1 md:mx-0 lg:mx-auto shadow-inner'>
