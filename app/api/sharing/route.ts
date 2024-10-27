@@ -75,11 +75,11 @@ export const PUT = async (req: NextRequest) => {
 	const body = await req.json();
 	const { id } = body;
 
-	const updateSharing = 'UPDATE sharing SET accepted = ? WHERE id = ? AND email = ?';
+	const updateSharing = 'UPDATE sharing SET accepted = ?, sharedUserId=? WHERE id = ? AND email = ?';
 
 	try {
 		// Execute the update query and explicitly cast the result to OkPacket
-		const response = await executeQuery<OkPacket>(updateSharing, ['true', id, session.user.email]);
+		const response = await executeQuery<OkPacket>(updateSharing, ['true', session.user.id, id, session.user.email]);
 
 		// Check the affectedRows to see if any record was updated
 		if (response.affectedRows > 0) {

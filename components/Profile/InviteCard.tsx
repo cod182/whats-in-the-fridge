@@ -33,15 +33,21 @@ const InviteCard = ({ sharedData, updateShare, inviteStatus }: Props) => {
 						// {/* Button for accepting a share */ }
 						accepted === 'false' && (
 							<button
-								className='hover:bg-gray-300 rounded p-[2px] transition-all duration-200 ease group'
+								className='hover:bg-gray-300 rounded p-[2px] transition-all duration-200 ease group relative'
 								onClick={() => updateShare({ ...sharedData, accepted: 'true' }, 'accept')}>
+								<p className="top-[32px] left-[-10px] absolute px-2 text-xs font-normal overflow-hidden h-0 group-hover:h-fit  transition-all duration-400 ease min-h-[0px] group-hover:min-h-[10px] bg-gray-300/80 group-hover:border-[1px] group-hover:border-black rounded">
+									Accept
+								</p>
 								<TiTick className='text-green-700 group-hover:scale-105 h-[25px] w-[25px]' />
 							</button>
 						)}
 
 				<button
-					className='hover:bg-gray-300 rounded p-[2px] transition-all duration-200 ease group'
+					className='hover:bg-gray-300 rounded p-[2px] transition-all duration-200 ease group relative'
 					onClick={() => updateShare(sharedData, 'delete')}>
+					<p className="top-[32px] left-[-10px] absolute px-2 text-xs font-normal overflow-hidden h-0 group-hover:h-fit  transition-all duration-400 ease min-h-[0px] group-hover:min-h-[10px] bg-gray-300/80 group-hover:border-[1px] group-hover:border-black rounded">
+						Cancel
+					</p>
 					<IoClose className='text-red-700 group-hover:scale-105 h-[25px] w-[25px]' />
 				</button>
 
