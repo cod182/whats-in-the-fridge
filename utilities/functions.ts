@@ -331,7 +331,7 @@ export const addShare = async (applianceId: number, email: string, applianceName
 };
 
 
-
+// Gets all sharing invites for the logged in user
 export const getSharingInvites = async () => {
   try {
     const response = await fetch(`/api/sharing/`,);
@@ -340,6 +340,45 @@ export const getSharingInvites = async () => {
     return responseData;
   } catch (error) {
     console.error('Error getting shares:', error);
+    return error;
+  }
+};
+
+// For Accepting an invite to receive a shared appliance
+export const acceptShareInvite = async (id: number) => {
+  try {
+    const response = await fetch(`/api/sharing`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }), // Send id in the body
+    });
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error updating share invite:', error);
+    return error;
+  }
+};
+
+
+// For rejecting an invite to receive a shared appliance
+export const rejectShareInvite = async (id: number) => {
+  try {
+    const response = await fetch(`/api/sharing`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }), // Send the id in the body
+    });
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error deleting share invite:', error);
     return error;
   }
 };

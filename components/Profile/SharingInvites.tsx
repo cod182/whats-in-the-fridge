@@ -1,9 +1,9 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { acceptShareInvite, getSharingInvites, rejectShareInvite } from '@/utilities/functions'
 
 import InviteCard from './InviteCard'
-import { getSharingInvites } from '@/utilities/functions'
 
 type Props = {
 	email: string
@@ -14,6 +14,7 @@ const SharingInvites = ({ email }: Props) => {
 	// States
 
 	const [sharingInvites, setSharingInvites] = useState<ShareProps[]>()
+	const [shareInviteUpdating, setShareInviteUpdating] = useState(false)
 
 	// Use Effects
 
@@ -31,31 +32,44 @@ const SharingInvites = ({ email }: Props) => {
 
 	// Functions
 
-	type UpdatingShareProps = {
-		newShareData: ShareProps,
-		type: string
-	}
 
 	const updateShare = async (newShareData: ShareProps, type: string) => {
+		setShareInviteUpdating(true);
 		let updatedShares = sharingInvites || []; // Fallback to an empty array if sharingInvites is undefined
 
 		if (type === 'delete') {
 			const choice = confirm('Are you sure you want to cancel this share?')
 			if (choice) {
-				// Filter out the share with the same id as shareUpdate
-				updatedShares = sharingInvites?.filter((i) => i.id !== newShareData.id) || [];
+				// Call functions to delete the share invite
+				const response = await rejectShareInvite(newShareData.id);
+				if (response.status === 200) {
+					// Filter out the share with the same id as shareUpdate
+					updatedShares = sharingInvites?.filter((i) => i.id !== newShareData.id) || [];
+				} else {
+					console.log(response.message)
+					setShareInviteUpdating(false);
+				}
 			}
+
 		}
 
 		if (type === 'accept') {
-			// Update the share with the same id as shareUpdate
-			updatedShares = sharingInvites?.map((i) =>
-				i.id === newShareData.id ? { ...i, accepted: 'true' } : i
-			) || [];
+			// Call function to accept the share invite
+			const response = await acceptShareInvite(newShareData.id);
+			if (response.status === 200) {
+				// Update the share with the same id as shareUpdate
+				updatedShares = sharingInvites?.map((i) =>
+					i.id === newShareData.id ? { ...i, accepted: 'true' } : i
+				) || [];
+			} else {
+				console.log(response.message)
+				setShareInviteUpdating(false);
+			}
 		}
 
 		// Update the sharingInvites state
 		setSharingInvites(updatedShares);
+		setShareInviteUpdating(false);
 	};
 
 
@@ -71,7 +85,7 @@ const SharingInvites = ({ email }: Props) => {
 				<div className='flex flex-row items-center justify-start gap-2'>
 					{sharingInvites.map((share, index) => {
 						return (
-							<InviteCard key={index} sharedData={share} updateShare={updateShare} />
+							<InviteCard key={index} sharedData={share} updateShare={updateShare} inviteStatus={shareInviteUpdating} />
 						)
 					})}
 				</div>
