@@ -40,8 +40,11 @@ const SharingInvites = ({ email }: Props) => {
 		let updatedShares = sharingInvites || []; // Fallback to an empty array if sharingInvites is undefined
 
 		if (type === 'delete') {
-			// Filter out the share with the same id as shareUpdate
-			updatedShares = sharingInvites?.filter((i) => i.id !== newShareData.id) || [];
+			const choice = confirm('Are you sure you want to cancel this share?')
+			if (choice) {
+				// Filter out the share with the same id as shareUpdate
+				updatedShares = sharingInvites?.filter((i) => i.id !== newShareData.id) || [];
+			}
 		}
 
 		if (type === 'accept') {

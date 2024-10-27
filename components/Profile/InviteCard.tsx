@@ -31,11 +31,11 @@ const InviteCard = ({ sharedData, updateShare }: Props) => {
 
 				<button
 					className='hover:bg-gray-300 rounded p-[2px] transition-all duration-200 ease group'
-				>
+					onClick={() => updateShare(sharedData, 'delete')}>
 					<IoClose className='text-red-700 group-hover:scale-105 h-[25px] w-[25px]' />
 				</button>
 			</div>
-		</div>
+		</div >
 	)
 }
 
