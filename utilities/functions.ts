@@ -312,20 +312,34 @@ export const removeShare = async (applianceId: number, email: string) => {
   }
 };
 
-export const addShare = async (applianceId: number, email: string) => {
+export const addShare = async (applianceId: number, email: string, applianceName: string) => {
   try {
     const response = await fetch(`/api/sharing/new/${applianceId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email }), // Send email as a string in the body
+      body: JSON.stringify({ email, applianceName }), // Send email as a string in the body
     });
 
     const responseData = await response.json();
     return responseData;
   } catch (error) {
     console.error('Error adding share:', error);
+    return error;
+  }
+};
+
+
+
+export const getSharingInvites = async () => {
+  try {
+    const response = await fetch(`/api/sharing/`,);
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error getting shares:', error);
     return error;
   }
 };

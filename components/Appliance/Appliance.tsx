@@ -9,6 +9,7 @@ import American from '../Appliances/American/American_main';
 import ApplianceTitleArea from '../Appliances/ApplianceTitleArea';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import ChestAppliance from '../Appliances/ChestAppliance/ChestAppliance_main';
+import { DefaultUser } from 'next-auth';
 import { FaEdit } from 'react-icons/fa';
 import { IoSaveSharp } from 'react-icons/io5';
 import { MdCancel } from 'react-icons/md';
@@ -25,11 +26,12 @@ type Props = {
   items: applianceItem[];
   updateItems: (items: applianceItem[]) => void;
   updateAppliance: (appliance: appliance) => void;
-  userId: string;
+  user: { id: string, name: string, email: string };
   applianceData: appliance;
 }
 
-const Appliance = ({ type = '', items, updateItems, updateAppliance, userId, applianceData }: Props) => {
+const Appliance = ({ type = '', items, updateItems, updateAppliance, user, applianceData }: Props) => {
+
   // States
 
   // The modal State for open or closed
@@ -37,11 +39,13 @@ const Appliance = ({ type = '', items, updateItems, updateAppliance, userId, app
 
   // The appliance state. Contains the current appliance
   const [appliance, setAppliance] = useState<ApplianceProp>();
+
   // State for the type of modal
   const [modalType, setModalType] = useState<'add' | 'view'>();
   const [availableItems, setAvailableItems] = useState<availableItem[]>([])
   const [userCreatedItems, setUserCreatedItems] = useState<userCreatedItem[]>([])
-  // Related to updaing the name of the appliance
+
+  // Related to updating the name of the appliance
   const [currentApplianceName, setCurrentApplianceName] = useState(applianceData.name)
   const [editName, setEditName] = useState<boolean>(false)
   const [applianceName, setApplianceName] = useState<string>('')
@@ -88,7 +92,7 @@ const Appliance = ({ type = '', items, updateItems, updateAppliance, userId, app
     // Gets all the items in teh database that can be added to the appliance
     getAvailableItemsToAdd();
 
-  }, [type, appliance, userId, applianceData.name])
+  }, [type, appliance, user.id, applianceData.name])
 
 
   // Functions
@@ -139,7 +143,7 @@ const Appliance = ({ type = '', items, updateItems, updateAppliance, userId, app
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ newName: applianceName, userId: userId.toString(), })
+        body: JSON.stringify({ newName: applianceName, userId: user.id.toString(), })
       });
       if (response.ok) {
         setCurrentApplianceName(applianceName)
@@ -223,12 +227,12 @@ const Appliance = ({ type = '', items, updateItems, updateAppliance, userId, app
                 applianceType={type}
                 updateItems={handleUpdateItems}
                 items={items}
-                userId={userId}
+                userId={user.id}
               />
             }
 
             {modalType === 'add' &&
-              <AddItem userId={userId} selectedArea={selectedArea} availableItems={availableItems} userCreatedItems={userCreatedItems} updateItems={handleUpdateItems} items={items}
+              <AddItem userId={user.id} selectedArea={selectedArea} availableItems={availableItems} userCreatedItems={userCreatedItems} updateItems={handleUpdateItems} items={items}
               />
             }
           </div>
@@ -259,7 +263,7 @@ const Appliance = ({ type = '', items, updateItems, updateAppliance, userId, app
 
             {/* Start Sharing Section */}
 
-            <SharingMenu applianceData={applianceData} updateAppliance={updateAppliance} />
+            <SharingMenu applianceData={applianceData} updateAppliance={updateAppliance} user={user} />
 
           </div>
 

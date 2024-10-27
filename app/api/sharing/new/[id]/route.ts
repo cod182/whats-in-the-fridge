@@ -24,20 +24,20 @@ export const POST = async (req: NextRequest, { params }: { params: Params }) => 
 
 	// Parse the request body and ensure email is a string
 	const body = await req.json();
-	const { email } = body;
+	const { email, applianceName } = body;
 
 	if (!email) {
 		return NextResponse.json({ message: "No email provided", status: 400 });
 	}
 
-	const insertSharingQuery = "INSERT INTO sharing (applianceId, email, accepted) VALUES (?, ?, ?)";
+	const insertSharingQuery = "INSERT INTO sharing (applianceId, email, accepted, ownerEmail, ownerName, ownerId, applianceName) VALUES (?, ?, ?,?,?,?,?)";
 
 
 	try {
 		// Execute the INSERT query and explicitly cast the result to OkPacket
-		const response = await executeQuery<OkPacket>(insertSharingQuery, [params.id, email, 'false']);
+		const response = await executeQuery<OkPacket>(insertSharingQuery, [params.id, email, 'false', session.user.email, session.user.name, session.user.id, applianceName]);
 
-		// Check the affectedRows to see if any record was inserted
+		// Check the affectedRows to see if any record was insertedo
 		if (response.affectedRows > 0) {
 			return NextResponse.json({
 				message: "Sharing record created successfully",

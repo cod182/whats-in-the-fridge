@@ -8,7 +8,7 @@ import { removeShare } from '@/utilities/functions'
 
 type Props = {
 	updateAppliance: (removedId: number) => void
-	sharedData: { id: number, applianceId: number; email: string; accepted: boolean }
+	sharedData: { id: number, applianceId: number; email: string; accepted: string }
 }
 
 const SharedToItem = ({ sharedData, updateAppliance }: Props) => {
@@ -41,10 +41,10 @@ const SharedToItem = ({ sharedData, updateAppliance }: Props) => {
 				<div className="relative flex flex-row items-center justify-start group z-[1] hover:z-[4]">
 					{/* Tooltip */}
 					<p className="right-[20px] absolute text-xs font-normal overflow-hidden w-0 group-hover:w-fit group-hover:px-2 transition-all duration-400 ease min-w-[0px] group-hover:min-w-[10px] bg-gray-300/90 group-hover:border-[1px] group-hover:border-black rounded">
-						{sharedData.accepted === true ? 'Accepted' : 'Pending'}
+						{sharedData.accepted === 'true' ? 'Accepted' : 'Pending'}
 					</p>
 					{/* Icon */}
-					{sharedData.accepted === true ? (
+					{sharedData.accepted === 'true' ? (
 						<TiTick className="text-green-600 h-[20px] w-[20px] group-icon" aria-label="accepted share" />
 					) : (
 						<GiSandsOfTime className="group-icon h-[20px] w-[20px]" aria-label="Pending share" />

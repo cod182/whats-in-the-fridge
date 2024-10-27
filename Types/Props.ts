@@ -49,7 +49,11 @@ type ShareProps = {
   id: number;
   applianceId: number;
   email: string;
-  accepted: boolean;
+  accepted: string;
+  ownerEmail: string;
+  ownerName: string;
+  ownerId: number;
+  applianceName: string;
 }
 
 type appliance = {

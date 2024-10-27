@@ -2,6 +2,7 @@ import { FadeInHOC, ProfileHome } from "@/components"
 
 import { Metadata } from 'next'
 import ProfileNotifications from '@/components/Profile/ProfileNotifications';
+import SharingInvites from "@/components/Profile/SharingInvites";
 import { getServerSession } from 'next-auth';
 import { nextAuthOptions } from '@/lib/nextAuthOptions';
 import { redirect } from 'next/navigation';
@@ -23,6 +24,9 @@ const page = async () => {
         <hr className='my-4 border-2 border-black' />
       </FadeInHOC>
       <ProfileNotifications user={session.user} />
+      {/* Sharing Invites section */}
+      <SharingInvites email={session.user.email} />
+
     </div>
   )
 }

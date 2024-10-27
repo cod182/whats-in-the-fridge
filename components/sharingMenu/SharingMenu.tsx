@@ -3,23 +3,22 @@
 import React, { FormEvent, useState } from 'react'
 import { addShare, removeShare } from '@/utilities/functions';
 
+import { DefaultUser } from 'next-auth';
 import { FaShare } from "react-icons/fa";
 import { FaSpinner } from 'react-icons/fa6';
-import { GiSandsOfTime } from "react-icons/gi";
 import { ImConnection } from 'react-icons/im'
-import { MdDeleteForever } from "react-icons/md";
 import { RiUserShared2Line } from 'react-icons/ri'
 import SharedToItem from './SharedToItem';
-import { TiTick } from "react-icons/ti";
 
 type Props = {
 	applianceData: appliance;
 	updateAppliance: (appliance: appliance) => void;
+	user: { id: string, name: string, email: string };
 }
 
 
 
-const SharingMenu = ({ applianceData, updateAppliance }: Props) => {
+const SharingMenu = ({ applianceData, updateAppliance, user }: Props) => {
 
 	// States
 	const [menuState, setMenuState] = useState(false)
@@ -33,7 +32,7 @@ const SharingMenu = ({ applianceData, updateAppliance }: Props) => {
 		e.preventDefault();
 		const form = e.target as HTMLFormElement;
 
-		let shareStatus = await addShare(applianceData.id, (form.elements[0] as HTMLInputElement).value)
+		let shareStatus = await addShare(applianceData.id, (form.elements[0] as HTMLInputElement).value, applianceData.name)
 		if (shareStatus.status === 200) {
 			handleUpdatingApplianceAfterShareAdded(applianceData.id, (form.elements[0] as HTMLInputElement).value);
 			setSubmittingNewShare(false);
@@ -47,7 +46,18 @@ const SharingMenu = ({ applianceData, updateAppliance }: Props) => {
 	// Handles updating the appliance locally when a share is added to avoid unnecessary api calls
 	const handleUpdatingApplianceAfterShareAdded = (applianceId: number, email: string) => {
 
-		const updatedShares = [...applianceData.sharedWith, { id: Math.random(), applianceId: applianceId, email: email, accepted: false }]
+		const updatedShares = [
+			...applianceData.sharedWith,
+			{
+				id: Math.random(),
+				applianceId: applianceId,
+				email: email,
+				accepted: 'false',
+				ownerEmail: user.email,
+				ownerName: user.name,
+				ownerId: applianceData.ownerid,
+				applianceName: applianceData.name
+			}];
 
 		const updatedAppliance = { ...applianceData, sharedWith: updatedShares }
 
