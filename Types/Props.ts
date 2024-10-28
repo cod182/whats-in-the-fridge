@@ -57,13 +57,17 @@ type ShareProps = {
   applianceName: string;
 }
 
+type sharedFromProps = {
+  ownerName: string;
+}
+
 type appliance = {
   id: number;
   ownerid: number;
   name: string;
   type: string;
-  sharedWith: ShareProps[]
-
+  sharedWith?: ShareProps[]
+  sharedFrom?: sharedFromProps;
 }
 
 type applianceItem = {

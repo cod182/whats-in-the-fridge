@@ -38,8 +38,12 @@ const ProfileNotifications = ({ user }: Props) => {
 
     // Calls fetch appliances
     fetchAppliances();
-    getAllUserItems();
+    if (appliances) {
+      getAllUserItems();
+    }
   }, [user]);
+
+  if (appliances && appliances.length) return null
 
   return (
     <>

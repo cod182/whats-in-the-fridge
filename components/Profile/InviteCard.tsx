@@ -15,7 +15,7 @@ const InviteCard = ({ sharedData, updateShare, inviteStatus }: Props) => {
 	const { email, accepted, applianceName, applianceId, ownerEmail, ownerName, ownerId, id } = sharedData;
 
 	return (
-		<div className='max-w-[200px] h-fit overflow-hidden transition-all duration-300 rounded-md hover:scale-105 hover:shadow-lg shadow-[1px_1px_0px_0px_rgba(0,0,0,0.1)] ease p-4'>
+		<div className='max-w-[200px] h-fit overflow-hidden transition-all duration-300 rounded-md  shadow-[1px_1px_0px_0px_rgba(0,0,0,0.1)] ease p-4'>
 			<p
 				className='text-sm font-normal'
 			>
@@ -45,7 +45,7 @@ const InviteCard = ({ sharedData, updateShare, inviteStatus }: Props) => {
 				<button
 					className='hover:bg-gray-300 rounded p-[2px] transition-all duration-200 ease group relative'
 					onClick={() => updateShare(sharedData, 'delete')}>
-					<p className="top-[32px] left-[-10px] absolute px-2 text-xs font-normal overflow-hidden h-0 group-hover:h-fit  transition-all duration-400 ease min-h-[0px] group-hover:min-h-[10px] bg-gray-300/80 group-hover:border-[1px] group-hover:border-black rounded">
+					<p className="top-[32px] left-[-14px] absolute px-2 text-xs font-normal overflow-hidden h-0 group-hover:h-fit  transition-all duration-400 ease min-h-[0px] group-hover:min-h-[10px] bg-gray-300/80 group-hover:border-[1px] group-hover:border-black rounded">
 						Cancel
 					</p>
 					<IoClose className='text-red-700 group-hover:scale-105 h-[25px] w-[25px]' />

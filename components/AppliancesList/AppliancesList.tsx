@@ -21,6 +21,7 @@ const AppliancesList = () => {
   const [filteredAppliances, setFilteredAppliances] = useState<appliance[]>()
   const [errorMessage, setErrorMessage] = useState<string>()
 
+  console.log(appliances);
 
   // useEffects
   useEffect(() => {
@@ -45,8 +46,9 @@ const AppliancesList = () => {
         setFilteredAppliances(appliances);
       }
     }
-
-    paginateAppliances();
+    if (appliances && appliances.length > 0) {
+      paginateAppliances();
+    }
   }, [appliances, numberOfResults])
 
   // Functions
@@ -55,10 +57,9 @@ const AppliancesList = () => {
   const handleDeleteAppliance = async (applianceId: number) => {
     try {
       const response = await removeApplianceFromDb(applianceId);
-      if (response.message) {
+      if (response.status != 200) {
         // if there is an error message
-        console.log(response.message)
-        setErrorMessage('Error deleting appliance')
+        setErrorMessage(response.status)
         setTimeout(() => {
           setErrorMessage(undefined)
         }, 2000)
@@ -87,7 +88,7 @@ const AppliancesList = () => {
     <>
       <div className={`${errorMessage ? 'max-h-[500px] py-2' : 'max-h-[0px] py-0'} mx-auto w-full sm:w-[80%] bg-gray-400/40 rounded-lg text-center overflow-hidden transition-all duration-200 ease`}>{errorMessage}</div>
       <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-        {filteredAppliances?.map((app, index) => {
+        {filteredAppliances && filteredAppliances?.map((app, index) => {
           return (
             <FadeInHOC key={app.id} delayNumber={index === 0 ? 200 : (index + 1) * 200} direction='up'>
               <>

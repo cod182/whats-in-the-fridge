@@ -75,7 +75,7 @@ const SharingInvites = ({ email }: Props) => {
 
 	// Returns
 
-	if (!sharingInvites) return null
+	if (!sharingInvites || sharingInvites.length > 1) return null
 
 	return (
 		<>

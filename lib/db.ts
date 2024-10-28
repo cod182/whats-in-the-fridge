@@ -28,7 +28,14 @@ const pool = mysql.createPool({
   password: process.env.NEXT_DB_PASS,
   database: process.env.NEXT_DB_DBNAME,
   port: parseInt(process.env.NEXT_DB_PORT || '3306', 10),
+  connectionLimit: 10, // Limit the max number of connections
+  waitForConnections: true, // Queue up when all connections are used
+  queueLimit: 0, // No limit on queued requests
+  connectTimeout: 10000, // 10 seconds to establish a connection
 });
+
+
+
 
 export const executeQuery = async <
   T extends RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader
