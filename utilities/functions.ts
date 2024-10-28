@@ -15,6 +15,21 @@ export const getOneAppliance = async (applianceId: string) => {
   }
 }
 
+export const getOneSharedAppliance = async (applianceId: string) => {
+  try {
+    const response = await fetch(`/api/appliance/shared/${applianceId}`, {
+      method: 'GET',
+    });
+
+    const responseData = await response.json();
+
+    return responseData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return false;
+  }
+}
+
 export const getAllAppliances = async () => {
   try {
     const response = await fetch('/api/appliance', {

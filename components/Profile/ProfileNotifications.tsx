@@ -43,7 +43,7 @@ const ProfileNotifications = ({ user }: Props) => {
     }
   }, [user]);
 
-  if (appliances && appliances.length) return null
+  if (appliances && appliances.length < 1) return null
 
   return (
     <>

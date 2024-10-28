@@ -1,8 +1,8 @@
 'use client'
 
 import { Appliance, ExpiryNotification, FridgeLoader } from '@/components';
-import { getOneAppliance, getOneApplianceItems } from '@/utilities/functions';
-import { redirect, useParams, useRouter } from 'next/navigation';
+import { getOneAppliance, getOneApplianceItems, getOneSharedAppliance } from '@/utilities/functions';
+import { redirect, useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { RiLoader2Fill } from "react-icons/ri";
@@ -12,6 +12,10 @@ const AppliancePage = () => {
   const router = useRouter();
 
   const { id } = useParams();
+  const searchParams = useSearchParams(); // Get query parameters
+  const shared = searchParams.get('shared'); // 'shared' query parameter, if exists
+
+
 
   const applianceId: string = id as string;
 
@@ -27,13 +31,19 @@ const AppliancePage = () => {
   const [applianceItems, setApplianceItems] = useState<applianceItem[]>();
   const [error, setError] = useState<string>();
 
+  console.log(appliance);
   // Use Effects
   useEffect(() => {
     const fetchData = async () => {
       if (status === 'authenticated') {
-        const selectedAppliance = await getOneAppliance(applianceId);
+        let selectedAppliance: any;
+        if (shared === null) {
+          selectedAppliance = await getOneAppliance(applianceId);
+        } else {
+          selectedAppliance = await getOneSharedAppliance(applianceId);
+        }
 
-        if (selectedAppliance.message) {
+        if (selectedAppliance.status === 500) {
           router.push("/profile");
 
           setError('There has been an error getting the appliance.')

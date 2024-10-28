@@ -41,7 +41,7 @@ const ApplianceCard = ({ app, handleDelete }: Props) => {
         </div>
       )}
 
-      <a href={`/appliance/${app.id}`} className='flex flex-row items-center justify-center h-full gap-2 w-full'>
+      <a href={`/appliance/${app.id}${app.sharedFrom ? '?shared' : ''}`} className='flex flex-row items-center justify-center h-full gap-2 w-full'>
         <div className='flex items-center justify-center'>
           {/* Image */}
           <Image src={image} alt={app.name} width={100} height={100} />

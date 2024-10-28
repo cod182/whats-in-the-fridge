@@ -23,6 +23,7 @@ const page = async () => {
       <FadeInHOC delayNumber={600} direction='down'>
         <hr className='my-4 border-2 border-black' />
       </FadeInHOC>
+
       <ProfileNotifications user={session.user} />
       {/* Sharing Invites section */}
       <SharingInvites email={session.user.email} />
