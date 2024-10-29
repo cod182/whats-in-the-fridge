@@ -109,8 +109,11 @@ export const removeItemFromDb = async (itemId: string, ownerId?: number, applian
         applianceId: shared ? applianceId : undefined
       }),
     });
+
     const responseData = await response.json();
+
     return responseData;
+
   } catch (error) {
     console.error('Error fetching data:', error);
     return error;

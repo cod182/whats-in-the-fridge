@@ -46,9 +46,8 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
   try {
     const response = await executeQuery('DELETE FROM applianceItems WHERE id = ? AND ownerid = ?', [params.id, session.user.id]) as ResultSetHeader;
 
-    if (response && response?.affectedRows && response?.affectedRows > 0) {
-      console.log('Item Has been deleted', response)
-      return NextResponse.json(response, { status: 200 });
+    if (response.affectedRows > 0) {
+      return NextResponse.json({ response, status: 200 });
     } else {
       return NextResponse.json({ message: 'Invalid item ID or unauthorized access', status: 401 });
     }
@@ -56,6 +55,7 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
     return NextResponse.json({ message: error.message, status: 500 });
   }
 }
+
 
 export const PUT = async (request: NextRequest, { params }: any, response: NextResponse) => {
   // API Protection

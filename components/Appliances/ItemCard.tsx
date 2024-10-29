@@ -58,19 +58,21 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
       try {
 
         const response = await removeItemFromDb(item.id, item.ownerid, item.applianceid, shared)
+        console.log(response);
+        if (response.status === 200) {
 
-        if (response.status != 200) {
-          console.log('Not Deleted', response)
-          setError('Failed to delete item')
-          setTimeout(() => {
-            setError('');
-          }, 2000);
-        } else {
 
           const filteredItems = items.filter(
             (i) => i.id != item.id
           )
           updateItems(filteredItems);
+
+        } else {
+          console.log('Not Deleted', response)
+          setError('Failed to delete item')
+          setTimeout(() => {
+            setError('');
+          }, 2000);
         }
       } catch (error) {
         console.log(error)
