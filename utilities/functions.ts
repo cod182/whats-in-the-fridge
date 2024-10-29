@@ -97,10 +97,17 @@ export const removeApplianceFromDb = async (applianceId: any) => {
   }
 }
 
-export const removeItemFromDb = async (itemId: any) => {
+export const removeItemFromDb = async (itemId: string, ownerId?: number, applianceId?: number, shared?: sharedFromProps,) => {
+
+  const apiUrl = shared ? `/api/shared-items/shared/${itemId}` : `/api/appliance-items/${itemId}`
+
   try {
-    const response = await fetch(`/api/appliance-items/${itemId}`, {
+    const response = await fetch(apiUrl, {
       method: 'DELETE',
+      body: JSON.stringify({
+        ownerId: shared ? ownerId : undefined,
+        applianceId: shared ? applianceId : undefined
+      }),
     });
     const responseData = await response.json();
     return responseData;

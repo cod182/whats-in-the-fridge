@@ -22,9 +22,10 @@ type Props = {
   applianceType: string;
   selectedArea: selectionProps;
   inSearch?: boolean;
+  shared?: sharedFromProps;
 }
 
-const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedArea }: Props) => {
+const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedArea, shared }: Props) => {
 
   // Use States
   const [containerStatus, setContainerStatus] = useState(false);
@@ -54,19 +55,18 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
     let result = confirm('Are you sure you want to delete?')
 
     if (result) {
-      console.log('deleting item');
-      console.log(e)
       try {
-        const response = await removeItemFromDb(item.id)
 
-        if (response.message) {
+        const response = await removeItemFromDb(item.id, item.ownerid, item.applianceid, shared)
+
+        if (response.status != 200) {
           console.log('Not Deleted', response)
           setError('Failed to delete item')
           setTimeout(() => {
             setError('');
           }, 2000);
         } else {
-          console.log('Delete Item Response Ok', response.ok);
+
           const filteredItems = items.filter(
             (i) => i.id != item.id
           )

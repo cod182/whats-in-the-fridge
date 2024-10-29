@@ -226,6 +226,7 @@ const Appliance = ({ type = '', items, updateItems, updateAppliance, user, appli
                 updateItems={handleUpdateItems}
                 items={items}
                 userId={user.id}
+                shared={applianceData.sharedFrom && applianceData.sharedFrom}
               />
             }
 

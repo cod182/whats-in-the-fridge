@@ -49,7 +49,7 @@ export const GET = async (req: NextApiRequest, { params }: { params: { id: strin
 			return NextResponse.json(itemsResponse, { status: 200 });
 		} else {
 			// session.user.id does not exist in the sharingResponse
-			return NextResponse.json({ message: 'User Not Authorised', status: 403 });
+			return NextResponse.json({ message: 'User Not Authorised', status: 401 });
 		}
 	} catch (error: any) {
 		return NextResponse.json({ message: error.message, status: 500 });
@@ -67,18 +67,33 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
 	}
 
 	if (!params.id || params.id === 'undefined') {
-		return new Response('No Item Id Provided', { status: 400, statusText: 'No Item Id Provided' })
+		return NextResponse.json({ message: 'Not Item ID Provided', status: 400 });
+		// return new Response('No Item Id Provided', { status: 400, statusText: 'No Item Id Provided' })
 	}
 
-	try {
-		const response = await executeQuery('DELETE FROM applianceItems WHERE id = ? AND ownerid = ?', [params.id, session.user.id]) as ResultSetHeader;
+	// Query to get all the users who have shared the appliance
+	const sharingQuery = "SELECT * FROM sharing WHERE applianceId=?";
 
-		if (response && response?.affectedRows && response?.affectedRows > 0) {
-			console.log('Item Has been deleted', response)
-			return NextResponse.json(response, { status: 200 });
-		} else {
-			return NextResponse.json({ message: 'Invalid item ID or unauthorized access', status: 401 });
+	try {
+
+		// Query to get all the users who have shared the appliance
+		const sharingResponse = await executeQuery(sharingQuery, [params.id]) as RowDataPacket[];
+
+		// Check if session.user.id exists in the sharingResponse
+		const isUserShared = checkUserAuthorised(sharingResponse, session.user.id);
+
+		if (!isUserShared) {
+
+			const response = await executeQuery('DELETE FROM applianceItems WHERE id = ?', [session.user.id]) as ResultSetHeader;
+			if (response && response?.affectedRows && response?.affectedRows > 0) {
+				console.log('Item Has been deleted', response)
+				return NextResponse.json(response, { status: 200 });
+			} else {
+				return NextResponse.json({ message: 'Invalid item ID or unauthorized access', status: 401 });
+			}
 		}
+
+
 	} catch (error: any) {
 		return NextResponse.json({ message: error.message, status: 500 });
 	}
