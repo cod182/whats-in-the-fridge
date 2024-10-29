@@ -59,6 +59,7 @@ type ShareProps = {
 
 type sharedFromProps = {
   ownerName: string;
+  ownerId: number;
 }
 
 type appliance = {
@@ -88,6 +89,7 @@ type applianceItem = {
   position: number;
   comment: string;
   image: string;
+  sharedUserId?: number;
 }
 
 type selectionProps = {

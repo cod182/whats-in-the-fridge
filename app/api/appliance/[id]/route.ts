@@ -46,7 +46,7 @@ export const GET = async (req: NextRequest, params: any) => {
     };
 
     // Return the combined result
-    return NextResponse.json(applianceWithSharing);
+    return NextResponse.json(applianceWithSharing, { status: 200 });
   } catch (error: any) {
     return NextResponse.json({ message: error.message, status: 500 });
   }

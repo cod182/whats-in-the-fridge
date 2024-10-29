@@ -1,7 +1,7 @@
 'use client'
 
 import { Appliance, ExpiryNotification, FridgeLoader } from '@/components';
-import { getOneAppliance, getOneApplianceItems, getOneSharedAppliance } from '@/utilities/functions';
+import { getOneAppliance, getOneApplianceItems, getOneSharedAppliance, getOneSharedApplianceItems } from '@/utilities/functions';
 import { redirect, useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -9,32 +9,55 @@ import { RiLoader2Fill } from "react-icons/ri";
 import { useSession } from 'next-auth/react';
 
 const AppliancePage = () => {
+
+  // Assignments
   const router = useRouter();
 
   const { id } = useParams();
   const searchParams = useSearchParams(); // Get query parameters
   const shared = searchParams.get('shared'); // 'shared' query parameter, if exists
 
-
-
   const applianceId: string = id as string;
 
+  // Session
   const { data: session, status } = useSession();
   let user: any;
 
   if (session?.user) {
     user = session.user
   }
+
+
+  // FUNCTIONS
+  const getAllApplianceItems = async () => {
+    if (appliance) {
+      let selectedApplianceItems: any;
+      if (shared === null) {
+        selectedApplianceItems = await getOneApplianceItems(applianceId)
+      } else {
+        selectedApplianceItems = await getOneSharedApplianceItems(applianceId)
+
+      }
+      if (selectedApplianceItems) {
+        setApplianceItems(selectedApplianceItems);
+        setLoading(false);
+      } else {
+        setError('There has been an error retrieving the appliance items');
+        return;
+      }
+    }
+  }
+
+
   // States
   const [loading, setLoading] = useState(true);
-  const [appliance, setAppliance] = useState<appliance>({ id: 0, ownerid: 0, name: 'null', type: '', sharedWith: [] });
+  const [appliance, setAppliance] = useState<appliance>({ id: 0, ownerid: 0, name: 'null', type: '' });
   const [applianceItems, setApplianceItems] = useState<applianceItem[]>();
   const [error, setError] = useState<string>();
 
-  console.log(appliance);
   // Use Effects
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchApplianceData = async () => {
       if (status === 'authenticated') {
         let selectedAppliance: any;
         if (shared === null) {
@@ -43,31 +66,26 @@ const AppliancePage = () => {
           selectedAppliance = await getOneSharedAppliance(applianceId);
         }
 
-        if (selectedAppliance.status === 401) {
+        if (selectedAppliance.status && selectedAppliance.status != 200) {
           router.push("/profile");
 
           setError('There has been an error getting the appliance.')
         } else {
           setAppliance(selectedAppliance);
+          getAllApplianceItems();
+
         }
       }
     };
-    fetchData();
+
+
+
+
+    fetchApplianceData();
   }, [user?.id, status, applianceId, router]);
 
   useEffect(() => {
-    const getAllApplianceItems = async () => {
-      if (appliance) {
-        const selectedApplianceItems = await getOneApplianceItems(applianceId)
-        if (selectedApplianceItems) {
-          setApplianceItems(selectedApplianceItems);
-          setLoading(false);
-        } else {
-          setError('There has been an error retrieving the appliance items');
-          return;
-        }
-      }
-    }
+
 
     if (status === 'authenticated') {
       getAllApplianceItems();

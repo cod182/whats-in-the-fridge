@@ -32,7 +32,6 @@ type Props = {
 }
 
 const Appliance = ({ type = '', items, updateItems, updateAppliance, user, applianceData }: Props) => {
-
   // States
 
   // The modal State for open or closed
@@ -213,8 +212,6 @@ const Appliance = ({ type = '', items, updateItems, updateAppliance, user, appli
     }
   }
 
-
-
   // Checks appliance exists
   if (appliance != null) {
     return (
@@ -233,7 +230,7 @@ const Appliance = ({ type = '', items, updateItems, updateAppliance, user, appli
             }
 
             {modalType === 'add' &&
-              <AddItem userId={user.id} selectedArea={selectedArea} availableItems={availableItems} userCreatedItems={userCreatedItems} updateItems={handleUpdateItems} items={items}
+              <AddItem userId={user.id} selectedArea={selectedArea} availableItems={availableItems} userCreatedItems={userCreatedItems} updateItems={handleUpdateItems} items={items} shared={applianceData.sharedFrom}
               />
             }
           </div>
@@ -244,17 +241,21 @@ const Appliance = ({ type = '', items, updateItems, updateAppliance, user, appli
           {/* Fridge Name */}
           <div className='flex flex-row items-center justify-start gap-2 mb-2'>
             <h1 className={`${editName ? 'max-w-[0px]' : 'max-w-[300px]'}  h-[36px] overflow-hidden text-3xl font-bold transition-all duration-200 ease`}>{currentApplianceName} </h1>
+
             {/* Edit Form */}
-            <form action="" method='PUT' onSubmit={(e) => handleChangeApplianceName(e)} className={`${!editName ? 'max-w-[0px]' : 'max-w-[1000px]'} left-0 text-3xl font-bold overflow-hidden transition-all duration-200 ease flex flex-row items-center gap-2`}>
-              <input id='nameInput' className={`py-[5px] px-2 rounded-md ${!applianceName ? 'border-red-400' : 'border-black'}`} type="text" value={applianceName} onChange={(e) => setApplianceName(e.target.value)} />
-              <button className='' type="submit"><IoSaveSharp className={`w-[25px] h-[25px] hover:text-green-600 transition-all duration-200 ease ${loading || success ? 'hidden' : ''}`} /></button>
-            </form>
-            <MdCancel className={`w-[25px] h-[25px] hover:text-red-500 transition-all duration-200 ease cursor-pointer ${editName ? (loading || success ? 'hidden' : '') : 'hidden'}`} onClick={() => { setEditName(false); setApplianceName(currentApplianceName) }} />
-            {/* Edit BUtton */}
-            <FaEdit className={`${editName ? 'hidden' : ''} text-2xl text-blue-600 hover:scale-110 hover:text-gray-200 transition-all duration-200 ease cursor-pointer`} onClick={() => { setEditName(true); }} />
-            <div className={`bg-gray-800/60 text-red-500 font-semibold overflow-hidden transition-all duration-200 ease  ${errorMessage ? 'max-w-[1000px] overflow-scroll py-[5px] px-2 rounded-lg' : 'max-w-[0px] p-0'}`}>{errorMessage}</div>
-            <TiTick className={`${success && editName ? 'h-[40px] w-[40px] text-green-500' : 'hidden'} transition-all duration-200 ease`} />
-            <BiDotsHorizontalRounded className={`${loading && editName ? 'h-[40px] w-[40px] text-blue-500' : 'hidden'} animate-spin transition-all duration-200 ease`} />
+            {!applianceData.sharedFrom && (<>
+              <form action="" method='PUT' onSubmit={(e) => handleChangeApplianceName(e)} className={`${!editName ? 'max-w-[0px]' : 'max-w-[1000px]'} left-0 text-3xl font-bold overflow-hidden transition-all duration-200 ease flex flex-row items-center gap-2`}>
+                <input id='nameInput' className={`py-[5px] px-2 rounded-md ${!applianceName ? 'border-red-400' : 'border-black'}`} type="text" value={applianceName} onChange={(e) => setApplianceName(e.target.value)} />
+                <button className='' type="submit"><IoSaveSharp className={`w-[25px] h-[25px] hover:text-green-600 transition-all duration-200 ease ${loading || success ? 'hidden' : ''}`} /></button>
+              </form>
+              <MdCancel className={`w-[25px] h-[25px] hover:text-red-500 transition-all duration-200 ease cursor-pointer ${editName ? (loading || success ? 'hidden' : '') : 'hidden'}`} onClick={() => { setEditName(false); setApplianceName(currentApplianceName) }} />
+              {/* Edit BUtton */}
+              <FaEdit className={`${editName ? 'hidden' : ''} text-2xl text-blue-600 hover:scale-110 hover:text-gray-200 transition-all duration-200 ease cursor-pointer`} onClick={() => { setEditName(true); }} />
+              <div className={`bg-gray-800/60 text-red-500 font-semibold overflow-hidden transition-all duration-200 ease  ${errorMessage ? 'max-w-[1000px] overflow-scroll py-[5px] px-2 rounded-lg' : 'max-w-[0px] p-0'}`}>{errorMessage}</div>
+              <TiTick className={`${success && editName ? 'h-[40px] w-[40px] text-green-500' : 'hidden'} transition-all duration-200 ease`} />
+              <BiDotsHorizontalRounded className={`${loading && editName ? 'h-[40px] w-[40px] text-blue-500' : 'hidden'} animate-spin transition-all duration-200 ease`} />
+            </>)}
+
           </div>
 
           {/* Title Area */}

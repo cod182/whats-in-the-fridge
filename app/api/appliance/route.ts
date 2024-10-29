@@ -179,6 +179,7 @@ export const GET = async (req: any) => {
         ...data,
         sharedFrom: {
           ownerName: correspondingAppliance ? correspondingAppliance.ownerName : 'Unknown Owner',
+          ownerId: correspondingAppliance ? correspondingAppliance.ownerId : 0,
         },
       };
     });
@@ -199,7 +200,6 @@ export const GET = async (req: any) => {
 
       return appliance;
     });
-
 
     const mergedArray = appliancesWithSharing.concat(sharedData);
 

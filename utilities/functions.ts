@@ -68,6 +68,21 @@ export const getOneApplianceItems = async (applianceId: any) => {
   }
 }
 
+
+export const getOneSharedApplianceItems = async (applianceId: any) => {
+  try {
+    const response = await fetch(`/api/appliance-items/shared/${applianceId}`, {
+      method: 'GET',
+    });
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    return false;
+  }
+}
+
+
+
 export const removeApplianceFromDb = async (applianceId: any) => {
   try {
     const response = await fetch(`/api/appliance/${applianceId}`, {

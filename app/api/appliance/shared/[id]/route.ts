@@ -53,7 +53,7 @@ export const GET = async (req: NextRequest, params: any) => {
 				accepted: share.accepted,
 				ownerEmail: share.ownerEmail,
 				ownerName: share.ownerName,
-				ownerId: share.ownerName,
+				ownerId: share.ownerId,
 				applianceName: share.applianceName,
 			})),
 		};
@@ -65,9 +65,12 @@ export const GET = async (req: NextRequest, params: any) => {
 			// Return the appliance
 			const applianceWithSharedFrom = {
 				...appliance[0],
-				sharedFrom: { ownerName: applianceWithSharing.sharedWith![0].ownerName },
+				sharedFrom: {
+					ownerName: applianceWithSharing.sharedWith![0].ownerName,
+					ownerId: applianceWithSharing.sharedWith![0].ownerId
+				},
 			};
-			return NextResponse.json(applianceWithSharedFrom);
+			return NextResponse.json(applianceWithSharedFrom, { status: 200 });
 		} else {
 			// User not authorised
 			return NextResponse.json({ message: 'User not authorized', status: 401 });
@@ -78,3 +81,5 @@ export const GET = async (req: NextRequest, params: any) => {
 		return NextResponse.json({ message: error.message, status: 500 });
 	}
 };
+
+
