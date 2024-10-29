@@ -11,6 +11,7 @@ import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import ChestAppliance from '../Appliances/ChestAppliance/ChestAppliance_main';
 import { DefaultUser } from 'next-auth';
 import { FaEdit } from 'react-icons/fa';
+import { ImConnection } from 'react-icons/im';
 import { IoSaveSharp } from 'react-icons/io5';
 import { MdCancel } from 'react-icons/md';
 import SharingMenu from '../sharingMenu/SharingMenu';
@@ -262,8 +263,18 @@ const Appliance = ({ type = '', items, updateItems, updateAppliance, user, appli
             <ApplianceTitleArea appliance={appliance} />
 
             {/* Start Sharing Section */}
+            {applianceData.sharedFrom ? (
+              <div className='flex flex-col items-center justify-center'>
+                <ImConnection className='rotate-45 w-[30px] h-[30px] text-blue-500' />
+                <p className='text-sm text-gray-600 font-normal italic'>Owned by: {applianceData.sharedFrom.ownerName}</p>
+              </div>
+            )
+              :
+              (
+                <SharingMenu applianceData={applianceData} updateAppliance={updateAppliance} user={user} />
 
-            <SharingMenu applianceData={applianceData} updateAppliance={updateAppliance} user={user} />
+              )
+            }
 
           </div>
 

@@ -28,7 +28,7 @@ export const GET = async (req: NextRequest, params: any) => {
 
     // Check if the appliance exists
     if (!appliance || appliance.length === 0) {
-      return NextResponse.json({ message: 'Appliance not found or unauthorized access' });
+      return NextResponse.json({ message: 'Appliance not found or unauthorized access', status: 401 });
     }
 
     // Fetch the sharing information for the appliance

@@ -18,7 +18,6 @@ export const GET = async (req: NextApiRequest, params: any, res: any) => {
 
   try {
     const response = await executeQuery(query, [session.user.id]);
-    // console.log(response);
     return NextResponse.json(response);
   } catch (error: any) {
     return NextResponse.json({ message: error.message });

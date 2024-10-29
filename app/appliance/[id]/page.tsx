@@ -43,7 +43,7 @@ const AppliancePage = () => {
           selectedAppliance = await getOneSharedAppliance(applianceId);
         }
 
-        if (selectedAppliance.status === 500) {
+        if (selectedAppliance.status === 401) {
           router.push("/profile");
 
           setError('There has been an error getting the appliance.')
