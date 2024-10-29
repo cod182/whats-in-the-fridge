@@ -65,6 +65,7 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
 		// Not Signed in
 		return NextResponse.json({ error: "You must be logged in': ", status: 401 })
 	}
+	const { applianceId, ownerId } = await req.json(); // Extract the appliance and from the body
 
 	if (!params.id || params.id === 'undefined') {
 		return NextResponse.json({ message: 'Not Item ID Provided', status: 400 });
@@ -77,22 +78,29 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
 	try {
 
 		// Query to get all the users who have shared the appliance
-		const sharingResponse = await executeQuery(sharingQuery, [params.id]) as RowDataPacket[];
+		const sharingResponse = await executeQuery(sharingQuery, [applianceId]) as RowDataPacket[];
 
-		// Check if session.user.id exists in the sharingResponse
-		const isUserShared = checkUserAuthorised(sharingResponse, session.user.id);
+		// check there is data returned from the sharing response
+		if (sharingResponse.length > 0) {
+			// Check if session.user.id exists in the sharingResponse
+			const isUserShared = checkUserAuthorised(sharingResponse, session.user.id);
 
-		if (!isUserShared) {
+			if (isUserShared) {
 
-			const response = await executeQuery('DELETE FROM applianceItems WHERE id = ?', [session.user.id]) as ResultSetHeader;
-			if (response && response?.affectedRows && response?.affectedRows > 0) {
-				console.log('Item Has been deleted', response)
-				return NextResponse.json(response, { status: 200 });
-			} else {
-				return NextResponse.json({ message: 'Invalid item ID or unauthorized access', status: 401 });
+				const response = await executeQuery('DELETE FROM applianceItems WHERE id = ?', [params.id]) as ResultSetHeader;
+
+				if (response.affectedRows > 0) {
+					console.log('Item Has been deleted', response)
+					return NextResponse.json({ response, status: 200 });
+				} else {
+					return NextResponse.json({ message: 'Invalid item ID or unauthorized access', status: 401 });
+				}
 			}
-		}
+			return NextResponse.json({ message: 'unauthorized access', status: 401 });
 
+		} else {
+			return NextResponse.json({ message: 'unauthorized access', status: 401 });
+		}
 
 	} catch (error: any) {
 		return NextResponse.json({ message: error.message, status: 500 });

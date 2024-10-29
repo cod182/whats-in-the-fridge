@@ -99,7 +99,7 @@ export const removeApplianceFromDb = async (applianceId: any) => {
 
 export const removeItemFromDb = async (itemId: string, ownerId?: number, applianceId?: number, shared?: sharedFromProps,) => {
 
-  const apiUrl = shared ? `/api/shared-items/shared/${itemId}` : `/api/appliance-items/${itemId}`
+  const apiUrl = shared ? `/api/appliance-items/shared/${itemId}` : `/api/appliance-items/${itemId}`
 
   try {
     const response = await fetch(apiUrl, {
