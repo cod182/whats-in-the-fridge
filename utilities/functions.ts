@@ -169,7 +169,27 @@ export const updateItemIconDb = async (updatedItem: { id: string, applianceid: n
     console.error('Error fetching data:', error);
     return error;
   }
+}
 
+export const moveItemInDb = async (updatedItem: { id: string, ownerid: number, applianceid: number, compartment: string, level: number, locationType: string, position: number }, ownerId?: number, applianceId?: number, shared?: sharedFromProps) => {
+  const apiUrl = shared ? `/api/appliance-items/shared/${updatedItem.id}` : `/api/appliance-items/${updatedItem.id}`
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'update-type': 'move'
+      },
+      body: JSON.stringify({ updatedItem }),
+    });
+    const responseData = await response.json();
+
+    return responseData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return error;
+  }
 }
 
 

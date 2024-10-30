@@ -1,10 +1,9 @@
 'use client'
 
-import { BsBoxArrowLeft, BsBoxArrowRight } from "react-icons/bs";
-import { getAvailableCompartments, removeItemFromDb, reverseDate, updateItemIconDb, updateItemInDb } from "@/utilities/functions";
-import { useEffect, useState } from 'react';
+import { removeItemFromDb, reverseDate, updateItemIconDb, updateItemInDb } from "@/utilities/functions";
 
 import { BiDotsHorizontalRounded } from "react-icons/bi";
+import { BsBoxArrowRight } from "react-icons/bs";
 import { CiCircleChevDown } from 'react-icons/ci';
 import { FaEdit } from 'react-icons/fa'
 import IconSearch from "../IconSearch/IconSearch";
@@ -14,6 +13,7 @@ import { IoSaveSharp } from "react-icons/io5";
 import { MdCancel } from "react-icons/md";
 import MoveArea from "./MoveArea";
 import { TiTick } from "react-icons/ti";
+import { useState } from 'react';
 
 type Props = {
   item: applianceItem;
@@ -222,7 +222,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
 
 
         {/* Moving Item Location START */}
-        <MoveArea setEditActivated={setEditActivated} updateItems={updateItems} items={items} setMoveArea={setMoveArea} moveArea={moveArea} item={item} applianceType={applianceType} selectedArea={selectedArea} />
+        <MoveArea setEditActivated={setEditActivated} updateItems={updateItems} items={items} setMoveArea={setMoveArea} moveArea={moveArea} item={item} applianceType={applianceType} selectedArea={selectedArea} shared={shared} />
         {/* MOVING ITEM LOCATION END */}
 
         {/* START Change Item Icon */}

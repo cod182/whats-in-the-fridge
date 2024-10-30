@@ -9,6 +9,7 @@ import SmallAppliance_min from "./SmallAppliance/SmallAppliance_min";
 import TallAppliance_min from "./TallAppliance/TallAppliance_min";
 import { TiTick } from "react-icons/ti";
 import { appliances } from "@/static/appliances";
+import { moveItemInDb } from "@/utilities/functions";
 
 type Props = {
   setMoveArea: (bool: boolean) => void;
@@ -19,11 +20,12 @@ type Props = {
   items: applianceItem[];
   updateItems: (items: applianceItem[]) => void;
   setEditActivated: (state: boolean) => void;
+  shared?: sharedFromProps;
 }
 
 
 
-const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea, item, applianceType, selectedArea }: Props) => {
+const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea, item, applianceType, selectedArea, shared }: Props) => {
 
   // UseStates
   const [appliance, setAppliance] = useState<ApplianceProp>()
@@ -67,16 +69,11 @@ const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea,
       // Start the updating process
       setUpdating(true);
       // Api Call
-      const response = await fetch(`/api/appliance-items/${item.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'update-type': 'move'
-        },
-        body: JSON.stringify(updatedItem),
-      });
+      const response = await moveItemInDb(updatedItem, item.ownerid, item.applianceid, shared)
+      console.log('move response', response)
       // If response is pk
-      if (response.ok) {
+      if (response.status === 200) {
+        console.log('response good!')
         // Updating off
         setUpdating(false)
         // Success off
@@ -92,7 +89,7 @@ const MoveArea = ({ setEditActivated, updateItems, items, setMoveArea, moveArea,
       } else {
         // Response no ok
         // Set the message from the error
-        setErrorMessage(response.statusText);
+        setErrorMessage(response.message);
         // Set success to false after 1 second
         setTimeout(() => {
           setErrorMessage('');

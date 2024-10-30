@@ -150,9 +150,9 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 			}
 
 			// SQL query with parameterized values
-			const query = `UPDATE applianceItems SET compartment=?, level=?, locationType=?, position=? WHERE id=? AND ownerid=? AND applianceid=?`;
+			const query = `UPDATE applianceItems SET compartment=?, level=?, locationType=?, position=? WHERE id=? AND applianceid=?`;
 
-			const queryResponse = await executeQuery(query, [compartment, level, locationType, position, params.id, session.user.id, applianceid]) as ResultSetHeader;
+			const queryResponse = await executeQuery(query, [compartment, level, locationType, position, id, applianceid]) as ResultSetHeader;
 
 
 			if (queryResponse.affectedRows > 0) {
