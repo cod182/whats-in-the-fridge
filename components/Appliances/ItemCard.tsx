@@ -1,7 +1,7 @@
 'use client'
 
 import { BsBoxArrowLeft, BsBoxArrowRight } from "react-icons/bs";
-import { getAvailableCompartments, removeItemFromDb, reverseDate, updateItemInDb } from "@/utilities/functions";
+import { getAvailableCompartments, removeItemFromDb, reverseDate, updateItemIconDb, updateItemInDb } from "@/utilities/functions";
 import { useEffect, useState } from 'react';
 
 import { BiDotsHorizontalRounded } from "react-icons/bi";

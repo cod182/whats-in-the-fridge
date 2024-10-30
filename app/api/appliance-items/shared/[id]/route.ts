@@ -261,14 +261,13 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 
 			if (!isUserShared) {
 				// Return an error if session.user.id does not exist in the sharingResponse
-
 				return NextResponse.json({ message: 'User Not Authorised', status: 401 });
 			}
 
 			// SQL query with parameterized values
 			const query = `UPDATE applianceItems SET image=? WHERE id=? AND applianceid=?`;
 
-			const queryResponse = await executeQuery(query, [image, params.id, session.user.id, applianceid]) as ResultSetHeader;
+			const queryResponse = await executeQuery(query, [image, id, applianceid]) as ResultSetHeader;
 
 
 			if (queryResponse.affectedRows > 0) {

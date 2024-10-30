@@ -151,7 +151,6 @@ export const updateItemInDb = async (updatedItem: applianceItem, ownerId?: numbe
 }
 
 export const updateItemIconDb = async (updatedItem: { id: string, applianceid: number, ownerid: number, image: string }, ownerId?: number, applianceId?: number, shared?: sharedFromProps) => {
-
   try {
     const apiUrl = shared ? `/api/appliance-items/shared/${updatedItem.id}` : `/api/appliance-items/${updatedItem.id}`
     const response = await fetch(apiUrl, {
@@ -160,7 +159,7 @@ export const updateItemIconDb = async (updatedItem: { id: string, applianceid: n
         'Content-Type': 'application/json',
         'update-type': 'iconUpdate'
       },
-      body: JSON.stringify(updatedItem),
+      body: JSON.stringify({ updatedItem }),
     });
 
     const responseData = await response.json();
