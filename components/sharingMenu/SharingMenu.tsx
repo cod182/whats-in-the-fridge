@@ -47,7 +47,7 @@ const SharingMenu = ({ applianceData, updateAppliance, user }: Props) => {
 	const handleUpdatingApplianceAfterShareAdded = (applianceId: number, email: string) => {
 
 		const updatedShares = [
-			...applianceData.sharedWith,
+			...(applianceData.sharedWith ?? []),
 			{
 				id: Math.random(),
 				applianceId: applianceId,
@@ -56,8 +56,10 @@ const SharingMenu = ({ applianceData, updateAppliance, user }: Props) => {
 				ownerEmail: user.email,
 				ownerName: user.name,
 				ownerId: applianceData.ownerid,
-				applianceName: applianceData.name
-			}];
+				applianceName: applianceData.name,
+				sharedUserId: 0
+			}
+		];
 
 		const updatedAppliance = { ...applianceData, sharedWith: updatedShares }
 
@@ -66,7 +68,7 @@ const SharingMenu = ({ applianceData, updateAppliance, user }: Props) => {
 
 	// Handles updating the appliance locally when a share is deleted to avoid unnecessary api calls
 	const handleUpdatingApplianceAfterShareDelete = (removedId: number) => {
-		const updatedShares = applianceData.sharedWith.filter(
+		const updatedShares = applianceData.sharedWith?.filter(
 			(i) => i.id != removedId
 		)
 
@@ -79,7 +81,7 @@ const SharingMenu = ({ applianceData, updateAppliance, user }: Props) => {
 		<div className='relative flex flex-col items-center justify-center z-[600]'>
 			<div className={`flex flex-row justify-end items-center }`}>
 
-				{applianceData.sharedWith.length > 0 ?
+				{applianceData.sharedWith && applianceData.sharedWith.length > 0 ?
 					<button onClick={() => setMenuState(!menuState)}>
 						<ImConnection className={`h-[25px] w-[25px] rotate-[45deg]  hover:text-blue-600 active:text-blue-700 group-hover:scale-105 transition-all duration-200 ease-in-out text-blue-500 }`} />
 					</button>
@@ -96,7 +98,7 @@ const SharingMenu = ({ applianceData, updateAppliance, user }: Props) => {
 			<div className={` absolute right-0 top-[30px] bg-gray-200/90 rounded transition-all duration-200 ease h-auto ${menuState ? 'max-h-[500px] w-[250px] overflow-hidden shadow-xl' : ' max-h-[0px] w-[250px] overflow-hidden shadow-none'}}`}>
 
 				<div className='w-full h-full p-2'>
-					{applianceData.sharedWith.length > 0
+					{applianceData.sharedWith && applianceData.sharedWith.length > 0
 						?
 						(
 							<div className='flex flex-col items-start justify-center '>
