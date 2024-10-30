@@ -1,7 +1,7 @@
 'use client'
 
 import { BsBoxArrowLeft, BsBoxArrowRight } from "react-icons/bs";
-import { getAvailableCompartments, removeItemFromDb, reverseDate } from "@/utilities/functions";
+import { getAvailableCompartments, removeItemFromDb, reverseDate, updateItemInDb } from "@/utilities/functions";
 import { useEffect, useState } from 'react';
 
 import { BiDotsHorizontalRounded } from "react-icons/bi";
@@ -140,25 +140,28 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
     const updatedItem = {
       ...item,
       name: formValues.itemName,
-      quantity: formValues.quantity,
+      quantity: Number(formValues.quantity),
       cookedFromFrozen: cookedFromFrozen,
       expiryDate: formValues.expiryDate,
       comment: formValues.comment,
       itemType: formValues.itemType,
       itemMainType: formValues.itemMainType,
       itemSubType: formValues.itemSubType,
-    }
+    };
+
     try {
       setUpdating(true)
-      const response = await fetch(`/api/appliance-items/${item.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'update-type': 'update'
-        },
-        body: JSON.stringify(updatedItem),
-      });
-      if (response.ok) {
+      const response = await updateItemInDb(updatedItem, item.ownerid, item.applianceid, shared)
+
+      // const response = await fetch(`/api/appliance-items/${item.id}`, {
+      //   method: 'PUT',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'update-type': 'update'
+      //   },
+      //   body: JSON.stringify(updatedItem),
+      // });
+      if (response.status === 200) {
         handlingUpdateLocalItem(updatedItem);
         setUpdating(false)
         setSuccess(true);
@@ -169,7 +172,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
           setContainerStatus(false);
         }, 1000);
       } else {
-        setError(response.statusText);
+        setError(response.message);
         // Set success to false after 1 second
         setTimeout(() => {
           setError('');

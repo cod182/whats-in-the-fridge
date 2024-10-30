@@ -7,7 +7,7 @@ import { executeQuery } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 import { headers } from "next/headers";
 
-export const GET = async (req: NextApiRequest, params: any, res: any) => {
+export const GET = async (req: NextRequest, params: any, res: NextResponse) => {
   // API Protection
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -68,9 +68,13 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
   const headersList = headers();
   const typeOfUpdate = headersList.get("update-type");
 
-
   if (typeOfUpdate === 'move') {
     try {
+
+
+      // Parse the body as JSON
+      const body = await request.json();
+      const { updatedItem } = body;
       const {
         compartment,
         level,
@@ -79,8 +83,7 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
         id,
         ownerid,
         applianceid
-      } = await request.json();
-
+      } = updatedItem;
 
       if (id != params.id) {
         // return new Response('Item ID Doesnt Match', { status: 404, statusText: 'Item ID Doesnt Match' })
@@ -120,6 +123,12 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 
   if (typeOfUpdate === 'update') {
     try {
+
+
+      // Parse the body as JSON
+      const body = await request.json();
+      const { updatedItem } = body;
+
       const {
         id,
         applianceid,
@@ -132,7 +141,9 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
         expiryDate,
         comment,
         cookedFromFrozen
-      } = await request.json();
+      } = updatedItem
+
+      console.log('updatedItem', updatedItem)
 
 
       if (id != params.id) {
@@ -181,12 +192,17 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 
   if (typeOfUpdate === 'iconUpdate') {
     try {
+
+      // Parse the body as JSON
+      const body = await request.json();
+      const { updatedItem } = body;
+
       const {
         id,
         applianceid,
         ownerid,
         image
-      } = await request.json();
+      } = updatedItem;
 
 
       if (id != params.id) {

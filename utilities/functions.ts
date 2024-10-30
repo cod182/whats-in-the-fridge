@@ -97,7 +97,7 @@ export const removeApplianceFromDb = async (applianceId: any) => {
   }
 }
 
-export const removeItemFromDb = async (itemId: string, ownerId?: number, applianceId?: number, shared?: sharedFromProps,) => {
+export const removeItemFromDb = async (itemId: string, ownerId?: number, applianceId?: number, shared?: sharedFromProps) => {
 
   const apiUrl = shared ? `/api/appliance-items/shared/${itemId}` : `/api/appliance-items/${itemId}`
 
@@ -118,8 +118,37 @@ export const removeItemFromDb = async (itemId: string, ownerId?: number, applian
     console.error('Error fetching data:', error);
     return error;
   }
+}
+
+export const updateItemInDb = async (updatedItem: applianceItem, ownerId?: number, applianceId?: number, shared?: sharedFromProps) => {
+
+  const apiUrl = shared ? `/api/appliance-items/shared/${updatedItem.id}` : `/api/appliance-items/${updatedItem.id}`
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'update-type': 'update'
+      },
+      body: JSON.stringify({
+        ...(shared && { ownerId }),
+        ...(shared && { applianceId }),
+        updatedItem: updatedItem
+      }),
+    });
+
+    const responseData = await response.json();
+
+    return responseData;
+
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return error;
+  }
 
 }
+
 
 export const getUserCustomItems = async () => {
   try {

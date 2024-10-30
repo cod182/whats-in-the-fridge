@@ -134,14 +134,14 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 
 			if (id != params.id) {
 				// return new Response('Item ID Doesnt Match', { status: 404, statusText: 'Item ID Doesnt Match' })
-				return NextResponse.json({ message: "Item ID Doesnt Match': ", status: 404 })
+				return NextResponse.json({ message: "Item ID Doesnt Match", status: 404 })
 
 			}
 
 
 			if (ownerid != session.user.id) {
 				// return new Response('Owner ID Doesnt match', {status: 400, statusText: 'Owner ID Doesnt match'})
-				return NextResponse.json({ message: "Owner ID Doesnt match': ", status: 401 })
+				return NextResponse.json({ message: "Owner ID Doesnt match", status: 401 })
 			}
 
 			// SQL query with parameterized values
@@ -150,7 +150,7 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 			const queryResponse = await executeQuery(query, [compartment, level, locationType, position, params.id, session.user.id, applianceid]) as ResultSetHeader;
 
 
-			if (queryResponse && queryResponse.affectedRows && queryResponse.affectedRows > 0) {
+			if (queryResponse.affectedRows > 0) {
 				// Return success response
 				// return new NextResponse('', { status: 200, statusText: 'Item Moved' });
 				return NextResponse.json({ message: "Item Moved': ", status: 200 })
