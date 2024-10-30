@@ -153,14 +153,6 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
       setUpdating(true)
       const response = await updateItemInDb(updatedItem, item.ownerid, item.applianceid, shared)
 
-      // const response = await fetch(`/api/appliance-items/${item.id}`, {
-      //   method: 'PUT',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'update-type': 'update'
-      //   },
-      //   body: JSON.stringify(updatedItem),
-      // });
       if (response.status === 200) {
         handlingUpdateLocalItem(updatedItem);
         setUpdating(false)
