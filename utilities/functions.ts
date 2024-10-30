@@ -83,6 +83,8 @@ export const getOneSharedApplianceItems = async (applianceId: any) => {
 
 
 
+
+
 export const removeApplianceFromDb = async (applianceId: any) => {
   try {
     const response = await fetch(`/api/appliance/${applianceId}`, {
@@ -142,6 +144,28 @@ export const updateItemInDb = async (updatedItem: applianceItem, ownerId?: numbe
 
     return responseData;
 
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return error;
+  }
+}
+
+export const updateItemIconDb = async (updatedItem: { id: string, applianceid: number, ownerid: number, image: string }, ownerId?: number, applianceId?: number, shared?: sharedFromProps) => {
+
+  try {
+    const apiUrl = shared ? `/api/appliance-items/shared/${updatedItem.id}` : `/api/appliance-items/${updatedItem.id}`
+    const response = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'update-type': 'iconUpdate'
+      },
+      body: JSON.stringify(updatedItem),
+    });
+
+    const responseData = await response.json();
+
+    return responseData;
   } catch (error) {
     console.error('Error fetching data:', error);
     return error;

@@ -88,16 +88,11 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
     try {
       setIconUpdating(true);
       const update = { id: item.id, applianceid: item.applianceid, ownerid: item.ownerid, image: icon }
-      const response = await fetch(`/api/appliance-items/${item.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'update-type': 'iconUpdate'
-        },
-        body: JSON.stringify(update),
-      });
+      const response = await updateItemIconDb(update, item.ownerid, item.applianceid, shared)
+
+
       // If successful, update the Item locally
-      if (response.ok) {
+      if (response.status === 200) {
         const index = items.findIndex(item => item.id === update.id); // finds the item that matches
         const updatedItem = { ...item, image: icon, }
         if (index === -1) {
