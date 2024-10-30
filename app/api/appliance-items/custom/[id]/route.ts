@@ -41,7 +41,6 @@ export const PUT = async (request: NextRequest, params: any, response: NextRespo
       creatorId,
     ]);
 
-    console.log('RESPONSE', queryResponse);
 
     // Return success response
     return new Response('', { status: 200, statusText: 'Success' });

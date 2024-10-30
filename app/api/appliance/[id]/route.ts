@@ -1,63 +1,92 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
-import { OkPacket, ResultSetHeader } from "mysql2";
+import { OkPacket, ResultSetHeader, RowDataPacket } from "mysql2";
 
 import { authOptions } from "@/utilities/authOptions";
 import { executeQuery } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 import { headers } from "next/headers";
 
-export const GET = async (req: any, params: any, res: any) => {
+export const GET = async (req: NextRequest, params: any) => {
   // API Protection
   const session = await getServerSession(authOptions);
   if (!session) {
-    // Not Signed in
-    return NextResponse.json({ error: "You must be logged in': ", status: 401 })
+    return NextResponse.json({ error: "You must be logged in", status: 401 });
   }
 
   if (!params.params.id) {
-    return NextResponse.json({ message: 'No item Id provided' });
+    return NextResponse.json({ message: 'No appliance Id provided' });
   }
-  const query = "SELECT * FROM appliances WHERE ownerid=? AND id=?"
+
+  // SQL queries
+  const applianceQuery = "SELECT * FROM appliances WHERE ownerid=? AND id=?";
+  const sharingQuery = "SELECT * FROM sharing WHERE applianceId=?";
+
   try {
-    const response = await executeQuery(query, [session.user.id, params.params.id]);
-    return NextResponse.json(response);
+    // Fetch the appliance
+    const appliance = await executeQuery(applianceQuery, [session.user.id, params.params.id]) as RowDataPacket[];
+
+    // Check if the appliance exists
+    if (!appliance || appliance.length === 0) {
+      return NextResponse.json({ message: 'Appliance not found or unauthorized access', status: 401 });
+    }
+
+    // Fetch the sharing information for the appliance
+    const sharingData = await executeQuery(sharingQuery, [params.params.id]) as RowDataPacket[];
+
+    // Combine appliance data with the sharing information
+    const applianceWithSharing = {
+      ...appliance[0], // Assuming appliance is a single result, we take the first item
+      sharedWith: sharingData.map((share: any) => ({
+        id: share.id,
+        applianceId: share.applianceId,
+        email: share.email,
+        accepted: share.accepted,
+      })),
+    };
+
+    // Return the combined result
+    return NextResponse.json(applianceWithSharing, { status: 200 });
   } catch (error: any) {
-    return NextResponse.json({ message: error.message });
-
+    return NextResponse.json({ message: error.message, status: 500 });
   }
-}
+};
 
-export const DELETE = async (req: any, { params }: any, res: any) => {
 
+export const DELETE = async (req: any, { params }: any) => {
   // API Protection
   const session = await getServerSession(authOptions);
   if (!session) {
-    // Not Signed in
-    return NextResponse.json({ error: "You must be logged in': ", status: 401 })
+    return NextResponse.json({ error: "You must be logged in", status: 401 });
   }
 
   if (!params.id) {
     return NextResponse.json({ message: 'No appliance Id provided' });
   }
 
+  // SQL queries for deleting appliance and sharing records
+  const deleteApplianceQuery = 'DELETE FROM appliances WHERE id=? AND ownerid=?';
+  const deleteSharingQuery = 'DELETE FROM sharing WHERE applianceId=?';
+
   try {
+    // Delete records from sharing table
+    await executeQuery(deleteSharingQuery, [params.id]);
 
-    const query = 'DELETE FROM appliances WHERE id=? AND ownerid=?'
+    // Delete the appliance itself
+    const response = await executeQuery(deleteApplianceQuery, [params.id, session.user.id]) as ResultSetHeader;
 
-    const response = await executeQuery(query, [params.id, session.user.id]) as ResultSetHeader;
-
-    if (response && response?.affectedRows && response?.affectedRows > 0) {
-      console.log('THE RESPONSE', response);
-      return NextResponse.json(response);
+    // Check the affectedRows property
+    if (response.affectedRows > 0) {
+      return NextResponse.json({ message: 'Appliance and related sharing records deleted successfully' });
     } else {
       return NextResponse.json({ message: 'Invalid appliance ID or unauthorized access' });
     }
   } catch (error: any) {
     return NextResponse.json({ message: error.message });
-
   }
-}
+};
+
+
 
 
 export const PUT = async (request: NextRequest, params: any, response: NextResponse) => {

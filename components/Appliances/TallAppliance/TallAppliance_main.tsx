@@ -5,9 +5,12 @@ import FreezerCompartment from '../FreezerCompartment';
 import FridgeCompartment from '../FridgeCompartment';
 import ItemSearch from '@/components/ItemSearch/ItemSearch';
 import React from 'react'
+import SharingMenu from '../../sharingMenu/SharingMenu';
 import { findItemLocation } from '@/utilities/functions';
 
 type Props = {
+  applianceData: appliance;
+  updateAppliance: (appliance: appliance) => void;
   appliance: ApplianceProp;
   handleSelect: (items: applianceItem[], level: number, compartment: string, type: string, position: number) => void;
   handleModalState: (state: string, toDisplay?: 'add' | 'view') => void;
@@ -17,7 +20,7 @@ type Props = {
   selectedArea: selectionProps;
 }
 
-const TallAppliance_main = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems, typeOfAppliance, selectedArea }: Props) => {
+const TallAppliance_main = ({ applianceData, appliance, handleSelect, updateAppliance, handleModalState, items, handleUpdateItems, typeOfAppliance, selectedArea }: Props) => {
 
   const itemsInLocation = findItemLocation(items);
   const shelfPositions = [1, 2, 3]; // How many areas there are on a shelf
@@ -26,14 +29,6 @@ const TallAppliance_main = ({ appliance, handleSelect, handleModalState, items, 
 
   return (
     <>
-      <ApplianceTitleArea appliance={appliance} />
-
-      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} applianceType={typeOfAppliance} selectedArea={selectedArea} />
-
-      <div className='mx-auto w-fit h-fit'>
-        <ExpiryNotification layout='horizontal' items={items} />
-      </div>
-
 
       <div className={`max-w-[400px] h-fit rounded-md md:p-1 border-2 border-black bg-gray-100 mx-auto relative shadow-inner ${typeOfAppliance === 'tall_fridge' && 'mr-[22px] xs:mx-auto md:mx-0 lg:mx-auto'}`}>
 

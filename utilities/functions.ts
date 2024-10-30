@@ -2,12 +2,27 @@ export const toggleBodyScrolling = (state: boolean) => {
   state ? document.body.classList.remove('overflow-hidden') : document.body.classList.add('overflow-hidden')
 };
 
-export const getOneAppliance = async (applianceId: any) => {
+export const getOneAppliance = async (applianceId: string) => {
   try {
     const response = await fetch(`/api/appliance/${applianceId}`, {
       method: 'GET',
     });
     const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return false;
+  }
+}
+
+export const getOneSharedAppliance = async (applianceId: string) => {
+  try {
+    const response = await fetch(`/api/appliance/shared/${applianceId}`, {
+      method: 'GET',
+    });
+
+    const responseData = await response.json();
+
     return responseData;
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -53,6 +68,23 @@ export const getOneApplianceItems = async (applianceId: any) => {
   }
 }
 
+
+export const getOneSharedApplianceItems = async (applianceId: any) => {
+  try {
+    const response = await fetch(`/api/appliance-items/shared/${applianceId}`, {
+      method: 'GET',
+    });
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    return false;
+  }
+}
+
+
+
+
+
 export const removeApplianceFromDb = async (applianceId: any) => {
   try {
     const response = await fetch(`/api/appliance/${applianceId}`, {
@@ -67,19 +99,99 @@ export const removeApplianceFromDb = async (applianceId: any) => {
   }
 }
 
-export const removeItemFromDb = async (itemId: any) => {
+export const removeItemFromDb = async (itemId: string, ownerId?: number, applianceId?: number, shared?: sharedFromProps) => {
+
+  const apiUrl = shared ? `/api/appliance-items/shared/${itemId}` : `/api/appliance-items/${itemId}`
+
   try {
-    const response = await fetch(`/api/appliance-items/${itemId}`, {
+    const response = await fetch(apiUrl, {
       method: 'DELETE',
+      body: JSON.stringify({
+        ownerId: shared ? ownerId : undefined,
+        applianceId: shared ? applianceId : undefined
+      }),
     });
+
     const responseData = await response.json();
+
+    return responseData;
+
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return error;
+  }
+}
+
+export const updateItemInDb = async (updatedItem: applianceItem, ownerId?: number, applianceId?: number, shared?: sharedFromProps) => {
+
+  const apiUrl = shared ? `/api/appliance-items/shared/${updatedItem.id}` : `/api/appliance-items/${updatedItem.id}`
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'update-type': 'update'
+      },
+      body: JSON.stringify({
+        ...(shared && { ownerId }),
+        ...(shared && { applianceId }),
+        updatedItem: updatedItem
+      }),
+    });
+
+    const responseData = await response.json();
+
+    return responseData;
+
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return error;
+  }
+}
+
+export const updateItemIconDb = async (updatedItem: { id: string, applianceid: number, ownerid: number, image: string }, ownerId?: number, applianceId?: number, shared?: sharedFromProps) => {
+  try {
+    const apiUrl = shared ? `/api/appliance-items/shared/${updatedItem.id}` : `/api/appliance-items/${updatedItem.id}`
+    const response = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'update-type': 'iconUpdate'
+      },
+      body: JSON.stringify({ updatedItem }),
+    });
+
+    const responseData = await response.json();
+
     return responseData;
   } catch (error) {
     console.error('Error fetching data:', error);
     return error;
   }
-
 }
+
+export const moveItemInDb = async (updatedItem: { id: string, ownerid: number, applianceid: number, compartment: string, level: number, locationType: string, position: number }, ownerId?: number, applianceId?: number, shared?: sharedFromProps) => {
+  const apiUrl = shared ? `/api/appliance-items/shared/${updatedItem.id}` : `/api/appliance-items/${updatedItem.id}`
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'update-type': 'move'
+      },
+      body: JSON.stringify({ updatedItem }),
+    });
+    const responseData = await response.json();
+
+    return responseData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return error;
+  }
+}
+
 
 export const getUserCustomItems = async () => {
   try {
@@ -291,4 +403,94 @@ export const getAvailableCompartments = (applianceType: string) => {
 
   // If appliance is found, return its available compartments, otherwise return null
   return foundAppliance && foundAppliance.availableCompartments
+};
+
+
+export const removeShare = async (applianceId: number, email: string) => {
+  try {
+    const response = await fetch(`/api/sharing/${applianceId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }), // Send email in the request body
+    });
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return error;
+  }
+};
+
+export const addShare = async (applianceId: number, email: string, applianceName: string) => {
+  try {
+    const response = await fetch(`/api/sharing/new/${applianceId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, applianceName }), // Send email as a string in the body
+    });
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error adding share:', error);
+    return error;
+  }
+};
+
+
+// Gets all sharing invites for the logged in user
+export const getSharingInvites = async () => {
+  try {
+    const response = await fetch(`/api/sharing/`,);
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error getting shares:', error);
+    return error;
+  }
+};
+
+// For Accepting an invite to receive a shared appliance
+export const acceptShareInvite = async (id: number) => {
+  try {
+    const response = await fetch(`/api/sharing`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }), // Send id in the body
+    });
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error updating share invite:', error);
+    return error;
+  }
+};
+
+
+// For rejecting an invite to receive a shared appliance
+export const rejectShareInvite = async (id: number) => {
+  try {
+    const response = await fetch(`/api/sharing`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }), // Send the id in the body
+    });
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Error deleting share invite:', error);
+    return error;
+  }
 };

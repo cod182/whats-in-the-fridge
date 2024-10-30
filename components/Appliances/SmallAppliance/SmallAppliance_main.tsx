@@ -27,13 +27,7 @@ const SmallAppliance_main = ({ appliance, handleSelect, handleModalState, items,
 
   return (
     <>
-      <ApplianceTitleArea appliance={appliance} />
 
-      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} applianceType={typeOfAppliance} selectedArea={selectedArea} />
-
-      <div className='mx-auto w-fit h-fit'>
-        <ExpiryNotification layout='horizontal' items={items} />
-      </div>
 
 
       <div className={`max-w-[400px] h-fit rounded-md md:p-1 border-2 border-black bg-gray-100 mx-auto relative shadow-inner ${typeOfAppliance === 'under_counter_fridge' ? 'mr-[22px] xs:mx-auto md:mx-0 lg:mx-auto' : typeOfAppliance === 'under_counter_fridge_with_freezer' ? 'mr-[22px] xs:mx-auto md:mx-0 lg:mx-auto' : ''}`}>

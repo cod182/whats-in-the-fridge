@@ -21,7 +21,7 @@ export const DELETE = async (req: NextApiRequest, params: any, res: NextApiRespo
   const email = headersList.get("userEmail");
 
   const query = 'DELETE FROM user WHERE id=? AND email=?';
-  const values = [id, email];
+  const values = [id, session.user.email];
 
   try {
     const response = await executeQuery(query, values);

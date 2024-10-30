@@ -6,9 +6,10 @@ type Props = {
   items: applianceItem[]
   userId: string;
   applianceType: string;
+  shared?: sharedFromProps;
 }
 
-const ViewItems = ({ selectedArea, updateItems, items, userId, applianceType }: Props) => {
+const ViewItems = ({ selectedArea, updateItems, items, userId, applianceType, shared }: Props) => {
 
   return (
     <>
@@ -16,7 +17,7 @@ const ViewItems = ({ selectedArea, updateItems, items, userId, applianceType }: 
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
         {selectedArea && selectedArea?.items?.map((item: applianceItem, index: number) =>
           <div key={index} className='w-full h-full px-[1px]'>
-            <ItemCard item={item} items={items} updateItems={updateItems} applianceType={applianceType} selectedArea={selectedArea} />
+            <ItemCard shared={shared} item={item} items={items} updateItems={updateItems} applianceType={applianceType} selectedArea={selectedArea} />
           </div>
         )}
       </div>

@@ -1,10 +1,9 @@
 'use client'
 
-import { BsBoxArrowLeft, BsBoxArrowRight } from "react-icons/bs";
-import { getAvailableCompartments, removeItemFromDb, reverseDate } from "@/utilities/functions";
-import { useEffect, useState } from 'react';
+import { removeItemFromDb, reverseDate, updateItemIconDb, updateItemInDb } from "@/utilities/functions";
 
 import { BiDotsHorizontalRounded } from "react-icons/bi";
+import { BsBoxArrowRight } from "react-icons/bs";
 import { CiCircleChevDown } from 'react-icons/ci';
 import { FaEdit } from 'react-icons/fa'
 import IconSearch from "../IconSearch/IconSearch";
@@ -14,6 +13,7 @@ import { IoSaveSharp } from "react-icons/io5";
 import { MdCancel } from "react-icons/md";
 import MoveArea from "./MoveArea";
 import { TiTick } from "react-icons/ti";
+import { useState } from 'react';
 
 type Props = {
   item: applianceItem;
@@ -22,9 +22,10 @@ type Props = {
   applianceType: string;
   selectedArea: selectionProps;
   inSearch?: boolean;
+  shared?: sharedFromProps;
 }
 
-const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedArea }: Props) => {
+const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedArea, shared }: Props) => {
 
   // Use States
   const [containerStatus, setContainerStatus] = useState(false);
@@ -54,23 +55,24 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
     let result = confirm('Are you sure you want to delete?')
 
     if (result) {
-      console.log('deleting item');
-      console.log(e)
       try {
-        const response = await removeItemFromDb(item.id)
 
-        if (response.message) {
+        const response = await removeItemFromDb(item.id, item.ownerid, item.applianceid, shared)
+        console.log(response);
+        if (response.status === 200) {
+
+
+          const filteredItems = items.filter(
+            (i) => i.id != item.id
+          )
+          updateItems(filteredItems);
+
+        } else {
           console.log('Not Deleted', response)
           setError('Failed to delete item')
           setTimeout(() => {
             setError('');
           }, 2000);
-        } else {
-          console.log('Delete Item Response Ok', response.ok);
-          const filteredItems = items.filter(
-            (i) => i.id != item.id
-          )
-          updateItems(filteredItems);
         }
       } catch (error) {
         console.log(error)
@@ -86,16 +88,11 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
     try {
       setIconUpdating(true);
       const update = { id: item.id, applianceid: item.applianceid, ownerid: item.ownerid, image: icon }
-      const response = await fetch(`/api/appliance-items/${item.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'update-type': 'iconUpdate'
-        },
-        body: JSON.stringify(update),
-      });
+      const response = await updateItemIconDb(update, item.ownerid, item.applianceid, shared)
+
+
       // If successful, update the Item locally
-      if (response.ok) {
+      if (response.status === 200) {
         const index = items.findIndex(item => item.id === update.id); // finds the item that matches
         const updatedItem = { ...item, image: icon, }
         if (index === -1) {
@@ -138,25 +135,20 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
     const updatedItem = {
       ...item,
       name: formValues.itemName,
-      quantity: formValues.quantity,
+      quantity: Number(formValues.quantity),
       cookedFromFrozen: cookedFromFrozen,
       expiryDate: formValues.expiryDate,
       comment: formValues.comment,
       itemType: formValues.itemType,
       itemMainType: formValues.itemMainType,
       itemSubType: formValues.itemSubType,
-    }
+    };
+
     try {
       setUpdating(true)
-      const response = await fetch(`/api/appliance-items/${item.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'update-type': 'update'
-        },
-        body: JSON.stringify(updatedItem),
-      });
-      if (response.ok) {
+      const response = await updateItemInDb(updatedItem, item.ownerid, item.applianceid, shared)
+
+      if (response.status === 200) {
         handlingUpdateLocalItem(updatedItem);
         setUpdating(false)
         setSuccess(true);
@@ -167,7 +159,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
           setContainerStatus(false);
         }, 1000);
       } else {
-        setError(response.statusText);
+        setError(response.message);
         // Set success to false after 1 second
         setTimeout(() => {
           setError('');
@@ -230,7 +222,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
 
 
         {/* Moving Item Location START */}
-        <MoveArea setEditActivated={setEditActivated} updateItems={updateItems} items={items} setMoveArea={setMoveArea} moveArea={moveArea} item={item} applianceType={applianceType} selectedArea={selectedArea} />
+        <MoveArea setEditActivated={setEditActivated} updateItems={updateItems} items={items} setMoveArea={setMoveArea} moveArea={moveArea} item={item} applianceType={applianceType} selectedArea={selectedArea} shared={shared} />
         {/* MOVING ITEM LOCATION END */}
 
         {/* START Change Item Icon */}

@@ -1,16 +1,20 @@
 'use client'
 
-import { FridgeFreezer, Modal } from '..';
+import { ExpiryNotification, FridgeFreezer, ItemSearch, Modal } from '..';
 import React, { useState } from 'react';
 import { getAllAddableItems, getItemsInThisLocation, getUserCustomItems, toggleBodyScrolling } from '@/utilities/functions';
 
 import AddItem from '../AddingItems/AddItem';
 import American from '../Appliances/American/American_main';
+import ApplianceTitleArea from '../Appliances/ApplianceTitleArea';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import ChestAppliance from '../Appliances/ChestAppliance/ChestAppliance_main';
+import { DefaultUser } from 'next-auth';
 import { FaEdit } from 'react-icons/fa';
+import { ImConnection } from 'react-icons/im';
 import { IoSaveSharp } from 'react-icons/io5';
 import { MdCancel } from 'react-icons/md';
+import SharingMenu from '../sharingMenu/SharingMenu';
 import SmallAppliance_main from '../Appliances/SmallAppliance/SmallAppliance_main';
 import TallAppliance_main from '../Appliances/TallAppliance/TallAppliance_main';
 import { TiTick } from 'react-icons/ti';
@@ -22,11 +26,12 @@ type Props = {
   type: string;
   items: applianceItem[];
   updateItems: (items: applianceItem[]) => void;
-  userId: string;
+  updateAppliance: (appliance: appliance) => void;
+  user: { id: string, name: string, email: string };
   applianceData: appliance;
 }
 
-const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Props) => {
+const Appliance = ({ type = '', items, updateItems, updateAppliance, user, applianceData }: Props) => {
   // States
 
   // The modal State for open or closed
@@ -34,17 +39,20 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
 
   // The appliance state. Contains the current appliance
   const [appliance, setAppliance] = useState<ApplianceProp>();
+
   // State for the type of modal
   const [modalType, setModalType] = useState<'add' | 'view'>();
   const [availableItems, setAvailableItems] = useState<availableItem[]>([])
   const [userCreatedItems, setUserCreatedItems] = useState<userCreatedItem[]>([])
-  // Related to updaing the name of the appliance
+
+  // Related to updating the name of the appliance
   const [currentApplianceName, setCurrentApplianceName] = useState(applianceData.name)
   const [editName, setEditName] = useState<boolean>(false)
   const [applianceName, setApplianceName] = useState<string>('')
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>()
   const [success, setSuccess] = useState(false)
+
 
   // The state for the currently selected area (e.g shelf 0 position 0)
   // Contains the level (shelf / drawer number), compartment (e.g fridge, freezer, door), and optional position (0,1,2)
@@ -84,7 +92,7 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
     // Gets all the items in teh database that can be added to the appliance
     getAvailableItemsToAdd();
 
-  }, [type, appliance, userId, applianceData.name])
+  }, [type, appliance, user.id, applianceData.name])
 
 
   // Functions
@@ -135,7 +143,7 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ newName: applianceName, userId: userId.toString(), })
+        body: JSON.stringify({ newName: applianceName, userId: user.id.toString(), })
       });
       if (response.ok) {
         setCurrentApplianceName(applianceName)
@@ -173,16 +181,18 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
   }
 
 
+
+
   const getApplianceComponent = () => {
     if (appliance != null) {
 
       switch (type) {
         case 'fridge_freezer':
-          return <FridgeFreezer handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} applianceType={type} />;
+          return <FridgeFreezer updateAppliance={updateAppliance} applianceData={applianceData} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} applianceType={type} />;
 
         case 'tall_freezer':
         case 'tall_fridge':
-          return <TallAppliance_main handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} typeOfAppliance={type} />;
+          return <TallAppliance_main updateAppliance={updateAppliance} applianceData={applianceData} handleModalState={handleModalState} appliance={appliance} handleSelect={handleSelect} items={items} handleUpdateItems={handleUpdateItems} selectedArea={selectedArea} typeOfAppliance={type} />;
 
         case 'chest_freezer':
         case 'chest_fridge':
@@ -202,8 +212,6 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
     }
   }
 
-
-
   // Checks appliance exists
   if (appliance != null) {
     return (
@@ -217,12 +225,13 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
                 applianceType={type}
                 updateItems={handleUpdateItems}
                 items={items}
-                userId={userId}
+                userId={user.id}
+                shared={applianceData.sharedFrom && applianceData.sharedFrom}
               />
             }
 
             {modalType === 'add' &&
-              <AddItem userId={userId} selectedArea={selectedArea} availableItems={availableItems} userCreatedItems={userCreatedItems} updateItems={handleUpdateItems} items={items}
+              <AddItem userId={user.id} selectedArea={selectedArea} availableItems={availableItems} userCreatedItems={userCreatedItems} updateItems={handleUpdateItems} items={items} shared={applianceData.sharedFrom}
               />
             }
           </div>
@@ -233,17 +242,50 @@ const Appliance = ({ type = '', items, updateItems, userId, applianceData }: Pro
           {/* Fridge Name */}
           <div className='flex flex-row items-center justify-start gap-2 mb-2'>
             <h1 className={`${editName ? 'max-w-[0px]' : 'max-w-[300px]'}  h-[36px] overflow-hidden text-3xl font-bold transition-all duration-200 ease`}>{currentApplianceName} </h1>
+
             {/* Edit Form */}
-            <form action="" method='PUT' onSubmit={(e) => handleChangeApplianceName(e)} className={`${!editName ? 'max-w-[0px]' : 'max-w-[1000px]'} left-0 text-3xl font-bold overflow-hidden transition-all duration-200 ease flex flex-row items-center gap-2`}>
-              <input id='nameInput' className={`py-[5px] px-2 rounded-md ${!applianceName ? 'border-red-400' : 'border-black'}`} type="text" value={applianceName} onChange={(e) => setApplianceName(e.target.value)} />
-              <button className='' type="submit"><IoSaveSharp className={`w-[25px] h-[25px] hover:text-green-600 transition-all duration-200 ease ${loading || success ? 'hidden' : ''}`} /></button>
-            </form>
-            <MdCancel className={`w-[25px] h-[25px] hover:text-red-500 transition-all duration-200 ease cursor-pointer ${editName ? (loading || success ? 'hidden' : '') : 'hidden'}`} onClick={() => { setEditName(false); setApplianceName(currentApplianceName) }} />
-            {/* Edit BUtton */}
-            <FaEdit className={`${editName ? 'hidden' : ''} text-2xl text-blue-600 hover:scale-110 hover:text-gray-200 transition-all duration-200 ease cursor-pointer`} onClick={() => { setEditName(true); }} />
-            <div className={`bg-gray-800/60 text-red-500 font-semibold overflow-hidden transition-all duration-200 ease  ${errorMessage ? 'max-w-[1000px] overflow-scroll py-[5px] px-2 rounded-lg' : 'max-w-[0px] p-0'}`}>{errorMessage}</div>
-            <TiTick className={`${success && editName ? 'h-[40px] w-[40px] text-green-500' : 'hidden'} transition-all duration-200 ease`} />
-            <BiDotsHorizontalRounded className={`${loading && editName ? 'h-[40px] w-[40px] text-blue-500' : 'hidden'} animate-spin transition-all duration-200 ease`} />
+            {!applianceData.sharedFrom && (<>
+              <form action="" method='PUT' onSubmit={(e) => handleChangeApplianceName(e)} className={`${!editName ? 'max-w-[0px]' : 'max-w-[1000px]'} left-0 text-3xl font-bold overflow-hidden transition-all duration-200 ease flex flex-row items-center gap-2`}>
+                <input id='nameInput' className={`py-[5px] px-2 rounded-md ${!applianceName ? 'border-red-400' : 'border-black'}`} type="text" value={applianceName} onChange={(e) => setApplianceName(e.target.value)} />
+                <button className='' type="submit"><IoSaveSharp className={`w-[25px] h-[25px] hover:text-green-600 transition-all duration-200 ease ${loading || success ? 'hidden' : ''}`} /></button>
+              </form>
+              <MdCancel className={`w-[25px] h-[25px] hover:text-red-500 transition-all duration-200 ease cursor-pointer ${editName ? (loading || success ? 'hidden' : '') : 'hidden'}`} onClick={() => { setEditName(false); setApplianceName(currentApplianceName) }} />
+              {/* Edit BUtton */}
+              <FaEdit className={`${editName ? 'hidden' : ''} text-2xl text-blue-600 hover:scale-110 hover:text-gray-200 transition-all duration-200 ease cursor-pointer`} onClick={() => { setEditName(true); }} />
+              <div className={`bg-gray-800/60 text-red-500 font-semibold overflow-hidden transition-all duration-200 ease  ${errorMessage ? 'max-w-[1000px] overflow-scroll py-[5px] px-2 rounded-lg' : 'max-w-[0px] p-0'}`}>{errorMessage}</div>
+              <TiTick className={`${success && editName ? 'h-[40px] w-[40px] text-green-500' : 'hidden'} transition-all duration-200 ease`} />
+              <BiDotsHorizontalRounded className={`${loading && editName ? 'h-[40px] w-[40px] text-blue-500' : 'hidden'} animate-spin transition-all duration-200 ease`} />
+            </>)}
+
+          </div>
+
+          {/* Title Area */}
+          <div className='flex flex-row justify-between items-center'>
+            {/* Title */}
+            <ApplianceTitleArea appliance={appliance} />
+
+            {/* Start Sharing Section */}
+            {applianceData.sharedFrom ? (
+              <div className='flex flex-col items-center justify-center'>
+                <ImConnection className='rotate-45 w-[30px] h-[30px] text-blue-500' />
+                <p className='text-sm text-gray-600 font-normal italic'>Owned by: {applianceData.sharedFrom.ownerName}</p>
+              </div>
+            )
+              :
+              (
+                <SharingMenu applianceData={applianceData} updateAppliance={updateAppliance} user={user} />
+
+              )
+            }
+
+          </div>
+
+          {/* Item search */}
+          <ItemSearch items={items} handleUpdateItems={handleUpdateItems} applianceType={type} selectedArea={selectedArea} />
+
+          {/* Expiry area */}
+          <div className='mx-auto w-fit h-fit'>
+            <ExpiryNotification layout='horizontal' items={items} />
           </div>
 
           {getApplianceComponent()}

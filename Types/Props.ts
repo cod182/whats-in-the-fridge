@@ -45,11 +45,30 @@ type userProps = {
   password: string;
 }
 
+type ShareProps = {
+  id: number;
+  applianceId: number;
+  email: string;
+  sharedUserId: number;
+  accepted: string;
+  ownerEmail: string;
+  ownerName: string;
+  ownerId: number;
+  applianceName: string;
+}
+
+type sharedFromProps = {
+  ownerName: string;
+  ownerId: number;
+}
+
 type appliance = {
   id: number;
   ownerid: number;
   name: string;
   type: string;
+  sharedWith?: ShareProps[]
+  sharedFrom?: sharedFromProps;
 }
 
 type applianceItem = {
@@ -70,6 +89,7 @@ type applianceItem = {
   position: number;
   comment: string;
   image: string;
+  sharedUserId?: number;
 }
 
 type selectionProps = {
@@ -97,3 +117,4 @@ type customIcons = {
   name: string;
   icon: string;
 }
+

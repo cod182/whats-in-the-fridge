@@ -16,10 +16,11 @@ type Props = {
   userId: string;
   updateItems: (items: applianceItem[]) => void;
   items: applianceItem[];
+  shared?: sharedFromProps;
 }
 
 // Add Item Component
-const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updateItems, items }: Props) => {
+const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updateItems, items, shared }: Props) => {
 
   const { compartment, position, level, type } = selectedArea; // spreading the selected area
   // Use States
@@ -101,10 +102,10 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
 
       {/* Type of item Creation */}
       <div>
-        {addType === 'search' && <SearchAddItems selectedArea={selectedArea} preMadeItems={availableItems} userCreatedItems={userCreatedItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />}
-        {addType === 'options' && <OptionAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} showItemTypes={true} />}
-        {addType === 'custom' && <CustomAddItem selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />}
-        {addType === 'userCreated' && <OptionAddItem selectedArea={selectedArea} availableItems={userCreatedItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} showItemTypes={false} />}
+        {addType === 'search' && <SearchAddItems shared={shared} selectedArea={selectedArea} preMadeItems={availableItems} userCreatedItems={userCreatedItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />}
+        {addType === 'options' && <OptionAddItem shared={shared} selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} showItemTypes={true} />}
+        {addType === 'custom' && <CustomAddItem shared={shared} selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />}
+        {addType === 'userCreated' && <OptionAddItem shared={shared} selectedArea={selectedArea} availableItems={userCreatedItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} showItemTypes={false} />}
 
       </div>
 

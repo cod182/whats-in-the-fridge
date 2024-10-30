@@ -14,8 +14,9 @@ type Props = {
   availableItems: availableItem[]
   userId: string;
   handleAddingToCurrentItems: (item: applianceItem) => void;
+  shared?: sharedFromProps;
 }
-const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCurrentItems }: Props) => {
+const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCurrentItems, shared }: Props) => {
   const { compartment, position, level, type: locationType } = selectedArea;
 
   // States
@@ -95,7 +96,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
       const newItemId = generateUniqueId();
       let newItemObject = {
         id: newItemId,
-        ownerid: parseInt(userId),
+        ownerid: shared ? shared.ownerId : parseInt(userId),
         applianceid: parseInt(id),
         name: formValues.name,
         itemType: formValues.itemType,
@@ -111,11 +112,14 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
         locationType: locationType,
         position: position,
         image: selectedIcon,
+
       };
 
       try {
         setSubmitting(true)
-        const response = await fetch('/api/appliance-items/new', {
+        // Defining the apiUrl depending on if the item is shared or not
+        const apiUrl = shared ? '/api/appliance-items/shared/new' : '/api/appliance-items/new'
+        const response = await fetch(apiUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

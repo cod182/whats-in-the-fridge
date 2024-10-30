@@ -17,7 +17,6 @@ export const GET = async (req: NextApiRequest, params: any, res: NextResponse) =
   try {
     let query = `SELECT * FROM customAvailableItems WHERE creatorId=${session.user.id}`
     const response = await executeQuery(query);
-    console.log(response)
     return NextResponse.json(response);
   } catch (error: any) {
     return NextResponse.json({ message: error.message });

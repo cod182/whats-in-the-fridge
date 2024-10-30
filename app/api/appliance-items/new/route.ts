@@ -40,60 +40,72 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
 
     if (!cookedFromFrozen) {
       console.log('id required for item');
-      return new Response('item cookedFromFrozen is required', { status: 400, statusText: 'Item cookedFromFrozen is missing' });
+      return NextResponse.json({ message: "item cookedFromFrozen is required': ", status: 400, statusText: 'Item cookedFromFrozen is missing' });
+      // return new Response('item cookedFromFrozen is required', { status: 400, statusText: 'Item cookedFromFrozen is missing' });
     }
 
     if (!id) {
       console.log('id required for item');
-      return new Response('item id is required', { status: 400, statusText: 'Item ID is missing' });
+      return NextResponse.json({ message: "item ID is required': ", status: 400, statusText: 'Item ID is missing' });
+      // return new Response('item id is required', { status: 400, statusText: 'Item ID is missing' });
     }
     if (!ownerid) {
       console.log('ownerid required');
-      return new Response('User ID is required', { status: 400, statusText: 'User ID is missing' });
+      return NextResponse.json({ message: "userID is required': ", status: 401, statusText: 'User is missing' });
+      // return new Response('User ID is required', { status: 400, statusText: 'User ID is missing' });
     }
 
     if (!applianceid) {
       console.log('applianceid required');
+      return NextResponse.json({ message: "ApplianceID is required': ", status: 400, statusText: 'ApplianceID is missing' });
       return new Response('Appliance ID is required', { status: 400, statusText: 'Appliance ID is missing' });
     }
 
     if (!name) {
       console.log('item name required');
-      return new Response('Item Name is required', { status: 400, statusText: 'Item Name is missing' });
+      return NextResponse.json({ message: "item name is required': ", status: 400, statusText: 'Item name is missing' });
+      // return new Response('Item Name is required', { status: 400, statusText: 'Item Name is missing' });
     }
 
     if (!quantity) {
       console.log('quantity required');
-      return new Response('Item Quantity is required', { status: 400, statusText: 'Quantity is missing' });
+      return NextResponse.json({ message: "item quantity is required': ", status: 400, statusText: 'Item quantity is missing' });
+      // return new Response('Item Quantity is required', { status: 400, statusText: 'Quantity is missing' });
     }
     if (!image) {
       console.log('quantity required');
-      return new Response('Image is required', { status: 400, statusText: 'Image has not been selected' });
+      return NextResponse.json({ message: "item image is required': ", status: 400, statusText: 'Item image is missing' });
+      // return new Response('Image is required', { status: 400, statusText: 'Image has not been selected' });
     }
 
     if (!addedDate) {
       console.log('added date required');
-      return new Response('Added Date is required', { status: 400, statusText: 'The dat today is missing' });
+      return NextResponse.json({ message: "item added date is required': ", status: 400, statusText: 'Item added date is missing' });
+      // return new Response('Added Date is required', { status: 400, statusText: 'The dat today is missing' });
     }
 
     if (!itemType) {
       console.log('item type required');
-      return new Response('Item Type is required', { status: 400, statusText: 'The Type of item is missing' });
+      return NextResponse.json({ message: "item Type is required': ", status: 400, statusText: 'Item Type is missing' });
+      // return new Response('Item Type is required', { status: 400, statusText: 'The Type of item is missing' });
     }
 
     if (!compartment) {
       console.log('Compartment required');
-      return new Response('Compartment is required', { status: 400, statusText: 'The compartment is missing' });
+      return NextResponse.json({ message: "compartment is required': ", status: 400, statusText: 'Compartment is missing' });
+      // return new Response('Compartment is required', { status: 400, statusText: 'The compartment is missing' });
     }
 
     if (!locationType) {
       console.log('Location Required');
-      return new Response('LocationType is required', { status: 400, statusText: 'The Location is missing' });
+      return NextResponse.json({ message: "LocationType is required': ", status: 400, statusText: 'LocationType is missing' });
+      // return new Response('LocationType is required', { status: 400, statusText: 'The Location is missing' });
     }
 
     if (!level) {
       console.log('Level is required');
-      return new Response('Level is required', { status: 400, statusText: 'The level is missing' });
+      return NextResponse.json({ message: "Level is required': ", status: 400, statusText: 'Level is missing' });
+      // return new Response('Level is required', { status: 400, statusText: 'The level is missing' });
     }
 
     // SQL query with parameterized values
@@ -121,12 +133,12 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
       image
     ]);
 
-    console.log(queryResponse);
-
     // Return success response
-    return new Response('', { status: 200, statusText: 'Success' });
+    return NextResponse.json({ message: "Success': ", status: 200, statusText: 'Success' });
+    // return new Response('', { status: 200, statusText: 'Success' });
   } catch (error: any) {
     console.error(error);
-    return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error', message: error.message }), { status: 500 });
+    return NextResponse.json({ message: error.message, status: 500, statusText: 'Internal Server Error' });
+    // return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error', message: error.message }), { status: 500 });
   }
 };

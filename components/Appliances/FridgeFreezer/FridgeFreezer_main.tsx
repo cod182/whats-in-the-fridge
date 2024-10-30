@@ -4,33 +4,32 @@ import ApplianceTitleArea from '../ApplianceTitleArea';
 import DrawerButton from '../DrawerButton'
 import FreezerCompartment from '../FreezerCompartment';
 import FridgeCompartment from '../FridgeCompartment';
+import { ImConnection } from 'react-icons/im';
 import React from 'react'
+import { RiUserShared2Line } from 'react-icons/ri';
+import SharingMenu from '../../sharingMenu/SharingMenu';
 import { findItemLocation } from '@/utilities/functions';
 
 type Props = {
-  appliance: ApplianceProp;
+  applianceData: appliance; // All data for the appliance with shared info
+  appliance: ApplianceProp; // Info abotu the current appliance structure
   handleSelect: (items: applianceItem[], level: number, compartment: string, type: string, position: number) => void;
   handleModalState: (state: string, toDisplay?: 'add' | 'view') => void;
   items: applianceItem[];
+  updateAppliance: (appliance: appliance) => void;
   handleUpdateItems: (items: applianceItem[]) => void;
   selectedArea: selectionProps;
   applianceType: string;
 }
 
-const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handleUpdateItems, selectedArea, applianceType }: Props) => {
+const FridgeFreezer = ({ applianceData, appliance, handleSelect, handleModalState, items, updateAppliance, handleUpdateItems, selectedArea, applianceType }: Props) => {
 
   const itemsInLocation = findItemLocation(items);
   const shelfPositions = [1, 2, 3]; // How many areas there are on a shelf
 
   return (
-    <>
-      <ApplianceTitleArea appliance={appliance} />
+    <div>
 
-      <ItemSearch items={items} handleUpdateItems={handleUpdateItems} applianceType={applianceType} selectedArea={selectedArea} />
-
-      <div className='mx-auto w-fit h-fit'>
-        <ExpiryNotification layout='horizontal' items={items} />
-      </div>
 
 
       <div className='max-w-[400px] h-[800px] rounded-md md:p-1 border-2 border-black bg-gray-100 relative mr-[22px] xs:mx-auto ml-1 md:mx-0 lg:mx-auto shadow-inner'>
@@ -69,7 +68,7 @@ const FridgeFreezer = ({ appliance, handleSelect, handleModalState, items, handl
         <div className='absolute bottom-[-10px] right-[2%] w-[30px] h-[20px] bg-black rounded-md z-[-10]' />
         {/* Feet End */}
       </div >
-    </>
+    </div>
   )
 }
 
