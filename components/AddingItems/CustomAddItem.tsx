@@ -182,7 +182,7 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
       <FadeInHOC delayNumber={800} direction='up'>
         <div className='w-full h-full border-[1px] border-black xxxs:p-4 rounded-md transition-all duration-200 ease overflow-hidden relative my-4'>
           {submitting &&
-            <div className={`absolute top- 0 left-0 w - full h - full bg - gray - 400 / 80 z - [999] flex flex - col justify - center items - center`}>
+            <div className={`absolute top-0 left-0 w-full h-full bg-gray-400/80 z-[999] flex flex-col justify-center items-center`}>
               <p className='text-xl font-bold animate-ping'>Adding...</p>
             </div>
           }
