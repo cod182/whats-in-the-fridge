@@ -12,19 +12,12 @@ type Props = {
 const ProfileNotifications = ({ user }: Props) => {
 
   // States
-  const [appliances, setAppliances] = useState<appliance[]>();
-  const [allItems, setAllItems] = useState<applianceItem[]>();
-
+  const [appliances, setAppliances] = useState<appliance[]>([]);
+  const [allItems, setAllItems] = useState<applianceItem[]>([]);
   // Get All Appliances
   // useEffects
   useEffect(() => {
     // Fetches the list of appliances
-    const fetchAppliances = async () => {
-      if (user) {
-        const appliances: appliance[] = await getAllAppliances();
-        setAppliances(appliances)
-      }
-    };
 
     const getAllUserItems = async () => {
       const selectedApplianceItems = await getAllApplianceItems()
@@ -35,13 +28,24 @@ const ProfileNotifications = ({ user }: Props) => {
       }
     }
 
+    const fetchAppliances = async () => {
+      if (user) {
+        const appliances: appliance[] = await getAllAppliances();
+        setAppliances(appliances)
+        if (appliances.length > 0) {
+          getAllUserItems();
+        }
+      }
+    };
+
+
 
     // Calls fetch appliances
     fetchAppliances();
-    if (appliances) {
-      getAllUserItems();
-    }
+
   }, [user]);
+
+
 
   if (appliances && appliances.length < 1) return null
 
@@ -51,15 +55,13 @@ const ProfileNotifications = ({ user }: Props) => {
         <p className='my-2 text-2xl font-bold'>Notifications</p>
       </FadeInHOC>
       <FadeInHOC delayNumber={600} direction='down'>
-        <div className='flex flex-row flex-wrap items-start justify-start gap-2'>
-          {appliances != undefined && allItems != undefined &&
+        <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 w-full'>
+          {appliances.length > 0 && allItems.length > 0 &&
             appliances.map((appliance: appliance) => {
               const items = allItems.filter(item => item.applianceid === appliance.id)
-              if (items.length > 0) {
+              if (items) {
                 return (
-                  <div key={appliance.id} className='w-full md:max-w-[250px]'>
-                    <ExpiryNotification items={items} message={`${appliance.name}`} linkToAppliance={`/appliance/${appliance.id}`} boxStyles='shadow-[1px_1px_0px_0px_rgba(0,0,0,0.1)]' />
-                  </div>
+                  <ExpiryNotification key={appliance.id} items={items} message={`${appliance.name}`} linkToAppliance={`/appliance/${appliance.id}${appliance.sharedFrom ? '?shared' : ''}`} boxStyles='shadow-[1px_1px_0px_0px_rgba(0,0,0,0.1)]' />
                 )
               }
             })

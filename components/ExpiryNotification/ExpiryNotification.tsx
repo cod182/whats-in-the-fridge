@@ -124,57 +124,58 @@ const ExpiryNotification = ({ items, message, linkToAppliance, layout = 'vertica
 
     }
   }
+  if (expiringItems) {
+    if (expiringItems[0].items.length > 0 || expiringItems[1].items.length > 0 || expiringItems[2].items.length > 0 || expiringItems[3].items.length > 0 || expiringItems[4].items.length > 0) {
+      return (
+        <div className={`w-full ${boxStyles} flex ${layout === 'vertical' ? 'flex-col items-start justify-center' : 'md:flex-row flex-wrap flex-col items-start justify-start gap-x-2'} w-full h-fit rounded-md p-2`}>
 
-  if (expiringItems && expiringItems[0].items.length > 0 || expiringItems && expiringItems[1].items.length > 0 || expiringItems && expiringItems[2].items.length > 0 || expiringItems && expiringItems[3].items.length > 0 || expiringItems && expiringItems[4].items.length > 0) {
-    return (
-      <div className={`${boxStyles} flex ${layout === 'vertical' ? 'flex-col items-start justify-center' : 'md:flex-row flex-wrap flex-col items-start justify-start gap-x-2'} w-full h-fit rounded-md p-2`}>
+          {message && (
+            <p className="px-2 font-semibold capitalize">{message}</p>
+          )}
 
-        {message && (
-          <p className="px-2 font-semibold capitalize">{message}</p>
-        )}
+          {linkToAppliance && (
+            <Link href={linkToAppliance} className="w-full px-2 text-sm italic text-gray-600 transition-all duration-200 ease hover:text-blue-500 active:text-blue-600 text-start text-normal group">Go to Appliance <FaArrowRight className="inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /> </Link>
+          )}
 
-        {linkToAppliance && (
-          <Link href={linkToAppliance} className="w-full px-2 text-sm italic text-gray-600 transition-all duration-200 ease hover:text-blue-500 active:text-blue-600 text-start text-normal group">Go to Appliance <FaArrowRight className="inline group-hover:translate-x-[5px] group-hover:scale-105 transition-all duration-300 ease" /> </Link>
-        )}
-
-        {expiringItems.map((expiryObj) =>
-          expiryObj.items.length >= 1 && (
-            <button
-              key={expiryObj.name.replace(/\s/g, "_")}
-              onClick={() => setSelectedExpiry((prev) => prev === expiryObj.name.replace(/\s/g, "_") ? null : expiryObj.name.replace(/\s/g, "_"))}
-              className={`w-full group h-fit my-1 py-[2px] flex flex-col items-start justify-center overflow-hidden ${expiryObj.name === 'expired' ? 'bg-red-500/70 font-bold hover:bg-red-500/80 active:bg-red-500/90' : 'bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500/90'} active:shadow-inner w-fit rounded-lg transition-all duration-200 ease cursor-pointer select-none`}
-            >
-              {/* TOP Notification Bar */}
-              <div className='flex flex-row items-center justify-between w-full px-2' onClick={() => { }}>
-                <p className={`text-md text-start ${expiryObj.name === 'expired' ? 'font-bold' : 'font-normal'}`}>{getExpiryText(expiryObj.name)} {expiryObj.name === 'expired' && (<IoIosWarning className="inline text-yellow-300" />)}</p>
-                <div className='ml-2 rounded-full bg-red-600 h-[22px] w-[22px] text-gray-100 text-sm select-none flex flex-col justify-center items-center'>
-                  <p>
-                    {expiryObj.items.length || 0}
-                  </p>
+          {expiringItems.map((expiryObj) =>
+            expiryObj.items.length >= 1 && (
+              <button
+                key={expiryObj.name.replace(/\s/g, "_")}
+                onClick={() => setSelectedExpiry((prev) => prev === expiryObj.name.replace(/\s/g, "_") ? null : expiryObj.name.replace(/\s/g, "_"))}
+                className={`w-full group h-fit my-1 py-[2px] flex flex-col items-start justify-center overflow-hidden ${expiryObj.name === 'expired' ? 'bg-red-500/70 font-bold hover:bg-red-500/80 active:bg-red-500/90' : 'bg-gray-500/50 hover:bg-gray-500/70 active:bg-gray-500/90'} active:shadow-inner w-fit rounded-lg transition-all duration-200 ease cursor-pointer select-none`}
+              >
+                {/* TOP Notification Bar */}
+                <div className='flex flex-row items-center justify-between w-full px-2' onClick={() => { }}>
+                  <p className={`text-md text-start ${expiryObj.name === 'expired' ? 'font-bold' : 'font-normal'}`}>{getExpiryText(expiryObj.name)} {expiryObj.name === 'expired' && (<IoIosWarning className="inline text-yellow-300" />)}</p>
+                  <div className='ml-2 rounded-full bg-red-600 h-[22px] w-[22px] text-gray-100 text-sm select-none flex flex-col justify-center items-center'>
+                    <p>
+                      {expiryObj.items.length || 0}
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Items that have / are expiring */}
-              <div className={`${selectedExpiry === expiryObj.name.replace(/\s/g, "_") ? 'max-h-[400px] overflow-scroll py-[5px]' : 'max-h-[0px] overflow-hidden'} transition-all duration-200 ease flex flex-col items-start justify-start gap-y-2 w-full`}>
-                <hr className="w-full border-black" />
-                <div className={`px-2 transition-all duration-200 ease flex flex-col items-start justify-start gap-y-2 w-full`}>
-                  {expiryObj.items.map((item) => (
-                    <div key={item.id} className="text-gray-300 w-full h-fit flex flex-col items-start justify-start bg-gray-800/60 rounded-lg px-2 py-[5px]">
-                      <p className='text-start text-md font-normal min-w-[170px]' >{item.name}</p>
-                      {expiryObj.name === 'expired' && (
-                        <p className="text-xs font-normal capitalize text-start">Expired: {reverseDate(item.expiryDate)}</p>
-                      )}
-                      <p className="text-xs font-normal capitalize text-start">Location: {item.compartment} {item.locationType} {item.level}</p>
-                    </div>
-                  ))}
+                {/* Items that have / are expiring */}
+                <div className={`${selectedExpiry === expiryObj.name.replace(/\s/g, "_") ? 'max-h-[400px] overflow-scroll py-[5px]' : 'max-h-[0px] overflow-hidden'} transition-all duration-200 ease flex flex-col items-start justify-start gap-y-2 w-full`}>
+                  <hr className="w-full border-black" />
+                  <div className={`px-2 transition-all duration-200 ease flex flex-col items-start justify-start gap-y-2 w-full`}>
+                    {expiryObj.items.map((item) => (
+                      <div key={item.id} className="text-gray-300 w-full h-fit flex flex-col items-start justify-start bg-gray-800/60 rounded-lg px-2 py-[5px]">
+                        <p className='text-start text-md font-normal min-w-[170px]' >{item.name}</p>
+                        {expiryObj.name === 'expired' && (
+                          <p className="text-xs font-normal capitalize text-start">Expired: {reverseDate(item.expiryDate)}</p>
+                        )}
+                        <p className="text-xs font-normal capitalize text-start">Location: {item.compartment} {item.locationType} {item.level}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </button >
-          )
-        )}
-      </div >
-    )
-  }
+              </button >
+            )
+          )}
+        </div >
+      )
+    }
+  } return
 }
 
 export default ExpiryNotification

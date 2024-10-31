@@ -312,8 +312,10 @@ export const getItemsInThisLocation = (level: number, items: applianceItem[], lo
   return array;
 }
 
+import { RowDataPacket } from 'mysql2';
 // Gets the image for th provided appliance name
 import { appliances } from '../static/appliances';
+import { executeQuery } from '@/lib/db';
 
 export const getImageForAppliance = (applianceName: string) => {
   let imageString = '/assets/images/appliances/not_found.webp'; // Settings the default string as a nor found image 
@@ -494,3 +496,24 @@ export const rejectShareInvite = async (id: number) => {
     return error;
   }
 };
+
+
+export const checkUserAuthorised = async (applianceId: string, id: string) => {
+  try {
+    // Query to get all the users who have shared the appliance
+    const sharingQuery = "SELECT * FROM sharing WHERE applianceId=?";
+    const sharingResponse = await executeQuery(sharingQuery, [applianceId]) as RowDataPacket[];
+
+
+    const isUserShared = sharingResponse.some(
+      (record) => {
+        return record.sharedUserId === parseInt(id);
+      }
+    );
+
+    return isUserShared;
+
+  } catch (error) {
+    return false;
+  }
+}

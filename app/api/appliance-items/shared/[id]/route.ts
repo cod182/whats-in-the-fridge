@@ -3,31 +3,10 @@ import { ResultSetHeader, RowDataPacket } from "mysql2";
 
 import { NextApiRequest } from "next";
 import { authOptions } from "@/utilities/authOptions";
+import { checkUserAuthorised } from "@/utilities/functions";
 import { executeQuery } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 import { headers } from "next/headers";
-
-const checkUserAuthorised = async (applianceId: string, id: string) => {
-	try {
-		// Query to get all the users who have shared the appliance
-		const sharingQuery = "SELECT * FROM sharing WHERE applianceId=?";
-		const sharingResponse = await executeQuery(sharingQuery, [applianceId]) as RowDataPacket[];
-
-
-		const isUserShared = sharingResponse.some(
-			(record) => {
-				return record.sharedUserId === parseInt(id);
-			}
-		);
-
-		return isUserShared;
-
-	} catch (error) {
-		return false;
-	}
-
-
-}
 
 export const GET = async (req: NextApiRequest, { params }: { params: { id: string } }, res: any) => {
 
