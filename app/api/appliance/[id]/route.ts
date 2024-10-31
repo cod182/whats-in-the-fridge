@@ -5,16 +5,17 @@ import { OkPacket, ResultSetHeader, RowDataPacket } from "mysql2";
 import { authOptions } from "@/utilities/authOptions";
 import { executeQuery } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
-import { headers } from "next/headers";
 
-export const GET = async (req: NextRequest, params: any) => {
+export const GET = async (req: NextRequest, { params }: any) => {
   // API Protection
   const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({ error: "You must be logged in", status: 401 });
   }
 
-  if (!params.params.id) {
+  const { id: paramId } = await params;
+
+  if (!paramId) {
     return NextResponse.json({ message: 'No appliance Id provided' });
   }
 
@@ -24,7 +25,7 @@ export const GET = async (req: NextRequest, params: any) => {
 
   try {
     // Fetch the appliance
-    const appliance = await executeQuery(applianceQuery, [session.user.id, params.params.id]) as RowDataPacket[];
+    const appliance = await executeQuery(applianceQuery, [session.user.id, paramId]) as RowDataPacket[];
 
     // Check if the appliance exists
     if (!appliance || appliance.length === 0) {
@@ -32,7 +33,7 @@ export const GET = async (req: NextRequest, params: any) => {
     }
 
     // Fetch the sharing information for the appliance
-    const sharingData = await executeQuery(sharingQuery, [params.params.id]) as RowDataPacket[];
+    const sharingData = await executeQuery(sharingQuery, [paramId]) as RowDataPacket[];
 
     // Combine appliance data with the sharing information
     const applianceWithSharing = {
@@ -60,7 +61,9 @@ export const DELETE = async (req: any, { params }: any) => {
     return NextResponse.json({ error: "You must be logged in", status: 401 });
   }
 
-  if (!params.id) {
+  const { id } = await params;
+
+  if (!id) {
     return NextResponse.json({ message: 'No appliance Id provided' });
   }
 
@@ -70,30 +73,31 @@ export const DELETE = async (req: any, { params }: any) => {
 
   try {
     // Delete records from sharing table
-    await executeQuery(deleteSharingQuery, [params.id]);
+    await executeQuery(deleteSharingQuery, [id]);
 
     // Delete the appliance itself
-    const response = await executeQuery(deleteApplianceQuery, [params.id, session.user.id]) as ResultSetHeader;
+    const response = await executeQuery(deleteApplianceQuery, [id, session.user.id]) as ResultSetHeader;
 
     // Check the affectedRows property
     if (response.affectedRows > 0) {
-      return NextResponse.json({ message: 'Appliance and related sharing records deleted successfully' });
+      return NextResponse.json({ message: 'Appliance and related sharing records deleted successfully', status: 200 });
     } else {
-      return NextResponse.json({ message: 'Invalid appliance ID or unauthorized access' });
+      return NextResponse.json({ message: 'Invalid appliance ID or unauthorized access', status: 401 });
     }
   } catch (error: any) {
-    return NextResponse.json({ message: error.message });
+    return NextResponse.json({ message: error.message, status: 400 });
   }
 };
 
 
 
 
-export const PUT = async (request: NextRequest, params: any, response: NextResponse) => {
+export const PUT = async (request: NextRequest, { params }: any, response: NextResponse) => {
+  const { id: paramId } = await params;
   try {
     const { newName, userId } = await request.json();
 
-    if (!params.params.id) {
+    if (!paramId) {
       return new Response('An appliance id is missing', { status: 400, statusText: 'An appliance id is missing' });
     }
 
@@ -109,11 +113,10 @@ export const PUT = async (request: NextRequest, params: any, response: NextRespo
     const query = `UPDATE appliances SET name = ? WHERE id = ? AND ownerid = ?`;
     const queryResponse = await executeQuery(query, [
       newName,
-      params.params.id,
+      paramId,
       userId
     ]);
 
-    console.log('RESPONSE', queryResponse);
 
     // Return success response
     return new Response('', { status: 200, statusText: 'Success: Appliance Renamed' });

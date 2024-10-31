@@ -9,15 +9,16 @@ interface Params {
 	id: string;   // Appliance ID
 }
 
-export const POST = async (req: NextRequest, { params }: { params: Params }) => {
+export const POST = async (req: NextRequest, { params }: any) => {
 	// API Protection: Check if the user is authenticated
 	const session = await getServerSession(authOptions);
 	if (!session) {
 		return NextResponse.json({ error: "You must be logged in", status: 401 });
 	}
+	const { id: paramsId } = await params;
 
 	// Check if appliance ID is provided
-	if (!params.id) {
+	if (!paramsId) {
 		return NextResponse.json({ message: "No appliance ID provided", status: 400 });
 	}
 
@@ -35,7 +36,7 @@ export const POST = async (req: NextRequest, { params }: { params: Params }) => 
 
 	try {
 		// Execute the INSERT query and explicitly cast the result to OkPacket
-		const response = await executeQuery<OkPacket>(insertSharingQuery, [params.id, email, 'false', session.user.email, session.user.name, session.user.id, applianceName]);
+		const response = await executeQuery<OkPacket>(insertSharingQuery, [paramsId, email, 'false', session.user.email, session.user.name, session.user.id, applianceName]);
 
 		// Check the affectedRows to see if any record was insertedo
 		if (response.affectedRows > 0) {

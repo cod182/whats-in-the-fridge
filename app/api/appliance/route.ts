@@ -220,7 +220,7 @@ export const DELETE = async (req: any, params: any, res: any) => {
   }
 
   // Get headers, expecting an appliance id from the request
-  const headersList = headers();
+  const headersList = await headers();
   const applianceId = headersList.get("appliance-id");
   if (!applianceId) {
     return NextResponse.json({ message: 'No Appliance ID Provided' });

@@ -15,7 +15,7 @@ export const GET = async (req: NextApiRequest, params: any, res: any) => {
     return NextResponse.json({ error: "You must be logged in': ", status: 401 })
   }
 
-  const headersList = headers();
+  const headersList = await headers();
   const query = headersList.get("query-header");
 
   if (!query) {

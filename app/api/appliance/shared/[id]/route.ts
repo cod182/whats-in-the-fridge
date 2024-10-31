@@ -1,25 +1,25 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
-import { OkPacket, ResultSetHeader, RowDataPacket } from "mysql2";
+import { OkPacket, RowDataPacket } from "mysql2";
 
-import { Appliance } from '@/components';
 import { authOptions } from "@/utilities/authOptions";
 import { executeQuery } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
-import { headers } from "next/headers";
 
 const hasMatchingSharedUserId = (applianceWithSharing: appliance, userId: string) => {
 	return applianceWithSharing!.sharedWith?.some((shared: ShareProps) => shared.sharedUserId === parseInt(userId));
 };
 
-export const GET = async (req: NextRequest, params: any) => {
+export const GET = async (req: NextRequest, { params }: any) => {
 	// API Protection
 	const session = await getServerSession(authOptions);
 	if (!session) {
 		return NextResponse.json({ error: "You must be logged in", status: 401 });
 	}
 
-	if (!params.params.id) {
+	const { id } = await params;
+
+	if (!id) {
 		return NextResponse.json({ message: 'No appliance Id provided' });
 	}
 
@@ -29,7 +29,7 @@ export const GET = async (req: NextRequest, params: any) => {
 
 	try {
 		// Fetch the appliance
-		const appliance = await executeQuery(applianceQuery, [params.params.id]) as RowDataPacket[];
+		const appliance = await executeQuery(applianceQuery, [id]) as RowDataPacket[];
 
 		// Check if the appliance exists
 		if (!appliance || appliance.length === 0) {
@@ -37,7 +37,7 @@ export const GET = async (req: NextRequest, params: any) => {
 		}
 
 		// Fetch the sharing information for the appliance
-		const sharingData = await executeQuery(sharingQuery, [params.params.id]) as RowDataPacket[];
+		const sharingData = await executeQuery(sharingQuery, [id]) as RowDataPacket[];
 
 		// Combine appliance data with the sharing information
 		const applianceWithSharing: appliance = {

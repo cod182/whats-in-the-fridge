@@ -16,7 +16,7 @@ export const DELETE = async (req: NextApiRequest, params: any, res: NextApiRespo
   }
 
 
-  const headersList = headers();
+  const headersList = await headers();
   const id = headersList.get("userId");
   const email = headersList.get("userEmail");
 

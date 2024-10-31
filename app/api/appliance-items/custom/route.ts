@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 import { authOptions } from '@/utilities/authOptions';
 import { executeQuery } from '@/lib/db';
 import { getServerSession } from 'next-auth/next';
-import { headers } from "next/headers";
 
 export const GET = async (req: NextApiRequest, params: any, res: NextResponse) => {
 

@@ -7,7 +7,7 @@ import { executeQuery } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 import { headers } from "next/headers";
 
-export const GET = async (req: NextRequest, params: any, res: NextResponse) => {
+export const GET = async (req: NextRequest, { params }: any, res: NextResponse) => {
   // API Protection
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -15,14 +15,16 @@ export const GET = async (req: NextRequest, params: any, res: NextResponse) => {
     return NextResponse.json({ error: "You must be logged in': ", status: 401 })
   }
 
-  if (!params.params.id) {
+  const { id: paramsId } = await params;
+
+  if (!paramsId) {
     return NextResponse.json({ message: 'No item Id provided' });
   }
 
   const query = 'SELECT * FROM applianceItems WHERE ownerid=? AND applianceid=?'
 
   try {
-    const response = await executeQuery(query, [session.user.id, params.params.id]);
+    const response = await executeQuery(query, [session.user.id, paramsId]);
     return NextResponse.json(response);
   } catch (error: any) {
     return NextResponse.json({ message: error.message });
@@ -38,13 +40,14 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
     // Not Signed in
     return NextResponse.json({ error: "You must be logged in': ", status: 401 })
   }
+  const { id: paramsId } = await params;
 
-  if (!params.id || params.id === 'undefined') {
+  if (!paramsId || paramsId === 'undefined') {
     return new Response('No Item Id Provided', { status: 400, statusText: 'No Item Id Provided' })
   }
 
   try {
-    const response = await executeQuery('DELETE FROM applianceItems WHERE id = ? AND ownerid = ?', [params.id, session.user.id]) as ResultSetHeader;
+    const response = await executeQuery('DELETE FROM applianceItems WHERE id = ? AND ownerid = ?', [paramsId, session.user.id]) as ResultSetHeader;
 
     if (response.affectedRows > 0) {
       return NextResponse.json({ response, status: 200 });
@@ -65,7 +68,10 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
     return NextResponse.json({ message: "You must be logged in': ", status: 401 })
   }
 
-  const headersList = headers();
+  const { id: paramsId } = await params;
+
+
+  const headersList = await headers();
   const typeOfUpdate = headersList.get("update-type");
 
   if (typeOfUpdate === 'move') {
@@ -87,7 +93,7 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 
       console.log(updatedItem)
 
-      if (id != params.id) {
+      if (id != paramsId) {
         // return new Response('Item ID Doesnt Match', { status: 404, statusText: 'Item ID Doesnt Match' })
         return NextResponse.json({ message: "Item ID Doesnt Match': ", status: 404 })
 
@@ -101,7 +107,7 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
       // SQL query with parameterized values
       const query = `UPDATE applianceItems SET compartment=?, level=?, locationType=?, position=? WHERE id=? AND ownerid=? AND applianceid=?`;
 
-      const queryResponse = await executeQuery(query, [compartment, level, locationType, position, params.id, session.user.id, applianceid]) as ResultSetHeader;
+      const queryResponse = await executeQuery(query, [compartment, level, locationType, position, paramsId, session.user.id, applianceid]) as ResultSetHeader;
 
 
       if (queryResponse.affectedRows > 0) {
@@ -147,7 +153,7 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
       console.log('updatedItem', updatedItem)
 
 
-      if (id != params.id) {
+      if (id != paramsId) {
         // return new Response('Item ID Doesnt Match', { status: 400, statusText: 'Item ID Doesnt Match' })
         return NextResponse.json({ message: 'Item ID Doesnt Match', status: 400 })
 
@@ -169,7 +175,7 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
       // SQL query with parameterized values
       const query = `UPDATE applianceItems SET name=?, itemType=?, itemMainType=?, itemSubType=?, quantity=?, cookedFromFrozen=?, expiryDate=?, comment=? WHERE id=? AND ownerid=? AND applianceid=?`;
 
-      const queryResponse = await executeQuery(query, [name, itemType, itemMainType, itemSubType, quantity, cookedFromFrozen, expiryDate, comment, params.id, session.user.id, applianceid]) as ResultSetHeader;
+      const queryResponse = await executeQuery(query, [name, itemType, itemMainType, itemSubType, quantity, cookedFromFrozen, expiryDate, comment, paramsId, session.user.id, applianceid]) as ResultSetHeader;
 
 
       if (queryResponse && queryResponse.affectedRows && queryResponse.affectedRows > 0) {
@@ -206,7 +212,7 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
       } = updatedItem;
 
 
-      if (id != params.id) {
+      if (id != paramsId) {
         // return new Response('Item ID Doesnt Match', { status: 400, statusText: 'Item ID Doesnt Match' })
         return NextResponse.json({ message: 'Item ID Doesnt Match', status: 400 })
       }
@@ -221,7 +227,7 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
       // SQL query with parameterized values
       const query = `UPDATE applianceItems SET image=? WHERE id=? AND ownerid=? AND applianceid=?`;
 
-      const queryResponse = await executeQuery(query, [image, params.id, session.user.id, applianceid]) as ResultSetHeader;
+      const queryResponse = await executeQuery(query, [image, paramsId, session.user.id, applianceid]) as ResultSetHeader;
 
 
       if (queryResponse && queryResponse.affectedRows && queryResponse.affectedRows > 0) {

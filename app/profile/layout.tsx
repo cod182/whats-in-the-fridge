@@ -22,7 +22,7 @@ const layout = async ({
   if (!session?.user) {
     redirect('/login');
   }
-  const headersList = headers();
+  const headersList = await headers();
   const pathname = headersList.get("x-pathname") || "";
 
   return (
