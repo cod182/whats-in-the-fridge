@@ -112,7 +112,6 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
         locationType: locationType,
         position: position,
         image: selectedIcon,
-
       };
 
       try {
@@ -126,7 +125,8 @@ const CustomAddItem = ({ selectedArea, availableItems, userId, handleAddingToCur
           },
           body: JSON.stringify(newItemObject),
         });
-        if (response.ok) {
+        if (response.status === 200) {
+
           const customItemResponse = await fetch('/api/appliance-items/custom/new', {
             method: 'POST',
             headers: {

@@ -63,7 +63,7 @@ export const POST = async (request: NextRequest, params: any, response: NextResp
     `;
     const queryResponse = await executeQuery(query, [
       id,
-      ownerid,
+      session.user.id,
       name,
       itemMainType,
       itemType,
