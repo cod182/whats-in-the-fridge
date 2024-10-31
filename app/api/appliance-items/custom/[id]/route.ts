@@ -51,6 +51,7 @@ export const PUT = async (request: NextRequest, params: any, response: NextRespo
 };
 
 export const DELETE = async (req: any, { params }: any, res: any) => {
+  const { id: paramsId } = await params;
 
   // API Protection
   const session = await getServerSession(authOptions);
@@ -59,14 +60,14 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
     return NextResponse.json({ error: "You must be logged in': ", status: 401 })
   }
 
-  if (!params.id || params.id === 'undefined') {
+  if (!paramsId || paramsId === 'undefined') {
     return new Response('No Item Id Provided', { status: 400, statusText: 'No Item Id Provided' })
   }
 
   try {
     const query = 'DELETE FROM customAvailableItems WHERE id = ? AND creatorId = ?';
 
-    const response = await executeQuery(query, [params.id, session.user.id]);
+    const response = await executeQuery(query, [paramsId, session.user.id]);
     console.log('deleted')
     return NextResponse.json(response);
   } catch (error: any) {

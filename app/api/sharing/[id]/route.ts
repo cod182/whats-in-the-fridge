@@ -5,19 +5,18 @@ import { authOptions } from "@/utilities/authOptions";
 import { executeQuery } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 
-interface Params {
-	id: string;   // Appliance ID
-}
-
-export const DELETE = async (req: NextRequest, { params }: { params: Params }) => {
+export const DELETE = async (req: NextRequest, { params }: any) => {
 	// API Protection: Check if the user is authenticated
 	const session = await getServerSession(authOptions);
 	if (!session) {
 		return NextResponse.json({ error: "You must be logged in", status: 401 });
 	}
 
+	const { id: paramsId } = await params;
+
+
 	// Check if appliance ID is provided
-	if (!params.id) {
+	if (!paramsId) {
 		return NextResponse.json({ message: "No appliance ID provided", status: 400 });
 	}
 
@@ -31,7 +30,7 @@ export const DELETE = async (req: NextRequest, { params }: { params: Params }) =
 
 	try {
 		// Execute the deletion query and explicitly cast the result to OkPacket
-		const response = await executeQuery<OkPacket>(deleteSharingQuery, [params.id, email]);
+		const response = await executeQuery<OkPacket>(deleteSharingQuery, [paramsId, email]);
 
 		// Check the affectedRows to see if any record was deleted
 		if (response.affectedRows > 0) {
