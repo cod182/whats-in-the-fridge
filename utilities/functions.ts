@@ -517,3 +517,12 @@ export const checkUserAuthorised = async (applianceId: string, id: string) => {
     return false;
   }
 }
+
+
+// utils/deviceDetection.ts
+export const isMobileOrTablet = (): boolean => {
+  if (typeof window === 'undefined') return false; // Return false on server-side
+
+  const userAgent = navigator.userAgent || navigator.vendor;
+  return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
+};
