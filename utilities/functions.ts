@@ -539,3 +539,15 @@ export const getBarcodeScanInfo = async (barcode: string) => {
     return error;
   }
 };
+
+export function checkFileType(value: string) {
+  if (
+    value.includes('https://')
+  ) {
+    console.log('True', value)
+    return `/assets/images/items/${value}`
+  } else {
+    console.log('False', value)
+    return value;
+  }
+}
