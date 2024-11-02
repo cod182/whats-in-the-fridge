@@ -115,7 +115,7 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
                 Scan Item
               </span>
             </button>
-          // {/* )} */}
+          )}
 
         </div>
       </div>
