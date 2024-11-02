@@ -127,7 +127,7 @@ const AddByScanner = ({ availableItems, selectedArea, userId, handleAddingToCurr
 				applianceid: applianceId,
 				name: product.product_name,
 				itemType: (product.categories_hierarchy && product.categories_hierarchy[0]) ? product.categories_hierarchy[0].replace(/^[^:]*:/, "") : 'Unknown',
-				itemMainType: (product.categories_hierarchy && product.categories_hierarchy[1]) ? product.categories_hierarchy[1].replace(/^[^:]*:/, "") : '',
+				itemMainType: (product.categories_hierarchy && product.categories_hierarchy[1]) ? product.categories_hierarchy[1].replace(/^[^:]*:/, "") : 'Unknown',
 				itemSubType: (product.categories_hierarchy && product.categories_hierarchy[2]) ? product.categories_hierarchy[2].replace(/^[^:]*:/, "") : '',
 				addedDate: getCurrentDate(),
 				expiryDate: formValues.expiryDate,
