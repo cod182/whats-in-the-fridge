@@ -128,8 +128,6 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
         {addType === 'custom' && <CustomAddItem shared={shared} selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />}
         {addType === 'userCreated' && <OptionAddItem shared={shared} selectedArea={selectedArea} availableItems={userCreatedItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} showItemTypes={false} />}
         {addType === 'scan' && <AddByScanner shared={shared} selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />}
-
-
       </div>
 
     </div >
