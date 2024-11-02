@@ -105,17 +105,17 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
             </button>
           )}
 
-          {!isMobile && (
-            // {/* Button for user to create their own item */}
-            <button onClick={() => setAddType('scan')}
-              className={`${addType === 'scan' ? ' border-green-300 border-2' : 'hover:translate-y-1'} flex flex-col items-center justify-center px-2 font-normal bg-from-blue-400 bg-gradient-to-br to-blue-400 from-blue-600 hover:translate-y-[-10px] active:bg-blue-400 aspect-square h-[100px] rounded-full transition-all duration-200 ease`}>
-              {/* <Image src='/assets/images/custom.svg' alt='pre-made icon' width={30} height={30} /> */}
-              <BsCameraVideo className='w-[25px] h-[25px]' />
-              <span className="">
-                Scan Item
-              </span>
-            </button>
-          )}
+          {/* Button for user to create their own item */}
+          {/* {!isMobile && ( */}
+          <button onClick={() => setAddType('scan')}
+            className={`${addType === 'scan' ? ' border-green-300 border-2' : 'hover:translate-y-1'} flex flex-col items-center justify-center px-2 font-normal bg-from-blue-400 bg-gradient-to-br to-blue-400 from-blue-600 hover:translate-y-[-10px] active:bg-blue-400 aspect-square h-[100px] rounded-full transition-all duration-200 ease`}>
+            {/* <Image src='/assets/images/custom.svg' alt='pre-made icon' width={30} height={30} /> */}
+            <BsCameraVideo className='w-[25px] h-[25px]' />
+            <span className="">
+              Scan Item
+            </span>
+          </button>
+          {/* )} */}
 
         </div>
       </div>
