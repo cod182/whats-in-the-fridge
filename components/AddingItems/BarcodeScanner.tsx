@@ -1,71 +1,91 @@
-// components/BarcodeScanner.tsx
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-import { Html5Qrcode } from 'html5-qrcode';
+import { BrowserMultiFormatReader } from '@zxing/library';
 
 interface BarcodeScannerProps {
 	onScanSuccess: (barcode: string) => void;
+	scanState: boolean;
+	updateScanningState: (state: boolean) => void;
 }
 
-const BarcodeScanner: React.FC<BarcodeScannerProps> = ({ onScanSuccess }) => {
-	const scannerRef = useRef<HTMLDivElement | null>(null);
-	const html5QrCodeRef = useRef<Html5Qrcode | null>(null);
-	const [scannerRunning, setScannerRunning] = useState(false);
-	const [error, setError] = useState<string | null>(null);
+const BarcodeScanner: React.FC<BarcodeScannerProps> = ({ onScanSuccess, scanState, updateScanningState }) => {
 
+	// States
+	const videoRef = useRef<HTMLVideoElement | null>(null);
+	const codeReader = useRef<BrowserMultiFormatReader | null>(null);
+	const mediaStreamRef = useRef<MediaStream | null>(null);
+
+
+	// Use Effects
 	useEffect(() => {
-		if (typeof window === 'undefined' || !scannerRef.current) return;
+		codeReader.current = new BrowserMultiFormatReader();
 
-		const html5QrCode = new Html5Qrcode(scannerRef.current.id);
-		html5QrCodeRef.current = html5QrCode;
+		const startScanning = async () => {
+			try {
+				mediaStreamRef.current = await navigator.mediaDevices.getUserMedia({ video: true });
+				if (videoRef.current) {
+					videoRef.current.srcObject = mediaStreamRef.current;
 
-		html5QrCode
-			.start(
-				{ facingMode: 'environment' }, // Use the rear camera
-				{
-					fps: 10, // Frames per second for scanning
-					qrbox: { width: 250, height: 250 }, // Define the scanning box size
-				},
-				(decodedText) => {
-					onScanSuccess(decodedText);
-					// Stop the scanner after a successful scan
-					if (scannerRunning) {
-						html5QrCode.stop().catch((stopError) => {
-							console.error('Error stopping scanner: ', stopError);
-						});
-						setScannerRunning(false);
-					}
-				},
-				(errorMessage) => {
-					console.warn('Scanning failed: ', errorMessage);
+					// Ensure the stream is ready before calling play
+					videoRef.current.onloadedmetadata = () => {
+						videoRef.current?.play().catch(err => console.error('Play error:', err));
+					};
 				}
-			)
-			.then(() => {
-				setScannerRunning(true); // Scanner started successfully
-			})
-			.catch((err) => {
-				console.error('Error starting scanner: ', err);
-				setError('Camera streaming not supported or initialization failed.');
-			});
 
-		// Cleanup on component unmount
-		return () => {
-			if (html5QrCodeRef.current && scannerRunning) {
-				html5QrCodeRef.current
-					.stop()
-					.then(() => html5QrCodeRef.current?.clear())
-					.catch((stopError) => {
-						console.warn('Error stopping scanner on unmount: ', stopError);
-					});
+				// Start scanning from the video stream
+				await codeReader.current!.decodeFromVideoDevice(null, videoRef.current!, (result, err) => {
+					if (result) {
+						onScanSuccess(result.getText());
+						updateScanningState(false);
+					}
+					if (err && !(err instanceof Error)) {
+						console.warn(err);
+					}
+				});
+			} catch (err) {
+				console.error('Error starting scanner:', err);
 			}
 		};
-	}, [onScanSuccess, scannerRunning]);
+		if (scanState) {
+			startScanning();
+		} else {
+			stopScanning();
+		}
 
-	if (error) {
-		return <p className="text-red-500">{error}</p>;
+		// Cleanup function to stop scanning and release the camera
+		return () => {
+			stopScanning();
+		};
+	}, [onScanSuccess, scanState, updateScanningState]);
+
+	const stopScanning = () => {
+		// Stop scanning
+		if (codeReader.current) {
+			codeReader.current.reset(); // Stop the scanner
+			console.log('Scanner stopped.');
+		}
+
+		// Stop all media tracks to release the camera
+		if (mediaStreamRef.current) {
+			mediaStreamRef.current.getTracks().forEach(track => {
+				track.stop(); // Stop the individual media track
+				console.log('Media track stopped.');
+			});
+			mediaStreamRef.current = null; // Clear the media stream ref
+		}
+
+		// Clear the video source
+		if (videoRef.current) {
+			videoRef.current.srcObject = null; // Clear the media source
+			videoRef.current.pause(); // Pause the video element if it's playing
+			console.log('Video source cleared.');
+		}
+	};
+	if (scanState) {
+
+		return <video ref={videoRef} style={{ width: '100%' }} />;
 	}
-
-	return <div ref={scannerRef} id="scanner" />;
+	return null
 };
 
 export default BarcodeScanner;
