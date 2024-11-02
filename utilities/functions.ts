@@ -517,3 +517,37 @@ export const checkUserAuthorised = async (applianceId: string, id: string) => {
     return false;
   }
 }
+
+
+// utils/deviceDetection.ts
+export const isMobileOrTablet = (): boolean => {
+  if (typeof window === 'undefined') return false; // Return false on server-side
+
+  const userAgent = navigator.userAgent || navigator.vendor;
+  return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
+};
+
+
+// Gets all sharing invites for the logged in user
+export const getBarcodeScanInfo = async (barcode: string) => {
+  try {
+    const response = await fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error getting shares:', error);
+    return error;
+  }
+};
+
+export function checkFileType(value: string) {
+  if (
+    value.includes('https://')
+  ) {
+    console.log('True', value)
+    return `/assets/images/items/${value}`
+  } else {
+    console.log('False', value)
+    return value;
+  }
+}

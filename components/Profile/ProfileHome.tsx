@@ -1,8 +1,5 @@
-import CustomButton from '../CustomButton/CustomButton';
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
 import Image from 'next/image';
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
 
 type Props = {
   user: { name: string; email: string; image: string, id: number }

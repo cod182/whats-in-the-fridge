@@ -68,9 +68,9 @@ const IconSearch = ({ handleUpdateIcon, currentIcon }: Props) => {
           <p className='text-xs italic text-gray-800'>Click on an icon to choose</p>
         </div>
         {currentIcon &&
-          <div className='flex flex-row items-center justify-start gap-2 px-2 py-[5px] bg-gray-400/50 rounded-md border-[1px] border-gray-800'>
+          <div className='flex flex-row items-center justify-start gap-2 px-2 py-[5px] bg-gray-400/50 rounded-md border-[1px] border-gray-800 '>
             <p>Current icon</p>
-            <Image alt='' src={`/assets/images/items/${currentIcon}`} className={`mx-auto shadow-md rounded-full`} width={50} height={50} />
+            <Image alt='' src={currentIcon.includes('https') ? currentIcon : `/assets/images/items/${currentIcon}`} className={`mx-auto shadow-md rounded-full aspect-square`} width={50} height={50} />
           </div>
         }
 
