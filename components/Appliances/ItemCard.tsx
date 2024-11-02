@@ -1,6 +1,6 @@
 'use client'
 
-import { removeItemFromDb, reverseDate, updateItemIconDb, updateItemInDb } from "@/utilities/functions";
+import { checkFileType, removeItemFromDb, reverseDate, updateItemIconDb, updateItemInDb } from "@/utilities/functions";
 
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { BsBoxArrowRight } from "react-icons/bs";
@@ -256,7 +256,8 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
                   </div>
                 </div>
               }
-              {/* SUERRORCCESS ICON END */}
+              {/* Error ICON END */}
+
             </div>
           </div>
           <div className="w-full h-fit flex flex-row items-center justify-end p-2">
@@ -278,7 +279,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
                 <div className='flex flex-row items-center justify-start w-full' >
                   <div className='mr-2 flex flex-col justify-center items-center max-w-[75px] max-h-[75px] min-h-[50px] min-w-[50px] aspect-square relative rounded-full'>
                     <div className="h-full w-full rounded-full overflow-hidden relative">
-                      <Image alt={`${item.name} `} src={`/assets/images/items/${item.image}`} width={75} height={75} className='object-fill' />
+                      <Image alt={`${item.name} `} src={item.image.includes('https') ? item.image : `/assets/images/items/${item.image}`} width={75} height={75} className='object-fill' />
                       <button onClick={(e) => { e.preventDefault(); setChangeIcon(true); }} className="absolute bottom-0 transition-all duration-300 ease hover:font-bold hover:h-full w-full h-[30%] bg-gray-500/80 active:bg-gray-600/80 text-white prose-sm hover:bg-gray-500/90 cursor-pointer">
                         edit
                       </button>
@@ -488,7 +489,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
                 {/* Item info */}
 
                 <div className='mr-2 flex flex-col justify-center items-center w-[75px] h-[75px] aspect-square relative'>
-                  <Image alt={`${item.name} `} src={`/assets/images/items/${item.image}`} width={75} height={75} className='object-fill' />
+                  <Image alt={`${item.name} `} src={item.image.includes('https') ? item.image : `/assets/images/items/${item.image}`} width={75} height={75} className='object-fill rounded-full aspect-square' />
                 </div>
                 <div className="w-full overflow-scroll">
                   <p className='capitalize text-md max-h-[24px] truncate'>{item.name}</p>

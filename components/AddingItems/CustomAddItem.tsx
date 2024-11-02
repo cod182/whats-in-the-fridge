@@ -5,9 +5,6 @@ import { useEffect, useRef, useState } from 'react';
 
 import FadeInHOC from '../FadeInHOC/FadeInHOC';
 import IconSearch from '../IconSearch/IconSearch';
-import Image from 'next/image';
-import { customImages } from '../../static/custom-item-images';
-import { setTimeout } from 'timers/promises';
 
 type Props = {
   selectedArea: selectionProps;
