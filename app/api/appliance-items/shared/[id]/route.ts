@@ -58,7 +58,7 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
 		return NextResponse.json({ error: "You must be logged in': ", status: 401 })
 	}
 
-	const { paramsId } = await params;
+	const { id: paramsId } = await params;
 
 	const { applianceId, ownerId } = await req.json(); // Extract the appliance and from the body
 
@@ -104,8 +104,7 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 		return NextResponse.json({ message: "You must be logged in': ", status: 401 })
 	}
 
-	const { paramsId } = await params;
-
+	const { id: paramsId } = await params;
 
 	const headersList = await headers();
 	const typeOfUpdate = headersList.get("update-type");
@@ -125,6 +124,7 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 				ownerid,
 				applianceid
 			} = updatedItem;
+
 
 			// Check if session.user.id exists in the sharingResponse
 			const isUserShared = await checkUserAuthorised(applianceid, session.user.id);

@@ -132,7 +132,7 @@ const AddItem = ({ selectedArea, availableItems, userCreatedItems, userId, updat
         {addType === 'scan' && <AddByScanner shared={shared} selectedArea={selectedArea} availableItems={availableItems} userId={userId} handleAddingToCurrentItems={handleAddingItem} />}
       </div>
 
-    </div >
+    </div>
   );
 
 }

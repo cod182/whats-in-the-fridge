@@ -87,7 +87,13 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
     // Api call to only update the icon used for the selected item
     try {
       setIconUpdating(true);
-      const update = { id: item.id, applianceid: item.applianceid, ownerid: item.ownerid, image: icon }
+      const update = {
+        id: item.id,
+        applianceid: item.applianceid,
+        ownerid: item.ownerid,
+        image: icon
+      }
+
       const response = await updateItemIconDb(update, item.ownerid, item.applianceid, shared)
 
 
@@ -146,6 +152,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
 
     try {
       setUpdating(true)
+      console.log(shared)
       const response = await updateItemInDb(updatedItem, item.ownerid, item.applianceid, shared)
 
       if (response.status === 200) {

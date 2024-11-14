@@ -92,7 +92,8 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
       } = updatedItem;
 
       console.log(updatedItem)
-
+      console.log('id', id)
+      console.log('paramsId', paramsId)
       if (id != paramsId) {
         // return new Response('Item ID Doesnt Match', { status: 404, statusText: 'Item ID Doesnt Match' })
         return NextResponse.json({ message: "Item ID Doesnt Match': ", status: 404 })
