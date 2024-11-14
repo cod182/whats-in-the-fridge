@@ -75,7 +75,7 @@ const SharingInvites = ({ email }: Props) => {
 
 	// Returns
 
-	if (!sharingInvites || sharingInvites.length > 1) return null
+	if (!sharingInvites || sharingInvites.length < 1) return null
 
 	return (
 		<>
@@ -84,6 +84,7 @@ const SharingInvites = ({ email }: Props) => {
 				<h4 className='font-semibold font-gray-600 text-lg'>Sharing Area</h4>
 				<div className='flex flex-row items-center justify-start gap-2'>
 					{sharingInvites.map((share, index) => {
+						console.log(index, share)
 						return (
 							<InviteCard key={index} sharedData={share} updateShare={updateShare} inviteStatus={shareInviteUpdating} />
 						)
