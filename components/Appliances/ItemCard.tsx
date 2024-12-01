@@ -152,7 +152,7 @@ const ItemCard = ({ item, updateItems, items, inSearch, applianceType, selectedA
 
     try {
       setUpdating(true)
-      console.log(shared)
+
       const response = await updateItemInDb(updatedItem, item.ownerid, item.applianceid, shared)
 
       if (response.status === 200) {

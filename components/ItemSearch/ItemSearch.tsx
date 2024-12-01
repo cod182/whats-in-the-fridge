@@ -37,7 +37,14 @@ const ItemSearch = ({ items, handleUpdateItems, selectedArea, applianceType }: P
   }
 
   const handleUpdateItemsIntercept = (items: applianceItem[]) => {
-    handleUpdateItems(items)
+    handleUpdateItems(items);
+
+    // Search the array of items
+    const results = items.filter(item =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    // set the results to the state
+    setSearchResults(results);
 
   }
 
