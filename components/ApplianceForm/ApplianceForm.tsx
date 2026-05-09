@@ -35,6 +35,7 @@ const ApplianceForm = ({ formType, userId }: Props) => {
   // Use Effects
   useEffect(() => {
     setFormData({ ...formData, userId: userId });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId])
 
 

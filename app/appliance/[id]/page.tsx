@@ -82,6 +82,7 @@ const AppliancePage = () => {
 
 
     fetchApplianceData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id, status, applianceId, router]);
 
   useEffect(() => {
@@ -90,6 +91,7 @@ const AppliancePage = () => {
     if (status === 'authenticated') {
       getAllApplianceItems();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appliance, applianceId, user?.id, status])
 
   // Error Handling
