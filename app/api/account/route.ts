@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { authOptions } from '@/utilities/authOptions';
@@ -6,7 +5,7 @@ import { executeQuery } from '@/lib/db';
 import { getServerSession } from 'next-auth/next';
 import { headers } from 'next/headers';
 
-export const DELETE = async (req: NextApiRequest, params: any, res: NextApiResponse) => {
+export const DELETE = async (request: NextRequest) => {
 
   // API Protection
   const session = await getServerSession(authOptions);

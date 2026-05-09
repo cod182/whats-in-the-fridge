@@ -1,13 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { NextApiRequest } from 'next';
 import { RowDataPacket } from 'mysql2';
 import { authOptions } from '@/utilities/authOptions';
 import { checkUserAuthorised } from '@/utilities/functions';
 import { executeQuery } from '@/lib/db';
 import { getServerSession } from 'next-auth/next';
 
-export const GET = async (req: NextRequest, params: any, res: any) => {
+const getErrorMessage = (error: unknown) => {
+  return error instanceof Error ? error.message : 'Internal Server Error';
+};
+
+export const GET = async (request: NextRequest) => {
 
   // API Protection
   const session = await getServerSession(authOptions);
@@ -60,8 +63,8 @@ export const GET = async (req: NextRequest, params: any, res: any) => {
     const allItems = allOwnedAndSharedItems.concat(ownedItems);
 
     return NextResponse.json(allItems);
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message });
+  } catch (error: unknown) {
+    return NextResponse.json({ message: getErrorMessage(error) });
 
   }
 }

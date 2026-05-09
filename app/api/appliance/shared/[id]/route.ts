@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 import { OkPacket, RowDataPacket } from "mysql2";
 
@@ -10,7 +9,16 @@ const hasMatchingSharedUserId = (applianceWithSharing: appliance, userId: string
 	return applianceWithSharing!.sharedWith?.some((shared: ShareProps) => shared.sharedUserId === parseInt(userId));
 };
 
-export const GET = async (req: NextRequest, { params }: any) => {
+type RouteContext = {
+	params: Promise<{ id: string }>;
+};
+
+const getErrorMessage = (error: unknown) => {
+	return error instanceof Error ? error.message : 'Internal Server Error';
+};
+
+export const GET = async (req: NextRequest, context: RouteContext) => {
+	const { params } = context;
 	// API Protection
 	const session = await getServerSession(authOptions);
 	if (!session) {
@@ -77,8 +85,8 @@ export const GET = async (req: NextRequest, { params }: any) => {
 		}
 
 		// Return the combined result
-	} catch (error: any) {
-		return NextResponse.json({ message: error.message, status: 500 });
+	} catch (error: unknown) {
+		return NextResponse.json({ message: getErrorMessage(error), status: 500 });
 	}
 };
 

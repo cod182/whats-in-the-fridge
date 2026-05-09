@@ -1,11 +1,14 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { authOptions } from '@/utilities/authOptions';
 import { executeQuery } from '@/lib/db';
 import { getServerSession } from 'next-auth/next';
 
-export const POST = async (request: NextRequest, params: any, response: NextApiResponse) => {
+const getErrorMessage = (error: unknown) => {
+	return error instanceof Error ? error.message : 'Internal Server Error';
+};
+
+export const POST = async (request: NextRequest) => {
 
 	// API Protection
 	const session = await getServerSession(authOptions);
@@ -32,9 +35,9 @@ export const POST = async (request: NextRequest, params: any, response: NextApiR
 			// return Response.redirect(`${process.env.NEXT_URL}/profile/appliances`);
 			return new Response('', { status: 200, statusText: 'Success' })
 
-		} catch (error: any) {
+		} catch (error: unknown) {
 			console.log(error);
-			return NextResponse.json({ status: 500, statusText: 'Internal Server Error', message: error.message, ok: false });
+			return NextResponse.json({ status: 500, statusText: 'Internal Server Error', message: getErrorMessage(error), ok: false });
 		}
 	}
 }

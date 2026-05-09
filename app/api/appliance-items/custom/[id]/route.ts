@@ -4,7 +4,16 @@ import { authOptions } from "@/utilities/authOptions";
 import { executeQuery } from "@/lib/db";
 import { getServerSession } from "next-auth";
 
-export const PUT = async (request: NextRequest, params: any, response: NextResponse) => {
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
+const getErrorMessage = (error: unknown) => {
+  return error instanceof Error ? error.message : 'Internal Server Error';
+};
+
+export const PUT = async (request: NextRequest, context: RouteContext) => {
+  const { params } = context;
 
   // API Protection
   const session = await getServerSession(authOptions);
@@ -12,6 +21,8 @@ export const PUT = async (request: NextRequest, params: any, response: NextRespo
     // Not Signed in
     return NextResponse.json({ error: "You must be logged in': ", status: 401 })
   }
+
+  const { id: paramId } = await params;
 
   try {
     const {
@@ -44,13 +55,14 @@ export const PUT = async (request: NextRequest, params: any, response: NextRespo
 
     // Return success response
     return new Response('', { status: 200, statusText: 'Success' });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(error);
-    return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error', message: error.message }), { status: 500 });
+    return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error', message: getErrorMessage(error) }), { status: 500 });
   }
 };
 
-export const DELETE = async (req: any, { params }: any, res: any) => {
+export const DELETE = async (request: NextRequest, context: RouteContext) => {
+  const { params } = context;
   const { id: paramsId } = await params;
 
   // API Protection
@@ -70,8 +82,8 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
     const response = await executeQuery(query, [paramsId, session.user.id]);
     console.log('deleted')
     return NextResponse.json(response);
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message });
+  } catch (error: unknown) {
+    return NextResponse.json({ message: getErrorMessage(error) });
 
   }
 }

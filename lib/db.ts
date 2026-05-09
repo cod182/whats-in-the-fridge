@@ -1,4 +1,4 @@
-import { createClient } from '@libsql/client';
+import { createClient, type InArgs } from '@libsql/client';
 
 type QueryRow = Record<string, unknown>;
 
@@ -49,7 +49,7 @@ export const executeQuery = async <T = QueryRow[] | QueryResultMeta>(
 
     const result = await dbClient.execute({
       sql: query,
-      args: values,
+      args: values as InArgs,
     });
 
     if (isReadQuery(query)) {

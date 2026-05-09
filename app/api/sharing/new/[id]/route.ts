@@ -9,7 +9,16 @@ interface Params {
 	id: string;   // Appliance ID
 }
 
-export const POST = async (req: NextRequest, { params }: any) => {
+type RouteContext = {
+	params: Promise<Params>;
+};
+
+const getErrorMessage = (error: unknown) => {
+	return error instanceof Error ? error.message : 'Internal Server Error';
+};
+
+export const POST = async (req: NextRequest, context: RouteContext) => {
+	const { params } = context;
 	// API Protection: Check if the user is authenticated
 	const session = await getServerSession(authOptions);
 	if (!session) {
@@ -38,7 +47,7 @@ export const POST = async (req: NextRequest, { params }: any) => {
 		// Execute the INSERT query and explicitly cast the result to OkPacket
 		const response = await executeQuery<OkPacket>(insertSharingQuery, [paramsId, email, 'false', session.user.email, session.user.name, session.user.id, applianceName]);
 
-		// Check the affectedRows to see if any record was insertedo
+		// Check affectedRows to see if a record was inserted
 		if (response.affectedRows > 0) {
 			return NextResponse.json({
 				message: "Sharing record created successfully",
@@ -50,7 +59,7 @@ export const POST = async (req: NextRequest, { params }: any) => {
 				status: 404,
 			});
 		}
-	} catch (error: any) {
-		return NextResponse.json({ message: error.message, status: 500 });
+	} catch (error: unknown) {
+		return NextResponse.json({ message: getErrorMessage(error), status: 500 });
 	}
 };

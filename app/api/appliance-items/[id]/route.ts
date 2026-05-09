@@ -1,13 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
-
-import { NextApiRequest } from "next";
 import { ResultSetHeader } from "mysql2";
+
 import { authOptions } from "@/utilities/authOptions";
 import { executeQuery } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 import { headers } from "next/headers";
 
-export const GET = async (req: NextRequest, { params }: any, res: NextResponse) => {
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
+const getErrorMessage = (error: unknown) => {
+  return error instanceof Error ? error.message : 'Internal Server Error';
+};
+
+export const GET = async (request: NextRequest, context: RouteContext) => {
+  const { params } = context;
   // API Protection
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -26,14 +34,15 @@ export const GET = async (req: NextRequest, { params }: any, res: NextResponse) 
   try {
     const response = await executeQuery(query, [session.user.id, paramsId]);
     return NextResponse.json(response);
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message });
+  } catch (error: unknown) {
+    return NextResponse.json({ message: getErrorMessage(error) });
 
   }
 }
 
 
-export const DELETE = async (req: any, { params }: any, res: any) => {
+export const DELETE = async (request: NextRequest, context: RouteContext) => {
+  const { params } = context;
   // API Protection
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -54,13 +63,14 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
     } else {
       return NextResponse.json({ message: 'Invalid item ID or unauthorized access', status: 401 });
     }
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message, status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ message: getErrorMessage(error), status: 500 });
   }
 }
 
 
-export const PUT = async (request: NextRequest, { params }: any, response: NextResponse) => {
+export const PUT = async (request: NextRequest, context: RouteContext) => {
+  const { params } = context;
   // API Protection
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -121,10 +131,10 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 
       }
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
       // return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error', message: error.message }));
-      return NextResponse.json({ message: error.message, status: 500 })
+      return NextResponse.json({ message: getErrorMessage(error), status: 500 })
 
     }
   }
@@ -190,10 +200,10 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 
       }
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
       // return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error', message: error.message }));}
-      return NextResponse.json({ message: error.message, status: 500 })
+      return NextResponse.json({ message: getErrorMessage(error), status: 500 })
 
     }
   }
@@ -242,10 +252,10 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 
       }
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
       // return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error', message: error.message }));
-      return NextResponse.json({ message: error.message, status: 500 })
+      return NextResponse.json({ message: getErrorMessage(error), status: 500 })
 
     }
   }

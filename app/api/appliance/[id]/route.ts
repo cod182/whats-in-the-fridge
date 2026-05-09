@@ -1,12 +1,20 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
-import { OkPacket, ResultSetHeader, RowDataPacket } from "mysql2";
+import { ResultSetHeader, RowDataPacket } from "mysql2";
 
 import { authOptions } from "@/utilities/authOptions";
 import { executeQuery } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 
-export const GET = async (req: NextRequest, { params }: any) => {
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
+const getErrorMessage = (error: unknown) => {
+  return error instanceof Error ? error.message : 'Internal Server Error';
+};
+
+export const GET = async (request: NextRequest, context: RouteContext) => {
+  const { params } = context;
   // API Protection
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -38,7 +46,7 @@ export const GET = async (req: NextRequest, { params }: any) => {
     // Combine appliance data with the sharing information
     const applianceWithSharing = {
       ...appliance[0], // Assuming appliance is a single result, we take the first item
-      sharedWith: sharingData.map((share: any) => ({
+      sharedWith: sharingData.map((share) => ({
         id: share.id,
         applianceId: share.applianceId,
         email: share.email,
@@ -48,13 +56,14 @@ export const GET = async (req: NextRequest, { params }: any) => {
 
     // Return the combined result
     return NextResponse.json(applianceWithSharing, { status: 200 });
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message, status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ message: getErrorMessage(error), status: 500 });
   }
 };
 
 
-export const DELETE = async (req: any, { params }: any) => {
+export const DELETE = async (request: NextRequest, context: RouteContext) => {
+  const { params } = context;
   // API Protection
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -84,16 +93,16 @@ export const DELETE = async (req: any, { params }: any) => {
     } else {
       return NextResponse.json({ message: 'Invalid appliance ID or unauthorized access', status: 401 });
     }
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message, status: 400 });
+  } catch (error: unknown) {
+    return NextResponse.json({ message: getErrorMessage(error), status: 400 });
   }
 };
 
 
 
 
-export const PUT = async (request: NextRequest, { params }: any, response: NextResponse) => {
-  const { id: paramId } = await params;
+export const PUT = async (request: NextRequest, context: RouteContext) => {
+  const { id: paramId } = await context.params;
   try {
     const { newName, userId } = await request.json();
 
@@ -120,8 +129,8 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 
     // Return success response
     return new Response('', { status: 200, statusText: 'Success: Appliance Renamed' });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(error);
-    return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error, Please try again', message: error.message }), { status: 500 });
+    return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error, Please try again', message: getErrorMessage(error) }), { status: 500 });
   }
 };

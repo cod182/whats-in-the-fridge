@@ -1,10 +1,13 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
 import { OkPacket, RowDataPacket } from 'mysql2';
 
 import { authOptions } from '@/utilities/authOptions';
-import { executeQuery } from '@/lib/db';
+import { QueryResultMeta, executeQuery } from '@/lib/db';
 import { getServerSession } from 'next-auth/next';
+
+const getErrorMessage = (error: unknown) => {
+  return error instanceof Error ? error.message : 'Internal Server Error';
+};
 
 const checkUserAuthorised = (sharingResponse: RowDataPacket[], id: string) => {
   const isUserShared = sharingResponse.some(
@@ -125,8 +128,8 @@ export const POST = async (request: NextRequest) => {
       ]);
 
 
-      if ((queryResponse as OkPacket).affectedRows !== undefined) {
-        const { affectedRows } = queryResponse as OkPacket;
+      const { affectedRows } = queryResponse as QueryResultMeta;
+      if (affectedRows !== undefined) {
         if (affectedRows === 1) {
           // Return success response
           return NextResponse.json({ message: "Success", status: 200, statusText: 'Success' });
@@ -142,8 +145,8 @@ export const POST = async (request: NextRequest) => {
 
     }
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(error);
-    return NextResponse.json({ message: error.message, status: 500, statusText: 'Internal Server Error' });
+    return NextResponse.json({ message: getErrorMessage(error), status: 500, statusText: 'Internal Server Error' });
   }
 };

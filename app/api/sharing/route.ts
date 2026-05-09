@@ -5,6 +5,10 @@ import { authOptions } from "@/utilities/authOptions";
 import { executeQuery } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 
+const getErrorMessage = (error: unknown) => {
+	return error instanceof Error ? error.message : 'Internal Server Error';
+};
+
 export const GET = async (req: NextRequest) => {
 	// API Protection: Check if the user is authenticated
 	const session = await getServerSession(authOptions);
@@ -18,8 +22,8 @@ export const GET = async (req: NextRequest) => {
 		const response = await executeQuery(query, [session.user.email]);
 		// console.log(response);
 		return NextResponse.json(response);
-	} catch (error: any) {
-		return NextResponse.json({ message: error.message });
+	} catch (error: unknown) {
+		return NextResponse.json({ message: getErrorMessage(error) });
 
 	}
 };
@@ -44,7 +48,7 @@ export const DELETE = async (req: NextRequest) => {
 		// Execute the deletion query and explicitly cast the result to OkPacket
 		const response = await executeQuery<OkPacket>(deleteSharingQuery, [id, session.user.email]);
 
-		// Check the affectedRows to see if any record was deleted
+		// Check affectedRows to see if a record was deleted
 		if (response.affectedRows > 0) {
 			return NextResponse.json({
 				message: "Appliance and related sharing records deleted successfully",
@@ -56,8 +60,8 @@ export const DELETE = async (req: NextRequest) => {
 				status: 404,
 			});
 		}
-	} catch (error: any) {
-		return NextResponse.json({ message: error.message, status: 500 });
+	} catch (error: unknown) {
+		return NextResponse.json({ message: getErrorMessage(error), status: 500 });
 	}
 };
 
@@ -81,7 +85,7 @@ export const PUT = async (req: NextRequest) => {
 		// Execute the update query and explicitly cast the result to OkPacket
 		const response = await executeQuery<OkPacket>(updateSharing, ['true', session.user.id, id, session.user.email]);
 
-		// Check the affectedRows to see if any record was updated
+		// Check affectedRows to see if a record was updated
 		if (response.affectedRows > 0) {
 			return NextResponse.json({
 				message: 'Sharing invite updated successfully',
@@ -93,7 +97,7 @@ export const PUT = async (req: NextRequest) => {
 				status: 404,
 			});
 		}
-	} catch (error: any) {
-		return NextResponse.json({ message: error.message, status: 500 });
+	} catch (error: unknown) {
+		return NextResponse.json({ message: getErrorMessage(error), status: 500 });
 	}
 };

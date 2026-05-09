@@ -1,14 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 
-import { NextApiRequest } from "next";
 import { authOptions } from "@/utilities/authOptions";
 import { checkUserAuthorised } from "@/utilities/functions";
 import { executeQuery } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 import { headers } from "next/headers";
 
-export const GET = async (req: NextApiRequest, { params }: any, res: any) => {
+type RouteContext = {
+	params: Promise<{ id: string }>;
+};
+
+const getErrorMessage = (error: unknown) => {
+	return error instanceof Error ? error.message : 'Internal Server Error';
+};
+
+export const GET = async (request: NextRequest, context: RouteContext) => {
+  const { params } = context;
 
 	// API Protection
 	const session = await getServerSession(authOptions);
@@ -43,24 +51,25 @@ export const GET = async (req: NextApiRequest, { params }: any, res: any) => {
 
 		return NextResponse.json(itemsResponse, { status: 200 });
 
-	} catch (error: any) {
-		return NextResponse.json({ message: error.message, status: 500 });
+	} catch (error: unknown) {
+		return NextResponse.json({ message: getErrorMessage(error), status: 500 });
 	}
 }
 
 
 
-export const DELETE = async (req: any, { params }: any, res: any) => {
-	// API Protection
-	const session = await getServerSession(authOptions);
-	if (!session) {
-		// Not Signed in
-		return NextResponse.json({ error: "You must be logged in': ", status: 401 })
-	}
+export const DELETE = async (request: NextRequest, context: RouteContext) => {
+  const { params } = context;
+  // API Protection
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    // Not Signed in
+    return NextResponse.json({ error: "You must be logged in': ", status: 401 })
+  }
 
-	const { id: paramsId } = await params;
+  const { id: paramsId } = await params;
 
-	const { applianceId, ownerId } = await req.json(); // Extract the appliance and from the body
+  const { applianceId, ownerId } = await request.json(); // Extract the appliance and from the body
 
 	if (!paramsId || paramsId === 'undefined') {
 		return NextResponse.json({ message: 'Not Item ID Provided', status: 400 });
@@ -89,14 +98,15 @@ export const DELETE = async (req: any, { params }: any, res: any) => {
 
 
 
-	} catch (error: any) {
-		return NextResponse.json({ message: error.message, status: 500 });
+	} catch (error: unknown) {
+		return NextResponse.json({ message: getErrorMessage(error), status: 500 });
 	}
 }
 
 
 
-export const PUT = async (request: NextRequest, { params }: any, response: NextResponse) => {
+export const PUT = async (request: NextRequest, context: RouteContext) => {
+  const { params } = context;
 	// API Protection
 	const session = await getServerSession(authOptions);
 	if (!session) {
@@ -151,10 +161,10 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 
 			}
 
-		} catch (error: any) {
+		} catch (error: unknown) {
 			console.error(error);
 			// return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error', message: error.message }));
-			return NextResponse.json({ message: error.message, status: 500 })
+			return NextResponse.json({ message: getErrorMessage(error), status: 500 })
 
 		}
 	}
@@ -219,10 +229,10 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 				return NextResponse.json({ message: 'Failed to update Item', status: 400 })
 			}
 
-		} catch (error: any) {
+		} catch (error: unknown) {
 			console.error(error);
 			// return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error', message: error.message }));}
-			return NextResponse.json({ message: error.message, status: 500 })
+			return NextResponse.json({ message: getErrorMessage(error), status: 500 })
 		}
 	}
 
@@ -268,10 +278,10 @@ export const PUT = async (request: NextRequest, { params }: any, response: NextR
 
 			}
 
-		} catch (error: any) {
+		} catch (error: unknown) {
 			console.error(error);
 			// return new Response(JSON.stringify({ status: 500, statusText: 'Internal Server Error', message: error.message }));
-			return NextResponse.json({ message: error.message, status: 500 })
+			return NextResponse.json({ message: getErrorMessage(error), status: 500 })
 
 		}
 	}

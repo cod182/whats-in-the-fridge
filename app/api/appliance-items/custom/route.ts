@@ -1,10 +1,13 @@
-import { NextApiRequest } from 'next';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '@/utilities/authOptions';
 import { executeQuery } from '@/lib/db';
 import { getServerSession } from 'next-auth/next';
 
-export const GET = async (req: NextApiRequest, params: any, res: NextResponse) => {
+const getErrorMessage = (error: unknown) => {
+  return error instanceof Error ? error.message : 'Internal Server Error';
+};
+
+export const GET = async (request: NextRequest) => {
 
   // API Protection
   const session = await getServerSession(authOptions);
@@ -17,8 +20,8 @@ export const GET = async (req: NextApiRequest, params: any, res: NextResponse) =
     let query = `SELECT * FROM customAvailableItems WHERE creatorId=${session.user.id}`
     const response = await executeQuery(query);
     return NextResponse.json(response);
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message });
+  } catch (error: unknown) {
+    return NextResponse.json({ message: getErrorMessage(error) });
 
   }
 }
