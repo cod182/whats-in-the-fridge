@@ -19,6 +19,10 @@ const headers = [
   "X-CSRF-Token", "X-Requested-With",
 ];
 
+const nextAuthOrigin = process.env.NEXTAUTH_URL
+  ? new URL(process.env.NEXTAUTH_URL).origin
+  : 'http://localhost:3000';
+
 
 const nextConfig = {
   images: {
@@ -39,7 +43,7 @@ const nextConfig = {
       source: "/api/(.*)",
       headers: [
         { key: "Access-Control-Allow-Credentials", value: "true" },
-        { key: 'Access-Control-Allow-Origin', value: `${process.env.NEXTAUTH_URL}` },
+        { key: 'Access-Control-Allow-Origin', value: nextAuthOrigin },
         { key: "Access-Control-Allow-Methods", value: "GET,POST,PUT" },
         { key: "Access-Control-Allow-Headers", value: headers.join(", ") }
       ]
