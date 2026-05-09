@@ -1,59 +1,70 @@
-// import mysql from 'serverless-mysql';
-// const db = mysql({
-//   config: {
-//     host: process.env.NEXT_DB_HOST,
-//     user: process.env.NEXT_DB_USER,
-//     password: process.env.NEXT_DB_PASS,
-//     database: process.env.NEXT_DB_DBNAME,
-//     port: parseInt(process.env.NEXT_DB_PORT || '3306', 10),
-//   }
-// });
+import { createClient } from '@libsql/client';
 
-// export const executeQuery = async (query: string, values: any = []) => {
-//   try {
-//     const results = await db.query(query, values);
-//     await db.end();
-//     return results;
-//   } catch (error) {
-//     return { error };
-//   }
+type QueryRow = Record<string, unknown>;
 
-// }
+export type QueryResultMeta = {
+  affectedRows: number;
+  rowsAffected: number;
+  insertId: number;
+  lastInsertRowid: number;
+};
 
-import mysql, { OkPacket, PoolConnection, ResultSetHeader, RowDataPacket } from 'mysql2/promise';
+let client: ReturnType<typeof createClient> | null = null;
 
-const pool = mysql.createPool({
-  host: process.env.NEXT_DB_HOST,
-  user: process.env.NEXT_DB_USER,
-  password: process.env.NEXT_DB_PASS,
-  database: process.env.NEXT_DB_DBNAME,
-  port: parseInt(process.env.NEXT_DB_PORT || '3306', 10),
-  connectionLimit: 10, // Limit the max number of connections
-  waitForConnections: true, // Queue up when all connections are used
-  queueLimit: 0, // No limit on queued requests
-  connectTimeout: 10000, // 10 seconds to establish a connection
-});
+const getClient = () => {
+  if (typeof window !== 'undefined') {
+    throw new Error('Database access is only available on the server.');
+  }
 
+  if (client) {
+    return client;
+  }
 
+  const url = process.env.NEXT_TURSO_DATABASE_URL || process.env.TURSO_DATABASE_URL;
+  const authToken = process.env.NEXT_TURSO_AUTH_TOKEN || process.env.TURSO_AUTH_TOKEN;
 
+  if (!url) {
+    throw new Error('Missing Turso database URL. Set NEXT_TURSO_DATABASE_URL or TURSO_DATABASE_URL.');
+  }
 
-export const executeQuery = async <
-  T extends RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader
->(
+  client = createClient({
+    url,
+    authToken,
+  });
+
+  return client;
+};
+
+const isReadQuery = (sql: string) => {
+  const normalized = sql.trim().toLowerCase();
+  return normalized.startsWith('select') || normalized.startsWith('pragma') || normalized.startsWith('with');
+};
+
+export const executeQuery = async <T = QueryRow[] | QueryResultMeta>(
   query: string,
-  values: any[] = []
+  values: unknown[] = []
 ): Promise<T> => {
-  let connection: PoolConnection | undefined;
   try {
-    connection = await pool.getConnection();
-    const [rows] = await connection.query<T>(query, values);
-    return rows;
-  } catch (error: any) {
-    console.error('Database Query Error: ', error);
-    throw new Error('Database query failed');
-  } finally {
-    if (connection) {
-      connection.release();
+    const dbClient = getClient();
+
+    const result = await dbClient.execute({
+      sql: query,
+      args: values,
+    });
+
+    if (isReadQuery(query)) {
+      return result.rows as T;
     }
+
+    const lastInsertRowid = Number(result.lastInsertRowid ?? 0);
+    return {
+      affectedRows: result.rowsAffected,
+      rowsAffected: result.rowsAffected,
+      insertId: lastInsertRowid,
+      lastInsertRowid,
+    } as T;
+  } catch (error) {
+    console.error('Database Query Error:', error);
+    throw new Error('Database query failed');
   }
 };

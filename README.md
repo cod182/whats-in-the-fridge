@@ -20,6 +20,29 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Database Setup (Turso)
+
+For a fresh Turso database, add your Turso values to `.env`:
+
+```bash
+NEXT_TURSO_AUTH_TOKEN="..."
+NEXT_TURSO_DATABASE_URL="libsql://..."
+```
+
+Then create all tables and base indexes:
+
+```bash
+npm run db:setup
+```
+
+Seed the built-in item catalog:
+
+```bash
+npm run db:seed
+```
+
+Schema SQL lives in `database/schema.sql`.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
